@@ -1,1 +1,85 @@
 /* You can add global styles to this file, and also import other style files */
+/* IBM plex */
+*{
+    font-family: 'Ysabeau';
+}
+
+::selection {
+    background-color: #20c997;
+    color: #fff;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 15px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: rgb(228, 228, 228);
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: rgb(195, 195, 195);
+    border-radius: 3px;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+
+@font-face {
+    font-family: 'Ysabeau';
+    src: url('../src/fonts/YsabeauInfant-Regular.ttf');
+    src: local('../src/fonts/YsabeauInfant-Regular'),
+        url('fonts/YsabeauInfant-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Ysabeau';
+    src: url('../src/fonts/YsabeauInfant-Bold.ttf');
+    src: local('../src/fonts/YsabeauInfant-Bold'),
+        url('fonts/YsabeauInfant-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Ysabeau';
+    src: url('../src/fonts/YsabeauInfant-Italic.ttf');
+    src: local('../src/fonts/YsabeauInfant-Italic'),
+        url('fonts/YsabeauInfant-Italic.ttf') format('truetype');
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Ysabeau';
+    src: url('../src/fonts/YsabeauInfant-BoldItalic.ttf');
+    src: local('../src/fonts/YsabeauInfant-BoldItalic'),
+        url('fonts/YsabeauInfant-BoldItalic.ttf') format('truetype');
+    font-weight: bold;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Ysabeau';
+    src: url('../src/fonts/YsabeauInfant-LightItalic.ttf');
+    src: local('../src/fonts/YsabeauInfant-LightItalic'),
+        url('fonts/YsabeauInfant-LightItalic.ttf') format('truetype');
+    font-weight: 300;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Ysabeau';
+    src: url('../src/fonts/YsabeauInfant-Light.ttf');
+    src: local('../src/fonts/YsabeauInfant-Light'),
+        url('fonts/YsabeauInfant-Light.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+}
