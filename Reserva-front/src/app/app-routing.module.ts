@@ -6,10 +6,12 @@ import { NosotrosComponent } from './components/main/nosotros/nosotros.component
 import { ContactosComponent } from './components/main/contactos/contactos.component';
 import { LoginComponent } from './components/auth/login/login.component';
 import { PoliticaPrivComponent } from './components/main/politica-priv/politica-priv.component';
+import { RegisterEmpresaComponent } from './components/auth/register-empresa/register-empresa.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'login', component: LoginComponent},
+  {path: 'register_empresa', component: RegisterEmpresaComponent},
   {path: 'registro', component: RegisterComponent},
   {path: 'nosotros', component: NosotrosComponent},
   {path: 'contacto', component: ContactosComponent},

@@ -3,22 +3,22 @@
 <div class="container-fluid" style="padding-top: 10vh">
     <div class="mb-5 container d-flex justify-content-center">
         <div class="p-4 p-sm-5 col-12 col-sm-8 rounded shadow">
-            <h2 class="text-center text-black-50 fw-bold">Regístrate!</h2>
+            <h2 class="text-center text-black-50 fw-bold">Regístrate Empresa!</h2>
             <p class="text-center pb-4 text-black-50">
-                Cree una cuenta para disfrutar de las funciones de nuestro sistema y empezar a reservar tus canchas.<br>
+                Cree una cuenta para ofrecer tus canchas al público.<br>
             </p>
             <form #registroForm="ngForm" (ngSubmit)="registrar(registroForm)">
                 <div class="row">
                     <div class="col-12 col-sm-6">
-                        <label for="nombres" class="form-label text-black-50">Nombres</label>
-                        <input type="text" class="form-control" placeholder="Ingrese sus nombres" name="nombres"
-                            id="nombres" [(ngModel)]="user.nombres" required />
+                        <label for="nombre" class="form-label text-black-50">Nombre</label>
+                        <input type="text" class="form-control" placeholder="Nombre de la empresa" name="nombre"
+                            id="nombre" [(ngModel)]="user.nombre" required />
                     </div>
 
                     <div class="col-12 col-sm-6 mt-3 mt-sm-0">
-                        <label for="apellidos" class="form-label text-black-50">Apellidos</label>
-                        <input type="text" class="form-control" placeholder="Ingrese sus apellidos "
-                            name="apellidos" id="apellidos" [(ngModel)]="user.apellidos" required />
+                        <label for="telefono" class="form-label text-black-50">Teléfono</label>
+                        <input type="text" class="form-control" placeholder="Ingrese su teléfono"
+                            name="telefono" id="telefono" [(ngModel)]="user.telefono" required />
                     </div>
                 </div>
 

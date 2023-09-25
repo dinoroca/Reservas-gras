@@ -5,11 +5,12 @@ import { Title } from '@angular/platform-browser';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-register',
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  selector: 'app-register-empresa',
+  templateUrl: './register-empresa.component.html',
+  styleUrls: ['./register-empresa.component.css']
 })
-export class RegisterComponent implements OnInit {
+
+export class RegisterEmpresaComponent implements OnInit {
 
   public user: any = {
 
