@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { ToastrService } from 'ngx-toastr';
+import { GuestService } from 'src/app/services/guest.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-register-empresa',
@@ -12,8 +14,10 @@ import { ToastrService } from 'ngx-toastr';
 
 export class RegisterEmpresaComponent implements OnInit {
 
-  public user: any = {
-
+  public empresa: any = {
+    region: '',
+    provincia: '',
+    distrito: ''
   };
 
   public password: any;
@@ -21,17 +25,40 @@ export class RegisterEmpresaComponent implements OnInit {
   public show = false;
   public alert_pass = false;
 
+  public regiones: Array<any> = [];
+  public provincias: Array<any> = [];
+  public distritos: Array<any> = [];
+
+  public provincias_arr: Array<any> = [];
+  public distritos_arr: Array<any> = [];
+  public vacio = true;
+
   public valid = false;
 
   public recordar = true;
+
+  isDisabledProvincia = true;
+  isDisabledDistrito = true;
 
   constructor(
     //private _userService: UserService,
     private _router: Router,
     private _title: Title,
+    private _guestService: GuestService,
+    private _userService: UserService,
     private _toastrService: ToastrService
   ) {
 
+    this._guestService.obtener_regiones().subscribe(
+      response => {
+        response.forEach((element: { id: any; name: any; }) => {
+          this.regiones.push({
+            id: element.id,
+            name: element.name
+          });
+        });
+      }
+    );
   }
 
   ngOnInit(): void {
@@ -41,25 +68,58 @@ export class RegisterEmpresaComponent implements OnInit {
 
   //Comparar contraseñas
   compare_password() {
-    if (this.password1 == this.user.password) {
+    if (this.password1 == this.empresa.password) {
       this.alert_pass = false;
       this.valid = true;
 
-    } else if (this.password1 != this.user.password) {
+    } else if (this.password1 != this.empresa.password) {
       this.alert_pass = true;
       this.valid = false;
     }
+  }
+
+  select_region() {
+    this.provincias = [];
+    this.distritos = [];
+    this.isDisabledProvincia = false;
+    this.isDisabledDistrito = true;
+    this.empresa.provincia = '';
+    this.empresa.distrito = '';
+    this._guestService.obtener_provincias().subscribe(
+      response => {
+        response.forEach((element: { department_id: any; }) => {
+          if (element.department_id == this.empresa.region) {
+            this.provincias.push(element);
+          }
+        });
+      }
+    );
+  }
+
+  select_provincia() {
+    this.distritos = [];
+    this.isDisabledDistrito = false;
+    this.empresa.distrito = '';
+    this._guestService.obtener_distritos().subscribe(
+      response => {
+        response.forEach((element: { province_id: any; }) => {
+          if (element.province_id == this.empresa.provincia) {
+            this.distritos.push(element);
+          }
+        });
+      }
+    );
   }
 
   registrar(registroForm: any) {
     if (registroForm.valid) {
 
       let data = {
-        nombres: this.user.nombres,
-        apellidos: this.user.apellidos,
-        email: this.user.email,
-        telefono: this.user.telefono,
-        password: this.user.password,
+        nombres: this.empresa.nombres,
+        apellidos: this.empresa.apellidos,
+        email: this.empresa.email,
+        telefono: this.empresa.telefono,
+        password: this.empresa.password,
       }
 
       // this._userService.registro_user(data).subscribe(

@@ -12,27 +12,65 @@
                     <div class="col-12 col-sm-6">
                         <label for="nombre" class="form-label text-black-50">Nombre</label>
                         <input type="text" class="form-control" placeholder="Nombre de la empresa" name="nombre"
-                            id="nombre" [(ngModel)]="user.nombre" required />
+                            id="nombre" [(ngModel)]="empresa.nombre" required />
                     </div>
 
                     <div class="col-12 col-sm-6 mt-3 mt-sm-0">
-                        <label for="telefono" class="form-label text-black-50">Teléfono</label>
-                        <input type="text" class="form-control" placeholder="Ingrese su teléfono"
-                            name="telefono" id="telefono" [(ngModel)]="user.telefono" required />
+                        <label for="username" class="form-label text-black-50">Nombre de ususario</label>
+                        <input type="text" class="form-control" placeholder="Ingrese su nombre de ususario"
+                            name="username" id="username" [(ngModel)]="empresa.username" required />
                     </div>
                 </div>
 
                 <div class="row mt-4">
                     <div class="col-12 col-sm-6">
                         <label for="email" class="form-label text-black-50">Correo</label>
-                        <input type="email" class="form-control" placeholder="Ingrese su correo" name="email"
-                            id="email" [(ngModel)]="user.email" required />
+                        <input type="email" class="form-control" placeholder="Ingrese su correo" name="email" id="email"
+                            [(ngModel)]="empresa.email" required />
                     </div>
 
                     <div class="col-12 col-sm-6 mt-3 mt-sm-0">
                         <label for="telefono" class="form-label text-black-50">Teléfono</label>
                         <input type="text" class="form-control" placeholder="Ingrese número" name="telefono"
-                            id="telefono" [(ngModel)]="user.telefono" required maxlength="9" />
+                            id="telefono" [(ngModel)]="empresa.telefono" required maxlength="9" />
+                    </div>
+                </div>
+
+                <div class="row mt-4">
+                    <div class="col-12 col-sm-6">
+                        <label for="region" class="form-label text-black-50">Región</label>
+                        <select id="region" class="form-select" name="region" 
+                            [(ngModel)]="empresa.region" (change)="select_region()" 
+                            required>
+                            <option value="" selected disabled>--Seleccione--</option>
+                            <option value="{{item.id}}" *ngFor="let item of regiones"> {{item.name}} </option>
+                        </select>
+                    </div>
+
+                    <div class="col-12 col-sm-6 mt-3 mt-sm-0">
+                        <label for="provincia" class="form-label text-black-50">Provincia</label>
+                        <select id="provincia" class="form-select" name="provincia" (change)="select_provincia()"
+                            [(ngModel)]="empresa.provincia"
+                            required>
+                            <option value="" selected disabled>--Seleccione--</option>
+                            <option value="{{item.id}}" *ngFor="let item of provincias"> {{item.name}} </option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row mt-4">
+                    <div class="col-12 col-sm-6">
+                        <label for="distrito" class="form-label text-black-50">Distrito</label>
+                        <select id="distrito" class="form-select" name="distrito" [(ngModel)]="empresa.distrito" required>
+                            <option value="" selected disabled>--Seleccione--</option>
+                            <option value="{{item.id}}" *ngFor="let item of distritos"> {{item.name}} </option>
+                        </select>
+                    </div>
+
+                    <div class="col-12 col-sm-6 mt-3 mt-sm-0">
+                        <label for="ubicacion" class="form-label text-black-50">Ubicación</label>
+                        <input type="text" class="form-control" placeholder="Ingrese ubicación de Maps" name="ubicacion"
+                            id="ubicacion" [(ngModel)]="empresa.ubicacion" required maxlength="9" />
                     </div>
                 </div>
 
@@ -41,14 +79,14 @@
                         <label for="password1" class="form-label text-black-50">Contraseña</label>
                         <input [type]="password" class="form-control" placeholder="Contraseña"
                             (keyup)="compare_password()" name="password1" id="password1" [(ngModel)]="password1"
-                            required/>
+                            required />
                     </div>
 
                     <div class="col-12 col-sm-6 mt-3 mt-sm-0">
                         <label for="password" class="form-label text-black-50">Confirmar contraseña</label>
                         <div class="input-group">
                             <input [type]="password" class="form-control" id="password"
-                                placeholder="Confirme su contraseña" name="password" [(ngModel)]="user.password"
+                                placeholder="Confirme su contraseña" name="password" [(ngModel)]="empresa.password"
                                 required (keyup)="compare_password()" />
                             <a class="btn btn-outline-primary" (click)="onClickPass()">
                                 <i class="bi bi-eye-fill" aria-hidden="true" *ngIf="!show"></i>
@@ -72,10 +110,9 @@
 
                 <div class="pt-2 text-center">
                     <small>Al dar click en <strong>Registrar</strong> aceptas nuestras
-                        <strong [routerLink]="['/politica-privacidad']" 
-                        style="cursor: pointer; color: #6F42C1;">
-                        Políticas de privacidad
-                    </strong>
+                        <strong [routerLink]="['/politica-privacidad']" style="cursor: pointer; color: #6F42C1;">
+                            Políticas de privacidad
+                        </strong>
                     </small>
                 </div>
 
@@ -91,10 +128,10 @@
                         Iniciar sesión
                     </a>
                 </p>
-                
+
                 <p class="font-size-sm text-center">
-                    <a class="fw-bold text-decoration-none text-primary" [routerLink]="['/register_empresa']">
-                        Soy una empresa
+                    <a class="fw-bold text-decoration-none text-primary" [routerLink]="['/registro']">
+                        Soy un usuario
                     </a>
                 </p>
             </form>
