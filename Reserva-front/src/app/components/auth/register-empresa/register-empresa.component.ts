@@ -26,7 +26,9 @@ export class RegisterEmpresaComponent implements OnInit {
   public alert_pass = false;
 
   public regiones: Array<any> = [];
+  public namereg ='';
   public provincias: Array<any> = [];
+  public nameprov ='';
   public distritos: Array<any> = [];
 
   public provincias_arr: Array<any> = [];
@@ -94,6 +96,10 @@ export class RegisterEmpresaComponent implements OnInit {
         });
       }
     );
+    const regencontrado = this.regiones.find(objeto => objeto.id === this.empresa.region);
+
+    this.namereg = regencontrado.name;
+    console.log(this.namereg);
   }
 
   select_provincia() {
@@ -109,38 +115,57 @@ export class RegisterEmpresaComponent implements OnInit {
         });
       }
     );
+
+    const provencontrado = this.provincias.find(objeto => objeto.id === this.empresa.provincia);
+
+    this.nameprov = provencontrado.name;
+    console.log(this.nameprov);
+    
+  }
+
+  select_distrito() {
+    console.log(this.empresa);
   }
 
   registrar(registroForm: any) {
     if (registroForm.valid) {
 
+      console.log(this.empresa.email);
+      
+
       let data = {
-        nombres: this.empresa.nombres,
-        apellidos: this.empresa.apellidos,
+        nombre: this.empresa.nombre,
+        user_name: this.empresa.username,
         email: this.empresa.email,
         telefono: this.empresa.telefono,
+        region: this.namereg,
+        provincia: this.nameprov,
+        distrito: this.empresa.distrito,
+        ubicacion: this.empresa.ubicacion,
         password: this.empresa.password,
       }
 
-      // this._userService.registro_user(data).subscribe(
-      //   response => {
-      //     if (response.data == undefined) {
-      //       this._toastrService.error(response.message, 'ERROR');
+      this._userService.registro_empresa(data).subscribe(
+        response => {
+          if (response.data == undefined) {
+            this._toastrService.error(response.message, 'ERROR');
 
-      //     } else if (response.data != undefined) {
-      //       localStorage.setItem('_id', response.data._id);
+          } else if (response.data != undefined) {
+            localStorage.setItem('_id', response.data._id);
 
-      //       this._userService.enviar_correo_confirmacion(response.data._id).subscribe(
-      //         response => {
-      //           if (response.data) {
-      //             this._toastrService.success('Se envió el código de verificación', 'ENVIADO!');
-      //             this._router.navigate(['/verificar']);
-      //           }
-      //         }
-      //       );
-      //     }
-      //   }
-      // );
+            this._toastrService.success('Se registró con éxito', 'REGISTRADO!');
+
+            // this._userService.enviar_correo_confirmacion(response.data._id).subscribe(
+            //   response => {
+            //     if (response.data) {
+            //       this._toastrService.success('Se envió el código de verificación', 'ENVIADO!');
+            //       this._router.navigate(['/verificar']);
+            //     }
+            //   }
+            // );
+          }
+        }
+      );
     } else {
       this._toastrService.error('Los datos del formulario no son válidos', 'ERROR');
     }

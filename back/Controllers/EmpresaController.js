@@ -42,7 +42,7 @@ const registro_empresa = async function (req, res) {
     res
       .status(200)
       .send({
-        message: "El correo ya está registrado por otro usuario",
+        message: "El nombre ya está registrado por otro usuario",
         data: undefined,
       });
   }

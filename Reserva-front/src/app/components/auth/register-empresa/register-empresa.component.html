@@ -61,9 +61,9 @@
                 <div class="row mt-4">
                     <div class="col-12 col-sm-6">
                         <label for="distrito" class="form-label text-black-50">Distrito</label>
-                        <select id="distrito" class="form-select" name="distrito" [(ngModel)]="empresa.distrito" required>
+                        <select id="distrito" class="form-select" name="distrito" [(ngModel)]="empresa.distrito" (change)="select_distrito()" required>
                             <option value="" selected disabled>--Seleccione--</option>
-                            <option value="{{item.id}}" *ngFor="let item of distritos"> {{item.name}} </option>
+                            <option value="{{item.name}}" *ngFor="let item of distritos"> {{item.name}} </option>
                         </select>
                     </div>
 
