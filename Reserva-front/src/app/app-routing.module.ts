@@ -7,6 +7,8 @@ import { ContactosComponent } from './components/main/contactos/contactos.compon
 import { LoginComponent } from './components/auth/login/login.component';
 import { PoliticaPrivComponent } from './components/main/politica-priv/politica-priv.component';
 import { RegisterEmpresaComponent } from './components/auth/register-empresa/register-empresa.component';
+import { VerifyMailComponent } from './components/auth/verify-mail/verify-mail.component';
+import { WaitComponent } from './components/auth/wait/wait.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -15,6 +17,8 @@ const routes: Routes = [
   {path: 'registro', component: RegisterComponent},
   {path: 'nosotros', component: NosotrosComponent},
   {path: 'contacto', component: ContactosComponent},
+  {path: 'verificar', component: VerifyMailComponent},
+  {path: 'wait', component: WaitComponent},
   {path: 'politica-privacidad', component: PoliticaPrivComponent},
 
   {path: '**', redirectTo: ''},

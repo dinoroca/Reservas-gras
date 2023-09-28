@@ -7,6 +7,7 @@ var EmpresaSchema = Schema({
     verificado: {type: Boolean, default: false, required: true},
     token_pass: {type: String, required: false},
     nombre: {type: String, required: true},
+    email: {type: String, required: true},
     user_name: {type: String, required: true},
     telefono: {type: String, required: true},
     region: {type: String, required: false},

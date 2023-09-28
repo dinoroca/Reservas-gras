@@ -8,13 +8,15 @@ import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from 'src/app/app-routing.module';
 import { RouterModule } from '@angular/router';
 import { RegisterEmpresaComponent } from './register-empresa/register-empresa.component';
+import { WaitComponent } from './wait/wait.component';
 
 @NgModule({
   declarations: [
     LoginComponent,
     RegisterComponent,
     VerifyMailComponent,
-    RegisterEmpresaComponent
+    RegisterEmpresaComponent,
+    WaitComponent
   ],
   imports: [
     CommonModule,

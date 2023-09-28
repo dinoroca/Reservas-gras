@@ -154,6 +154,7 @@ export class RegisterEmpresaComponent implements OnInit {
             localStorage.setItem('_id', response.data._id);
 
             this._toastrService.success('Se registró con éxito', 'REGISTRADO!');
+            this._router.navigate(['/wait']);
 
             // this._userService.enviar_correo_confirmacion(response.data._id).subscribe(
             //   response => {
