@@ -48,7 +48,58 @@ const registro_user = async function (req, res) {
   }
 }
 
+const login_user = async function (req, res) {
+  var data = req.body;
+  var users_arr = [];
+
+  //Busca un cliente mediante el correo
+  users_arr = await User.find({ email: data.email });
+
+  if (users_arr.length == 0) {
+    res
+      .status(200)
+      .send({ message: "Correo o contraseña incorrectos", data: undefined });
+  } else {
+    //Si existe el cliente se manda al login
+    let user = users_arr[0];
+
+    //Comparar contraseñas
+    bcrypt.compare(data.password, user.password, async function (error, check) {
+      if (check) {
+        res.status(200).send({
+          data: user,
+          token: jwt.createToken(user),
+        });
+      } else {
+        res
+          .status(200)
+          .send({ message: "Correo o contraseña incorrectos", data: undefined });
+      }
+    });
+  }
+}
+
+const obtener_user = async function (req, res) {
+  if (req.user) {
+
+    var id = req.params['id'];
+
+    try {
+      var reg = await User.findById({ _id: id });
+      res.status(200).send({ data: reg });
+
+    } catch (error) {
+      res.status(200).send({ data: undefined });
+    }
+
+  } else {
+    res.status(500).send({ message: 'NoAccess' });
+  }
+}
+
 
 module.exports = {
-    registro_user
+    registro_user,
+    login_user,
+    obtener_user
 }

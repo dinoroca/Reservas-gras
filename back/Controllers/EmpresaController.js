@@ -15,10 +15,10 @@ const registro_empresa = async function (req, res) {
   var empresas_arr = [];
 
   //Verifica que no exista correo repetido
-  empresas_arr = await Empresa.find({ nombre: data.nombre });
+  empresas_arr = await Empresa.find({ email: data.email });
 
   if (empresas_arr.length == 0) {
-    //Registro del usuario
+    //Registro de empresa
 
     if (data.password) {
       bcrypt.hash(data.password, null, null, async function (err, hash) {
@@ -42,7 +42,7 @@ const registro_empresa = async function (req, res) {
     res
       .status(200)
       .send({
-        message: "El nombre ya está registrado por otro usuario",
+        message: "El correo ya está registrado por otro usuario",
         data: undefined,
       });
   }

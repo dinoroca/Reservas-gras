@@ -9,6 +9,10 @@ import { PoliticaPrivComponent } from './components/main/politica-priv/politica-
 import { RegisterEmpresaComponent } from './components/auth/register-empresa/register-empresa.component';
 import { VerifyMailComponent } from './components/auth/verify-mail/verify-mail.component';
 import { WaitComponent } from './components/auth/wait/wait.component';
+import { ForgotPassComponent } from './components/main/forgot-pass/forgot-pass.component';
+import { AuthUserGuard } from './guards/auth-user.guard';
+import { AuthAdminGuard } from './guards/auth-admin.guard';
+import { AuthGrassGuard } from './guards/auth-grass.guard';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -19,7 +23,29 @@ const routes: Routes = [
   {path: 'contacto', component: ContactosComponent},
   {path: 'verificar', component: VerifyMailComponent},
   {path: 'wait', component: WaitComponent},
+  {path: 'forgot-password', component: ForgotPassComponent},
   {path: 'politica-privacidad', component: PoliticaPrivComponent},
+
+  //Lazy load de modulo de usuario
+  {
+    path: 'usuario',
+    loadChildren: () => import('./components/user/user.module').then(m => m.UserModule),
+    canActivate: [AuthUserGuard]
+  },
+
+  //Lazy load de modulo de ADMIN
+  {
+    path: 'admin',
+    loadChildren: () => import('./components/admin/admin.module').then(m => m.AdminModule),
+    canActivate: [AuthAdminGuard]
+  },
+
+  //Lazy load de modulo de GRASS
+  {
+    path: 'grass',
+    loadChildren: () => import('./components/grass/grass.module').then(m => m.GrassModule),
+    canActivate: [AuthGrassGuard]
+  },
 
   {path: '**', redirectTo: ''},
 ];

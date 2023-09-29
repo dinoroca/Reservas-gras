@@ -1,0 +1,27 @@
+
+<app-header></app-header>
+
+<div class="mt-5">
+    <div class="mt-5 pt-5">
+        <div class="mb-5 container d-flex justify-content-center">
+            <div class="p-4 p-sm-5 col-12 col-sm-6 rounded shadow">
+                <h2 class="text-center text-black-50 fw-bold">Olvidó su contraseña?</h2>
+                <p class="text-center pb-4 text-black-50">
+                    Estimado usuario, ingrese su correo registrado
+                </p>
+                <form #verificarForm="ngForm" (ngSubmit)="verificar(verificarForm)">
+                    <input type="email" class="form-control" placeholder="Ingrese su correo" name="correo"
+                        id="codigo" [(ngModel)]="correo" required />
+
+                    <div class="d-grid gap-2 mt-4">
+                        <button type="submit" class="btn btn-primary" [disabled]="verificarForm.invalid">
+                            Verificar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-footer></app-footer>

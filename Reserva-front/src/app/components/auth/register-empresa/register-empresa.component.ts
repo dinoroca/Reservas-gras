@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-//import { UserService } from '../../../services/user.service';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { ToastrService } from 'ngx-toastr';
@@ -96,6 +95,7 @@ export class RegisterEmpresaComponent implements OnInit {
         });
       }
     );
+    
     const regencontrado = this.regiones.find(objeto => objeto.id === this.empresa.region);
 
     this.namereg = regencontrado.name;
