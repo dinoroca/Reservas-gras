@@ -2,6 +2,7 @@
 /* Ysabeau */
 *{
     font-family: 'Ysabeau';
+    font-size: 1.05rem;
 }
 
 ::selection {
@@ -32,54 +33,54 @@
 
 @font-face {
     font-family: 'Ysabeau';
-    src: url('../src/fonts/YsabeauInfant-Regular.ttf');
-    src: local('../src/fonts/YsabeauInfant-Regular'),
-        url('fonts/YsabeauInfant-Regular.ttf') format('truetype');
+    src: url('../src/fonts/YsabeauOffice-Regular.ttf');
+    src: local('../src/fonts/YsabeauOffice-Regular'),
+        url('fonts/YsabeauOffice-Regular.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'Ysabeau';
-    src: url('../src/fonts/YsabeauInfant-Bold.ttf');
-    src: local('../src/fonts/YsabeauInfant-Bold'),
-        url('fonts/YsabeauInfant-Bold.ttf') format('truetype');
+    src: url('../src/fonts/YsabeauOffice-Bold.ttf');
+    src: local('../src/fonts/YsabeauOffice-Bold'),
+        url('fonts/YsabeauOffice-Bold.ttf') format('truetype');
     font-weight: bold;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'Ysabeau';
-    src: url('../src/fonts/YsabeauInfant-Italic.ttf');
-    src: local('../src/fonts/YsabeauInfant-Italic'),
-        url('fonts/YsabeauInfant-Italic.ttf') format('truetype');
+    src: url('../src/fonts/YsabeauOffice-Italic.ttf');
+    src: local('../src/fonts/YsabeauOffice-Italic'),
+        url('fonts/YsabeauOffice-Italic.ttf') format('truetype');
     font-weight: normal;
     font-style: italic;
 }
 
 @font-face {
     font-family: 'Ysabeau';
-    src: url('../src/fonts/YsabeauInfant-BoldItalic.ttf');
-    src: local('../src/fonts/YsabeauInfant-BoldItalic'),
-        url('fonts/YsabeauInfant-BoldItalic.ttf') format('truetype');
+    src: url('../src/fonts/YsabeauOffice-BoldItalic.ttf');
+    src: local('../src/fonts/YsabeauOffice-BoldItalic'),
+        url('fonts/YsabeauOffice-BoldItalic.ttf') format('truetype');
     font-weight: bold;
     font-style: italic;
 }
 
 @font-face {
     font-family: 'Ysabeau';
-    src: url('../src/fonts/YsabeauInfant-LightItalic.ttf');
-    src: local('../src/fonts/YsabeauInfant-LightItalic'),
-        url('fonts/YsabeauInfant-LightItalic.ttf') format('truetype');
+    src: url('../src/fonts/YsabeauOffice-ExtraLightItalic.ttf');
+    src: local('../src/fonts/YsabeauOffice-ExtraLightItalic'),
+        url('fonts/YsabeauOffice-ExtraLightItalic.ttf') format('truetype');
     font-weight: 300;
     font-style: italic;
 }
 
 @font-face {
     font-family: 'Ysabeau';
-    src: url('../src/fonts/YsabeauInfant-Light.ttf');
-    src: local('../src/fonts/YsabeauInfant-Light'),
-        url('fonts/YsabeauInfant-Light.ttf') format('truetype');
+    src: url('../src/fonts/YsabeauOffice-ExtraLight.ttf');
+    src: local('../src/fonts/YsabeauOffice-ExtraLight'),
+        url('fonts/YsabeauOffice-ExtraLight.ttf') format('truetype');
     font-weight: 300;
     font-style: normal;
 }
