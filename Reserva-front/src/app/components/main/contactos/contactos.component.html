@@ -1,5 +1,94 @@
 <app-header></app-header>
 
-<p>contactos works!</p>
+<div
+    style="background-image: url('../../../../assets/img/svg/wave.svg'); background-position: top; background-repeat: no-repeat;">
+
+    <div class="container py-5">
+        <div class="card mb-3 mt-5"
+            style="max-width: 100%; box-shadow: 0.1rem 0.5rem 0.9rem rgba(0, 0, 0, 0.5); border: none;">
+            <div class="row g-0">
+                <div class="col-md-4 text-center d-flex flex-column justify-content-center px-2"
+                    style="background-color: rgb(16, 63, 109); color: white;">
+                    <p class="lead mt-4">Si tiene alguna pregunta, inquietud o comentario,
+                        ¡nos encantaría saber de usted! <br> <em>Envíe su consulta usando cualquiera de los siguientes
+                            métodos</em>:
+                    </p>
+
+                    <div class="my-3">
+                        <a href="tel:919000000" class="nav-link mt-2 mb-2 ">
+                            <i class="bi bi-telephone-forward icon-contact"></i> &nbsp;
+                            <span>(+51) 919 000 000</span>
+                        </a>
+                        <a href="https://wa.me/919000000" class="nav-link mt-2 mb-2" target="_blank">
+                            <i class="bi bi-whatsapp icon-contact"></i> &nbsp;
+                            <span>(+51) 919 000 000</span>
+                        </a>
+                        <a href="mailto:reservatugrass@gmail.com" class="nav-link mt-2 mb-2">
+                            <i class="bi bi-envelope icon-contact"></i> &nbsp;
+                            <span>reservaTuGrass@gmail.com</span>
+                        </a>
+                        <a href="https://www.facebook.com/profile.php?id=100092778871387" target="_blank"
+                            class="nav-link mt-2 mb-2">
+                            <i class="bi bi-messenger icon-contact"></i> &nbsp;
+                            <span>Contáctanos por Messenger</span>
+                        </a>
+                    </div>
+                </div>
+
+
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <p class="lead">
+                            También puede ponerse en contacto con nosotros completando el siguiente formulario:</p>
+                        <form #registroForm="ngForm">
+                            <div class="row">
+                                <div class="col-sm-6 form-group py-2">
+                                    <label for="cont-name" class="form-label">Nombres y apellidos *</label>
+                                    <input type="text" id="cont-name" class="form-control" placeholder="John Doe"
+                                        required name="cliente">
+                                </div>
+                                <div class="col-sm-6 form-group py-2">
+                                    <label for="cont-email" class="form-label">Correo *</label>
+                                    <input type="email" id="cont-email" class="form-control"
+                                        placeholder="johndoe@example.com" required name="correo">
+                                </div>
+                                <div class="col-sm-6 form-group py-2">
+                                    <label for="cont-phone" class="form-label">Teléfono *</label>
+                                    <input type="text" id="cont-phone" class="form-control bg-0"
+                                        placeholder="000-000-000" maxlength="9" required name="telefono">
+                                </div>
+                                <div class="col-sm-6 form-group py-2">
+                                    <label for="cont-subject" class="form-label">Asunto *</label>
+                                    <input type="text" id="cont-subject" class="form-control bg-0"
+                                        placeholder="Título del mensaje" required name="asunto">
+                                </div>
+                                <div class="col-12 form-group py-2">
+                                    <label for="cont-message" class="form-label">Mensaje *</label>
+                                    <textarea id="cont-message" class="form-control" rows="5"
+                                        placeholder="Escribe tu consulta" required name="mensaje"></textarea>
+                                </div>
+
+                                <div class="d-grid gap-2 mt-3">
+                                    <button type="submit" class="btn btn-primary" [disabled]="registroForm.invalid">
+                                        <i class="cxi-send"></i>
+                                        Enviar
+                                    </button>
+
+                                    <!-- Button with growing spinner and text -->
+                                    <button type="button" class="btn btn-secondary" *ngIf="">
+                                        <span class="spinner-grow spinner-grow-sm me-2" role="status" aria-hidden="true"
+                                            disabled></span>
+                                        Enviando...
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <app-footer></app-footer>
