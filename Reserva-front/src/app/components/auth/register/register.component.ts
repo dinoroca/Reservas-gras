@@ -54,7 +54,6 @@ export class RegisterComponent implements OnInit {
 
       let data = {
         nombres: this.user.nombres,
-        apellidos: this.user.apellidos,
         email: this.user.email,
         telefono: this.user.telefono,
         password: this.user.password,
