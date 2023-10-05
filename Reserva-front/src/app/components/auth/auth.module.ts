@@ -9,6 +9,7 @@ import { AppRoutingModule } from 'src/app/app-routing.module';
 import { RouterModule } from '@angular/router';
 import { RegisterEmpresaComponent } from './register-empresa/register-empresa.component';
 import { WaitComponent } from './wait/wait.component';
+import { SideMenuRegisterComponent } from './side-menu-register/side-menu-register.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { WaitComponent } from './wait/wait.component';
     RegisterComponent,
     VerifyMailComponent,
     RegisterEmpresaComponent,
-    WaitComponent
+    WaitComponent,
+    SideMenuRegisterComponent
   ],
   imports: [
     CommonModule,

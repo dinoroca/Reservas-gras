@@ -2,9 +2,12 @@
 
 <div class="container-fluid" style="padding-top: 10vh">
     <div class="mb-5 container d-flex justify-content-center">
-        <div class="p-4 p-sm-5 col-12 col-sm-8 rounded shadow">
+        <div class="p-3 p-sm-4 col-12 col-sm-8 rounded shadow">
+
+            <app-side-menu-register></app-side-menu-register>
+
             <h2 class="text-center text-black-50 fw-bold">Regístrate Empresa!</h2>
-            <p class="text-center pb-4 text-black-50">
+            <p class="text-center pb-2 text-black-50">
                 Cree una cuenta para ofrecer tus canchas al público.<br>
             </p>
             <form #registroForm="ngForm" (ngSubmit)="registrar(registroForm)">
@@ -118,7 +121,7 @@
 
                 <div class="d-grid gap-2 mt-4">
                     <button type="submit" class="btn btn-primary" [disabled]="registroForm.invalid">
-                        <i class="bi bi-person-check"></i> &nbsp; Registrar
+                        <i class="bi bi-plus-circle"></i> &nbsp; Registrar
                     </button>
                 </div>
 
@@ -126,12 +129,6 @@
                     Ya tienes cuenta?
                     <a class="fw-bold text-decoration-none text-success" [routerLink]="['/login']">
                         Iniciar sesión
-                    </a>
-                </p>
-
-                <p class="font-size-sm text-center">
-                    <a class="fw-bold text-decoration-none text-primary" [routerLink]="['/registro']">
-                        Soy un usuario
                     </a>
                 </p>
             </form>

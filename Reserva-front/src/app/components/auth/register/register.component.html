@@ -2,15 +2,18 @@
 
 <div class="container-fluid" style="padding-top: 10vh">
     <div class="mb-5 container d-flex justify-content-center">
-        <div class="p-4 p-sm-5 col-12 col-sm-8 rounded shadow">
+        <div class="p-3 p-sm-4 col-12 col-sm-8 rounded shadow">
+            
+            <app-side-menu-register></app-side-menu-register>
+
             <h2 class="text-center text-black-50 fw-bold">Regístrate!</h2>
-            <p class="text-center pb-4 text-black-50">
+            <p class="text-center pb-2 text-black-50">
                 Cree una cuenta para disfrutar de las funciones de nuestro sistema y empezar a reservar tus canchas.<br>
             </p>
             <form #registroForm="ngForm" (ngSubmit)="registrar(registroForm)">
                 <div class="row">
                     <div class="col-12">
-                        <label for="nombres" class="form-label text-black-50">Nombres</label>
+                        <label for="nombres" class="form-label">Nombres</label>
                         <input type="text" class="form-control" placeholder="Ingrese sus nombres" name="nombres"
                             id="nombres" [(ngModel)]="user.nombres" required />
                     </div>
@@ -18,13 +21,13 @@
 
                 <div class="row mt-4">
                     <div class="col-12 col-sm-6">
-                        <label for="email" class="form-label text-black-50">Correo</label>
+                        <label for="email" class="form-label">Correo</label>
                         <input type="email" class="form-control" placeholder="Ingrese su correo" name="email"
                             id="email" [(ngModel)]="user.email" required />
                     </div>
 
                     <div class="col-12 col-sm-6 mt-3 mt-sm-0">
-                        <label for="telefono" class="form-label text-black-50">Teléfono</label>
+                        <label for="telefono" class="form-label">Teléfono</label>
                         <input type="text" class="form-control" placeholder="Ingrese número" name="telefono"
                             id="telefono" [(ngModel)]="user.telefono" required maxlength="9" />
                     </div>
@@ -32,14 +35,14 @@
 
                 <div class="row mt-4">
                     <div class="col-12 col-sm-6">
-                        <label for="password1" class="form-label text-black-50">Contraseña</label>
+                        <label for="password1" class="form-label">Contraseña</label>
                         <input [type]="password" class="form-control" placeholder="Contraseña"
                             (keyup)="compare_password()" name="password1" id="password1" [(ngModel)]="password1"
                             required/>
                     </div>
 
                     <div class="col-12 col-sm-6 mt-3 mt-sm-0">
-                        <label for="password" class="form-label text-black-50">Confirmar contraseña</label>
+                        <label for="password" class="form-label">Confirmar contraseña</label>
                         <div class="input-group">
                             <input [type]="password" class="form-control" id="password"
                                 placeholder="Confirme su contraseña" name="password" [(ngModel)]="user.password"
@@ -83,12 +86,6 @@
                     Ya tienes cuenta?
                     <a class="fw-bold text-decoration-none text-success" [routerLink]="['/login']">
                         Iniciar sesión
-                    </a>
-                </p>
-                
-                <p class="font-size-sm text-center">
-                    <a class="fw-bold text-decoration-none text-primary" [routerLink]="['/register_empresa']">
-                        Soy una empresa
                     </a>
                 </p>
             </form>
