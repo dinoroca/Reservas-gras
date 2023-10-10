@@ -6,5 +6,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./footer.component.css']
 })
 export class FooterComponent {
+  public user_lc: any = {};
 
+  constructor(
+  ) {
+    this.user_lc = JSON.parse(localStorage.getItem('user_data')!);
+  }
 }

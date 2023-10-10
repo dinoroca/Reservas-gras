@@ -123,10 +123,6 @@ export class RegisterEmpresaComponent implements OnInit {
     
   }
 
-  select_distrito() {
-    console.log(this.empresa);
-  }
-
   registrar(registroForm: any) {
     if (registroForm.valid) {
 
