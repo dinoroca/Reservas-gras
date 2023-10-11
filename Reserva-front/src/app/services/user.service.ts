@@ -39,6 +39,16 @@ export class UserService {
     return this._http.post(this.url + 'registro_empresa', data, { headers: headers });
   }
 
+  listar_empresas_filtro(filtro: any): Observable<any> {
+    return this._http.get(this.url + 'listar_empresas_filtro/' + filtro);
+  }
+
+  //MENSAJES
+  enviar_mensaje_contacto(data: any): Observable<any> {
+    let headers = new HttpHeaders().set('Content-Type', 'application/json');
+    return this._http.post(this.url + 'enviar_mensaje_contacto', data, { headers: headers });
+  }
+
 
   public isAutenticatedUser(): Boolean {
 

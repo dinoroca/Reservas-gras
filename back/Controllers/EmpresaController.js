@@ -48,7 +48,20 @@ const registro_empresa = async function (req, res) {
   }
 }
 
+const listar_empresas_filtro = async function (req, res) {
+
+  let filtro = req.params['filtro'];
+
+      let reg = await Empresa.find({ nombre: new RegExp(filtro, 'i') }).sort({ createdAt: -1 });
+      if (reg.length > 0) {
+        res.status(200).send({ data: reg });
+    } else {
+        res.status(200).send({ data: undefined });
+    }
+}
+
 
 module.exports = {
-    registro_empresa
+    registro_empresa,
+    listar_empresas_filtro
 }

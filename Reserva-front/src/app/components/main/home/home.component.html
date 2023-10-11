@@ -7,21 +7,25 @@
             <p>Decubre, reserva y disfruta del juego en su máxima epresión con <strong>ReservaTuGrass.com</strong></p>
         </div>
 
-        <h2>Buscar  grass</h2>
+        <h2>Buscar grass</h2>
 
         <div class="px-2 px-sm-5">
             <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="Buscar por Nombres" aria-label="Recipient's username" aria-describedby="button-addon2">
-                <button class="btn btn-outline-info" type="button" id="button-addon2"><i class="bi bi-search"></i></button>
-              </div>
+                <input type="text" class="form-control" placeholder="Buscar por Nombres"
+                    aria-label="buscar" aria-describedby="button-addon2" name="busqueda" 
+                    [(ngModel)]="busqueda" (keyup)="buscarName()">
+                <button class="btn btn-outline-info" type="button" id="button-addon2"><i
+                        class="bi bi-search"></i></button>
+            </div>
         </div>
+
+        <p class="fs-4 fw-light">Buscar por ubicación</p>
 
         <div class="row mt-4 px-2 px-sm-5">
             <div class="col-12 col-sm-4">
                 <label for="region" class="form-label text-black-50">Región</label>
-                <select id="region" class="form-select" name="region" 
-                    [(ngModel)]="empresa.region" (change)="select_region()" 
-                    required>
+                <select id="region" class="form-select" name="region" [(ngModel)]="empresa.region"
+                    (change)="select_region()" required>
                     <option value="" selected disabled>--Seleccione--</option>
                     <option value="{{item.id}}" *ngFor="let item of regiones"> {{item.name}} </option>
                 </select>
@@ -30,8 +34,7 @@
             <div class="col-12 col-sm-4 mt-3 mt-sm-0">
                 <label for="provincia" class="form-label text-black-50">Provincia</label>
                 <select id="provincia" class="form-select" name="provincia" (change)="select_provincia()"
-                    [(ngModel)]="empresa.provincia"
-                    required>
+                    [(ngModel)]="empresa.provincia" required>
                     <option value="" selected disabled>--Seleccione--</option>
                     <option value="{{item.id}}" *ngFor="let item of provincias"> {{item.name}} </option>
                 </select>
@@ -56,10 +59,12 @@
 
         <div class="col-12 pb-5 pt-2 col-sm-4">
             <div class="card shadow">
-                <img src="https://static.wixstatic.com/media/a74d9b_f677ff68338f43cf87e470b0312b7cea~mv2.jpg/v1/fill/w_1000,h_563,al_c,q_85,usm_0.66_1.00_0.01/a74d9b_f677ff68338f43cf87e470b0312b7cea~mv2.jpg" class="card-img-top" alt="...">
+                <img src="https://static.wixstatic.com/media/a74d9b_f677ff68338f43cf87e470b0312b7cea~mv2.jpg/v1/fill/w_1000,h_563,al_c,q_85,usm_0.66_1.00_0.01/a74d9b_f677ff68338f43cf87e470b0312b7cea~mv2.jpg"
+                    class="card-img-top" alt="...">
                 <div class="card-body">
-                    <h4 class="card-title fw-bold text-center" >Card title</h4>
-                    <p class="card-text fw-light">Some quick example text to build on the card title and make up the bulk of the card's
+                    <h4 class="card-title fw-bold text-center">Card title</h4>
+                    <p class="card-text fw-light">Some quick example text to build on the card title and make up the
+                        bulk of the card's
                         content.
                     </p>
 
@@ -85,10 +90,12 @@
 
         <div class="col-12 pb-5 pt-2 col-sm-4">
             <div class="card shadow">
-                <img src="https://static.wixstatic.com/media/a74d9b_f677ff68338f43cf87e470b0312b7cea~mv2.jpg/v1/fill/w_1000,h_563,al_c,q_85,usm_0.66_1.00_0.01/a74d9b_f677ff68338f43cf87e470b0312b7cea~mv2.jpg" class="card-img-top" alt="...">
+                <img src="https://static.wixstatic.com/media/a74d9b_f677ff68338f43cf87e470b0312b7cea~mv2.jpg/v1/fill/w_1000,h_563,al_c,q_85,usm_0.66_1.00_0.01/a74d9b_f677ff68338f43cf87e470b0312b7cea~mv2.jpg"
+                    class="card-img-top" alt="...">
                 <div class="card-body">
-                    <h4 class="card-title fw-bold text-center" >Card title</h4>
-                    <p class="card-text fw-light">Some quick example text to build on the card title and make up the bulk of the card's
+                    <h4 class="card-title fw-bold text-center">Card title</h4>
+                    <p class="card-text fw-light">Some quick example text to build on the card title and make up the
+                        bulk of the card's
                         content.
                     </p>
 
@@ -114,10 +121,12 @@
 
         <div class="col-12 pb-5 pt-2 col-sm-4">
             <div class="card shadow">
-                <img src="https://static.wixstatic.com/media/a74d9b_f677ff68338f43cf87e470b0312b7cea~mv2.jpg/v1/fill/w_1000,h_563,al_c,q_85,usm_0.66_1.00_0.01/a74d9b_f677ff68338f43cf87e470b0312b7cea~mv2.jpg" class="card-img-top" alt="...">
+                <img src="https://static.wixstatic.com/media/a74d9b_f677ff68338f43cf87e470b0312b7cea~mv2.jpg/v1/fill/w_1000,h_563,al_c,q_85,usm_0.66_1.00_0.01/a74d9b_f677ff68338f43cf87e470b0312b7cea~mv2.jpg"
+                    class="card-img-top" alt="...">
                 <div class="card-body">
-                    <h4 class="card-title fw-bold text-center" >Card title</h4>
-                    <p class="card-text fw-light">Some quick example text to build on the card title and make up the bulk of the card's
+                    <h4 class="card-title fw-bold text-center">Card title</h4>
+                    <p class="card-text fw-light">Some quick example text to build on the card title and make up the
+                        bulk of the card's
                         content.
                     </p>
 
@@ -143,10 +152,12 @@
 
         <div class="col-12 pb-5 pt-2 col-sm-4">
             <div class="card shadow">
-                <img src="https://static.wixstatic.com/media/a74d9b_f677ff68338f43cf87e470b0312b7cea~mv2.jpg/v1/fill/w_1000,h_563,al_c,q_85,usm_0.66_1.00_0.01/a74d9b_f677ff68338f43cf87e470b0312b7cea~mv2.jpg" class="card-img-top" alt="...">
+                <img src="https://static.wixstatic.com/media/a74d9b_f677ff68338f43cf87e470b0312b7cea~mv2.jpg/v1/fill/w_1000,h_563,al_c,q_85,usm_0.66_1.00_0.01/a74d9b_f677ff68338f43cf87e470b0312b7cea~mv2.jpg"
+                    class="card-img-top" alt="...">
                 <div class="card-body">
-                    <h4 class="card-title fw-bold text-center" >Card title</h4>
-                    <p class="card-text fw-light">Some quick example text to build on the card title and make up the bulk of the card's
+                    <h4 class="card-title fw-bold text-center">Card title</h4>
+                    <p class="card-text fw-light">Some quick example text to build on the card title and make up the
+                        bulk of the card's
                         content.
                     </p>
 
@@ -172,10 +183,12 @@
 
         <div class="col-12 pb-5 pt-2 col-sm-4">
             <div class="card shadow">
-                <img src="https://static.wixstatic.com/media/a74d9b_f677ff68338f43cf87e470b0312b7cea~mv2.jpg/v1/fill/w_1000,h_563,al_c,q_85,usm_0.66_1.00_0.01/a74d9b_f677ff68338f43cf87e470b0312b7cea~mv2.jpg" class="card-img-top" alt="...">
+                <img src="https://static.wixstatic.com/media/a74d9b_f677ff68338f43cf87e470b0312b7cea~mv2.jpg/v1/fill/w_1000,h_563,al_c,q_85,usm_0.66_1.00_0.01/a74d9b_f677ff68338f43cf87e470b0312b7cea~mv2.jpg"
+                    class="card-img-top" alt="...">
                 <div class="card-body">
-                    <h4 class="card-title fw-bold text-center" >Card title</h4>
-                    <p class="card-text fw-light">Some quick example text to build on the card title and make up the bulk of the card's
+                    <h4 class="card-title fw-bold text-center">Card title</h4>
+                    <p class="card-text fw-light">Some quick example text to build on the card title and make up the
+                        bulk of the card's
                         content.
                     </p>
 
@@ -201,10 +214,12 @@
 
         <div class="col-12 pb-5 pt-2 col-sm-4">
             <div class="card shadow">
-                <img src="https://static.wixstatic.com/media/a74d9b_f677ff68338f43cf87e470b0312b7cea~mv2.jpg/v1/fill/w_1000,h_563,al_c,q_85,usm_0.66_1.00_0.01/a74d9b_f677ff68338f43cf87e470b0312b7cea~mv2.jpg" class="card-img-top" alt="...">
+                <img src="https://static.wixstatic.com/media/a74d9b_f677ff68338f43cf87e470b0312b7cea~mv2.jpg/v1/fill/w_1000,h_563,al_c,q_85,usm_0.66_1.00_0.01/a74d9b_f677ff68338f43cf87e470b0312b7cea~mv2.jpg"
+                    class="card-img-top" alt="...">
                 <div class="card-body">
-                    <h4 class="card-title fw-bold text-center" >Card title</h4>
-                    <p class="card-text fw-light">Some quick example text to build on the card title and make up the bulk of the card's
+                    <h4 class="card-title fw-bold text-center">Card title</h4>
+                    <p class="card-text fw-light">Some quick example text to build on the card title and make up the
+                        bulk of the card's
                         content.
                     </p>
 
@@ -227,7 +242,47 @@
                 </div>
             </div>
         </div>
-        
+
+        <h3 class="text-center">Comentarios</h3>
+        <div class="d-flex justify-content-center pb-3">
+            <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel" [ngStyle]="{'width': screenWidth < screenHeight ? '90vw' : '70vw' }">
+              <div class="carousel-inner">
+                <div class="" *ngFor="let item of reviewsDestacados; let indice = index">
+                  <div class="carousel-item" [ngClass]="{'active': indice == 0}" data-bs-interval="3000">
+                    <img src="{{imagen_fondo}}" class="w-100 rounded" alt="...">
+                    <div class="carousel-caption">
+                      <h4 class="text-black-50"> {{item.user.nombres}} {{item.user.apellidos}} </h4>
+                      <p class="text-black" [innerHTML]="item.comentario"></p>
+      
+                      <h6>
+                        <i class="bi bi-star-fill" [ngClass]="{'text-warning': item.estrellas >= 1}"></i>
+                        <i class="bi bi-star-fill" [ngClass]="{'text-warning': item.estrellas >= 2}"></i>
+                        <i class="bi bi-star-fill" [ngClass]="{'text-warning': item.estrellas >= 3}"></i>
+                        <i class="bi bi-star-fill" [ngClass]="{'text-warning': item.estrellas >= 4}"></i>
+                        <i class="bi bi-star-fill" [ngClass]="{'text-warning': item.estrellas >= 5}"></i>
+                      </h6>
+      
+                      <div class="text-black-50">
+                        <i class="bi bi-calendar-event"></i> &nbsp; {{item.createdAt | date}}
+                      </div>
+      
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <button class="carousel-control-prev fs-6" type="button" data-bs-target="#carouselExampleInterval"
+                data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"
+                  style="background-color: rgb(148, 148, 148);"></span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval"
+                data-bs-slide="next">
+                <span class="carousel-control-next-icon" style="background-color: rgb(148, 148, 148);"
+                  aria-hidden="true"></span>
+              </button>
+            </div>
+          </div>
+
     </div>
 </div>
 

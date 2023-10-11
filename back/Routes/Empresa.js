@@ -9,6 +9,10 @@ var auth = require('../Middlewares/authenticate');
 api.post('/registro_empresa', EmpresaController.registro_empresa);
 
 
+//Buscar empresa
+api.get('/listar_empresas_filtro/:filtro?', EmpresaController.listar_empresas_filtro);
+
+
 
 //Exportar los módulos
 module.exports = api;
