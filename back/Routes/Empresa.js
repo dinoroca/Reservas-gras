@@ -11,6 +11,9 @@ api.post('/registro_empresa', EmpresaController.registro_empresa);
 
 //Buscar empresa
 api.get('/listar_empresas_filtro/:filtro?', EmpresaController.listar_empresas_filtro);
+api.get('/listar_empresas_region/:region?', EmpresaController.listar_empresas_region);
+api.get('/listar_empresas_prov/:region?/:provincia?', EmpresaController.listar_empresas_prov);
+api.get('/listar_empresas_dist/:region?/:provincia?/:distrito?', EmpresaController.listar_empresas_dist);
 
 
 

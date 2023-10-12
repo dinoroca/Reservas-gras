@@ -12,7 +12,7 @@ import { UserService } from 'src/app/services/user.service';
 export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
-    
+
   }
 
   public empresa: any = {
@@ -22,9 +22,9 @@ export class HomeComponent implements OnInit {
   };
 
   public regiones: Array<any> = [];
-  public namereg ='';
+  public namereg = '';
   public provincias: Array<any> = [];
-  public nameprov ='';
+  public nameprov = '';
   public distritos: Array<any> = [];
 
   public provincias_arr: Array<any> = [];
@@ -32,9 +32,17 @@ export class HomeComponent implements OnInit {
 
   public empresas: Array<any> = [];
   public busqueda = '';
+  public load_search = false;
   public load_data = true;
   public show_alert_void = false;
   public show_card_empresas = false;
+
+  public empresas_ubication: Array<any> = [];
+  public busqueda_ubication = '';
+  public load_search_ubication = false;
+  public load_data_ubication = true;
+  public show_alert_void_ubication = false;
+  public show_card_empresas_ubication = false;
 
   isDisabledProvincia = true;
   isDisabledDistrito = true;
@@ -53,7 +61,7 @@ export class HomeComponent implements OnInit {
     this.screenHeight = window.innerHeight;
   }
 
-  constructor (
+  constructor(
     private _router: Router,
     private _title: Title,
     private _guestService: GuestService,
@@ -85,22 +93,29 @@ export class HomeComponent implements OnInit {
 
   init_data() {
     this.show_card_empresas = false;
+    this.show_alert_void = false;
   }
 
   buscarName() {
     if (this.busqueda) {
       this.show_alert_void = false;
-      this.show_card_empresas = false;
+      this.load_search = true;
+      this.show_card_empresas = true;
       this._userService.listar_empresas_filtro(this.busqueda).subscribe(
         response => {
-          this.empresas = response.data;
-          console.log(this.empresas);
-          
-          this.load_data = false;
 
-          if (this.empresas.length == 0) {
+          if (response.data != undefined) {
+            this.empresas = response.data;
+        
+
+            this.load_data = false;
+
+          } else {
             this.show_alert_void = true;
+            this.show_card_empresas = false;
           }
+
+          this.load_search = false;
         },
       );
     }
@@ -115,7 +130,11 @@ export class HomeComponent implements OnInit {
     this.isDisabledProvincia = false;
     this.isDisabledDistrito = true;
     this.empresa.provincia = '';
+    this.nameprov = '';
     this.empresa.distrito = '';
+    this.load_search_ubication = true;
+    this.busqueda = '';
+    this.init_data();
     this._guestService.obtener_provincias().subscribe(
       response => {
         response.forEach((element: { department_id: any; }) => {
@@ -125,11 +144,28 @@ export class HomeComponent implements OnInit {
         });
       }
     );
-    
+
     const regencontrado = this.regiones.find(objeto => objeto.id === this.empresa.region);
 
     this.namereg = regencontrado.name;
-    console.log(this.namereg);
+
+    this._userService.listar_empresas_region(this.namereg).subscribe(
+      response => {
+
+        if (response.data != undefined) {
+          this.empresas_ubication = response.data;
+          this.show_card_empresas_ubication =  true;
+          this.load_data_ubication = false;
+          this.show_alert_void_ubication = false;
+
+        } else {
+          this.show_alert_void_ubication = true;
+          this.show_card_empresas_ubication = false;
+        }
+
+        this.load_search_ubication = false;
+      },
+    );
   }
 
   select_provincia() {
@@ -149,8 +185,45 @@ export class HomeComponent implements OnInit {
     const provencontrado = this.provincias.find(objeto => objeto.id === this.empresa.provincia);
 
     this.nameprov = provencontrado.name;
-    console.log(this.nameprov);
-    
+
+    this._userService.listar_empresas_prov(this.namereg, this.nameprov).subscribe(
+      response => {
+
+        if (response.data != undefined) {
+          this.empresas_ubication = response.data;
+          this.show_card_empresas_ubication =  true;
+          this.load_data_ubication = false;
+          this.show_alert_void_ubication = false;
+
+        } else {
+          this.show_alert_void_ubication = true;
+          this.show_card_empresas_ubication = false;
+        }
+
+        this.load_search_ubication = false;
+      },
+    );
+
+  }
+
+  select_distrito() {
+    this._userService.listar_empresas_dist(this.namereg, this.nameprov, this.empresa.distrito).subscribe(
+      response => {
+
+        if (response.data != undefined) {
+          this.empresas_ubication = response.data;
+          this.show_card_empresas_ubication =  true;
+          this.load_data_ubication = false;
+          this.show_alert_void_ubication = false;
+
+        } else {
+          this.show_alert_void_ubication = true;
+          this.show_card_empresas_ubication = false;
+        }
+
+        this.load_search_ubication = false;
+      },
+    );
   }
 
 }

@@ -43,6 +43,18 @@ export class UserService {
     return this._http.get(this.url + 'listar_empresas_filtro/' + filtro);
   }
 
+  listar_empresas_region(region: any): Observable<any> {
+    return this._http.get(this.url + 'listar_empresas_region/' + region);
+  }
+
+  listar_empresas_prov(region: any, provincia: any): Observable<any> {
+    return this._http.get(this.url + 'listar_empresas_prov/' + region + '/' + provincia);
+  }
+
+  listar_empresas_dist(region: any, provincia: any, distrito: any): Observable<any> {
+    return this._http.get(this.url + 'listar_empresas_dist/' + region + '/' + provincia +  '/' + distrito);
+  }
+
   //MENSAJES
   enviar_mensaje_contacto(data: any): Observable<any> {
     let headers = new HttpHeaders().set('Content-Type', 'application/json');

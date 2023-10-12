@@ -52,7 +52,55 @@ const listar_empresas_filtro = async function (req, res) {
 
   let filtro = req.params['filtro'];
 
-      let reg = await Empresa.find({ nombre: new RegExp(filtro, 'i') }).sort({ createdAt: -1 });
+      let reg = await Empresa.find({ nombre: new RegExp(filtro, 'i') }).sort({ createdAt: -1 }).limit(10);
+      if (reg.length > 0) {
+        res.status(200).send({ data: reg });
+    } else {
+        res.status(200).send({ data: undefined });
+    }
+}
+
+const listar_empresas_region = async function (req, res) {
+
+  let region = req.params['region'];
+
+      let reg = await Empresa.find({ region: new RegExp(region, 'i') }).sort({ createdAt: -1 }).limit(20);
+      if (reg.length > 0) {
+        res.status(200).send({ data: reg });
+    } else {
+        res.status(200).send({ data: undefined });
+    }
+}
+
+const listar_empresas_prov = async function (req, res) {
+
+  let region = req.params['region'];
+  let provincia = req.params['provincia'];
+
+      let reg = await Empresa.find({ $and: [
+        { provincia: provincia },
+        { region:region }
+      ] }).sort({ createdAt: -1 }).limit(20);
+
+      if (reg.length > 0) {
+        res.status(200).send({ data: reg });
+    } else {
+        res.status(200).send({ data: undefined });
+    }
+}
+
+const listar_empresas_dist = async function (req, res) {
+
+  let region = req.params['region'];
+  let provincia = req.params['provincia'];
+  let distrito = req.params['distrito'];
+
+      let reg = await Empresa.find({ $and: [
+        { provincia: provincia },
+        { region:region },
+        { distrito:distrito }
+      ] }).sort({ createdAt: -1 }).limit(20);
+
       if (reg.length > 0) {
         res.status(200).send({ data: reg });
     } else {
@@ -63,5 +111,8 @@ const listar_empresas_filtro = async function (req, res) {
 
 module.exports = {
     registro_empresa,
-    listar_empresas_filtro
+    listar_empresas_filtro,
+    listar_empresas_region,
+    listar_empresas_prov,
+    listar_empresas_dist
 }
