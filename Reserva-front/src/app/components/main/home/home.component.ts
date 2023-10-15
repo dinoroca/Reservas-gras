@@ -101,6 +101,8 @@ export class HomeComponent implements OnInit {
       this.show_alert_void = false;
       this.load_search = true;
       this.show_card_empresas = true;
+      this.show_card_empresas_ubication = false;
+      this.show_alert_void_ubication = false;
       this._userService.listar_empresas_filtro(this.busqueda).subscribe(
         response => {
 
