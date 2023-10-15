@@ -11,6 +11,11 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class HomeComponent implements OnInit {
 
+
+  //------------- se aumento
+  public searchOption: string = 'name';
+  //-----------
+
   ngOnInit(): void {
 
   }
@@ -108,7 +113,7 @@ export class HomeComponent implements OnInit {
 
           if (response.data != undefined) {
             this.empresas = response.data;
-        
+
 
             this.load_data = false;
 
@@ -156,7 +161,7 @@ export class HomeComponent implements OnInit {
 
         if (response.data != undefined) {
           this.empresas_ubication = response.data;
-          this.show_card_empresas_ubication =  true;
+          this.show_card_empresas_ubication = true;
           this.load_data_ubication = false;
           this.show_alert_void_ubication = false;
 
@@ -193,7 +198,7 @@ export class HomeComponent implements OnInit {
 
         if (response.data != undefined) {
           this.empresas_ubication = response.data;
-          this.show_card_empresas_ubication =  true;
+          this.show_card_empresas_ubication = true;
           this.load_data_ubication = false;
           this.show_alert_void_ubication = false;
 
@@ -214,7 +219,7 @@ export class HomeComponent implements OnInit {
 
         if (response.data != undefined) {
           this.empresas_ubication = response.data;
-          this.show_card_empresas_ubication =  true;
+          this.show_card_empresas_ubication = true;
           this.load_data_ubication = false;
           this.show_alert_void_ubication = false;
 
@@ -228,4 +233,11 @@ export class HomeComponent implements OnInit {
     );
   }
 
+  //------------se aumento
+  changeSearchOption(option: string) {
+    this.searchOption = option;
+  }
+
 }
+
+

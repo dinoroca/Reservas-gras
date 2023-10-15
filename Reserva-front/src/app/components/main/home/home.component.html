@@ -1,146 +1,218 @@
 <app-header></app-header>
-<div class="container-fluid" style="padding-top: 10vh">
-    <div class="text-center">
+<!-- Waves -->
+<section class="waves">
+    <div style="height: 60px;"></div>
 
-        <div class="">
-            <p class="fs-2 fw-light">Somos tu puente hacia el emocionante mundo del deporte en césped</p>
-            <p>Decubre, reserva y disfruta del juego en su máxima epresión con <strong>ReservaTuGrass.com</strong></p>
+    <div class="text-center d-flex justify-content-center" style="padding-left: 2vh; padding-right: 2vh; height: 45vh;">
+        <div class="container my-auto">
+            <h2 class="fw-light">Somos tu puente hacia el emocionante mundo del
+                deporte en
+                césped</h2>
+            <p><em>Decubre, reserva y disfruta del juego en su máxima epresión con
+                    <strong>ReservaTuGrass.com</strong></em> </p>
+            <br>
+            <a href="#" style="text-decoration: none;">¡Reserva ahora!</a>
         </div>
-
-        <h2>Buscar grass</h2>
-
-        <div class="px-2 px-sm-5">
-            <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="Buscar por Nombres" aria-label="buscar"
-                    aria-describedby="button-addon2" name="busqueda" [(ngModel)]="busqueda" (keyup)="buscarName()">
-                <button class="btn btn-outline-info" type="button" id="button-addon2" (click)="buscarName()"><i
-                        class="bi bi-search"></i></button>
-            </div>
-
-
-            <div class="text-center" *ngIf="load_search">
-                <div class="spinner-border" style="width: 3rem; height: 3rem" role="status">
-                </div>
-                <h5 class="text-black-50"><small>Cargando...</small></h5>
-            </div>
-
-            <div class="rounded mt-4" *ngIf="show_alert_void" style="background-color: rgb(255, 223, 223);">
-                <p class="text-center p-2 text-danger">ERROR: No se encontró un grass con el nombre '{{busqueda}}'</p>
-            </div>
-
-            <div *ngIf="show_card_empresas" class="row d-flex justify-content-center px-2 px-sm-5">
-
-                <div class="col-12 pb-5 pt-2 col-sm-4" *ngFor="let item of empresas">
-                    <div class="card shadow">
-                        <img src="https://static.wixstatic.com/media/a74d9b_f677ff68338f43cf87e470b0312b7cea~mv2.jpg/v1/fill/w_1000,h_563,al_c,q_85,usm_0.66_1.00_0.01/a74d9b_f677ff68338f43cf87e470b0312b7cea~mv2.jpg"
-                            class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h4 class="card-title fw-bold text-center"> {{item.nombre}} </h4>
-                            <p class="card-text fw-light">Some quick example text to build on the card title and make up the
-                                bulk of the card's
-                                content.
-                            </p>
-        
-                            <p><i class="bi bi-geo-alt-fill"></i> &nbsp; <a>Jr. Bracelona N° 123</a>
-                            </p>
-                            <p><i class="bi bi-pentagon-fill"></i> &nbsp; <a>2 canchas de futsal</a>
-                            </p>
-                            <p><i class="bi bi-dribbble"></i> &nbsp; <a>2 canchas de vóley</a>
-                            </p>
-                            <p><i class="bi bi-lightning-charge-fill"></i> &nbsp; <a>Iluminación LED</a>
-                            </p>
-                            <p><i class="bi bi-check-circle-fill"></i> &nbsp; <a>Techado</a>
-                            </p>
-                            <p><i class="bi bi-car-front-fill"></i> &nbsp; <a>Garaje</a>
-                            </p>
-        
-                            <div class="text-center">
-                                <a href="#" class="btn btn-warning">Reservar &nbsp; <i class="bi bi-chevron-right"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-        <p class="fs-4 fw-light">Buscar por ubicación</p>
-
-        <div class="row mt-4 px-2 px-sm-5">
-            <div class="col-12 col-sm-4">
-                <label for="region" class="form-label text-black-50">Región</label>
-                <select id="region" class="form-select" name="region" [(ngModel)]="empresa.region"
-                    (change)="select_region()" required>
-                    <option value="" selected disabled>--Seleccione--</option>
-                    <option value="{{item.id}}" *ngFor="let item of regiones"> {{item.name}} </option>
-                </select>
-            </div>
-
-            <div class="col-12 col-sm-4 mt-3 mt-sm-0">
-                <label for="provincia" class="form-label text-black-50">Provincia</label>
-                <select id="provincia" class="form-select" name="provincia" (change)="select_provincia()"
-                    [(ngModel)]="empresa.provincia" required>
-                    <option value="" selected disabled>--Seleccione--</option>
-                    <option value="{{item.id}}" *ngFor="let item of provincias"> {{item.name}} </option>
-                </select>
-            </div>
-
-            <div class="col-12 col-sm-4">
-                <label for="distrito" class="form-label text-black-50">Distrito</label>
-                <select id="distrito" class="form-select" name="distrito" [(ngModel)]="empresa.distrito" 
-                    (change)=" select_distrito()" required>
-                    <option value="" selected disabled>--Seleccione--</option>
-                    <option value="{{item.name}}" *ngFor="let item of distritos"> {{item.name}} </option>
-                </select>
-            </div>
-
-            <div class="text-center" *ngIf="load_search_ubication">
-                <div class="spinner-border" style="width: 3rem; height: 3rem" role="status">
-                </div>
-                <h5 class="text-black-50"><small>Cargando...</small></h5>
-            </div>
-    
-            <div class="rounded mt-4" *ngIf="show_alert_void_ubication" style="background-color: rgb(255, 223, 223);">
-                <p class="text-center p-2 text-danger" style="margin-bottom: 0;">No se encontró ningún grass en {{namereg}} {{nameprov}} {{empresa.distrito}}</p>
-            </div>
-
-            <div *ngIf="show_card_empresas_ubication" class="row d-flex justify-content-center px-2 px-sm-5">
-
-                <div class="col-12 pb-5 pt-2 col-sm-4" *ngFor="let item of empresas_ubication">
-                    <div class="card shadow">
-                        <img src="https://static.wixstatic.com/media/a74d9b_f677ff68338f43cf87e470b0312b7cea~mv2.jpg/v1/fill/w_1000,h_563,al_c,q_85,usm_0.66_1.00_0.01/a74d9b_f677ff68338f43cf87e470b0312b7cea~mv2.jpg"
-                            class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h4 class="card-title fw-bold text-center"> {{item.nombre}} </h4>
-                            <p class="card-text fw-light">Some quick example text to build on the card title and make up the
-                                bulk of the card's
-                                content.
-                            </p>
-        
-                            <p><i class="bi bi-geo-alt-fill"></i> &nbsp; <a>Jr. Bracelona N° 123</a>
-                            </p>
-                            <p><i class="bi bi-pentagon-fill"></i> &nbsp; <a>2 canchas de futsal</a>
-                            </p>
-                            <p><i class="bi bi-dribbble"></i> &nbsp; <a>2 canchas de vóley</a>
-                            </p>
-                            <p><i class="bi bi-lightning-charge-fill"></i> &nbsp; <a>Iluminación LED</a>
-                            </p>
-                            <p><i class="bi bi-check-circle-fill"></i> &nbsp; <a>Techado</a>
-                            </p>
-                            <p><i class="bi bi-car-front-fill"></i> &nbsp; <a>Garaje</a>
-                            </p>
-        
-                            <div class="text-center">
-                                <a href="#" class="btn btn-warning">Reservar &nbsp; <i class="bi bi-chevron-right"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
     </div>
 
+    <div class="wave wave1"></div>
+    <div class="wave wave2"></div>
+    <div class="wave wave3"></div>
+    <div class="wave wave4"></div>
+</section>
+
+
+
+
+<div class="container-fluid" style="padding-top: 1vh">
+    <!-- Contenedor principal -->
+    <div class="container">
+
+        <!-- Selector de Opción de Búsqueda -->
+        <div class="button-search d-flex align-items-center justify-content-center" style="height: 100px">
+
+            <button type="button" class="button-search-children" [class.active]="searchOption === 'name'"
+                (click)="changeSearchOption('name')">
+                Buscar por nombre
+            </button>
+            <button type="button" class="button-search-children" [class.active]="searchOption === 'location'"
+                (click)="changeSearchOption('location')">
+                Buscar por ubicación
+            </button>
+
+
+        </div>
+
+
+        <!-- <div class="btn-group">
+        <button type="button" class="btn btn-primary" [class.active]="searchOption === 'name'"
+            (click)="changeSearchOption('name')">
+            Buscar por Nombre
+        </button>
+        <button type="button" class="btn btn-primary" [class.active]="searchOption === 'location'"
+            (click)="changeSearchOption('location')">
+            Buscar por Ubicación
+        </button>
+    </div> -->
+
+        <!-- Campo de búsqueda por Nombre -->
+        <div *ngIf="searchOption === 'name'">
+            <!-- <input type="text" [(ngModel)]="busqueda" placeholder="Nombre del Grass">
+        <button (click)="buscarName()">Buscar</button> -->
+
+            <div class="px-2 px-sm-5">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Buscar por Nombres" aria-label="buscar"
+                        aria-describedby="button-addon2" name="busqueda" [(ngModel)]="busqueda" (keyup)="buscarName()">
+                    <button class="btn btn-outline-info" type="button" id="button-addon2" (click)="buscarName()"><i
+                            class="bi bi-search"></i></button>
+                </div>
+
+
+                <div class="text-center" *ngIf="load_search">
+                    <div class="spinner-border" style="width: 3rem; height: 3rem" role="status">
+                    </div>
+                    <h5 class="text-black-50"><small>Cargando...</small></h5>
+                </div>
+
+                <div class="rounded mt-4" *ngIf="show_alert_void" style="background-color: rgb(255, 223, 223);">
+                    <p class="text-center p-2 text-danger">ERROR: No se encontró un grass con el nombre '{{busqueda}}'
+                    </p>
+                </div>
+
+                <div *ngIf="show_card_empresas" class="row d-flex justify-content-center px-2 px-sm-5">
+
+                    <div class="col-12 pb-5 pt-2 col-sm-4" *ngFor="let item of empresas">
+                        <div class="card shadow">
+                            <img src="https://static.wixstatic.com/media/a74d9b_f677ff68338f43cf87e470b0312b7cea~mv2.jpg/v1/fill/w_1000,h_563,al_c,q_85,usm_0.66_1.00_0.01/a74d9b_f677ff68338f43cf87e470b0312b7cea~mv2.jpg"
+                                class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h4 class="card-title fw-bold text-center"> {{item.nombre}} </h4>
+                                <p class="card-text fw-light">Some quick example text to build on the card title and
+                                    make up
+                                    the
+                                    bulk of the card's
+                                    content.
+                                </p>
+
+                                <p><i class="bi bi-geo-alt-fill"></i> &nbsp; <a>Jr. Bracelona N° 123</a>
+                                </p>
+                                <p><i class="bi bi-pentagon-fill"></i> &nbsp; <a>2 canchas de futsal</a>
+                                </p>
+                                <p><i class="bi bi-dribbble"></i> &nbsp; <a>2 canchas de vóley</a>
+                                </p>
+                                <p><i class="bi bi-lightning-charge-fill"></i> &nbsp; <a>Iluminación LED</a>
+                                </p>
+                                <p><i class="bi bi-check-circle-fill"></i> &nbsp; <a>Techado</a>
+                                </p>
+                                <p><i class="bi bi-car-front-fill"></i> &nbsp; <a>Garaje</a>
+                                </p>
+
+                                <div class="text-center">
+                                    <a href="#" class="btn btn-warning">Reservar &nbsp; <i
+                                            class="bi bi-chevron-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Campo de búsqueda por Ubicación -->
+        <div *ngIf="searchOption === 'location'">
+            <div class="row mt-4 px-2 px-sm-5">
+                <div class="col-12 col-sm-4">
+                    <label for="region" class="form-label text-black-50">Región</label>
+                    <select id="region" class="form-select" name="region" [(ngModel)]="empresa.region"
+                        (change)="select_region()" required>
+                        <option value="" selected disabled>--Seleccione--</option>
+                        <option value="{{item.id}}" *ngFor="let item of regiones"> {{item.name}} </option>
+                    </select>
+                </div>
+
+                <div class="col-12 col-sm-4 mt-3 mt-sm-0">
+                    <label for="provincia" class="form-label text-black-50">Provincia</label>
+                    <select id="provincia" class="form-select" name="provincia" (change)="select_provincia()"
+                        [(ngModel)]="empresa.provincia" required>
+                        <option value="" selected disabled>--Seleccione--</option>
+                        <option value="{{item.id}}" *ngFor="let item of provincias"> {{item.name}} </option>
+                    </select>
+                </div>
+
+                <div class="col-12 col-sm-4">
+                    <label for="distrito" class="form-label text-black-50">Distrito</label>
+                    <select id="distrito" class="form-select" name="distrito" [(ngModel)]="empresa.distrito"
+                        (change)=" select_distrito()" required>
+                        <option value="" selected disabled>--Seleccione--</option>
+                        <option value="{{item.name}}" *ngFor="let item of distritos"> {{item.name}} </option>
+                    </select>
+                </div>
+
+                <div class="text-center" *ngIf="load_search_ubication">
+                    <div class="spinner-border" style="width: 3rem; height: 3rem" role="status">
+                    </div>
+                    <h5 class="text-black-50"><small>Cargando...</small></h5>
+                </div>
+
+                <div class="rounded mt-4" *ngIf="show_alert_void_ubication"
+                    style="background-color: rgb(255, 223, 223);">
+                    <p class="text-center p-2 text-danger" style="margin-bottom: 0;">No se encontró ningún grass en
+                        {{namereg}} {{nameprov}} {{empresa.distrito}}</p>
+                </div>
+
+                <div *ngIf="show_card_empresas_ubication" class="row d-flex justify-content-center px-2 px-sm-5">
+
+                    <div class="col-12 pb-5 pt-2 col-sm-4" *ngFor="let item of empresas_ubication">
+                        <div class="card shadow">
+                            <img src="https://static.wixstatic.com/media/a74d9b_f677ff68338f43cf87e470b0312b7cea~mv2.jpg/v1/fill/w_1000,h_563,al_c,q_85,usm_0.66_1.00_0.01/a74d9b_f677ff68338f43cf87e470b0312b7cea~mv2.jpg"
+                                class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h4 class="card-title fw-bold text-center"> {{item.nombre}} </h4>
+                                <p class="card-text fw-light">Some quick example text to build on the card title and
+                                    make up
+                                    the
+                                    bulk of the card's
+                                    content.
+                                </p>
+
+                                <p><i class="bi bi-geo-alt-fill"></i> &nbsp; <a>Jr. Bracelona N° 123</a>
+                                </p>
+                                <p><i class="bi bi-pentagon-fill"></i> &nbsp; <a>2 canchas de futsal</a>
+                                </p>
+                                <p><i class="bi bi-dribbble"></i> &nbsp; <a>2 canchas de vóley</a>
+                                </p>
+                                <p><i class="bi bi-lightning-charge-fill"></i> &nbsp; <a>Iluminación LED</a>
+                                </p>
+                                <p><i class="bi bi-check-circle-fill"></i> &nbsp; <a>Techado</a>
+                                </p>
+                                <p><i class="bi bi-car-front-fill"></i> &nbsp; <a>Garaje</a>
+                                </p>
+
+                                <div class="text-center">
+                                    <a href="#" class="btn btn-warning">Reservar &nbsp; <i
+                                            class="bi bi-chevron-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Resultados de la búsqueda -->
+        <div *ngIf="searchOption === 'name' && show_card_empresas">
+            <!-- Muestra los resultados de la búsqueda por nombre -->
+        </div>
+        <div *ngIf="searchOption === 'location' && show_card_empresas_ubication">
+            <!-- Muestra los resultados de la búsqueda por ubicación -->
+        </div>
+
+        <!-- Otras secciones de la página -->
+
+    </div>
     <div class="text-center">
         <h2>Grass en tu ciudad</h2>
     </div>
