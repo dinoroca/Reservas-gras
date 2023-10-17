@@ -23,49 +23,33 @@
 
 
 
-
 <div class="container-fluid" style="padding-top: 1vh">
     <!-- Contenedor principal -->
     <div class="container">
 
-        <!-- Selector de Opción de Búsqueda -->
+        <!-- Selector de Opción de Búsqueda | botones -->
         <div class="button-search d-flex align-items-center justify-content-center" style="height: 100px">
-
             <button type="button" class="button-search-children" [class.active]="searchOption === 'name'"
+                [class.opacidad-50]="searchOption === 'location'" [class.border-color]="searchOption === 'location'"
                 (click)="changeSearchOption('name')">
                 Buscar por nombre
             </button>
             <button type="button" class="button-search-children" [class.active]="searchOption === 'location'"
+                [class.opacidad-50]="searchOption === 'name'" [class.border-color]="searchOption === 'name'"
                 (click)="changeSearchOption('location')">
                 Buscar por ubicación
             </button>
-
-
         </div>
 
-
-        <!-- <div class="btn-group">
-        <button type="button" class="btn btn-primary" [class.active]="searchOption === 'name'"
-            (click)="changeSearchOption('name')">
-            Buscar por Nombre
-        </button>
-        <button type="button" class="btn btn-primary" [class.active]="searchOption === 'location'"
-            (click)="changeSearchOption('location')">
-            Buscar por Ubicación
-        </button>
-    </div> -->
-
-        <!-- Campo de búsqueda por Nombre -->
+        <!--! Campo de búsqueda por Nombre -->
         <div *ngIf="searchOption === 'name'">
-            <!-- <input type="text" [(ngModel)]="busqueda" placeholder="Nombre del Grass">
-        <button (click)="buscarName()">Buscar</button> -->
-
-            <div class="px-2 px-sm-5">
-                <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="Buscar por Nombres" aria-label="buscar"
-                        aria-describedby="button-addon2" name="busqueda" [(ngModel)]="busqueda" (keyup)="buscarName()">
-                    <button class="btn btn-outline-info" type="button" id="button-addon2" (click)="buscarName()"><i
-                            class="bi bi-search"></i></button>
+            <div class="px-2 px-md-5 mb-4">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Añade el nombre del grass aquí"
+                        aria-label="buscar" aria-describedby="button-addon2" name="busqueda" [(ngModel)]="busqueda"
+                        (keyup)="buscarName()">
+                    <button class="btn btn-outline-dark btn-1" type="button" id="button-addon2"
+                        (click)="buscarName()"><i class="bi bi-search"></i></button>
                 </div>
 
 
@@ -120,32 +104,32 @@
             </div>
         </div>
 
-        <!-- Campo de búsqueda por Ubicación -->
+        <!--! Campo de búsqueda por Ubicación -->
         <div *ngIf="searchOption === 'location'">
-            <div class="row mt-4 px-2 px-sm-5">
+            <div class="row px-2 px-md-5 mb-4">
                 <div class="col-12 col-sm-4">
-                    <label for="region" class="form-label text-black-50">Región</label>
+                    <!-- <label for="region" class="form-label text-black-50">Región</label> -->
                     <select id="region" class="form-select" name="region" [(ngModel)]="empresa.region"
                         (change)="select_region()" required>
-                        <option value="" selected disabled>--Seleccione--</option>
+                        <option value="" selected disabled>Departamento</option>
                         <option value="{{item.id}}" *ngFor="let item of regiones"> {{item.name}} </option>
                     </select>
                 </div>
 
                 <div class="col-12 col-sm-4 mt-3 mt-sm-0">
-                    <label for="provincia" class="form-label text-black-50">Provincia</label>
+                    <!-- <label for="provincia" class="form-label text-black-50">Provincia</label> -->
                     <select id="provincia" class="form-select" name="provincia" (change)="select_provincia()"
                         [(ngModel)]="empresa.provincia" required>
-                        <option value="" selected disabled>--Seleccione--</option>
+                        <option value="" selected disabled>Provincia</option>
                         <option value="{{item.id}}" *ngFor="let item of provincias"> {{item.name}} </option>
                     </select>
                 </div>
 
-                <div class="col-12 col-sm-4">
-                    <label for="distrito" class="form-label text-black-50">Distrito</label>
+                <div class="col-12 col-sm-4 mt-3 mt-sm-0">
+                    <!-- <label for="distrito" class="form-label text-black-50">Distrito</label> -->
                     <select id="distrito" class="form-select" name="distrito" [(ngModel)]="empresa.distrito"
                         (change)=" select_distrito()" required>
-                        <option value="" selected disabled>--Seleccione--</option>
+                        <option value="" selected disabled>Distrito</option>
                         <option value="{{item.name}}" *ngFor="let item of distritos"> {{item.name}} </option>
                     </select>
                 </div>

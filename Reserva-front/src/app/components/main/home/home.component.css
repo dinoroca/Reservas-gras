@@ -97,7 +97,60 @@ section .wave.wave4 {
     border-radius: 010%;
     border-radius: 30px;
     color: white;
-    height: 50px;
-    width: 25vh;
-    /* margin: 100px 10px 10px 10px; */
+    height: 40px;
+    width: 30vh;
+
+    white-space: nowrap;
+    /* Evita el desbordamiento de texto */
+    overflow: hidden;
+    /* Oculta cualquier texto que exceda el ancho máximo */
+    text-overflow: ellipsis;
+    /* Agrega puntos suspensivos (...) para indicar texto truncado */
+    /* font-size: 16px; */
+}
+
+.button-search-children:hover {
+    max-width: none;
+    /* Elimina el ancho máximo al pasar el mouse (muestra el texto completo) */
+}
+
+/* Media query para dispositivos móviles (pantallas más pequeñas) */
+@media (max-width: 768px) {
+    .button-search-children {
+        font-size: 14px;
+        /* Tamaño para dispositivos móviles */
+    }
+}
+
+@media screen and (width: 280px) and (height: 653px) {
+    .button-search-children {
+        font-size: 10px;
+        height: 30px;
+
+        /* Tamaño para dispositivos móviles */
+    }
+}
+
+s
+
+/* Clase para opacidad al 100% */
+.opacidad-100 {
+    opacity: 1;
+}
+
+/* Clase para opacidad al 50% */
+.opacidad-50 {
+    opacity: 0.5;
+}
+
+/* Clase para color de borde y texto */
+.border-color {
+    border: 2px solid #249b89;
+    background: transparent;
+    color: #249b89;
+}
+
+/** Clase para cursiva del contenido del atributo placeholder **/
+::placeholder {
+    font-style: italic;
 }
