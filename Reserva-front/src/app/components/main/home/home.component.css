@@ -91,14 +91,17 @@ section .wave.wave4 {
 }
 
 .button-search-children {
-    background-color: #249b89;
+    background-color: #19ce81;
     margin-left: 10px;
-    border: 4px solid #249b89;
+    border: none;
+    /* background: linear-gradient(to bottom, #3de69d, #0eab68); */
     border-radius: 010%;
     border-radius: 30px;
     color: white;
     height: 40px;
     width: 30vh;
+
+    /** #249b89 */
 
     white-space: nowrap;
     /* Evita el desbordamiento de texto */
@@ -145,12 +148,39 @@ s
 
 /* Clase para color de borde y texto */
 .border-color {
-    border: 2px solid #249b89;
+    border: 2px solid #19ce81;
     background: transparent;
-    color: #249b89;
+    color: #19ce81;
 }
 
 /** Clase para cursiva del contenido del atributo placeholder **/
 ::placeholder {
     font-style: italic;
+}
+
+
+/* ! OJO */
+.card-text {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    /* Número de líneas que deseas mostrar */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+.btn-reserve {
+    background-color: #19ce81;
+    border: none;
+    /* color: #effef7; */
+    color: white;
+}
+
+.bi {
+    color: #0eab68;
+}
+
+.bi-greater {
+    color: #effef7;
 }
