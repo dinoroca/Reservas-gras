@@ -19,6 +19,8 @@ export class RegisterEmpresaComponent implements OnInit {
     distrito: ''
   };
 
+  public user: any = {};
+
   public password: any;
   public password1 = '';
   public show = false;
@@ -38,6 +40,11 @@ export class RegisterEmpresaComponent implements OnInit {
 
   public recordar = true;
 
+  public usuario: any = {};
+  public token: any;
+  public id: any;
+  public user_lc: any;
+
   isDisabledProvincia = true;
   isDisabledDistrito = true;
 
@@ -50,6 +57,9 @@ export class RegisterEmpresaComponent implements OnInit {
     private _toastrService: ToastrService
   ) {
 
+    this.token = localStorage.getItem('token') || sessionStorage.getItem('token');
+    this.id = localStorage.getItem('_id') || sessionStorage.getItem('_id');
+
     this._guestService.obtener_regiones().subscribe(
       response => {
         response.forEach((element: { id: any; name: any; }) => {
@@ -60,6 +70,29 @@ export class RegisterEmpresaComponent implements OnInit {
         });
       }
     );
+
+    if (this.token) {
+      //Obtener usuario
+      this._userService.obtener_user(this.id, this.token).subscribe(
+        response => {
+          this.user = response.data;
+          localStorage.setItem('user_data', JSON.stringify(this.user));
+
+          if (localStorage.getItem('user_data')) {
+            this.user_lc = JSON.parse(localStorage.getItem('user_data')!);
+
+            if (this.user_lc.role == 'ADMIN') {
+             this._router.navigate(['/admin']);
+              
+            } else if(this.user_lc.role == 'USER') {
+              this._router.navigate(['/usuario']);
+            }
+          } else {
+            this.user_lc = undefined;
+          }
+        }
+      );
+    }
   }
 
   ngOnInit(): void {
@@ -99,7 +132,6 @@ export class RegisterEmpresaComponent implements OnInit {
     const regencontrado = this.regiones.find(objeto => objeto.id === this.empresa.region);
 
     this.namereg = regencontrado.name;
-    console.log(this.namereg);
   }
 
   select_provincia() {
@@ -119,15 +151,11 @@ export class RegisterEmpresaComponent implements OnInit {
     const provencontrado = this.provincias.find(objeto => objeto.id === this.empresa.provincia);
 
     this.nameprov = provencontrado.name;
-    console.log(this.nameprov);
     
   }
 
   registrar(registroForm: any) {
     if (registroForm.valid) {
-
-      console.log(this.empresa.email);
-      
 
       let data = {
         nombre: this.empresa.nombre,

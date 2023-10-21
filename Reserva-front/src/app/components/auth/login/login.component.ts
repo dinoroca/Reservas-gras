@@ -42,9 +42,9 @@ export class LoginComponent implements OnInit {
             this.user_lc = JSON.parse(localStorage.getItem('user_data')!);
 
             if (this.user_lc.role == 'ADMIN') {
-             this._router.navigate(['/admin']);
-              
-            } else if(this.user_lc.role == 'USER') {
+              this._router.navigate(['/admin']);
+
+            } else if (this.user_lc.role == 'USER') {
               this._router.navigate(['/usuario']);
             }
           } else {
@@ -70,7 +70,35 @@ export class LoginComponent implements OnInit {
       this._userService.login_user(data).subscribe(
         response => {
           if (response.data == undefined) {
-            this._toastrService.error(response.message, 'ERROR');
+
+            this._userService.login_empresa(data).subscribe(
+              response => {
+                if (response.data == undefined) {
+                  this._toastrService.error(response.message, 'ERROR');
+
+                } else if (response.data.verificado) {
+
+                  if (this.recordar) {
+                    localStorage.setItem('token', response.token);
+                    localStorage.setItem('_id', response.data._id);
+
+                  } else {
+                    sessionStorage.setItem('token', response.token);
+                    sessionStorage.setItem('_id', response.data._id);
+                  }
+                  this.usuario = response.data;
+
+                  if (this.usuario.role === 'GRASS') {
+                    this._router.navigate(['/grass']).then(() => {
+                      setTimeout(() => {
+                        location.reload();
+                      }, 500);
+                    });
+
+                  }
+                }
+              }
+            );
 
           } else if (response.data.verificado) {
             if (this.recordar) {

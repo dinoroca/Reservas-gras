@@ -48,6 +48,55 @@ const registro_empresa = async function (req, res) {
   }
 }
 
+const login_empresa = async function (req, res) {
+  var data = req.body;
+  var empresas_arr = [];
+
+  //Busca un cliente mediante el correo
+  empresas_arr = await Empresa.find({ email: data.email });
+
+  if (empresas_arr.length == 0) {
+    res
+      .status(200)
+      .send({ message: "Correo o contraseña incorrectos", data: undefined });
+  } else {
+    //Si existe el cliente se manda al login
+    let user = empresas_arr[0];
+
+    //Comparar contraseñas
+    bcrypt.compare(data.password, user.password, async function (error, check) {
+      if (check) {
+        res.status(200).send({
+          data: user,
+          token: jwt.createToken(user),
+        });
+      } else {
+        res
+          .status(200)
+          .send({ message: "Correo o contraseña incorrectos", data: undefined });
+      }
+    });
+  }
+}
+
+const obtener_empresa = async function (req, res) {
+  if (req.empresa) {
+
+    var id = req.params['id'];
+
+    try {
+      var reg = await Empresa.findById({ _id: id });
+      res.status(200).send({ data: reg });
+
+    } catch (error) {
+      res.status(200).send({ data: undefined });
+    }
+
+  } else {
+    res.status(500).send({ message: 'NoAccess' });
+  }
+}
+
 const listar_empresas_filtro = async function (req, res) {
 
   let filtro = req.params['filtro'];
@@ -111,6 +160,8 @@ const listar_empresas_dist = async function (req, res) {
 
 module.exports = {
     registro_empresa,
+    login_empresa,
+    obtener_empresa,
     listar_empresas_filtro,
     listar_empresas_region,
     listar_empresas_prov,

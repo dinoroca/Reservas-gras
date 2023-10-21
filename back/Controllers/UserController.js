@@ -112,6 +112,5 @@ module.exports = {
     registro_user,
     login_user,
     obtener_user,
-
     enviar_mensaje_contacto
 }

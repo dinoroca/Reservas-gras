@@ -1,6 +1,7 @@
 import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { GLOBAL } from 'src/app/services/global';
 import { GuestService } from 'src/app/services/guest.service';
 import { UserService } from 'src/app/services/user.service';
 
@@ -25,6 +26,12 @@ export class HomeComponent implements OnInit {
     provincia: '',
     distrito: ''
   };
+
+  public token: any;
+  public id: any;
+  public user: any;
+  public user_lc: any;
+  public url: any;
 
   public regiones: Array<any> = [];
   public namereg = '';
@@ -76,6 +83,9 @@ export class HomeComponent implements OnInit {
     this.screenWidth = window.innerWidth;
     this.screenHeight = window.innerHeight;
 
+    this.url = GLOBAL.url;
+    this.user_lc = undefined;
+
     this._guestService.obtener_regiones().subscribe(
       response => {
         response.forEach((element: { id: any; name: any; }) => {
@@ -91,6 +101,58 @@ export class HomeComponent implements OnInit {
       this.imagen_fondo = '../../../../assets/img/fondo-comentario.jpg';
     } else {
       this.imagen_fondo = '../../../../assets/img/fondo-coment.png';
+    }
+
+    this.token = localStorage.getItem('token') || sessionStorage.getItem('token');
+    this.id = localStorage.getItem('_id') || sessionStorage.getItem('_id');
+
+    if (this.token) {
+      //Obtener usuario
+      this._userService.obtener_user(this.id, this.token).subscribe(
+        response => {
+
+          if (response.data == undefined) {
+            _userService.obtener_empresa(this.id, this.token).subscribe(
+              response => {
+                if (response.data == undefined) {
+                  this.user_lc = undefined;
+
+                } else {
+                  this.user = response.data;
+                  localStorage.setItem('user_data', JSON.stringify(this.user));
+
+                  if (localStorage.getItem('user_data')) {
+                    this.user_lc = JSON.parse(localStorage.getItem('user_data')!);
+
+                    if (this.user_lc.role == 'GRASS') {
+                      this._router.navigate(['/grass']);
+                    }
+                  } else {
+                    this.user_lc = undefined;
+                  }
+                }
+              }
+            );
+          } else {
+
+            this.user = response.data;
+            localStorage.setItem('user_data', JSON.stringify(this.user));
+
+            if (localStorage.getItem('user_data')) {
+              this.user_lc = JSON.parse(localStorage.getItem('user_data')!);
+
+              if (this.user_lc.role == 'ADMIN') {
+                this._router.navigate(['/admin']);
+
+              } else if (this.user_lc.role == 'USER') {
+                this._router.navigate(['/usuario']);
+              }
+            } else {
+              this.user_lc = undefined;
+            }
+          }
+        }
+      );
     }
 
     this.init_data();
