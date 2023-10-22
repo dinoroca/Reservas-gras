@@ -1,0 +1,21 @@
+.active {
+    text-decoration: none;
+    background-color: var(--bs-primary);
+    border-radius: 5px;
+    font-size: 1.1rem;
+    box-shadow: 0px 0px 5px #96f3d2;
+}
+
+.nav-link.active {
+    color: #FFF;
+    font-style: bold;
+}
+
+
+.nav-item :hover {
+    text-decoration: none;
+    color: black;
+    background-color: #96F3BF;
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px #96F3BF;
+}
