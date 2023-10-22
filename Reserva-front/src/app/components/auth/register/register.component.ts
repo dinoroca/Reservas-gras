@@ -56,28 +56,53 @@ export class RegisterComponent implements OnInit {
     this.id = localStorage.getItem('_id') || sessionStorage.getItem('_id');
 
     if (this.token) {
-      //Obtener usuario
-      this._userService.obtener_user(this.id, this.token).subscribe(
-        response => {
+      _userService.obtener_user(this.id, this.token).subscribe(response => {
+        if (response.data == undefined) {
+          _userService.obtener_empresa(this.id, this.token).subscribe(empresaResponse => {
+            this.user = empresaResponse.data || response.data;
+            localStorage.setItem('user_data', JSON.stringify(this.user));
+            this.user_lc = JSON.parse(localStorage.getItem('user_data')!) || undefined;
+    
+            if (this.user_lc) {
+              switch (this.user_lc.role) {
+                case 'GRASS':
+                  this._router.navigate(['/grass']);
+                  break;
+                case 'ADMIN':
+                  this._router.navigate(['/admin']);
+                  break;
+                case 'USER':
+                  this._router.navigate(['/usuario']);
+                  break;
+                default:
+                  this.user_lc = undefined;
+              }
+            } else {
+              this.user_lc = undefined;
+            }
+          });
+        } else {
           this.user = response.data;
           localStorage.setItem('user_data', JSON.stringify(this.user));
-
-          if (localStorage.getItem('user_data')) {
-            this.user_lc = JSON.parse(localStorage.getItem('user_data')!);
-
-            if (this.user_lc.role == 'ADMIN') {
-             this._router.navigate(['/admin']);
-              
-            } else if(this.user_lc.role == 'USER') {
-              this._router.navigate(['/usuario']);
+          this.user_lc = JSON.parse(localStorage.getItem('user_data')!) || undefined;
+    
+          if (this.user_lc) {
+            switch (this.user_lc.role) {
+              case 'ADMIN':
+                this._router.navigate(['/admin']);
+                break;
+              case 'USER':
+                this._router.navigate(['/usuario']);
+                break;
+              default:
+                this.user_lc = undefined;
             }
           } else {
             this.user_lc = undefined;
           }
         }
-      );
-    }
-    
+      });
+    }    
   }
 
   ngOnInit(): void {

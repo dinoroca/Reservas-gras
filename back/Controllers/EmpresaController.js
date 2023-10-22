@@ -80,7 +80,7 @@ const login_empresa = async function (req, res) {
 }
 
 const obtener_empresa = async function (req, res) {
-  if (req.empresa) {
+  if (req.user) {
 
     var id = req.params['id'];
 

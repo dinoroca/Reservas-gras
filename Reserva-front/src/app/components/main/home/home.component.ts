@@ -18,7 +18,7 @@ export class HomeComponent implements OnInit {
   //-----------
 
   ngOnInit(): void {
-
+    this._title.setTitle('Reserva tu Grass');
   }
 
   public empresa: any = {
