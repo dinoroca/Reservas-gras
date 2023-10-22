@@ -126,7 +126,6 @@ export class RegisterComponent implements OnInit {
     const regencontrado = this.regiones.find(objeto => objeto.id === this.user.region);
 
     this.namereg = regencontrado.name;
-    console.log(this.namereg);
   }
 
   registrar(registroForm: any) {
@@ -135,6 +134,7 @@ export class RegisterComponent implements OnInit {
       let data = {
         nombres: this.user.nombres,
         email: this.user.email,
+        ciudad: this.namereg,
         telefono: this.user.telefono,
         password: this.user.password,
       }

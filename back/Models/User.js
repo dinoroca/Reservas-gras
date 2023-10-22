@@ -8,6 +8,7 @@ var UserSchema = Schema({
     token_pass: {type: String, required: false},
     nombres: {type: String, required: true},
     email: {type: String, required: true},
+    ciudad: {type: String, required: true},
     telefono: {type: String, required: true},
     password: {type: String, required: true},
     role: {type: String, default: 'USER', required: true},

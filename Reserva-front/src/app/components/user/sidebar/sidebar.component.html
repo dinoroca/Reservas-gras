@@ -1,0 +1,50 @@
+<div class="card" style="border:none">
+    <div class="card-body text-center">
+        <img style="width: 100px; height: auto;"
+            src="../../../../../assets/img/svg/01.svg">
+
+        <h5 class="text-black-50 mb-0 pt-2">{{user.nombres}}</h5>
+    </div>
+</div>
+
+<div class="mt-3">
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item" [routerLink]="['/usuario/perfil']" routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }">
+            <a><i class="bi bi-info-circle"></i> &nbsp; Mis datos</a>
+        </li>
+        <li class="list-group-item" [routerLink]="['/usuario/perfil/reservas']" routerLinkActive="active">
+            <a> <i class="bi bi-ticket-perforated"></i> &nbsp; Mis reservaciones</a>
+        </li>
+        <li class="list-group-item" [routerLink]="['/usuario/perfil/actualizar']" routerLinkActive="active">
+            <a> <i class="bi bi-check-lg"></i> &nbsp; Actualizar datos</a>
+        </li>
+        <li class="list-group-item" [routerLink]="['/usuario/perfil/update-password']" routerLinkActive="active">
+            <a> <i class="bi bi-key"></i>&nbsp; Cambiar contraseña</a>
+        </li>
+        <li class="list-group-item text-danger fw-bold" type="button" data-bs-toggle="modal"
+            data-bs-target="#exampleModal">
+            <i class="bi bi-arrow-bar-left"></i> &nbsp; Cerrar sesión
+        </li>
+    </ul>
+</div>
+
+<!-- Modal cerrar sesión-->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Cerrar sesión?</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    <i class="bi bi-x-lg"></i>
+                </button>
+                <button type="button" class="btn btn-danger" (click)="logout()">
+                    <i class="bi bi-arrow-bar-left"></i> &nbsp; Cerrar sesión
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

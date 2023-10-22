@@ -9,6 +9,9 @@ import { ContactoComponent } from './contacto/contacto.component';
 import { DatosComponent } from './perfil/datos/datos.component';
 import { ReservasComponent } from './perfil/reservas/reservas.component';
 import { ActualizarComponent } from './perfil/actualizar/actualizar.component';
+import { SidebarComponent } from './sidebar/sidebar.component';
+import { FormsModule } from '@angular/forms';
+import { UpdatePasswordComponent } from './perfil/update-password/update-password.component';
 
 
 @NgModule({
@@ -19,11 +22,14 @@ import { ActualizarComponent } from './perfil/actualizar/actualizar.component';
     ContactoComponent,
     DatosComponent,
     ReservasComponent,
-    ActualizarComponent
+    ActualizarComponent,
+    SidebarComponent,
+    UpdatePasswordComponent
   ],
   imports: [
     CommonModule,
-    UserRoutingModule
+    UserRoutingModule,
+    FormsModule
   ]
 })
 export class UserModule { }

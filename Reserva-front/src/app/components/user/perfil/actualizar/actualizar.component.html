@@ -1,1 +1,71 @@
-<p>actualizar works!</p>
+<app-nav></app-nav>
+
+<div class="container py-5">
+    <div class="shadow rounded mt-5 p-4">
+        <div class="row">
+            <div class="col-sm-3 col-12 mt-3">
+                <app-sidebar></app-sidebar>
+            </div>
+            <!-- actualizar mis datos -->
+            <div class="col-sm-9 col-12 mt-3">
+                <h3 class="text-center fw-bold py-4" style="color:rgb(6, 170, 115)">ACTUALIZAR MIS DATOS</h3>
+                <!-- Body -->
+                <div class="d-flex">
+                    <div class="flex-fill border-box d-none d-lg-block"
+                        style="width: 5%; border-left: 1px solid rgb(6, 170, 115);">
+                    </div>
+
+                    <div class="flex-fill" style="width: 95%;">
+                        <div class="d-flex justify-content-center">
+                            <div class="p-1 p-sm-1 col-12">
+                                <form #updateForm="ngForm" (ngSubmit)="actualizar(updateForm)">
+                                    <div class="row">
+                                        <div class="col-12 col-sm-6">
+                                            <label for="nombres" class="form-label text-black-50">Nombres</label>
+                                            <input type="text" class="form-control" placeholder="Ingrese sus nombres"
+                                                name="nombres" id="nombres" [(ngModel)]="user.nombres" required />
+                                        </div>
+    
+                                        <div class="col-12 col-sm-6">
+                                            <label for="ciudad" class="form-label text-black-50">Ciudad</label>
+                                            <select id="ciudad" class="form-select" name="ciudad"
+                                                [(ngModel)]="user.ciudad" required (click)="select_region()">
+                                                <option selected>{{user.ciudad}}</option>
+                                                <option value="{{item.id}}" *ngFor="let item of regiones"> {{item.name}} </option>
+                                            </select>
+                                        </div>
+                                    </div>
+    
+                                    <div class="row mt-4">
+                                        <div class="col-12 col-sm-6">
+                                            <label for="email" class="form-label text-black-50">Correo</label>
+                                            <input type="email" class="form-control" placeholder="Ingrese su correo"
+                                                name="email" id="email" [(ngModel)]="user.email" disabled />
+                                        </div>
+    
+                                        <div class="col-12 col-sm-6 mt-3 mt-sm-0">
+                                            <label for="telefono" class="form-label text-black-50">Teléfono</label>
+                                            <input type="text" class="form-control" placeholder="Ingrese número"
+                                                name="telefono" id="telefono" [(ngModel)]="user.telefono" required
+                                                maxlength="9" />
+                                        </div>
+                                    </div>
+    
+                                    <div class="d-grid gap-2 mt-4">
+                                        <button type="submit" class="btn btn-primary"
+                                            [disabled]="updateForm.invalid && valid">
+                                            <i class="bi bi-person-check"></i> &nbsp; Actualizar
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

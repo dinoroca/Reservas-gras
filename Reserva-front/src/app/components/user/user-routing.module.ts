@@ -6,6 +6,7 @@ import { ContactoComponent } from './contacto/contacto.component';
 import { DatosComponent } from './perfil/datos/datos.component';
 import { ReservasComponent } from './perfil/reservas/reservas.component';
 import { ActualizarComponent } from './perfil/actualizar/actualizar.component';
+import { UpdatePasswordComponent } from './perfil/update-password/update-password.component';
 
 const routes: Routes = [
   {path: '', component: InicioComponent},
@@ -13,7 +14,8 @@ const routes: Routes = [
   {path: 'contacto', component: ContactoComponent},
   {path: 'perfil', component: DatosComponent},
   {path: 'perfil/reservas', component: ReservasComponent},
-  {path: 'perfil/actualizar', component: ActualizarComponent}
+  {path: 'perfil/actualizar', component: ActualizarComponent},
+  {path: 'perfil/update-password', component: UpdatePasswordComponent}
 ];
 
 @NgModule({
