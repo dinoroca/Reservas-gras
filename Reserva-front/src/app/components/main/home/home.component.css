@@ -134,7 +134,6 @@ section .wave.wave4 {
     }
 }
 
-s
 
 /* Clase para opacidad al 100% */
 .opacidad-100 {
@@ -177,9 +176,17 @@ s
     color: white;
 }
 
-.bi {
+.bi-1 {
     color: #0eab68;
 }
+
+.bi-2 {
+    color: red;
+}
+
+/* .buscar {
+    color: black;
+} */
 
 .bi-greater {
     color: #effef7;
