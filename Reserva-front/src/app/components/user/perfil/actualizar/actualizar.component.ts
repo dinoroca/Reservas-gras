@@ -55,11 +55,6 @@ export class ActualizarComponent implements OnInit {
   ngOnInit(): void {
     this._title.setTitle('Perfil | Actualizar datos');
     this.passwClass = 'password';
-
-    //Permitir seleccionar como máximo la fecha actual
-    const hoy = new Date();
-    const input = document.querySelector("#f_nacimiento")!;
-    input.setAttribute("max", hoy.toISOString().split("T")[0]);
   }
 
   select_region() {
