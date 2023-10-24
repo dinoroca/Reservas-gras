@@ -14,6 +14,9 @@ const registro_user = async function (req, res) {
   var data = req.body;
   var users_arr = [];
 
+  //Generar un aleatorio de 6 dígitos
+  const code = Math.floor(100000 + Math.random() * 900000);
+
   //Verifica que no exista correo repetido
   users_arr = await User.find({ email: data.email });
 
@@ -24,6 +27,7 @@ const registro_user = async function (req, res) {
       bcrypt.hash(data.password, null, null, async function (err, hash) {
         if (hash) {
           data.password = hash;
+          data.codigo = code;
           var reg = await User.create(data);
           res.status(200).send({
             data: reg,
@@ -79,6 +83,22 @@ const login_user = async function (req, res) {
   }
 }
 
+const actualizar_user_verificado = async function (req, res) {
+
+  var id = req.params['id'];
+  var codigo = req.params['codigo'];
+
+  var user = await User.findById({ _id: id });
+
+  if (codigo == user.codigo) {
+    var reg = await User.findByIdAndUpdate({ _id: id }, { verificado: true });
+
+    res.status(200).send({ data: reg });
+  } else if (codigo != user.codigo) {
+    res.status(200).send({ data: undefined });
+  }
+}
+
 const obtener_user = async function (req, res) {
   if (req.user) {
 
@@ -111,6 +131,7 @@ const enviar_mensaje_contacto = async function (req, res) {
 module.exports = {
     registro_user,
     login_user,
+    actualizar_user_verificado,
     obtener_user,
     enviar_mensaje_contacto
 }

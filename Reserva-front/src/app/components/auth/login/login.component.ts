@@ -123,6 +123,9 @@ export class LoginComponent implements OnInit {
                     });
 
                   }
+                } else {
+                  this._toastrService.error('Empresa aún no verificada', 'ERROR!');
+                  this._router.navigate(['/wait']);
                 }
               }
             );

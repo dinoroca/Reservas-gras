@@ -9,7 +9,7 @@ import { UserService } from 'src/app/services/user.service';
   templateUrl: './verify-mail.component.html',
   styleUrls: ['./verify-mail.component.css']
 })
-export class VerifyMailComponent implements OnInit{
+export class VerifyMailComponent implements OnInit {
 
   public codigo = '';
   public id: any;
@@ -29,19 +29,24 @@ export class VerifyMailComponent implements OnInit{
   }
 
   verificar(verificarForm: any) {
-    // if (verificarForm.valid) {
-    //   this._userService.actualizar_user_verificado(this.id, this.codigo).subscribe(
-    //     response => {
-    //       if (response.data != undefined) {
-    //         this._toastrService.success('Se verificó correctamente', 'VERIFICADO!');
-    //         this._router.navigate(['/login']);
-    //       } else {
-    //         this._toastrService.error('Código incorrecto, vuelve a intentarlo', 'ERROR');
-    //         this.codigo = '';
-    //       }
-    //     }
-    //   );
-    // }
+    if (verificarForm.valid) {
+      if (this.id) {
+        this._userService.actualizar_user_verificado(this.id, this.codigo).subscribe(
+          response => {
+            if (response.data != undefined) {
+              this._toastrService.success('Se verificó correctamente', 'VERIFICADO!');
+              this._router.navigate(['/login']);
+            } else {
+              this._toastrService.error('Código incorrecto, vuelve a intentarlo', 'ERROR');
+              this.codigo = '';
+            }
+          }
+        );
+      } else {
+        this._toastrService.error('Verifique su cuenta en el mismo dispositivo', 'ERROR');
+        this.codigo = '';
+      }
+    }
   }
 
 }
