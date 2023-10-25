@@ -3,10 +3,10 @@
 <div class="container-fluid" style="padding-top: 10vh">
     <div class="mb-5 container d-flex justify-content-center">
         <div class="p-3 p-sm-4 col-12 col-sm-8 rounded shadow">
-            
+
             <app-side-menu-register></app-side-menu-register>
 
-            <h2 class="text-center text-black-50 fw-bold">Regístrate!</h2>
+            <h2 class="text-center text-black-50 fw-bold pt-4">¡Regístrate!</h2>
             <p class="text-center pb-2 text-black-50">
                 Cree una cuenta para disfrutar de las funciones de nuestro sistema y empezar a reservar tus canchas.<br>
             </p>
@@ -14,16 +14,15 @@
                 <div class="row">
                     <div class="col-12 col-sm-6">
                         <label for="nombres" class="form-label">Nombres</label>
-                        <input type="text" class="form-control" placeholder="Ingrese sus nombres" name="nombres"
+                        <input type="text" class="form-control" placeholder="Ingrese su nombre" name="nombres"
                             id="nombres" [(ngModel)]="user.nombres" required />
                     </div>
 
                     <div class="col-12 col-sm-6 mt-3 mt-sm-0">
-                        <label for="region" class="form-label text-black-50">Ciudad</label>
-                        <select id="region" class="form-select" name="region" 
-                            [(ngModel)]="user.region" (change)="select_region()" 
-                            required>
-                            <option value="" selected disabled>--Seleccione--</option>
+                        <label for="region" class="form-label">Ciudad</label>
+                        <select id="region" class="form-select" name="region" [(ngModel)]="user.region"
+                            (change)="select_region()" required>
+                            <option value="" selected disabled>Seleccionar</option>
                             <option value="{{item.id}}" *ngFor="let item of regiones"> {{item.name}} </option>
                         </select>
                     </div>
@@ -32,13 +31,13 @@
                 <div class="row mt-4">
                     <div class="col-12 col-sm-6">
                         <label for="email" class="form-label">Correo</label>
-                        <input type="email" class="form-control" placeholder="Ingrese su correo" name="email"
-                            id="email" [(ngModel)]="user.email" required />
+                        <input type="email" class="form-control" placeholder="Ingrese su correo" name="email" id="email"
+                            [(ngModel)]="user.email" required />
                     </div>
 
                     <div class="col-12 col-sm-6 mt-3 mt-sm-0">
-                        <label for="telefono" class="form-label">Teléfono</label>
-                        <input type="text" class="form-control" placeholder="Ingrese número" name="telefono"
+                        <label for="telefono" class="form-label">WhatsApp</label>
+                        <input type="text" class="form-control" placeholder="Ingrese su WhatsApp" name="telefono"
                             id="telefono" [(ngModel)]="user.telefono" required maxlength="9" />
                     </div>
                 </div>
@@ -46,9 +45,9 @@
                 <div class="row mt-4">
                     <div class="col-12 col-sm-6">
                         <label for="password1" class="form-label">Contraseña</label>
-                        <input [type]="password" class="form-control" placeholder="Contraseña"
+                        <input [type]="password" class="form-control" placeholder="Ingrese su contraseña"
                             (keyup)="compare_password()" name="password1" id="password1" [(ngModel)]="password1"
-                            required/>
+                            required />
                     </div>
 
                     <div class="col-12 col-sm-6 mt-3 mt-sm-0">
@@ -79,10 +78,9 @@
 
                 <div class="pt-2 text-center">
                     <small>Al dar click en <strong>Registrar</strong> aceptas nuestras
-                        <strong [routerLink]="['/politica-privacidad']" 
-                        style="cursor: pointer; color: #6F42C1;">
-                        Políticas de privacidad
-                    </strong>
+                        <strong [routerLink]="['/politica-privacidad']" style="cursor: pointer; color: #6F42C1;">
+                            Políticas de privacidad
+                        </strong>
                     </small>
                 </div>
 
@@ -93,7 +91,7 @@
                 </div>
 
                 <p class="font-size-sm pt-4 text-center">
-                    Ya tienes cuenta?
+                    ¿Ya tienes cuenta?
                     <a class="fw-bold text-decoration-none text-success" [routerLink]="['/login']">
                         Iniciar sesión
                     </a>
