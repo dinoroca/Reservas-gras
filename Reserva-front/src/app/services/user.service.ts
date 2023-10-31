@@ -42,6 +42,16 @@ export class UserService {
     return this._http.put(this.url + 'actualizar_user/' + id, data, { headers: headers });
   }
 
+  comparar_password(data: any, token: any): Observable<any> {
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json', 'authorization': token });
+    return this._http.post(this.url + 'comparar_password', data, { headers: headers });
+  }
+
+  actualizar_password_user(id: any, data: any, token: any): Observable<any> {
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json', 'authorization': token });
+    return this._http.put(this.url + 'actualizar_password_user/' + id, data, { headers: headers });
+  }
+
   //EMPRESA
   registro_empresa(data: any): Observable<any> {
     let headers = new HttpHeaders({ 'Content-Type': 'application/json' });

@@ -52,14 +52,14 @@
                                     </div>
     
                                     <div class="d-grid gap-2 mt-4">
-                                        <button type="submit" class="btn btn-primary"
+                                        <button *ngIf="!load_btn" type="submit" class="btn btn-primary"
                                             [disabled]="updateForm.invalid && valid">
                                             <i class="bi bi-person-check"></i> &nbsp; Actualizar
                                         </button>
 
                                         <button *ngIf="load_btn" class="btn btn-primary" type="button" disabled>
                                             <span class="spinner-grow spinner-grow-sm" aria-hidden="true"></span>
-                                            <span role="status">Actualizando...</span>
+                                            <span role="status"> &nbsp; Actualizando...</span>
                                           </button>
                                     </div>
                                 </form>

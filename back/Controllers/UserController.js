@@ -135,6 +135,60 @@ const actualizar_user = async function (req, res) {
   }
 }
 
+const comparar_password = async function (req, res) {
+  var data = req.body;
+  var users_arr = [];
+
+  //Busca un cliente mediante el correo
+  users_arr = await User.find({ email: data.email });
+
+  if (users_arr.length == 0) {
+    res
+      .status(200)
+      .send({ message: "Correo o contraseña incorrectos", data: undefined });
+  } else {
+    //Si existe el cliente se manda al login
+    let user = users_arr[0];
+
+    //Comparar contraseñas
+    bcrypt.compare(data.password, user.password, async function (error, check) {
+      if (check) {
+        res.status(200).send({ data: true });
+      } else {
+        res
+          .status(200)
+          .send({ message: "Contraseña incorrecta", data: undefined });
+      }
+    });
+  }
+}
+
+const actualizar_password_user = async function (req, res) {
+  if (req.user) {
+    var id = req.params['id'];
+    var data = req.body;
+
+    if (data.password) {
+      bcrypt.hash(data.password, null, null, async function (err, hash) {
+        if (hash) {
+          data.password = hash;
+          var reg = await User.findByIdAndUpdate({ _id: id }, {
+            password: data.password
+          });
+
+          res.status(200).send({ data: true });
+
+        } else {
+          res.status(200).send({ message: "Error server", data: undefined });
+        }
+      });
+    }
+
+  } else {
+    res.status(500).send({ message: 'NoAccess' });
+  }
+}
+
 
 ////////CONTACTO
 const enviar_mensaje_contacto = async function (req, res) {
@@ -152,5 +206,7 @@ module.exports = {
     actualizar_user_verificado,
     obtener_user,
     actualizar_user,
+    comparar_password,
+    actualizar_password_user,
     enviar_mensaje_contacto
 }

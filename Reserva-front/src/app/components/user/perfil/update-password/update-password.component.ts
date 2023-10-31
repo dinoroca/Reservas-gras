@@ -44,19 +44,19 @@ export class UpdatePasswordComponent implements OnInit {
       password: this.pass
     }
 
-    // this._userService.comparar_password(data, this.token).subscribe(
-    //   response => {        
-    //     if (response.data == undefined) {
-    //       this._toastrService.error(response.message, 'ERROR');
+    this._userService.comparar_password(data, this.token).subscribe(
+      response => {        
+        if (response.data == undefined) {
+          this._toastrService.error(response.message, 'ERROR');
 
-    //     } else if (response.data == true || response.data == 'true') {
-    //       this._toastrService.success('Se verificó con éxito', 'VERIFICADO!');
+        } else if (response.data == true || response.data == 'true') {
+          this._toastrService.success('Se verificó con éxito', 'VERIFICADO!');
 
-    //       this.verificado = true;
-    //       this.pass = '';
-    //     }
-    //   }
-    //);
+          this.verificado = true;
+          this.pass = '';
+        }
+      }
+    );
   }
 
   onClickPass() {
@@ -84,24 +84,24 @@ export class UpdatePasswordComponent implements OnInit {
     let data = {
       password : this.password
     }
-    // this._userService.actualizar_password_user(this.user._id, data, this.token).subscribe(
-    //   response => {
-    //     if (response.data == undefined) {
-    //       this._toastrService.error(response.message, 'ERROR');
+    this._userService.actualizar_password_user(this.user._id, data, this.token).subscribe(
+      response => {
+        if (response.data == undefined) {
+          this._toastrService.error(response.message, 'ERROR');
 
-    //     } else if (response.data == true || response.data == 'true') {
-    //       this._toastrService.success('Se actualizó la contraseña', 'ACTUALIZADO!');
+        } else if (response.data == true || response.data == 'true') {
+          this._toastrService.success('Se actualizó la contraseña', 'ACTUALIZADO!');
 
-    //       this.verificado = false;
-    //       this.password = '';
-    //       this.password1 = '';
-    //       this.pass = '';
-    //       this.show = false;
-    //       this.valid = false;
-    //       this._router.navigate(['/usuario/perfil']);
-    //     }
-    //   }
-    // );
+          this.verificado = false;
+          this.password = '';
+          this.password1 = '';
+          this.pass = '';
+          this.show = false;
+          this.valid = false;
+          this._router.navigate(['/usuario/perfil']);
+        }
+      }
+    );
 
   }
 }
