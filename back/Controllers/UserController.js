@@ -117,6 +117,24 @@ const obtener_user = async function (req, res) {
   }
 }
 
+const actualizar_user = async function (req, res) {
+  if (req.user) {
+    var id = req.params['id'];
+    var data = req.body;
+
+    var reg = await User.findByIdAndUpdate({ _id: id }, {
+      nombres: data.nombres,
+      ciudad: data.ciudad,
+      telefono: data.telefono
+    });
+
+    res.status(200).send({ data: reg });
+
+  } else {
+    res.status(500).send({ message: 'NoAccess' });
+  }
+}
+
 
 ////////CONTACTO
 const enviar_mensaje_contacto = async function (req, res) {
@@ -133,5 +151,6 @@ module.exports = {
     login_user,
     actualizar_user_verificado,
     obtener_user,
+    actualizar_user,
     enviar_mensaje_contacto
 }

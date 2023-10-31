@@ -56,14 +56,16 @@
                                             [disabled]="updateForm.invalid && valid">
                                             <i class="bi bi-person-check"></i> &nbsp; Actualizar
                                         </button>
+
+                                        <button *ngIf="load_btn" class="btn btn-primary" type="button" disabled>
+                                            <span class="spinner-grow spinner-grow-sm" aria-hidden="true"></span>
+                                            <span role="status">Actualizando...</span>
+                                          </button>
                                     </div>
                                 </form>
                             </div>
                         </div>
                     </div>
-
-
-                   
                 </div>
             </div>
         </div>

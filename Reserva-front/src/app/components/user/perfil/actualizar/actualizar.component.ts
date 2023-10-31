@@ -66,17 +66,17 @@ export class ActualizarComponent implements OnInit {
   actualizar(updateForm: any) {    
     if(updateForm.valid) {
       this.load_btn = true;
-      // this._userService.actualizar_user(this.id, this.user, this.token).subscribe(
-      //   response => {
-      //     if (response.data == undefined) {
-      //       this._toastrService.error(response.message, 'ERROR');
-      //     } else {
-      //       this._toastrService.success('Se actualizó con éxito', 'ACTUALIZADO!');
-
-      //       this._router.navigate(['/usuario']);
-      //     }
-      //   }
-      // );
+      this._userService.actualizar_user(this.id, this.user, this.token).subscribe(
+        response => {
+          if (response.data == undefined) {
+            this._toastrService.error(response.message, 'ERROR');
+          } else {
+            this._toastrService.success('Se actualizó con éxito', 'ACTUALIZADO!');
+            this.load_btn = false;
+            this._router.navigate(['/usuario']);
+          }
+        }
+      );
     } else {
       this._toastrService.error('Datos inválidos en el formulario', 'ERROR');
     }
