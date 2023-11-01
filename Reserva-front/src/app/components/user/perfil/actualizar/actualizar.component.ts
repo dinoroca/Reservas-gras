@@ -35,13 +35,11 @@ export class ActualizarComponent implements OnInit {
     private _toastrService: ToastrService,
     private _title: Title
   ){
+    
     this._guestService.obtener_regiones().subscribe(
       response => {
         response.forEach((element: { id: any; name: any; }) => {
-          this.regiones.push({
-            id: element.id,
-            name: element.name
-          });
+          this.regiones.push(element.name);
         });
       }
     );
@@ -58,9 +56,9 @@ export class ActualizarComponent implements OnInit {
   }
 
   select_region() {
-    const regencontrado = this.regiones.find(objeto => objeto.id === this.user.region);
+    const regencontrado = this.user.ciudad;
 
-    this.namereg = regencontrado.name;
+    this.namereg = regencontrado;
   }
 
   actualizar(updateForm: any) {    

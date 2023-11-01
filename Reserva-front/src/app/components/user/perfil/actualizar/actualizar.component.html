@@ -29,9 +29,9 @@
                                         <div class="col-12 col-sm-6">
                                             <label for="ciudad" class="form-label text-black-50">Ciudad</label>
                                             <select id="ciudad" class="form-select" name="ciudad"
-                                                [(ngModel)]="user.ciudad" required (click)="select_region()">
+                                                [(ngModel)]="user.ciudad" required (change)="select_region()">
                                                 <option selected>{{user.ciudad}}</option>
-                                                <option value="{{item.id}}" *ngFor="let item of regiones"> {{item.name}} </option>
+                                                <option value="{{item}}" *ngFor="let item of regiones"> {{item}} </option>
                                             </select>
                                         </div>
                                     </div>
