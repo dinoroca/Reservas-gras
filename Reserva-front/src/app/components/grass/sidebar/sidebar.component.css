@@ -1,0 +1,26 @@
+.nav-link {
+    color: #FFF;
+}
+
+.nav-link.active {
+    color: #20C997;
+    font-style: bold;
+    box-shadow: 0px 0px 2px #20C997;
+    font-size: 1.2rem;
+}
+
+.nav-link:hover {
+    color: #ffffff;
+    text-decoration: none;
+    background-color: #079367;
+    border-radius: 5px;
+    box-shadow: 0px 0px 7px #7dffd4;
+}
+
+a{
+    cursor: pointer;
+}
+
+i{
+    font-size: 1.1rem;
+}

@@ -6,5 +6,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./sidebar.component.css']
 })
 export class SidebarComponent {
+  public user: any;
+
+  constructor() {
+    this.user = JSON.parse(localStorage.getItem('user_data')!);
+  }
 
 }
