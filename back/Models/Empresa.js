@@ -8,7 +8,7 @@ var EmpresaSchema = Schema({
     token_pass: {type: String, required: false},
     nombre: {type: String, required: true},
     email: {type: String, required: true},
-    user_name: {type: String, required: true},
+    direccion: {type: String, required: true},
     telefono: {type: String, required: true},
     region: {type: String, required: false},
     provincia: {type: String, required: false},

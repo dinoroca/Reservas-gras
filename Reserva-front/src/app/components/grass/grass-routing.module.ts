@@ -5,11 +5,13 @@ import { CanchasComponent } from './canchas/canchas.component';
 import { ReservacionesComponent } from './reservaciones/reservaciones.component';
 import { IndexCuentasComponent } from './cuentas/index-cuentas/index-cuentas.component';
 import { IndexDatosComponent } from './datos/index-datos/index-datos.component';
+import { EditDatosComponent } from './datos/edit-datos/edit-datos.component';
 
 const routes: Routes = [
   {path: '', component: InicioComponent},
   {path: 'canchas', component: CanchasComponent},
   {path: 'datos', component: IndexDatosComponent},
+  {path: 'datos/actualizar', component: EditDatosComponent},
   {path: 'reservaciones', component: ReservacionesComponent},
   {path: 'cuentas', component: IndexCuentasComponent}
 ];

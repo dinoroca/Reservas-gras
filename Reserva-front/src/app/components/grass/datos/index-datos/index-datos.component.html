@@ -4,6 +4,74 @@
 <div class="container py-4">
     <app-sidebar></app-sidebar>
 
-<p>Datos works!</p>
+    <div class="shadow rounded mt-5 p-4">
+        <!-- mis datos -->
+        <div class="row">
+            <div class="col-12 col-sm-6">
+                <label for="nombre" class="form-label text-black-50">Nombre</label>
+                <input disabled disabled type="text" class="form-control" placeholder="Ingrese nombre del grass"
+                    name="nombre" id="nombre" [(ngModel)]="user_lc.nombre" />
+            </div>
+
+            <div class="col-12 col-sm-6 mt-3 mt-sm-0">
+                <label for="direccion" class="form-label text-black-50">Dirección</label>
+                <input disabled type="text" class="form-control" placeholder="Ingrese la dirección de su grass"
+                    name="direccion" id="direccion" [(ngModel)]="user_lc.direccion" />
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-12 col-sm-6">
+                <label for="email" class="form-label text-black-50">Correo</label>
+                <input disabled type="email" class="form-control" placeholder="Ingrese su correo" name="email"
+                    id="email" [(ngModel)]="user_lc.email" />
+            </div>
+
+            <div class="col-12 col-sm-6 mt-3 mt-sm-0">
+                <label for="telefono" class="form-label text-black-50">Teléfono</label>
+                <input disabled type="text" class="form-control" placeholder="Ingrese su número" name="telefono"
+                    id="telefono" [(ngModel)]="user_lc.telefono" maxlength="9" />
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-12 col-sm-6">
+                <label for="region" class="form-label text-black-50">Región</label>
+                <select id="region" class="form-select" name="region" [(ngModel)]="user_lc.region" selected disabled>
+                    <option> {{user_lc.region}} </option>
+                </select>
+            </div>
+
+            <div class="col-12 col-sm-6 mt-3 mt-sm-0">
+                <label for="provincia" class="form-label text-black-50">Provincia</label>
+                <select id="provincia" class="form-select" name="provincia" [(ngModel)]="user_lc.provincia" selected
+                    disabled>
+                    <option> {{user_lc.provincia}} </option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-12 col-sm-6">
+                <label for="distrito" class="form-label text-black-50">Distrito</label>
+                <select id="distrito" class="form-select" name="distrito" [(ngModel)]="user_lc.distrito" selected
+                    disabled>
+                    <option> {{user_lc.distrito}} </option>
+                </select>
+            </div>
+
+            <div class="col-12 col-sm-6 mt-3 mt-sm-0">
+                <label for="ubicacion" class="form-label text-black-50">Ubicación</label>
+                <input disabled type="text" class="form-control" placeholder="Ingrese link de Google Maps"
+                    name="ubicacion" id="ubicacion" [(ngModel)]="user_lc.ubicacion" />
+            </div>
+        </div>
+
+        <div class="d-grid gap-2 mt-5">
+            <button type="submit" class="btn btn-primary" [routerLink]="['/grass/datos/actualizar']">
+                <i class="bi bi-pencil"></i> &nbsp; Actualizar datos
+            </button>
+        </div>
+    </div>
 
 </div>

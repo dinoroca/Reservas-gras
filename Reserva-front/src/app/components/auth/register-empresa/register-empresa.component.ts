@@ -186,7 +186,7 @@ export class RegisterEmpresaComponent implements OnInit {
 
       let data = {
         nombre: this.empresa.nombre,
-        user_name: this.empresa.username,
+        direccion: this.empresa.direccion,
         email: this.empresa.email,
         telefono: this.empresa.telefono,
         region: this.namereg,
