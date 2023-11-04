@@ -9,6 +9,7 @@ var auth = require('../Middlewares/authenticate');
 api.post('/registro_empresa', EmpresaController.registro_empresa);
 api.post('/login_empresa', EmpresaController.login_empresa);
 api.get('/obtener_empresa/:id', auth.auth, EmpresaController.obtener_empresa);
+api.put('/actualizar_empresa/:id', auth.auth, EmpresaController.actualizar_empresa);
 
 
 //Buscar empresa

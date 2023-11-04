@@ -25,24 +25,25 @@
                                             <input type="text" class="form-control" placeholder="Ingrese sus nombres"
                                                 name="nombres" id="nombres" [(ngModel)]="user.nombres" required />
                                         </div>
-    
+
                                         <div class="col-12 col-sm-6">
                                             <label for="ciudad" class="form-label text-black-50">Ciudad</label>
                                             <select id="ciudad" class="form-select" name="ciudad"
                                                 [(ngModel)]="user.ciudad" required (change)="select_region()">
                                                 <option selected>{{user.ciudad}}</option>
-                                                <option value="{{item}}" *ngFor="let item of regiones"> {{item}} </option>
+                                                <option value="{{item}}" *ngFor="let item of regiones"> {{item}}
+                                                </option>
                                             </select>
                                         </div>
                                     </div>
-    
+
                                     <div class="row mt-4">
                                         <div class="col-12 col-sm-6">
                                             <label for="email" class="form-label text-black-50">Correo</label>
                                             <input type="email" class="form-control" placeholder="Ingrese su correo"
                                                 name="email" id="email" [(ngModel)]="user.email" disabled />
                                         </div>
-    
+
                                         <div class="col-12 col-sm-6 mt-3 mt-sm-0">
                                             <label for="telefono" class="form-label text-black-50">Teléfono</label>
                                             <input type="text" class="form-control" placeholder="Ingrese número"
@@ -50,7 +51,7 @@
                                                 maxlength="9" />
                                         </div>
                                     </div>
-    
+
                                     <div class="d-grid gap-2 mt-4">
                                         <button *ngIf="!load_btn" type="submit" class="btn btn-primary"
                                             [disabled]="updateForm.invalid && valid">
@@ -60,7 +61,7 @@
                                         <button *ngIf="load_btn" class="btn btn-primary" type="button" disabled>
                                             <span class="spinner-grow spinner-grow-sm" aria-hidden="true"></span>
                                             <span role="status"> &nbsp; Actualizando...</span>
-                                          </button>
+                                        </button>
                                     </div>
                                 </form>
                             </div>

@@ -157,6 +157,24 @@ const listar_empresas_dist = async function (req, res) {
     }
 }
 
+const actualizar_empresa = async function (req, res) {
+  if (req.user) {
+    var id = req.params['id'];
+    var data = req.body;
+
+    var reg = await Empresa.findByIdAndUpdate({ _id: id }, {
+      nombre: data.nombre,
+      direccion: data.direccion,
+      telefono: data.telefono,
+      ubicacion: data.ubicacion,
+    });
+
+    res.status(200).send({ data: reg });
+
+  } else {
+    res.status(500).send({ message: 'NoAccess' });
+  }
+}
 
 module.exports = {
     registro_empresa,
@@ -165,5 +183,6 @@ module.exports = {
     listar_empresas_filtro,
     listar_empresas_region,
     listar_empresas_prov,
-    listar_empresas_dist
+    listar_empresas_dist,
+    actualizar_empresa
 }

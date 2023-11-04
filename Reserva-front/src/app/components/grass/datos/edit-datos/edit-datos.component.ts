@@ -15,8 +15,6 @@ export class EditDatosComponent implements OnInit {
   public empresa: any = {
   };
 
-  public user: any = {};
-
   public regiones: Array<any> = [];
   public namereg ='';
   public provincias: Array<any> = [];
@@ -28,13 +26,14 @@ export class EditDatosComponent implements OnInit {
   public vacio = true;
 
   public valid = false;
+  public load_btn = false;
+  public load_data = false;
 
-  public recordar = true;
-
-  public usuario: any = {};
   public token: any;
   public id: any;
-  public user_lc: any;
+  public user_lc: any = {
+
+  };
 
   isDisabledProvincia = true;
   isDisabledDistrito = true;
@@ -50,65 +49,24 @@ export class EditDatosComponent implements OnInit {
 
     this.token = localStorage.getItem('token') || sessionStorage.getItem('token');
     this.id = localStorage.getItem('_id') || sessionStorage.getItem('_id');
-    this.user_lc = JSON.parse(localStorage.getItem('user_data')!);
+    this.user_lc = JSON.parse(localStorage.getItem('user_data')!); 
 
-    this._guestService.obtener_regiones().subscribe(
+    _userService.obtener_empresa(this.id, this.token).subscribe(
       response => {
-        response.forEach((element: { id: any; name: any; }) => {
-          this.regiones.push({
-            id: element.id,
-            name: element.name
-          });
-        });
+        this.load_data = true;
+        if (response.data == undefined) {
+          this._toastrService.error('Usuario inexistente', 'ERROR!');
+          this.load_data = false;
+        } else {
+          this.empresa = response.data;
+          this.load_data = false;
+        }
       }
     );
-    
   }
 
   ngOnInit(): void {
     this._title.setTitle('GRASS | Actualizar datos');
-  }
-
-  select_region() {
-    this.provincias = [];
-    this.distritos = [];
-    this.isDisabledProvincia = false;
-    this.isDisabledDistrito = true;
-    this.empresa.provincia = '';
-    this.empresa.distrito = '';
-    this._guestService.obtener_provincias().subscribe(
-      response => {
-        response.forEach((element: { department_id: any; }) => {
-          if (element.department_id == this.empresa.region) {
-            this.provincias.push(element);
-          }
-        });
-      }
-    );
-    
-    const regencontrado = this.regiones.find(objeto => objeto.id === this.empresa.region);
-
-    this.namereg = regencontrado.name;
-  }
-
-  select_provincia() {
-    this.distritos = [];
-    this.isDisabledDistrito = false;
-    this.empresa.distrito = '';
-    this._guestService.obtener_distritos().subscribe(
-      response => {
-        response.forEach((element: { province_id: any; }) => {
-          if (element.province_id == this.empresa.provincia) {
-            this.distritos.push(element);
-          }
-        });
-      }
-    );
-
-    const provencontrado = this.provincias.find(objeto => objeto.id === this.empresa.provincia);
-
-    this.nameprov = provencontrado.name;
-    
   }
 
   actualizar(registroForm: any) {
@@ -125,28 +83,18 @@ export class EditDatosComponent implements OnInit {
         ubicacion: this.user_lc.ubicacion,
       }
 
-      // this._userService.registro_empresa(data).subscribe(
-      //   response => {
-      //     if (response.data == undefined) {
-      //       this._toastrService.error(response.message, 'ERROR');
-
-      //     } else if (response.data != undefined) {
-      //       localStorage.setItem('_id', response.data._id);
-
-      //       this._toastrService.success('Se registró con éxito', 'REGISTRADO!');
-      //       this._router.navigate(['/wait']);
-
-      //       // this._userService.enviar_correo_confirmacion(response.data._id).subscribe(
-      //       //   response => {
-      //       //     if (response.data) {
-      //       //       this._toastrService.success('Se envió el código de verificación', 'ENVIADO!');
-      //       //       this._router.navigate(['/verificar']);
-      //       //     }
-      //       //   }
-      //       // );
-      //     }
-      //   }
-      // );
+      this._userService.actualizar_empresa(this.id, data, this.token).subscribe(
+        response => {
+          this.load_btn = true;
+          if (response.data == undefined) {
+            this._toastrService.error(response.message, 'ERROR');
+          } else {
+            this._toastrService.success('Se actualizó con éxito', 'ACTUALIZADO!');
+            this.load_btn = false;
+            this._router.navigate(['/grass']);
+          }
+        }
+      );
     } else {
       this._toastrService.error('Los datos del formulario no son válidos', 'ERROR');
     }
