@@ -24,6 +24,7 @@ export class RegisterEmpresaComponent implements OnInit {
   public password: any;
   public password1 = '';
   public show = false;
+  public showAlertLink = false;
   public alert_pass = false;
 
   public regiones: Array<any> = [];
@@ -37,6 +38,7 @@ export class RegisterEmpresaComponent implements OnInit {
   public vacio = true;
 
   public valid = false;
+  public validLink = false;
 
   public recordar = true;
 
@@ -125,6 +127,18 @@ export class RegisterEmpresaComponent implements OnInit {
   ngOnInit(): void {
     this._title.setTitle('Registro de empresas');
     this.password = 'password';
+  }
+
+  validarURL() {
+    const urlRegex = /^(https:\/\/maps\.app\.goo\.gl\/[a-zA-Z0-9]+)$/;
+
+    if (urlRegex.test(this.empresa.ubicacion)) {
+      this.validLink = true;
+      this.showAlertLink = false;
+    } else {
+      this.validLink = false;
+      this.showAlertLink = true;
+    }
   }
 
   //Comparar contraseñas

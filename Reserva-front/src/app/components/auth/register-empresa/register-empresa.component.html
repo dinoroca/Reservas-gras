@@ -71,8 +71,13 @@
 
                     <div class="col-12 col-sm-6 mt-3 mt-sm-0">
                         <label for="ubicacion" class="form-label text-black-50">Ubicación</label>
-                        <input type="text" class="form-control" placeholder="Ingrese link de Google Maps" name="ubicacion"
-                            id="ubicacion" [(ngModel)]="empresa.ubicacion" required/>
+                        <input type="text" class="form-control" placeholder="Ingrese link de Google Maps"
+                            name="ubicacion" id="ubicacion" [(ngModel)]="empresa.ubicacion" (change)="validarURL()"
+                            required />
+
+                        <div class="alert alert-danger mt-2 text-center" role="alert" *ngIf="showAlertLink">
+                            <em>Link de maps inválido</em>
+                        </div>
                     </div>
                 </div>
 
@@ -119,7 +124,8 @@
                 </div>
 
                 <div class="d-grid gap-2 mt-4">
-                    <button type="submit" class="btn btn-primary" [disabled]="registroForm.invalid">
+                    <button type="submit" class="btn btn-primary"
+                        [disabled]="registroForm.invalid || !valid || !validLink">
                         <i class="bi bi-plus-circle"></i> &nbsp; Registrar
                     </button>
                 </div>
