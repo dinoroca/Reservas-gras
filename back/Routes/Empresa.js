@@ -10,6 +10,9 @@ api.post('/registro_empresa', EmpresaController.registro_empresa);
 api.post('/login_empresa', EmpresaController.login_empresa);
 api.get('/obtener_empresa/:id', auth.auth, EmpresaController.obtener_empresa);
 api.put('/actualizar_empresa/:id', auth.auth, EmpresaController.actualizar_empresa);
+api.post('/crear_caracteristicas_empresa/:id', auth.auth, EmpresaController.crear_caracteristicas_empresa);
+api.get('/obtener_caracteristicas_empresa/:id', auth.auth, EmpresaController.obtener_caracteristicas_empresa);
+api.put('/actualizar_caracteristicas_empresa/:id', auth.auth, EmpresaController.actualizar_caracteristicas_empresa);
 
 
 //Buscar empresa

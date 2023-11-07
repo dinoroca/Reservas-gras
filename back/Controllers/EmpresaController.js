@@ -1,6 +1,7 @@
 'use strict';
 
 var Empresa = require('../Models/Empresa');
+var Caracteristicas = require('../Models/Caracteristicas');
 var bcrypt = require('bcrypt-nodejs');
 var jwt = require('../Helpers/jwt');
 
@@ -101,24 +102,24 @@ const listar_empresas_filtro = async function (req, res) {
 
   let filtro = req.params['filtro'];
 
-      let reg = await Empresa.find({ nombre: new RegExp(filtro, 'i') }).sort({ createdAt: -1 }).limit(10);
-      if (reg.length > 0) {
-        res.status(200).send({ data: reg });
-    } else {
-        res.status(200).send({ data: undefined });
-    }
+  let reg = await Empresa.find({ nombre: new RegExp(filtro, 'i') }).sort({ createdAt: -1 }).limit(10);
+  if (reg.length > 0) {
+    res.status(200).send({ data: reg });
+  } else {
+    res.status(200).send({ data: undefined });
+  }
 }
 
 const listar_empresas_region = async function (req, res) {
 
   let region = req.params['region'];
 
-      let reg = await Empresa.find({ region: new RegExp(region, 'i') }).sort({ createdAt: -1 }).limit(20);
-      if (reg.length > 0) {
-        res.status(200).send({ data: reg });
-    } else {
-        res.status(200).send({ data: undefined });
-    }
+  let reg = await Empresa.find({ region: new RegExp(region, 'i') }).sort({ createdAt: -1 }).limit(20);
+  if (reg.length > 0) {
+    res.status(200).send({ data: reg });
+  } else {
+    res.status(200).send({ data: undefined });
+  }
 }
 
 const listar_empresas_prov = async function (req, res) {
@@ -126,16 +127,18 @@ const listar_empresas_prov = async function (req, res) {
   let region = req.params['region'];
   let provincia = req.params['provincia'];
 
-      let reg = await Empresa.find({ $and: [
-        { provincia: provincia },
-        { region:region }
-      ] }).sort({ createdAt: -1 }).limit(20);
+  let reg = await Empresa.find({
+    $and: [
+      { provincia: provincia },
+      { region: region }
+    ]
+  }).sort({ createdAt: -1 }).limit(20);
 
-      if (reg.length > 0) {
-        res.status(200).send({ data: reg });
-    } else {
-        res.status(200).send({ data: undefined });
-    }
+  if (reg.length > 0) {
+    res.status(200).send({ data: reg });
+  } else {
+    res.status(200).send({ data: undefined });
+  }
 }
 
 const listar_empresas_dist = async function (req, res) {
@@ -144,17 +147,19 @@ const listar_empresas_dist = async function (req, res) {
   let provincia = req.params['provincia'];
   let distrito = req.params['distrito'];
 
-      let reg = await Empresa.find({ $and: [
-        { provincia: provincia },
-        { region:region },
-        { distrito:distrito }
-      ] }).sort({ createdAt: -1 }).limit(20);
+  let reg = await Empresa.find({
+    $and: [
+      { provincia: provincia },
+      { region: region },
+      { distrito: distrito }
+    ]
+  }).sort({ createdAt: -1 }).limit(20);
 
-      if (reg.length > 0) {
-        res.status(200).send({ data: reg });
-    } else {
-        res.status(200).send({ data: undefined });
-    }
+  if (reg.length > 0) {
+    res.status(200).send({ data: reg });
+  } else {
+    res.status(200).send({ data: undefined });
+  }
 }
 
 const actualizar_empresa = async function (req, res) {
@@ -176,13 +181,80 @@ const actualizar_empresa = async function (req, res) {
   }
 }
 
+const crear_caracteristicas_empresa = async function (req, res) {
+  if (req.user) {
+    if (req.user.role == 'GRASS') {
+      try {
+        var reg = await Caracteristicas.create(data);
+        res.status(200).send({ data: reg });
+
+      } catch (error) {
+        res.status(200).send({ data: undefined });
+      }
+
+    } else {
+      res.status(500).send({ message: 'NoAccess' });
+    }
+  } else {
+    res.status(500).send({ message: 'NoAccess' });
+  }
+}
+
+const obtener_caracteristicas_empresa = async function (req, res) {
+  if (req.user) {
+    if (req.user.role == 'GRASS') {
+      let id = req.params['id'];
+      let caracteristicas = await Caracteristicas.find({ empresa: id }).populate('empresa');
+      res.status(200).send({ data: caracteristicas });
+
+    } else {
+      res.status(500).send({ message: 'NoAccess' });
+    }
+  } else {
+    res.status(500).send({ message: 'NoAccess' });
+  }
+}
+
+const actualizar_caracteristicas_empresa = async function (req, res) {
+  if (req.user) {
+    if (req.user.role == 'GRASS') {
+
+      var id = req.params['id'];
+      var data = req.body;
+
+      try {
+        var reg = await Caracteristicas.updateOne({ empresa: id }, {
+          techado: data.techado,
+          canchas_futsal: data.canchas_futsal,
+          canchas_voley: data.canchas_voley,
+          iluminacion: data.iluminacion,
+          garaje: data.garaje
+        });
+        res.status(200).send({ data: reg });
+
+      } catch (error) {
+        res.status(200).send({ data: undefined });
+      }
+
+    } else {
+      res.status(500).send({ message: 'NoAccess' });
+    }
+  } else {
+    res.status(500).send({ message: 'NoAccess' });
+  }
+}
+
+
 module.exports = {
-    registro_empresa,
-    login_empresa,
-    obtener_empresa,
-    listar_empresas_filtro,
-    listar_empresas_region,
-    listar_empresas_prov,
-    listar_empresas_dist,
-    actualizar_empresa
+  registro_empresa,
+  login_empresa,
+  obtener_empresa,
+  listar_empresas_filtro,
+  listar_empresas_region,
+  listar_empresas_prov,
+  listar_empresas_dist,
+  actualizar_empresa,
+  crear_caracteristicas_empresa,
+  obtener_caracteristicas_empresa,
+  actualizar_caracteristicas_empresa
 }

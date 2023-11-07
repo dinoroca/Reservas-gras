@@ -85,7 +85,7 @@
                 </div>
 
                 <div class="d-grid gap-2 mt-4">
-                    <button type="submit" class="btn btn-primary" [disabled]="registroForm.invalid">
+                    <button type="submit" class="btn btn-primary" [disabled]="registroForm.invalid || !valid">
                         <i class="bi bi-person-check"></i> &nbsp; Registrar
                     </button>
                 </div>

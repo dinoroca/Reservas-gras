@@ -89,6 +89,21 @@ export class UserService {
     return this._http.put(this.url + 'actualizar_empresa/' + id, data, { headers: headers });
   }
 
+  crear_caracteristicas_empresa(id: any, data: any): Observable<any> {
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this._http.post(this.url + 'crear_caracteristicas_empresa/' + id, data, { headers: headers });
+  }
+
+  obtener_caracteristicas_empresa(id: any): Observable<any> {
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this._http.get(this.url + 'obtener_caracteristicas_empresa/' + id, { headers: headers });
+  }
+
+  actualizar_caracteristicas_empresa(id: any, data: any): Observable<any> {
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this._http.put(this.url + 'actualizar_caracteristicas_empresa/' + id, data, { headers: headers });
+  }
+
   //MENSAJES
   enviar_mensaje_contacto(data: any): Observable<any> {
     let headers = new HttpHeaders().set('Content-Type', 'application/json');

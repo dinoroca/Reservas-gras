@@ -13,6 +13,7 @@ import { CreateCuentasComponent } from './cuentas/create-cuentas/create-cuentas.
 import { EditCuentasComponent } from './cuentas/edit-cuentas/edit-cuentas.component';
 import { IndexDatosComponent } from './datos/index-datos/index-datos.component';
 import { EditDatosComponent } from './datos/edit-datos/edit-datos.component';
+import { CaracteristicasComponent } from './caracteristicas/caracteristicas.component';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { EditDatosComponent } from './datos/edit-datos/edit-datos.component';
     CreateCuentasComponent,
     EditCuentasComponent,
     IndexDatosComponent,
-    EditDatosComponent
+    EditDatosComponent,
+    CaracteristicasComponent
   ],
   imports: [
     CommonModule,
