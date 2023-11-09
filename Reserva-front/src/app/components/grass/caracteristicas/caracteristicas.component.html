@@ -12,52 +12,88 @@
                     <h3 class="text-center fw-bold" style="color:rgb(6, 170, 115)">CARACTERÍSTICAS</h3>
                 </div>
                 <div class="card-body">
-                    <h4 class="card-title text-center" style="font-weight: 300;">
-                        Registre o actualice las características de su grass
-                    </h4>
+                    <ng-container *ngIf="load_data">
+                        <div class="text-center">
+                            <div class="spinner-border text-secondary" style="width: 3rem; height: 3rem" role="status">
+                            </div>
+                            <h4 class="text-black-50"><small>Cargando...</small></h4>
+                        </div>
+                    </ng-container>
 
-                    <!-- Chek iluminación LED -->
-                    <div class="row mx-2 mx-sm-4 py-3">
-                        <div class="form-check col-12 col-sm-4">
-                            <input class="form-check-input" type="checkbox" id="flexCheckIlumination" [(ngModel)]="ilumination">
-                            <label class="form-check-label" for="flexCheckIlumination">
-                                Iluminación LED
-                            </label>
+                    <ng-container *ngIf="!load_data">
+                        <h4 class="card-title text-center" style="font-weight: 300;">
+                            Registre o actualice las características de su grass
+                        </h4>
+
+                        <!-- Chek iluminación LED -->
+                        <div class="row mx-2 mx-sm-4 py-3">
+                            <div class="form-check col-12 col-sm-4">
+                                <input class="form-check-input" type="checkbox" id="flexCheckIlumination"
+                                    name="iluminacion" [(ngModel)]="car.iluminacion">
+                                <label class="form-check-label" for="flexCheckIlumination">
+                                    Iluminación LED
+                                </label>
+                            </div>
+
+                            <!-- Check Techado -->
+                            <div class="form-check col-12 col-sm-4">
+                                <input class="form-check-input" type="checkbox" id="flexCheckTechado" name="techado"
+                                    [(ngModel)]="car.techado">
+                                <label class="form-check-label" for="flexCheckTechado">
+                                    Techado
+                                </label>
+                            </div>
+
+                            <!-- Check Garaje -->
+                            <div class="form-check col-12 col-sm-4">
+                                <input class="form-check-input" type="checkbox" id="flexCheckGaraje" name="techado"
+                                    [(ngModel)]="car.garaje">
+                                <label class="form-check-label" for="flexCheckGaraje">
+                                    Garaje
+                                </label>
+                            </div>
                         </div>
 
-                        <!-- Check Techado -->
-                        <div class="form-check col-12 col-sm-4">
-                            <input class="form-check-input" type="checkbox" id="flexCheckTechado" [(ngModel)]="techado">
-                            <label class="form-check-label" for="flexCheckTechado">
-                                Techado
-                            </label>
-                        </div>
+                        <div class="row mx-2 mx-sm-4 py-3">
+                            <div class="input-group mb-3 col-6">
+                                <span class="input-group-text" id="inputGroup-sizing-default">Cantidad de canchas de
+                                    fútbol</span>
+                                <input type="number" class="form-control" aria-label="Sizing example input"
+                                    aria-describedby="inputGroup-sizing-default" min="0" name="canchas_futsal"
+                                    [(ngModel)]="car.canchas_futsal">
+                            </div>
 
-                        <!-- Check Garaje -->
-                        <div class="form-check col-12 col-sm-4">
-                            <input class="form-check-input" type="checkbox" id="flexCheckGaraje" [(ngModel)]="garaje">
-                            <label class="form-check-label" for="flexCheckGaraje">
-                                Garaje
-                            </label>
+                            <div class="input-group mb-3 col-12 col-sm-6">
+                                <span class="input-group-text" id="inputGroup-sizing-default">Cantidad de canchas de
+                                    voley</span>
+                                <input type="number" class="form-control" aria-label="Sizing example input"
+                                    aria-describedby="inputGroup-sizing-default" min="0" name="cancas_voley"
+                                    [(ngModel)]="car.canchas_voley">    
+                            </div>
                         </div>
-                    </div>
-
-                    <div class="row mx-2 mx-sm-4 py-3">
-                        <div class="input-group mb-3 col-6">
-                            <span class="input-group-text" id="inputGroup-sizing-default">Cantidad de canchas de fútbol</span>
-                            <input type="number" class="form-control" aria-label="Sizing example input"
-                                aria-describedby="inputGroup-sizing-default" min="0" [(ngModel)]="canchafut">
-                        </div>
-
-                        <div class="input-group mb-3 col-12 col-sm-6">
-                            <span class="input-group-text" id="inputGroup-sizing-default">Cantidad de canchas de fútbol</span>
-                            <input type="number" class="form-control" aria-label="Sizing example input"
-                                aria-describedby="inputGroup-sizing-default" min="0" [(ngModel)]="canchavol">
-                        </div>
-                    </div>
+                    </ng-container>
                 </div>
+                <!-- Crearcaractersticas -->
                 <div class="card-footer text-body-secondary text-center">
-                    <a href="#" class="btn btn-primary"><i class="bi bi-check2-circle"></i> &nbsp; Actualizar</a>
+                    <a *ngIf="btn_crear && !load_btn_crear" class="btn btn-primary" (click)="crear()"><i class="bi bi-plus-circle"></i> &nbsp; 
+                        Crear
+                    </a>
+
+                    <button *ngIf="load_btn_crear" class="btn btn-primary" type="button" disabled>
+                        <span class="spinner-grow spinner-grow-sm" aria-hidden="true"></span>
+                        <span role="status"> &nbsp; Creando...</span>
+                    </button>
+                </div>
+                <!-- Actualizar cracteristicas -->
+                <div class="card-footer text-body-secondary text-center">
+                    <a *ngIf="btn_actualzar && !load_btn" class="btn btn-primary" (click)="actualizar()"><i class="bi bi-check2-circle"></i> &nbsp;
+                        Actualizar
+                    </a>
+
+                    <button *ngIf="load_btn" class="btn btn-primary" type="button" disabled>
+                        <span class="spinner-grow spinner-grow-sm" aria-hidden="true"></span>
+                        <span role="status"> &nbsp; Actualizando...</span>
+                    </button>
                 </div>
             </div>
         </div>

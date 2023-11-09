@@ -14,4 +14,4 @@ var CaracteristicasSchema = Schema({
     createdAt: {type: Date, default: Date.now, required: true}
 });
 
-module.exports = mongoose.model('cancha', CaracteristicasSchema);
+module.exports = mongoose.model('carateristica', CaracteristicasSchema);

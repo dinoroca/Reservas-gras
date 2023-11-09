@@ -184,6 +184,7 @@ const actualizar_empresa = async function (req, res) {
 const crear_caracteristicas_empresa = async function (req, res) {
   if (req.user) {
     if (req.user.role == 'GRASS') {
+      var data = req.body;
       try {
         var reg = await Caracteristicas.create(data);
         res.status(200).send({ data: reg });
@@ -205,7 +206,12 @@ const obtener_caracteristicas_empresa = async function (req, res) {
     if (req.user.role == 'GRASS') {
       let id = req.params['id'];
       let caracteristicas = await Caracteristicas.find({ empresa: id }).populate('empresa');
-      res.status(200).send({ data: caracteristicas });
+
+      if (caracteristicas.length >= 1) {
+        res.status(200).send({ data: caracteristicas });
+      } else {
+        res.status(200).send({ data: undefined });
+      }
 
     } else {
       res.status(500).send({ message: 'NoAccess' });
