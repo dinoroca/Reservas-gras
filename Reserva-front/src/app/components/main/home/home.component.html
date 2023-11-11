@@ -66,30 +66,40 @@
 
                 <div *ngIf="show_card_empresas" class="row d-flex justify-content-center px-2 px-sm-5">
 
-                    <div class="col-12 pb-5 pt-2 col-sm-4" *ngFor="let item of empresas">
+                    <div class="col-12 pb-5 pt-2 col-sm-4" *ngFor="let item of caracBuscada">
                         <div class="card shadow">
                             <img src="https://static.wixstatic.com/media/a74d9b_f677ff68338f43cf87e470b0312b7cea~mv2.jpg/v1/fill/w_1000,h_563,al_c,q_85,usm_0.66_1.00_0.01/a74d9b_f677ff68338f43cf87e470b0312b7cea~mv2.jpg"
                                 class="card-img-top" alt="...">
                             <div class="card-body">
-                                <h4 class="card-title fw-bold text-center"> {{item.nombre}} </h4>
-                                <p class="card-text fw-light">Some quick example text to build on the card title and
-                                    make up
-                                    the
-                                    bulk of the card's
-                                    content.
-                                </p>
+                                <h4 class="card-title fw-bold text-center"> {{item.empresa.nombre}} </h4>
 
-                                <p><i class="bi bi-geo-alt-fill"></i> &nbsp; <a>Jr. Bracelona N° 123</a>
+                                <p><i class="bi-1 bi-geo-alt-fill"></i> &nbsp;
+                                    <a href="{{item.empresa.ubicacion}}" target="_blank" 
+                                    style="text-decoration: none; color: #000;"> 
+                                    {{item.empresa.direccion}} 
+                                </a>
                                 </p>
-                                <p><i class="bi bi-pentagon-fill"></i> &nbsp; <a>2 canchas de futsal</a>
+                                <p><i class="bi-1 bi-pentagon-fill"></i> &nbsp; <a> {{item.canchas_futsal}} canchas de futsal</a>
                                 </p>
-                                <p><i class="bi bi-dribbble"></i> &nbsp; <a>2 canchas de vóley</a>
+                                <p><i class="bi-1 bi-dribbble"></i> &nbsp; <a> {{item.canchas_voley}} canchas de vóley</a>
                                 </p>
-                                <p><i class="bi bi-lightning-charge-fill"></i> &nbsp; <a>Iluminación LED</a>
+                                <p *ngIf="item.iluminacion"><i class="bi-1 bi-lightning-charge-fill"></i> &nbsp; <a>Iluminación LED</a>
+
+                                <p *ngIf="!item.iluminacion" class="text-secondary"><i class="bi-2 bi-lightning-charge-fill">
+
+                                </i> &nbsp; <a>Sin iluminación LED</a>
                                 </p>
-                                <p><i class="bi bi-check-circle-fill"></i> &nbsp; <a>Techado</a>
+                                <p *ngIf="item.techado"><i class="bi-1 bi-check-circle-fill"></i> &nbsp; <a>Techado</a>
+
+                                <p *ngIf="!item.techado" class="text-secondary"><i class="bi-2 bi-check-circle-fill">
+
+                                </i> &nbsp; <a>Sin techado</a>
                                 </p>
-                                <p><i class="bi bi-car-front-fill"></i> &nbsp; <a>Garaje</a>
+                                <p *ngIf="item.iluminacion"><i class="bi-1 bi-car-front-fill"></i> &nbsp; <a>Garaje</a>
+
+                                <p *ngIf="!item.iluminacion" class="text-secondary"><i class="bi-2 bi-car-front-fill">
+
+                                </i> &nbsp; <a>Sin garaje</a>
                                 </p>
 
                                 <div class="text-center">

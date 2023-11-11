@@ -43,6 +43,8 @@ export class HomeComponent implements OnInit {
   public distritos_arr: Array<any> = [];
 
   public empresas: Array<any> = [];
+  public caracteristicas: Array<any> = [];
+  public caracBuscada: Array<any> = [];
   public busqueda = '';
   public load_search = false;
   public load_data = true;
@@ -170,19 +172,46 @@ export class HomeComponent implements OnInit {
       this.show_card_empresas = true;
       this.show_card_empresas_ubication = false;
       this.show_alert_void_ubication = false;
+      this.caracBuscada = [];
+      this.empresas = [];
       this._userService.listar_empresas_filtro(this.busqueda).subscribe(
         response => {
 
           if (response.data != undefined) {
             this.empresas = response.data;
-
-
             this.load_data = false;
 
           } else {
             this.show_alert_void = true;
             this.show_card_empresas = false;
           }
+
+          this._userService.obtener_caracteristicas_empresa_publico().subscribe(
+            response => {
+              if (response.data != undefined ) {
+
+                this.caracteristicas = response.data;
+                
+                for (let i = 0; i < this.empresas.length; i++) {
+                  let idBuscado = this.empresas[i]._id;  
+
+                  for (let j = 0; j < this.caracteristicas.length; j++) {
+
+                    if (idBuscado === this.caracteristicas[j].empresa._id) {
+                      this.caracBuscada[i] = this.caracteristicas[j];
+                      idBuscado = '';
+                      break
+                    } else {
+                      
+                    }
+                  }       
+                }
+
+              } else {
+                
+              }
+            }
+          );
 
           this.load_search = false;
         },

@@ -13,6 +13,7 @@ api.put('/actualizar_empresa/:id', auth.auth, EmpresaController.actualizar_empre
 api.post('/crear_caracteristicas_empresa/:id', auth.auth, EmpresaController.crear_caracteristicas_empresa);
 api.get('/obtener_caracteristicas_empresa/:id', auth.auth, EmpresaController.obtener_caracteristicas_empresa);
 api.put('/actualizar_caracteristicas_empresa/:id', auth.auth, EmpresaController.actualizar_caracteristicas_empresa);
+api.get('/obtener_caracteristicas_empresa_publico', EmpresaController.obtener_caracteristicas_empresa_publico);
 
 
 //Buscar empresa

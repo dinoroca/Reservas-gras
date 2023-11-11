@@ -56,16 +56,14 @@
 
                         <div class="row mx-2 mx-sm-4 py-3">
                             <div class="input-group mb-3 col-6">
-                                <span class="input-group-text" id="inputGroup-sizing-default">Cantidad de canchas de
-                                    fútbol</span>
+                                <span class="input-group-text" id="inputGroup-sizing-default">Canchas de fútbol</span>
                                 <input type="number" class="form-control" aria-label="Sizing example input"
                                     aria-describedby="inputGroup-sizing-default" min="0" name="canchas_futsal"
                                     [(ngModel)]="car.canchas_futsal">
                             </div>
 
                             <div class="input-group mb-3 col-12 col-sm-6">
-                                <span class="input-group-text" id="inputGroup-sizing-default">Cantidad de canchas de
-                                    voley</span>
+                                <span class="input-group-text" id="inputGroup-sizing-default">Canchas de voley</span>
                                 <input type="number" class="form-control" aria-label="Sizing example input"
                                     aria-describedby="inputGroup-sizing-default" min="0" name="cancas_voley"
                                     [(ngModel)]="car.canchas_voley">    
@@ -74,26 +72,28 @@
                     </ng-container>
                 </div>
                 <!-- Crearcaractersticas -->
-                <div class="card-footer text-body-secondary text-center">
-                    <a *ngIf="btn_crear && !load_btn_crear" class="btn btn-primary" (click)="crear()"><i class="bi bi-plus-circle"></i> &nbsp; 
-                        Crear
-                    </a>
-
-                    <button *ngIf="load_btn_crear" class="btn btn-primary" type="button" disabled>
-                        <span class="spinner-grow spinner-grow-sm" aria-hidden="true"></span>
-                        <span role="status"> &nbsp; Creando...</span>
-                    </button>
-                </div>
-                <!-- Actualizar cracteristicas -->
-                <div class="card-footer text-body-secondary text-center">
-                    <a *ngIf="btn_actualzar && !load_btn" class="btn btn-primary" (click)="actualizar()"><i class="bi bi-check2-circle"></i> &nbsp;
-                        Actualizar
-                    </a>
-
-                    <button *ngIf="load_btn" class="btn btn-primary" type="button" disabled>
-                        <span class="spinner-grow spinner-grow-sm" aria-hidden="true"></span>
-                        <span role="status"> &nbsp; Actualizando...</span>
-                    </button>
+                <div class="card-footer">
+                    <div class="text-body-secondary text-center">
+                        <a *ngIf="btn_crear && !load_btn_crear" class="btn btn-primary" (click)="crear()"><i class="bi bi-plus-circle"></i> &nbsp; 
+                            Crear
+                        </a>
+    
+                        <button *ngIf="load_btn_crear" class="btn btn-primary" type="button" disabled>
+                            <span class="spinner-grow spinner-grow-sm" aria-hidden="true"></span>
+                            <span role="status"> &nbsp; Creando...</span>
+                        </button>
+                    </div>
+                    <!-- Actualizar cracteristicas -->
+                    <div class="text-body-secondary text-center">
+                        <a *ngIf="btn_actualzar && !load_btn" class="btn btn-primary" (click)="actualizar()"><i class="bi bi-check2-circle"></i> &nbsp;
+                            Actualizar
+                        </a>
+    
+                        <button *ngIf="load_btn" class="btn btn-primary" type="button" disabled>
+                            <span class="spinner-grow spinner-grow-sm" aria-hidden="true"></span>
+                            <span role="status"> &nbsp; Actualizando...</span>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>

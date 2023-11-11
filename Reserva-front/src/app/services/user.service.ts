@@ -99,6 +99,10 @@ export class UserService {
     return this._http.get(this.url + 'obtener_caracteristicas_empresa/' + id, { headers: headers });
   }
 
+  obtener_caracteristicas_empresa_publico(): Observable<any> {
+    return this._http.get(this.url + 'obtener_caracteristicas_empresa_publico');
+  }
+
   actualizar_caracteristicas_empresa(id: any, token: any, data: any): Observable<any> {
     let headers = new HttpHeaders({ 'Content-Type': 'application/json', 'authorization': token });
     return this._http.put(this.url + 'actualizar_caracteristicas_empresa/' + id, data, { headers: headers });

@@ -250,6 +250,16 @@ const actualizar_caracteristicas_empresa = async function (req, res) {
   }
 }
 
+const obtener_caracteristicas_empresa_publico = async function (req, res) {
+  let caracteristicas = await Caracteristicas.find().populate('empresa');
+
+  if (caracteristicas.length >= 1) {
+    res.status(200).send({ data: caracteristicas });
+  } else {
+    res.status(200).send({ data: undefined });
+  }
+}
+
 
 module.exports = {
   registro_empresa,
@@ -262,5 +272,6 @@ module.exports = {
   actualizar_empresa,
   crear_caracteristicas_empresa,
   obtener_caracteristicas_empresa,
+  obtener_caracteristicas_empresa_publico,
   actualizar_caracteristicas_empresa
 }
