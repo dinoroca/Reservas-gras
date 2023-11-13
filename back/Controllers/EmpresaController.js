@@ -110,6 +110,16 @@ const listar_empresas_filtro = async function (req, res) {
   }
 }
 
+const listar_empresas_publico = async function (req, res) {
+
+  let reg = await Empresa.find().sort({ createdAt: 1 }).limit(9);
+  if (reg.length > 0) {
+    res.status(200).send({ data: reg });
+  } else {
+    res.status(200).send({ data: undefined });
+  }
+}
+
 const listar_empresas_region = async function (req, res) {
 
   let region = req.params['region'];
@@ -273,5 +283,6 @@ module.exports = {
   crear_caracteristicas_empresa,
   obtener_caracteristicas_empresa,
   obtener_caracteristicas_empresa_publico,
+  listar_empresas_publico,
   actualizar_caracteristicas_empresa
 }

@@ -14,6 +14,7 @@ api.post('/crear_caracteristicas_empresa/:id', auth.auth, EmpresaController.crea
 api.get('/obtener_caracteristicas_empresa/:id', auth.auth, EmpresaController.obtener_caracteristicas_empresa);
 api.put('/actualizar_caracteristicas_empresa/:id', auth.auth, EmpresaController.actualizar_caracteristicas_empresa);
 api.get('/obtener_caracteristicas_empresa_publico', EmpresaController.obtener_caracteristicas_empresa_publico);
+api.get('/listar_empresas_publico', EmpresaController.listar_empresas_publico);
 
 
 //Buscar empresa

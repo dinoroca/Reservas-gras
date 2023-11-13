@@ -52,6 +52,10 @@ export class HomeComponent implements OnInit {
   public show_card_empresas = false;
 
   public empresas_ubication: Array<any> = [];
+  public primeras_empresas: Array<any> = [];
+  public caracPrimeros: Array<any> = [];
+  public primerosBuscado: Array<any> = [];
+
   public busqueda_ubication = '';
   public load_search_ubication = false;
   public load_data_ubication = true;
@@ -158,6 +162,42 @@ export class HomeComponent implements OnInit {
     }
 
     this.init_data();
+
+    _userService.listar_empresas_publico().subscribe(
+      response => {
+        if (response.data != undefined) {
+
+          this.primeras_empresas = response.data;
+
+          this._userService.obtener_caracteristicas_empresa_publico().subscribe(
+            response => {
+              if (response.data != undefined ) {
+
+                this.caracPrimeros = response.data;
+                
+                for (let i = 0; i < this.primeras_empresas.length; i++) {
+                  let idBuscado = this.primeras_empresas[i]._id;  
+
+                  for (let j = 0; j < this.caracPrimeros.length; j++) {
+
+                    if (idBuscado === this.caracPrimeros[j].empresa._id) {
+                      this.primerosBuscado[i] = this.caracPrimeros[j];
+                      idBuscado = '';
+                      break
+                    } else {
+                      this.primerosBuscado[i] = null;
+                    }
+                  }       
+                }
+
+              }
+            }
+          );
+        } else {
+          this.primeras_empresas = [];
+        }
+      }
+    );
   }
 
   init_data() {
@@ -202,13 +242,11 @@ export class HomeComponent implements OnInit {
                       idBuscado = '';
                       break
                     } else {
-                      
+                      this.caracBuscada[i] = null;
                     }
                   }       
                 }
 
-              } else {
-                
               }
             }
           );
@@ -225,6 +263,7 @@ export class HomeComponent implements OnInit {
   select_region() {
     this.provincias = [];
     this.distritos = [];
+    this.caracBuscada = [];
     this.isDisabledProvincia = false;
     this.isDisabledDistrito = true;
     this.empresa.provincia = '';
@@ -256,6 +295,32 @@ export class HomeComponent implements OnInit {
           this.load_data_ubication = false;
           this.show_alert_void_ubication = false;
 
+          
+          this._userService.obtener_caracteristicas_empresa_publico().subscribe(
+            response => {
+              if (response.data != undefined ) {
+
+                this.caracteristicas = response.data;
+                
+                for (let i = 0; i < this.empresas_ubication.length; i++) {
+                  let idBuscado = this.empresas_ubication[i]._id;  
+
+                  for (let j = 0; j < this.caracteristicas.length; j++) {
+
+                    if (idBuscado === this.caracteristicas[j].empresa._id) {
+                      this.caracBuscada[i] = this.caracteristicas[j];
+                      idBuscado = '';
+                      break
+                    } else {
+                      this.caracBuscada[i] = null;
+                    }
+                  }       
+                }
+
+              }
+            }
+          );
+
         } else {
           this.show_alert_void_ubication = true;
           this.show_card_empresas_ubication = false;
@@ -268,6 +333,7 @@ export class HomeComponent implements OnInit {
 
   select_provincia() {
     this.distritos = [];
+    this.caracBuscada = [];
     this.isDisabledDistrito = false;
     this.empresa.distrito = '';
     this._guestService.obtener_distritos().subscribe(
@@ -288,10 +354,36 @@ export class HomeComponent implements OnInit {
       response => {
 
         if (response.data != undefined) {
+          this.empresas_ubication = [];
           this.empresas_ubication = response.data;
           this.show_card_empresas_ubication = true;
           this.load_data_ubication = false;
           this.show_alert_void_ubication = false;
+
+          this._userService.obtener_caracteristicas_empresa_publico().subscribe(
+            response => {
+              if (response.data != undefined ) {
+
+                this.caracteristicas = response.data;
+                
+                for (let i = 0; i < this.empresas_ubication.length; i++) {
+                  let idBuscado = this.empresas_ubication[i]._id;  
+
+                  for (let j = 0; j < this.caracteristicas.length; j++) {
+
+                    if (idBuscado === this.caracteristicas[j].empresa._id) {
+                      this.caracBuscada[i] = this.caracteristicas[j];
+                      idBuscado = '';
+                      break
+                    } else {
+                      this.caracBuscada[i] = null;
+                    }
+                  }       
+                }
+
+              }
+            }
+          );
 
         } else {
           this.show_alert_void_ubication = true;
@@ -309,10 +401,37 @@ export class HomeComponent implements OnInit {
       response => {
 
         if (response.data != undefined) {
+          this.caracBuscada = [];
+          this.empresas_ubication = [];
           this.empresas_ubication = response.data;
           this.show_card_empresas_ubication = true;
           this.load_data_ubication = false;
           this.show_alert_void_ubication = false;
+
+          this._userService.obtener_caracteristicas_empresa_publico().subscribe(
+            response => {
+              if (response.data != undefined ) {
+
+                this.caracteristicas = response.data;
+                
+                for (let i = 0; i < this.empresas_ubication.length; i++) {
+                  let idBuscado = this.empresas_ubication[i]._id;  
+
+                  for (let j = 0; j < this.caracteristicas.length; j++) {
+
+                    if (idBuscado === this.caracteristicas[j].empresa._id) {
+                      this.caracBuscada[i] = this.caracteristicas[j];
+                      idBuscado = '';
+                      break
+                    } else {
+                      this.caracBuscada[i] = null;
+                    }
+                  }       
+                }
+
+              }
+            }
+          );
 
         } else {
           this.show_alert_void_ubication = true;
