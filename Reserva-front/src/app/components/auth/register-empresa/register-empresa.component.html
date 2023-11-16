@@ -124,9 +124,9 @@
                 </div>
 
                 <div class="d-grid gap-2 mt-4">
-                    <button type="submit" class="btn btn-primary"
-                        [disabled]="registroForm.invalid || !valid || !validLink">
-                        <i class="bi bi-plus-circle"></i> &nbsp; Registrar
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        <i class="bi bi-arrow-right"></i> &nbsp; Continuar
                     </button>
                 </div>
 
@@ -137,6 +137,76 @@
                     </a>
                 </p>
             </form>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="exampleModalLabel">Características</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <ng-container>
+                    <h4 class="card-title text-center" style="font-weight: 300;">
+                        Registre las características de su grass
+                    </h4>
+
+                    <!-- Chek iluminación LED -->
+                    <div class="row mx-2 mx-sm-4 py-3">
+                        <div class="form-check col-12 col-sm-4">
+                            <input class="form-check-input" type="checkbox" id="flexCheckIlumination"
+                                name="iluminacion" [(ngModel)]="car.iluminacion">
+                            <label class="form-check-label" for="flexCheckIlumination">
+                                Iluminación LED
+                            </label>
+                        </div>
+
+                        <!-- Check Techado -->
+                        <div class="form-check col-12 col-sm-4">
+                            <input class="form-check-input" type="checkbox" id="flexCheckTechado" name="techado"
+                                [(ngModel)]="car.techado">
+                            <label class="form-check-label" for="flexCheckTechado">
+                                Techado
+                            </label>
+                        </div>
+
+                        <!-- Check Garaje -->
+                        <div class="form-check col-12 col-sm-4">
+                            <input class="form-check-input" type="checkbox" id="flexCheckGaraje" name="techado"
+                                [(ngModel)]="car.garaje">
+                            <label class="form-check-label" for="flexCheckGaraje">
+                                Garaje
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="row mx-2 mx-sm-4 py-3">
+                        <div class="input-group mb-3 col-6">
+                            <span class="input-group-text" id="inputGroup-sizing-default">Canchas de fútbol</span>
+                            <input type="number" class="form-control" aria-label="Sizing example input"
+                                aria-describedby="inputGroup-sizing-default" min="0" name="canchas_futsal"
+                                [(ngModel)]="car.canchas_futsal">
+                        </div>
+
+                        <div class="input-group mb-3 col-12 col-sm-6">
+                            <span class="input-group-text" id="inputGroup-sizing-default">Canchas de voley</span>
+                            <input type="number" class="form-control" aria-label="Sizing example input"
+                                aria-describedby="inputGroup-sizing-default" min="0" name="cancas_voley"
+                                [(ngModel)]="car.canchas_voley">    
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+            <div class="modal-footer d-flex justify-content-center">
+                <button class="btn btn-primary" (click)="registrar(registroForm)" data-bs-dismiss="modal" [disabled]="registroForm.invalid || !valid || !validLink">
+                    <i class="bi bi-plus-circle"></i> &nbsp; Registrar
+                </button>
+            </div>
         </div>
     </div>
 </div>

@@ -446,6 +446,8 @@ export class HomeComponent implements OnInit {
   //------------se aumento
   changeSearchOption(option: string) {
     this.searchOption = option;
+    this.busqueda = '';
+    this.init_data();
   }
 
 }

@@ -47,6 +47,9 @@ export class RegisterEmpresaComponent implements OnInit {
   public id: any;
   public user_lc: any;
 
+  public load_btn_crear = false;
+  public car : any = { };
+
   isDisabledProvincia = true;
   isDisabledDistrito = true;
 
@@ -121,6 +124,14 @@ export class RegisterEmpresaComponent implements OnInit {
         }
       });
     }
+
+    this.car = {
+      techado: false,
+      canchas_futsal: 0,
+      canchas_voley: 0,
+      iluminacion: false,
+      garaje: false
+    } 
     
   }
 
@@ -218,6 +229,21 @@ export class RegisterEmpresaComponent implements OnInit {
           } else if (response.data != undefined) {
             localStorage.setItem('_id', response.data._id);
 
+            let dataChar = {
+              empresa: response.data._id,
+              techado: this.car.techado,
+              canchas_futsal: this.car.canchas_futsal,
+              canchas_voley: this.car.canchas_voley,
+              iluminacion: this.car.iluminacion,
+              garaje : this.car.garaje
+            }
+        
+            this._userService.crear_caracteristicas_empresa(response.data._id, response.token, dataChar).subscribe(
+              response => {
+              }
+            );
+            
+
             this._toastrService.success('Se registró con éxito', 'REGISTRADO!');
             this._router.navigate(['/wait']);
 
@@ -232,6 +258,7 @@ export class RegisterEmpresaComponent implements OnInit {
           }
         }
       );
+
     } else {
       this._toastrService.error('Los datos del formulario no son válidos', 'ERROR');
     }
