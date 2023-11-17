@@ -191,3 +191,21 @@ section .wave.wave4 {
 .bi-greater {
     color: #effef7;
 }
+
+.images-grass {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.nombre {
+    margin-top: auto;
+    background: linear-gradient(to top, rgba(0, 1, 30, 0.7) 50%, rgba(10, 0, 11, 0)100%);
+    padding: 10px;
+    text-align: center;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    color: white;
+    ;
+}
