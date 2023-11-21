@@ -64,20 +64,32 @@
                     </p>
                 </div>
 
-                <div *ngIf="show_card_empresas" class="row d-flex justify-content-center px-2 px-sm-5">
+                <div *ngIf="show_card_empresas" class="row d-flex justify-content-center px-1 px-sm-5 mt-4">
 
                     <!-- Busqueda por name -->
 
-                    <div class="col-12 pb-5 pt-2 col-sm-4" *ngFor="let item of caracBuscada">
-                        <div class="card shadow">
-                            <img src="https://static.wixstatic.com/media/a74d9b_f677ff68338f43cf87e470b0312b7cea~mv2.jpg/v1/fill/w_1000,h_563,al_c,q_85,usm_0.66_1.00_0.01/a74d9b_f677ff68338f43cf87e470b0312b7cea~mv2.jpg"
-                                class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h4 class="card-title fw-bold text-center"> {{item.empresa.nombre}} </h4>
+                    <div class="col-12 pb-4 pt-2 col-sm-6" *ngFor="let item of caracBuscada">
+                        <div class="card shadow" style="border-color: #aaf0c9;">
 
-                                <p><i class="bi-1 bi-geo-alt-fill"></i> &nbsp;
+                            <div class="images-grass">
+                                <img src="https://static.wixstatic.com/media/a74d9b_f677ff68338f43cf87e470b0312b7cea~mv2.jpg/v1/fill/w_1000,h_563,al_c,q_85,usm_0.66_1.00_0.01/a74d9b_f677ff68338f43cf87e470b0312b7cea~mv2.jpg"
+                                    class="card-img-top" alt="...">
+                                <div class="nombre">
+                                    <h5 class="card-title fw-bold text-center"> {{item.empresa.nombre}} </h5>
+                                </div>
+                            </div>
+
+
+
+
+                            <div class="card-body">
+                                <h4 class="card-title fw-bold text-center" style="color: #19ce81;">
+                                    {{item.empresa.provincia}} </h4>
+
+                                <p class="text-center">
+                                    <i class="bi-1 bi-geo-alt-fill"></i> &nbsp;
                                     <a href="{{item.empresa.ubicacion}}" target="_blank"
-                                        style="text-decoration: none; color: #000;">
+                                        style="text-decoration: none; color: #095c3d;">
                                         {{item.empresa.direccion}}
                                     </a>
                                 </p>
@@ -162,10 +174,12 @@
                         {{namereg}} {{nameprov}} {{empresa.distrito}}</p>
                 </div>
 
-                <div *ngIf="show_card_empresas_ubication" class="row d-flex justify-content-center px-2 px-sm-5">
+                <div *ngIf="show_card_empresas_ubication" class="row d-flex justify-content-center px-2 px-sm-5 mt-4">
 
-                    <div class="col-12 pb-5 pt-2 col-sm-4" *ngFor="let item of caracBuscada">
-                        <div class="card shadow">
+                    <!-- Búsqueda por ubicación -->
+
+                    <div class="col-12 pb-5 pt-2 col-md-6" *ngFor="let item of caracBuscada">
+                        <div class="card shadow" style="border-color: #aaf0c9;">
                             <img src="https://static.wixstatic.com/media/a74d9b_f677ff68338f43cf87e470b0312b7cea~mv2.jpg/v1/fill/w_1000,h_563,al_c,q_85,usm_0.66_1.00_0.01/a74d9b_f677ff68338f43cf87e470b0312b7cea~mv2.jpg"
                                 class="card-img-top" alt="...">
                             <div class="card-body">
