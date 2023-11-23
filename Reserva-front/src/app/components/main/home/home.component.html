@@ -43,7 +43,7 @@
 
         <!--! Campo de búsqueda por Nombre -->
         <div *ngIf="searchOption === 'name'">
-            <div class="px-2 px-md-5 mb-4">
+            <div class="px-2 px-md-1 mb-4">
                 <div class="input-group">
                     <input type="text" class="form-control" placeholder="Añade el nombre del grass aquí"
                         aria-label="buscar" aria-describedby="button-addon2" name="busqueda" [(ngModel)]="busqueda"
@@ -64,64 +64,79 @@
                     </p>
                 </div>
 
-                <div *ngIf="show_card_empresas" class="row d-flex justify-content-center px-1 px-sm-5 mt-4">
+                <div *ngIf="show_card_empresas" class="row d-flex justify-content-center  mt-4">
 
                     <!-- Busqueda por name -->
 
-                    <div class="col-12 pb-4 pt-2 col-sm-6" *ngFor="let item of caracBuscada">
-                        <div class="card shadow" style="border-color: #aaf0c9;">
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-4 pb-4 pt-2" *ngFor="let item of caracBuscada">
 
+                        <div class="card shadow" style="border-color: #aaf0c9;">
                             <div class="images-grass">
                                 <img src="https://static.wixstatic.com/media/a74d9b_f677ff68338f43cf87e470b0312b7cea~mv2.jpg/v1/fill/w_1000,h_563,al_c,q_85,usm_0.66_1.00_0.01/a74d9b_f677ff68338f43cf87e470b0312b7cea~mv2.jpg"
                                     class="card-img-top" alt="...">
                                 <div class="nombre">
                                     <h5 class="card-title fw-bold text-center"> {{item.empresa.nombre}} </h5>
                                 </div>
+
+                                <div class="provinciaa" style="display: flex;
+                                position: absolute;
+                                right: 10px;">
+                                    <span style="background-color: #19ce81;
+                                    border-radius: 0px 0.3rem 0px 0.75rem;
+                                    padding: 0.125rem 0.4rem;
+                                    margin-right: -0.65rem;
+                                    color: white">
+                                        {{item.empresa.provincia}}
+                                    </span>
+                                </div>
                             </div>
 
-
-
-
                             <div class="card-body">
-                                <h4 class="card-title fw-bold text-center" style="color: #19ce81;">
-                                    {{item.empresa.provincia}} </h4>
-
                                 <p class="text-center">
-                                    <i class="bi-1 bi-geo-alt-fill"></i> &nbsp;
                                     <a href="{{item.empresa.ubicacion}}" target="_blank"
-                                        style="text-decoration: none; color: #095c3d;">
+                                        style="text-decoration: none; color: #095c3d; font-style: italic;">
                                         {{item.empresa.direccion}}
+                                    </a> &nbsp;
+                                    <a href="{{item.empresa.ubicacion}}" target="_blank">
+                                        <i class="bi bi-arrow-up-right-circle" style="color: #095c3d;"></i>
                                     </a>
                                 </p>
-                                <p><i class="bi-1 bi-pentagon-fill"></i> &nbsp; <a> {{item.canchas_futsal}} canchas de
-                                        futsal</a>
-                                </p>
-                                <p><i class="bi-1 bi-dribbble"></i> &nbsp; <a> {{item.canchas_voley}} canchas de
-                                        vóley</a>
-                                </p>
-                                <p *ngIf="item.iluminacion"><i class="bi-1 bi-lightning-charge-fill"></i> &nbsp;
-                                    <a>Iluminación LED</a>
 
-                                <p *ngIf="!item.iluminacion" class="text-secondary"><i class="bi-2 bi-lightning-charge">
+                                <div class="grass-caracteristicas">
+                                    <p>
+                                        <i class="bi-1 bi-pentagon-fill"></i> &nbsp; <a> {{item.canchas_futsal}} canchas
+                                            de futsal</a>
+                                    </p>
+                                    <p><i class="bi-1 bi-dribbble"></i> &nbsp; <a> {{item.canchas_voley}} canchas de
+                                            vóley</a>
+                                    </p>
+                                    <p *ngIf="item.iluminacion"><i class="bi-1 bi-lightning-charge-fill"></i> &nbsp;
+                                        <a>Iluminación LED</a>
 
-                                    </i> &nbsp; <a>Sin iluminación LED</a>
-                                </p>
-                                <p *ngIf="item.techado"><i class="bi-1 bi-cloud-lightning-rain-fill"></i> &nbsp;
-                                    <a>Techado</a>
+                                    <p *ngIf="!item.iluminacion" class="text-secondary"><i
+                                            class="bi-2 bi-lightning-charge">
 
-                                <p *ngIf="!item.techado" class="text-secondary"><i class="bi-2 bi-cloud-lightning-rain">
+                                        </i> &nbsp; <a>Sin iluminación LED</a>
+                                    </p>
+                                    <p *ngIf="item.techado"><i class="bi-1 bi-cloud-lightning-rain-fill"></i> &nbsp;
+                                        <a>Techado</a>
 
-                                    </i> &nbsp; <a>Sin techo</a>
-                                </p>
-                                <p *ngIf="item.garaje"><i class="bi-1 bi-car-front-fill"></i> &nbsp; <a>Garaje</a>
+                                    <p *ngIf="!item.techado" class="text-secondary"><i
+                                            class="bi-2 bi-cloud-lightning-rain">
 
-                                <p *ngIf="!item.garaje" class="text-secondary"><i class="bi-2 bi-car-front">
+                                        </i> &nbsp; <a>Sin techo</a>
+                                    </p>
+                                    <p *ngIf="item.garaje"><i class="bi-1 bi-car-front-fill"></i> &nbsp; <a>Garaje</a>
 
-                                    </i> &nbsp; <a>Sin garaje</a>
-                                </p>
+                                    <p *ngIf="!item.garaje" class="text-secondary"><i class="bi-2 bi-car-front">
 
-                                <div class="text-center">
-                                    <a href="#" class="btn btn-warning">Reservar &nbsp; <i
+                                        </i> &nbsp; <a>Sin garaje</a>
+                                    </p>
+                                </div>
+
+                                <div class="text-center" style=" padding: 10px 0px;">
+                                    <a href="#" class="btn btn-warning"
+                                        style="width: 280px; border-radius: 30px;">Reservar &nbsp; <i
                                             class="bi bi-chevron-right"></i></a>
                                 </div>
                             </div>

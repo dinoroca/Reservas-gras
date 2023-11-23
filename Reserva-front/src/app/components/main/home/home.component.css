@@ -209,3 +209,8 @@ section .wave.wave4 {
     color: white;
     ;
 }
+
+
+.grass-caracteristicas p {
+    margin-bottom: 5px;
+}
