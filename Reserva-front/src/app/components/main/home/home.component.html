@@ -67,7 +67,6 @@
                 <div *ngIf="show_card_empresas" class="row d-flex justify-content-center  mt-4">
 
                     <!-- Busqueda por name -->
-
                     <div class="col-12 col-sm-12 col-md-6 col-lg-4 pb-4 pt-2" *ngFor="let item of caracBuscada">
 
                         <div class="card shadow" style="border-color: #aaf0c9;">
@@ -78,14 +77,8 @@
                                     <h5 class="card-title fw-bold text-center"> {{item.empresa.nombre}} </h5>
                                 </div>
 
-                                <div class="provinciaa" style="display: flex;
-                                position: absolute;
-                                right: 10px;">
-                                    <span style="background-color: #19ce81;
-                                    border-radius: 0px 0.3rem 0px 0.75rem;
-                                    padding: 0.125rem 0.4rem;
-                                    margin-right: -0.65rem;
-                                    color: white">
+                                <div class="provinciaa" style="display: flex; position: absolute; right: 10px;">
+                                    <span id="name-provincia">
                                         {{item.empresa.provincia}}
                                     </span>
                                 </div>
@@ -244,118 +237,117 @@
             </div>
 
         </div>
-
-        <!-- _______________________________________________________ -->
-        <!-- Resultados de la búsqueda -->
-        <div *ngIf="searchOption === 'name' && show_card_empresas">
-            <!-- Muestra los resultados de la búsqueda por nombre -->
-        </div>
-        <div *ngIf="searchOption === 'location' && show_card_empresas_ubication">
-            <!-- Muestra los resultados de la búsqueda por ubicación -->
-        </div>
-        <!-- _______________________________________________________ -->
-
     </div>
 
     <!-- Grass por ubicación de usuario -->
-    <div class="text-center fw-bold mt-5 mb-3">
-        <h2>Grass más populares</h2>
-    </div>
+    <div class="pt-2" style="margin-top: 74px;">
+        <div class=" text-center fw-bold mt-2 mb-4" style="color: #095c3d">
+            <h2>Grasses más populares</h2>
+        </div>
 
-    <div class="row d-flex justify-content-center px-2 px-sm-5">
+        <div class="row d-flex justify-content-center px-2 px-sm-5">
 
-        <ng-container *ngIf="primeras_empresas.length > 0">
-            <div *ngFor="let item of primerosBuscado" class="col-md-4 pb-5 pt-2 col-sm-12">
-                <div class="card shadow">
-                    <img src="https://static.wixstatic.com/media/a74d9b_f677ff68338f43cf87e470b0312b7cea~mv2.jpg/v1/fill/w_1000,h_563,al_c,q_85,usm_0.66_1.00_0.01/a74d9b_f677ff68338f43cf87e470b0312b7cea~mv2.jpg"
-                        class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h4 class="card-title fw-bold text-center"> {{item.empresa.nombre}} </h4>
+            <ng-container *ngIf="primeras_empresas.length > 0">
+                <div *ngFor="let item of primerosBuscado" class="col-md-4 pb-5 pt-2 col-sm-12">
+                    <div class="card shadow">
+                        <img src="https://static.wixstatic.com/media/a74d9b_f677ff68338f43cf87e470b0312b7cea~mv2.jpg/v1/fill/w_1000,h_563,al_c,q_85,usm_0.66_1.00_0.01/a74d9b_f677ff68338f43cf87e470b0312b7cea~mv2.jpg"
+                            class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h4 class="card-title fw-bold text-center"> {{item.empresa.nombre}} </h4>
 
-                        <p><i class="bi-1 bi-geo-alt-fill"></i> &nbsp;
-                            <a href="{{item.empresa.ubicacion}}" target="_blank"
-                                style="text-decoration: none; color: #000;">
-                                {{item.empresa.direccion}}
-                            </a>
-                        </p>
-                        <p><i class="bi-1 bi-pentagon-fill"></i> &nbsp; <a> {{item.canchas_futsal}} canchas de
-                                futsal</a>
-                        </p>
-                        <p><i class="bi-1 bi-dribbble"></i> &nbsp; <a> {{item.canchas_voley}} canchas de
-                                vóley</a>
-                        </p>
-                        <p *ngIf="item.iluminacion"><i class="bi-1 bi-lightning-charge-fill"></i> &nbsp;
-                            <a>Iluminación LED</a>
+                            <p><i class="bi-1 bi-geo-alt-fill"></i> &nbsp;
+                                <a href="{{item.empresa.ubicacion}}" target="_blank"
+                                    style="text-decoration: none; color: #000;">
+                                    {{item.empresa.direccion}}
+                                </a>
+                            </p>
 
-                        <p *ngIf="!item.iluminacion" class="text-secondary"><i class="bi-2 bi-lightning-charge">
+                            <p><i class="bi-1 bi-pentagon-fill"></i> &nbsp; <a> {{item.canchas_futsal}} canchas de
+                                    futsal</a>
+                            </p>
+                            <p><i class="bi-1 bi-dribbble"></i> &nbsp; <a> {{item.canchas_voley}} canchas de
+                                    vóley</a>
+                            </p>
+                            <p *ngIf="item.iluminacion"><i class="bi-1 bi-lightning-charge-fill"></i> &nbsp;
+                                <a>Iluminación LED</a>
 
-                            </i> &nbsp; <a>Sin iluminación LED</a>
-                        </p>
-                        <p *ngIf="item.techado"><i class="bi-1 bi-cloud-lightning-rain-fill"></i> &nbsp;
-                            <a>Techado</a>
+                            <p *ngIf="!item.iluminacion" class="text-secondary"><i class="bi-2 bi-lightning-charge">
 
-                        <p *ngIf="!item.techado" class="text-secondary"><i class="bi-2 bi-cloud-lightning-rain">
+                                </i> &nbsp; <a>Sin iluminación LED</a>
+                            </p>
+                            <p *ngIf="item.techado"><i class="bi-1 bi-cloud-lightning-rain-fill"></i> &nbsp;
+                                <a>Techado</a>
 
-                            </i> &nbsp; <a>Sin techo</a>
-                        </p>
-                        <p *ngIf="item.garaje"><i class="bi-1 bi-car-front-fill"></i> &nbsp; <a>Garaje</a>
+                            <p *ngIf="!item.techado" class="text-secondary"><i class="bi-2 bi-cloud-lightning-rain">
 
-                        <p *ngIf="!item.garaje" class="text-secondary"><i class="bi-2 bi-car-front">
+                                </i> &nbsp; <a>Sin techo</a>
+                            </p>
+                            <p *ngIf="item.garaje"><i class="bi-1 bi-car-front-fill"></i> &nbsp; <a>Garaje</a>
 
-                            </i> &nbsp; <a>Sin garaje</a>
-                        </p>
+                            <p *ngIf="!item.garaje" class="text-secondary"><i class="bi-2 bi-car-front">
 
-                        <div class="text-center">
-                            <a href="#" class="btn btn-reserve">Reservar &nbsp; <i
-                                    class="bi-greater bi-chevron-right"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </ng-container>
+                                </i> &nbsp; <a>Sin garaje</a>
+                            </p>
 
-        <h3 class="text-center">Comentarios</h3>
-        <div class="d-flex justify-content-center pb-3">
-            <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel"
-                [ngStyle]="{'width': screenWidth < screenHeight ? '90vw' : '70vw' }">
-                <div class="carousel-inner">
-                    <div class="" *ngFor="let item of reviewsDestacados; let indice = index">
-                        <div class="carousel-item" [ngClass]="{'active': indice == 0}" data-bs-interval="3000">
-                            <img src="{{imagen_fondo}}" class="w-100 rounded" alt="...">
-                            <div class="carousel-caption">
-                                <h4 class="text-black-50"> {{item.user.nombres}} {{item.user.apellidos}} </h4>
-                                <p class="text-black" [innerHTML]="item.comentario"></p>
-
-                                <h6>
-                                    <i class="bi bi-star-fill" [ngClass]="{'text-warning': item.estrellas >= 1}"></i>
-                                    <i class="bi bi-star-fill" [ngClass]="{'text-warning': item.estrellas >= 2}"></i>
-                                    <i class="bi bi-star-fill" [ngClass]="{'text-warning': item.estrellas >= 3}"></i>
-                                    <i class="bi bi-star-fill" [ngClass]="{'text-warning': item.estrellas >= 4}"></i>
-                                    <i class="bi bi-star-fill" [ngClass]="{'text-warning': item.estrellas >= 5}"></i>
-                                </h6>
-
-                                <div class="text-black-50">
-                                    <i class="bi bi-calendar-event"></i> &nbsp; {{item.createdAt | date}}
-                                </div>
-
+                            <div class="text-center">
+                                <a href="#" class="btn btn-reserve">Reservar &nbsp; <i
+                                        class="bi-greater bi-chevron-right"></i></a>
                             </div>
                         </div>
                     </div>
                 </div>
-                <button class="carousel-control-prev fs-6" type="button" data-bs-target="#carouselExampleInterval"
-                    data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"
-                        style="background-color: rgb(148, 148, 148);"></span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval"
-                    data-bs-slide="next">
-                    <span class="carousel-control-next-icon" style="background-color: rgb(148, 148, 148);"
-                        aria-hidden="true"></span>
-                </button>
-            </div>
-        </div>
+            </ng-container>
 
+            <h3 class="text-center">Comentarios</h3>
+            <div class="d-flex justify-content-center pb-3">
+                <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel"
+                    [ngStyle]="{'width': screenWidth < screenHeight ? '90vw' : '70vw' }">
+                    <div class="carousel-inner">
+                        <div class="" *ngFor="let item of reviewsDestacados; let indice = index">
+                            <div class="carousel-item" [ngClass]="{'active': indice == 0}" data-bs-interval="3000">
+                                <img src="{{imagen_fondo}}" class="w-100 rounded" alt="...">
+                                <div class="carousel-caption">
+                                    <h4 class="text-black-50"> {{item.user.nombres}} {{item.user.apellidos}} </h4>
+                                    <p class="text-black" [innerHTML]="item.comentario"></p>
+
+                                    <h6>
+                                        <i class="bi bi-star-fill"
+                                            [ngClass]="{'text-warning': item.estrellas >= 1}"></i>
+                                        <i class="bi bi-star-fill"
+                                            [ngClass]="{'text-warning': item.estrellas >= 2}"></i>
+                                        <i class="bi bi-star-fill"
+                                            [ngClass]="{'text-warning': item.estrellas >= 3}"></i>
+                                        <i class="bi bi-star-fill"
+                                            [ngClass]="{'text-warning': item.estrellas >= 4}"></i>
+                                        <i class="bi bi-star-fill"
+                                            [ngClass]="{'text-warning': item.estrellas >= 5}"></i>
+                                    </h6>
+
+                                    <div class="text-black-50">
+                                        <i class="bi bi-calendar-event"></i> &nbsp; {{item.createdAt | date}}
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="carousel-control-prev fs-6" type="button" data-bs-target="#carouselExampleInterval"
+                        data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"
+                            style="background-color: rgb(148, 148, 148);"></span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval"
+                        data-bs-slide="next">
+                        <span class="carousel-control-next-icon" style="background-color: rgb(148, 148, 148);"
+                            aria-hidden="true"></span>
+                    </button>
+                </div>
+            </div>
+
+        </div>
     </div>
+
+
 </div>
 
 <app-footer></app-footer>

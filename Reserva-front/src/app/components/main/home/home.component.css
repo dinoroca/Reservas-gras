@@ -214,3 +214,11 @@ section .wave.wave4 {
 .grass-caracteristicas p {
     margin-bottom: 5px;
 }
+
+#name-provincia {
+    background-color: #19ce81;
+    border-radius: 0px 0.3rem 0px 0.75rem;
+    padding: 0.125rem 0.4rem;
+    margin-right: -0.65rem;
+    color: white
+}
