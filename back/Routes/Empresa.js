@@ -5,16 +5,22 @@ var EmpresaController = require('../Controllers/EmpresaController');
 var api = express.Router();
 var auth = require('../Middlewares/authenticate');
 
-//Peticiones
+//Peticiones Emoresa
 api.post('/registro_empresa', EmpresaController.registro_empresa);
 api.post('/login_empresa', EmpresaController.login_empresa);
 api.get('/obtener_empresa/:id', auth.auth, EmpresaController.obtener_empresa);
 api.put('/actualizar_empresa/:id', auth.auth, EmpresaController.actualizar_empresa);
+api.get('/listar_empresas_publico', EmpresaController.listar_empresas_publico);
+
+//características
 api.post('/crear_caracteristicas_empresa/:id', auth.auth, EmpresaController.crear_caracteristicas_empresa);
 api.get('/obtener_caracteristicas_empresa/:id', auth.auth, EmpresaController.obtener_caracteristicas_empresa);
 api.put('/actualizar_caracteristicas_empresa/:id', auth.auth, EmpresaController.actualizar_caracteristicas_empresa);
 api.get('/obtener_caracteristicas_empresa_publico', EmpresaController.obtener_caracteristicas_empresa_publico);
-api.get('/listar_empresas_publico', EmpresaController.listar_empresas_publico);
+
+//Canchas
+api.post('/crear_cancha_empresa/:id', auth.auth, EmpresaController.crear_cancha_empresa);
+
 
 
 //Buscar empresa

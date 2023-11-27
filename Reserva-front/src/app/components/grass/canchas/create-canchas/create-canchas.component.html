@@ -5,45 +5,56 @@
     <app-sidebar></app-sidebar>
 
     <div class="shadow rounded mt-5 p-4">
-        <h3 class="text-center fw-bold" style="color:rgb(6, 170, 115)">Registrar canchas</h3>
+        <h3 class="text-center fw-bold">
+            <a [routerLink]="['/grass/canchas']"><i class="text-info bi bi-arrow-left"></i></a> &nbsp; <span style="color:rgb(6, 170, 115)">Registrar canchas</span>
+        </h3>
 
         <div class="mb-3">
             <label for="descripcion" class="form-label text-secondary">Descipción de la cancha</label>
-            <textarea class="form-control" id="descripcion" rows="3" placeholder="Ingrese una descripción (opcional)"></textarea>
+            <textarea class="form-control" id="descripcion" name="descripcion" [(ngModel)]="cancha.descripcion" rows="3"
+                placeholder="Ingrese una descripción (opcional)"></textarea>
         </div>
 
         <div class="row">
             <div class="py-2 col-12 col-sm-6">
                 <label for="tipo" class="form-label text-secondary">Tipo de cancha</label>
-                <select class="form-select" aria-label="Default select example">
-                    <option selected disabled>Seleccione</option>
-                    <option value="1">Voley</option>
-                    <option value="2">Fútbol / Futsal</option>
+                <select class="form-select" aria-label="Default select example" id="tipo" name="tipo"
+                    [(ngModel)]="cancha.tipo">
+                    <option selected disabled value="">Seleccione</option>
+                    <option value="Voley">Voley</option>
+                    <option value="Fútbol/Futsal">Fútbol / Futsal</option>
                 </select>
             </div>
 
             <div class="py-2 col-6 col-sm-3">
                 <label for="largo" class="form-label text-secondary">Largo</label>
-                <input type="number" class="form-control" id="largo">
+                <input type="number" class="form-control" min="0" id="largo" name="largo" [(ngModel)]="cancha.largo">
             </div>
 
             <div class="py-2 col-6 col-sm-3">
                 <label for="ancho" class="form-label text-secondary">Ancho</label>
-                <input type="number" class="form-control" id="ancho">
+                <input type="number" class="form-control" min="0" id="ancho" name="ancho" [(ngModel)]="cancha.ancho">
             </div>
-            
+
             <div class="py-2 col-12 col-sm-6">
-                <label for="precio_dia" class="form-label text-secondary">Precio de día</label>
-                <input type="number" class="form-control" id="precio_dia">
+                <label for="precio_dia" class="form-label text-secondary">Precio de día (SOLES)</label>
+                <input type="number" class="form-control" min="0" id="precio_dia" name="precio_dia"
+                    [(ngModel)]="cancha.precio_dia">
             </div>
             <div class="py-2 col-12 col-sm-6">
-                <label for="precio_noche" class="form-label text-secondary">Precio de noche</label>
-                <input type="number" class="form-control" id="precio_noche">
+                <label for="precio_noche" class="form-label text-secondary">Precio de noche (SOLES)</label>
+                <input type="number" class="form-control" min="0" id="precio_noche" name="precio_noche"
+                    [(ngModel)]="cancha.precio_noche">
             </div>
         </div>
 
         <div class="d-grid gap-2 pt-4">
-            <button class="btn btn-primary" type="button">Registrar</button>
-          </div>
+            <button *ngIf="!load_btn_crear" class="btn btn-primary" type="button" (click)="crear()">Registrar</button>
+
+            <button *ngIf="load_btn_crear" class="btn btn-primary" type="button" disabled>
+                <span class="spinner-grow spinner-grow-sm" aria-hidden="true"></span>
+                <span role="status" style="font-weight: 300;">&nbsp; Creando...</span>
+            </button>
+        </div>
     </div>
 </div>
