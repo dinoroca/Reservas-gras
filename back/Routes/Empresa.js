@@ -20,6 +20,7 @@ api.get('/obtener_caracteristicas_empresa_publico', EmpresaController.obtener_ca
 
 //Canchas
 api.post('/crear_cancha_empresa/:id', auth.auth, EmpresaController.crear_cancha_empresa);
+api.get('/obtener_canchas_empresa/:id', auth.auth, EmpresaController.obtener_canchas_empresa);
 
 
 

@@ -118,6 +118,11 @@ export class UserService {
     return this._http.post(this.url + 'crear_cancha_empresa/' + id, data, { headers: headers });
   }
 
+  obtener_canchas_empresa(id: any, token: any): Observable<any> {
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json', 'authorization': token });
+    return this._http.get(this.url + 'obtener_canchas_empresa/' + id, { headers: headers });
+  }
+
   //MENSAJES
   enviar_mensaje_contacto(data: any): Observable<any> {
     let headers = new HttpHeaders().set('Content-Type', 'application/json');

@@ -7,12 +7,48 @@
     <div class="shadow rounded mt-5 p-4">
         <h3 class="text-center fw-bold" style="color:rgb(6, 170, 115)">CANCHAS</h3>
 
-        <div class="alert alert-danger text-center" role="alert">
-            Aún no existen canchas!
-        </div>
+        <ng-container *ngIf="load_data">
+          <div class="text-center">
+              <div class="spinner-border text-secondary" style="width: 3rem; height: 3rem" role="status">
+              </div>
+              <h4 class="text-black-50"><small>Cargando...</small></h4>
+          </div>
+      </ng-container>
 
-        <div class="text-center">
-            <button type="button" class="btn btn-primary" [routerLink]="['/grass/canchas/crear']"><i class="bi bi-plus-circle"></i> &nbsp; Crear</button>
-        </div>
+        <ng-container *ngIf="!btn_crear && !load_data">
+            Existen las canchas
+            <div>
+                <div class="shadow card rounded my-4" *ngFor="let item of canchas; let indice = index"
+                  style="border: 1px solid rgb(111, 66, 193);">
+                  <div class="card-body py-1">
+                    <div class="d-flex flex-wrap justify-content-between py-3" data-toggle="collapse"
+                      aria-expanded="false">
+
+                      <span class="pr-2 fw-bold">N°. {{indice+1}} </span>
+                      <span *ngIf="item.tipo == 'Fútbol/Futsal'">Tipo: 
+                        <span class="fw-bold" style="color: rgb(0, 192, 86);">{{item.tipo}}
+                        </span>
+                      </span>
+
+                      <span *ngIf="item.tipo == 'Voley'">Tipo: 
+                        <span class="fw-bold" style="color: rgb(241, 78, 143);">{{item.tipo}}
+                        </span>
+                      </span>
+                    </div>
+  
+                  </div>
+                </div>
+              </div>
+        </ng-container>
+
+        <ng-container *ngIf="btn_crear && !load_data">
+            <div class="alert alert-danger text-center" role="alert">
+                Aún no existen canchas!
+            </div>
+    
+            <div class="text-center">
+                <button type="button" class="btn btn-primary" [routerLink]="['/grass/canchas/crear']"><i class="bi bi-plus-circle"></i> &nbsp; Crear</button>
+            </div>
+        </ng-container>
     </div>
 </div>

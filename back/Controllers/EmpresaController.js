@@ -2,7 +2,7 @@
 
 var Empresa = require('../Models/Empresa');
 var Caracteristicas = require('../Models/Caracteristicas');
-var Cancha = require ('../Models/Cancha');
+var Cancha = require('../Models/Cancha');
 var bcrypt = require('bcrypt-nodejs');
 var jwt = require('../Helpers/jwt');
 
@@ -294,6 +294,27 @@ const crear_cancha_empresa = async function (req, res) {
   }
 }
 
+const obtener_canchas_empresa = async function (req, res) {
+  if (req.user) {
+    if (req.user.role == 'GRASS') {
+      let id = req.params['id'];
+      let canchas = await Cancha.find({ empresa: id }).populate('empresa');
+
+      if (canchas.length >= 1) {
+        res.status(200).send({ data: canchas });
+      } else {
+        res.status(200).send({ data: undefined });
+      }
+
+    } else {
+      res.status(500).send({ message: 'NoAccess' });
+    }
+  } else {
+    res.status(500).send({ message: 'NoAccess' });
+  }
+}
+
+
 
 module.exports = {
   registro_empresa,
@@ -309,5 +330,6 @@ module.exports = {
   obtener_caracteristicas_empresa_publico,
   listar_empresas_publico,
   actualizar_caracteristicas_empresa,
-  crear_cancha_empresa
+  crear_cancha_empresa,
+  obtener_canchas_empresa
 }
