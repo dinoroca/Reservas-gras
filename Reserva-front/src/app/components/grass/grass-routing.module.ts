@@ -9,6 +9,8 @@ import { CaracteristicasComponent } from './caracteristicas/caracteristicas.comp
 import { IndexCanchasComponent } from './canchas/index-canchas/index-canchas.component';
 import { CreateCanchasComponent } from './canchas/create-canchas/create-canchas.component';
 import { EditCanchasComponent } from './canchas/edit-canchas/edit-canchas.component';
+import { CreateCuentasComponent } from './cuentas/create-cuentas/create-cuentas.component';
+import { EditCuentasComponent } from './cuentas/edit-cuentas/edit-cuentas.component';
 
 const routes: Routes = [
   {path: '', component: InicioComponent},
@@ -19,7 +21,9 @@ const routes: Routes = [
   {path: 'datos', component: IndexDatosComponent},
   {path: 'datos/actualizar', component: EditDatosComponent},
   {path: 'reservaciones', component: ReservacionesComponent},
-  {path: 'cuentas', component: IndexCuentasComponent}
+  {path: 'cuentas', component: IndexCuentasComponent},
+  {path: 'cuentas/crear', component: CreateCuentasComponent},
+  {path: 'cuentas/:id', component: EditCuentasComponent},
 ];
 
 @NgModule({

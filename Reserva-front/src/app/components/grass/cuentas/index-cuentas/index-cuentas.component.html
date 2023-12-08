@@ -1,10 +1,98 @@
 <app-nav></app-nav>
 
-
 <div class="container py-4">
     <app-sidebar></app-sidebar>
 
-    <div class="shadow rounded mt-5 p-4">
-        Cuentas
+    <div class="card shadow mt-4" style="border-color: #F8F8F8;">
+        <h3 class="card-header d-flex justify-content-between" style="color:rgb(6, 170, 115)">
+            CUENTAS
+            <a class="btn btn-primary" [routerLink]="['/grass/cuentas/crear']">
+                <i class="bi bi-plus-lg"></i> &nbsp; Registrar
+            </a>
+        </h3>
+        <div class="card-body text-center">
+            <div class="" *ngIf="load_data">
+                <!-- Custom size border spinner -->
+                <div class="text-center">
+                    <div class="spinner-border" style="width: 3rem; height: 3rem" role="status">
+                    </div>
+                    <h5 class="text-black-50"><small>Cargando...</small></h5>
+                </div>
+            </div>
+
+            <div class="" *ngIf="!load_data">
+                <ng-container *ngFor="let item of cuentas">
+                    <div class="shadow rounded px-3 my-3 py-3" [ngStyle]="{'background-color': item.color}">
+                        <div class="row pt-3">
+                            <div class="text-center">
+                                <h5 class="fw-bold">
+                                    <a> {{item.banco}}</a> &nbsp;
+                                    <a [routerLink]="['/grass/cuentas', item._id]" class="text-primary"
+                                        style="text-decoration: none;">
+                                        <i class="bi-pencil-fill"></i> &nbsp;
+                                    </a>
+                                    <a data-bs-toggle="modal" [attr.data-bs-target]="'#delete-' + item._id"
+                                        class="text-danger" type="button">
+                                        <i class="bi bi-trash-fill"></i>
+                                    </a>
+                                </h5>
+                            </div>
+
+                            <!-- Modal eliminar -->
+                            <div class="modal fade" id="delete-{{ item._id }}" tabindex="-1" style="display: none"
+                                aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title text-center">
+                                                Eliminar cuenta
+                                            </h4>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close">
+                                            </button>
+                                        </div>
+                                        <div class="modal-body text-center">
+                                            Desea eliminar la cuenta de {{item.banco}} {{ item.cuenta}}?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button class="btn btn-secondary btn-sm bi-x-circle-fill" type="button"
+                                                data-bs-dismiss="modal">
+                                            </button>
+                                            <button *ngIf="!load_btn" class="btn btn-danger btn-sm"
+                                                data-bs-dismiss="modal" (click)="eliminar(item._id)" type="button"> <i
+                                                    class="bi bi-trash-fill"></i> &nbsp;
+                                                Eliminar
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4 col-12">
+                                <span class="badge rounded-pill bg-secondary"><strong>Titular: </strong>
+                                    {{item.titular}}</span>
+                            </div>
+
+                            <div class="col-md-4 col-12">
+                                <span class="fs-6 mx-3"> <strong>Cuenta: </strong> {{item.cuenta}}</span>
+                            </div>
+
+                            <div class="col-md-4 col-12">
+                                <span class="fs-6 mx-3"> <strong>CCI: </strong> {{item.cci}}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </ng-container>
+            </div>
+
+            <ng-container *ngIf="btn_crear && !load_data">
+                <div class="alert alert-danger mb-0" role="alert">
+                    Aún no existen cuentas!
+                </div>
+            </ng-container>
+        </div>
     </div>
 </div>

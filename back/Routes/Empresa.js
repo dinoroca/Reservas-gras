@@ -25,6 +25,15 @@ api.get('/obtener_cancha_empresa/:id', auth.auth, EmpresaController.obtener_canc
 api.put('/actualizar_cancha_empresa/:id', auth.auth, EmpresaController.actualizar_cancha_empresa);
 api.delete('/eliminar_cancha_empresa/:id', auth.auth, EmpresaController.eliminar_cancha_empresa);
 
+/////// CUENTAS
+api.post('/registro_cuenta_grass', auth.auth, EmpresaController.registro_cuenta_grass);
+api.get('/obtener_cuentas_grass', auth.auth, EmpresaController.obtener_cuentas_grass);
+api.get('/obtener_cuenta_grass/:id', auth.auth, EmpresaController.obtener_cuenta_grass);
+api.delete('/eliminar_cuenta_grass/:id', auth.auth, EmpresaController.eliminar_cuenta_grass);
+api.put('/actualizar_cuenta_grass/:id', auth.auth, EmpresaController.actualizar_cuenta_grass);
+api.get('/obtener_cuentas', auth.auth, EmpresaController.obtener_cuentas);
+
+
 
 //Buscar empresa
 api.get('/listar_empresas_filtro/:filtro?', EmpresaController.listar_empresas_filtro);

@@ -3,6 +3,7 @@
 var Empresa = require('../Models/Empresa');
 var Caracteristicas = require('../Models/Caracteristicas');
 var Cancha = require('../Models/Cancha');
+var Cuenta = require('../Models/Cuenta');
 var bcrypt = require('bcrypt-nodejs');
 var jwt = require('../Helpers/jwt');
 
@@ -378,6 +379,122 @@ const eliminar_cancha_empresa = async function (req, res) {
   }
 }
 
+//Cuentas
+const registro_cuenta_grass = async function (req, res) {
+  if (req.user) {
+    if (req.user.role == 'GRASS') {
+
+      var data = req.body;
+
+      let reg = await Cuenta.create(data);
+      res.status(200).send({ data: reg });
+
+    } else {
+      res.status(500).send({ message: 'NoAccess' });
+    }
+  } else {
+    res.status(500).send({ message: 'NoAccess' });
+  }
+}
+
+const obtener_cuentas_grass = async function (req, res) {
+  if (req.user) {
+    if (req.user.role == 'GRASS') {
+
+      let cuentas = [];
+      try {
+        cuentas = await Cuenta.find().sort({ createdAt: -1 });
+        res.status(200).send({ data: cuentas });
+      } catch (error) {
+        res.status(200).send({ data: undefined });
+      }
+    } else {
+      res.status(500).send({ message: 'NoAccess' });
+    }
+  } else {
+    res.status(500).send({ message: 'NoAccess' });
+  }
+}
+
+const obtener_cuenta_grass = async function (req, res) {
+  if (req.user) {
+    if (req.user.role == 'GRASS') {
+
+      var id = req.params['id'];
+
+      let cuenta;
+
+      try {
+        cuenta = await Cuenta.findById({ _id: id });
+        res.status(200).send({ data: cuenta });
+      } catch (error) {
+        res.status(200).send({ data: undefined });
+      }
+    } else {
+      res.status(500).send({ message: 'NoAccess' });
+    }
+  } else {
+    res.status(500).send({ message: 'NoAccess' });
+  }
+}
+
+const eliminar_cuenta_grass = async function (req, res) {
+  if (req.user) {
+    if (req.user.role == 'GRASS') {
+
+      var id = req.params['id'];
+      let reg = await Cuenta.findByIdAndRemove({ _id: id });
+      res.status(200).send({ data: reg });
+
+    } else {
+      res.status(500).send({ message: 'NoAccess' });
+    }
+  } else {
+    res.status(500).send({ message: 'NoAccess' });
+  }
+}
+
+const actualizar_cuenta_grass = async function (req, res) {
+  if (req.user) {
+    if (req.user.role == 'GRASS') {
+
+      var id = req.params['id'];
+      var data = req.body;
+
+      var reg = await Cuenta.findByIdAndUpdate({ _id: id }, {
+        banco: data.banco,
+        titular: data.titular,
+        cuenta: data.cuenta,
+        cci: data.cci,
+        color: data.color
+      });
+
+      res.status(200).send({ data: reg });
+
+    } else {
+      res.status(500).send({ message: 'NoAccess' });
+    }
+  } else {
+    res.status(500).send({ message: 'NoAccess' });
+  }
+}
+
+const obtener_cuentas = async function (req, res) {
+  if (req.user) {
+
+    let cuentas = [];
+    try {
+      cuentas = await Cuenta.find();
+      res.status(200).send({ data: cuentas });
+    } catch (error) {
+      res.status(200).send({ data: undefined });
+    }
+  } else {
+    res.status(500).send({ message: 'NoAccess' });
+  }
+}
+
+
 module.exports = {
   registro_empresa,
   login_empresa,
@@ -396,5 +513,11 @@ module.exports = {
   obtener_canchas_empresa,
   obtener_cancha_empresa,
   actualizar_cancha_empresa,
-  eliminar_cancha_empresa
+  eliminar_cancha_empresa,
+  registro_cuenta_grass,
+  obtener_cuentas_grass,
+  obtener_cuenta_grass,
+  eliminar_cuenta_grass,
+  actualizar_cuenta_grass,
+  obtener_cuentas
 }

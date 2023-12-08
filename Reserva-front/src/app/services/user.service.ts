@@ -138,6 +138,38 @@ export class UserService {
     return this._http.delete(this.url + 'eliminar_cancha_empresa/' + id, { headers: headers });
   }
 
+  //Cuentas
+  registro_cuenta_grass(data: any, token: any): Observable<any> {
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json', 'authorization': token });
+    return this._http.post(this.url + 'registro_cuenta_grass', data, { headers: headers });
+  }
+
+  obtener_cuenta_grass(id: any, token: any): Observable<any> {
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json', 'authorization': token });
+    return this._http.get(this.url + 'obtener_cuenta_grass/' + id, { headers: headers });
+  }
+
+  obtener_cuentas_grass(token: any): Observable<any> {
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json', 'authorization': token });
+    return this._http.get(this.url + 'obtener_cuentas_grass', { headers: headers });
+  }
+
+  eliminar_cuenta_grass(id: any, token: any): Observable<any> {
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json', 'authorization': token });
+    return this._http.delete(this.url + 'eliminar_cuenta_grass/' + id, { headers: headers });
+  }
+
+  actualizar_cuenta_grass(id: any, data: any, token: any): Observable<any> {
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json', 'authorization': token });
+    return this._http.put(this.url + 'actualizar_cuenta_grass/' + id, data, { headers: headers });
+  }
+
+  obtener_cuentas(token: any): Observable<any> {
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json', 'authorization': token });
+    return this._http.get(this.url + 'obtener_cuentas', { headers: headers });
+  }
+
+
   //MENSAJES
   enviar_mensaje_contacto(data: any): Observable<any> {
     let headers = new HttpHeaders().set('Content-Type', 'application/json');
