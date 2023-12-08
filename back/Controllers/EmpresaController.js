@@ -314,7 +314,69 @@ const obtener_canchas_empresa = async function (req, res) {
   }
 }
 
+const obtener_cancha_empresa = async function (req, res) {
+  if (req.user) {
+    if (req.user.role == 'GRASS') {
 
+      var id = req.params['id'];
+
+      let cancha;
+
+      try {
+        cancha = await Cancha.findById({ _id: id });
+        res.status(200).send({ data: cancha });
+      } catch (error) {
+        res.status(200).send({ data: undefined });
+      }
+    } else {
+      res.status(500).send({ message: 'NoAccess' });
+    }
+  } else {
+    res.status(500).send({ message: 'NoAccess' });
+  }
+}
+
+const actualizar_cancha_empresa = async function (req, res) {
+  if (req.user) {
+    if (req.user.role == 'GRASS') {
+
+      var id = req.params['id'];
+      var data = req.body;
+
+      var reg = await Cancha.findByIdAndUpdate({ _id: id }, {
+        descripcion: data.descripcion,
+        tipo: data.tipo,
+        largo: data.largo,
+        ancho: data.ancho,
+        precio_dia: data.precio_dia,
+        precio_noche: data.precio_noche
+      });
+
+      res.status(200).send({ data: reg });
+
+    } else {
+      res.status(500).send({ message: 'NoAccess' });
+    }
+  } else {
+    res.status(500).send({ message: 'NoAccess' });
+  }
+}
+
+const eliminar_cancha_empresa = async function (req, res) {
+  if (req.user) {
+    if (req.user.role == 'GRASS') {
+
+      var id = req.params['id'];
+      let reg = await Cancha.findByIdAndRemove({ _id: id });
+      res.status(200).send({ data: reg });
+
+    } else {
+      res.status(500).send({ message: 'NoAccess' });
+    }
+  } else {
+    res.status(500).send({ message: 'NoAccess' });
+  }
+}
 
 module.exports = {
   registro_empresa,
@@ -331,5 +393,8 @@ module.exports = {
   listar_empresas_publico,
   actualizar_caracteristicas_empresa,
   crear_cancha_empresa,
-  obtener_canchas_empresa
+  obtener_canchas_empresa,
+  obtener_cancha_empresa,
+  actualizar_cancha_empresa,
+  eliminar_cancha_empresa
 }

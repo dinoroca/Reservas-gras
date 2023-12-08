@@ -52,5 +52,17 @@ export class IndexCanchasComponent implements OnInit {
       }
     );
   }
+
+  eliminar(id: any) {
+    this.load_btn = true;
+    this._userService.eliminar_cancha_empresa(id, this.token).subscribe(
+      response => {
+        this._toastrService.success('Se eliminó con éxito', 'ELIMINADO!');
+
+        this.load_btn = false;
+        this.init_data();
+      }
+    );
+  }
 }
 

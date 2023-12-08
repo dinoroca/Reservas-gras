@@ -31,7 +31,7 @@
             </h4>
 
             <div class="row">
-              <div class="col-12 fw-light">
+              <div class="col-12 fw-light" style="text-align: justify;">
                 {{item.descripcion}}
               </div>
 
@@ -48,16 +48,52 @@
               </div>
             </div>
 
-            <div class="d-flex flex-wrap justify-content-between py-3" data-toggle="collapse" aria-expanded="false">
+            <div class="d-flex flex-wrap justify-content-between pt-2" data-toggle="collapse" aria-expanded="false">
 
-              <a class="text-info fs-5" [routerLink]="['/grass']"><i class="bi bi-pencil"></i></a>
-              <a class="text-danger fs-5"><i class="bi bi-trash"></i></a>
+              <a class="text-info fs-5" [routerLink]="['/grass/canchas', item._id]"><i class="bi bi-pencil"></i></a>
+              <a data-bs-toggle="modal" [attr.data-bs-target]="'#delete-' + item._id"
+                class="text-danger fs-5" type="button">
+                <i class="bi bi-trash"></i>
+              </a>
             </div>
 
+          </div>
+
+          <!-- Modal eliminar -->
+          <div class="modal fade" id="delete-{{ item._id }}" tabindex="-1" style="display: none" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title text-center">
+                    Eliminar cuenta
+                  </h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                  </button>
+                </div>
+                <div class="modal-body text-center">
+                  Desea eliminar la cancha {{indice + 1}} ?
+                </div>
+                <div class="modal-footer">
+                  <button class="btn btn-secondary btn-sm bi-x-lg" type="button" data-bs-dismiss="modal">
+                  </button>
+                  <button *ngIf="!load_btn" class="btn btn-danger btn-sm" data-bs-dismiss="modal"
+                    (click)="eliminar(item._id)" type="button"> <i class="bi bi-trash-fill"></i> &nbsp;
+                    Eliminar
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
+      <!-- Agregar -->
+      <div class="d-grid gap-2">
+        <button class="btn btn-primary" type="button" [routerLink]="['/grass/canchas/crear']">
+          <i class="bi bi-plus-lg"></i> &nbsp;
+          Agregar
+        </button>
+      </div>
     </ng-container>
 
     <ng-container *ngIf="btn_crear && !load_data">

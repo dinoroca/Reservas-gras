@@ -21,7 +21,9 @@ api.get('/obtener_caracteristicas_empresa_publico', EmpresaController.obtener_ca
 //Canchas
 api.post('/crear_cancha_empresa/:id', auth.auth, EmpresaController.crear_cancha_empresa);
 api.get('/obtener_canchas_empresa/:id', auth.auth, EmpresaController.obtener_canchas_empresa);
-
+api.get('/obtener_cancha_empresa/:id', auth.auth, EmpresaController.obtener_cancha_empresa);
+api.put('/actualizar_cancha_empresa/:id', auth.auth, EmpresaController.actualizar_cancha_empresa);
+api.delete('/eliminar_cancha_empresa/:id', auth.auth, EmpresaController.eliminar_cancha_empresa);
 
 
 //Buscar empresa

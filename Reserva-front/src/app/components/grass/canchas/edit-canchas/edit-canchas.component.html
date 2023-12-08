@@ -1,1 +1,78 @@
-<p>edit-canchas works!</p>
+<app-nav></app-nav>
+
+
+<div class="container py-4">
+    <app-sidebar></app-sidebar>
+
+    <div class="shadow rounded mt-5 p-4">
+        <h3 class="text-center fw-bold">
+            <a [routerLink]="['/grass/canchas']"><i class="text-info bi bi-arrow-left"></i></a> &nbsp; <span
+                style="color:rgb(6, 170, 115)">
+                Actualizar cancha
+            </span>
+        </h3>
+
+        <ng-container *ngIf="load_data">
+            <div class="text-center">
+                <div class="spinner-border text-secondary" style="width: 3rem; height: 3rem" role="status">
+                </div>
+                <h4 class="text-black-50"><small>Cargando...</small></h4>
+            </div>
+        </ng-container>
+
+        <ng-container *ngIf="!load_data">
+
+            <div class="mb-3">
+                <label for="descripcion" class="form-label text-secondary">Descipción de la cancha</label>
+                <textarea class="form-control" id="descripcion" name="descripcion" [(ngModel)]="cancha.descripcion"
+                    rows="3" placeholder="Ingrese una descripción (opcional)"></textarea>
+            </div>
+
+            <div class="row">
+                <div class="py-2 col-12 col-sm-6">
+                    <label for="tipo" class="form-label text-secondary">Tipo de cancha</label>
+                    <select class="form-select" aria-label="Default select example" id="tipo" name="tipo"
+                        [(ngModel)]="cancha.tipo">
+                        <option selected disabled value="">Seleccione</option>
+                        <option value="Voley">Voley</option>
+                        <option value="Fútbol/Futsal">Fútbol / Futsal</option>
+                    </select>
+                </div>
+
+                <div class="py-2 col-6 col-sm-3">
+                    <label for="largo" class="form-label text-secondary">Largo</label>
+                    <input type="number" class="form-control" min="0" id="largo" name="largo"
+                        [(ngModel)]="cancha.largo">
+                </div>
+
+                <div class="py-2 col-6 col-sm-3">
+                    <label for="ancho" class="form-label text-secondary">Ancho</label>
+                    <input type="number" class="form-control" min="0" id="ancho" name="ancho"
+                        [(ngModel)]="cancha.ancho">
+                </div>
+
+                <div class="py-2 col-12 col-sm-6">
+                    <label for="precio_dia" class="form-label text-secondary">Precio de día (SOLES)</label>
+                    <input type="number" class="form-control" min="0" id="precio_dia" name="precio_dia"
+                        [(ngModel)]="cancha.precio_dia">
+                </div>
+                <div class="py-2 col-12 col-sm-6">
+                    <label for="precio_noche" class="form-label text-secondary">Precio de noche (SOLES)</label>
+                    <input type="number" class="form-control" min="0" id="precio_noche" name="precio_noche"
+                        [(ngModel)]="cancha.precio_noche">
+                </div>
+            </div>
+
+            <div class="d-grid gap-2 pt-4">
+                <button *ngIf="!load_btn_act" class="btn btn-primary" type="button"
+                    (click)="actualizar()">Actualizar</button>
+
+                <button *ngIf="load_btn_act" class="btn btn-primary" type="button" disabled>
+                    <span class="spinner-grow spinner-grow-sm" aria-hidden="true"></span>
+                    <span role="status" style="font-weight: 300;">&nbsp; Actualizando...</span>
+                </button>
+            </div>
+
+        </ng-container>
+    </div>
+</div>
