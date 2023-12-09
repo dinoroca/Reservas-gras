@@ -18,6 +18,7 @@ export class EditCanchasComponent implements OnInit {
   public load_btn = false;
   public load_btn_act = false;
   public load_data = true;
+  public field_extra = false;
 
   constructor(
     private _title: Title,
@@ -45,6 +46,9 @@ export class EditCanchasComponent implements OnInit {
               this.load_data = false;
             }else {
               this.cancha = response.data;
+              if (this.cancha.tipo == 'Mixto') {
+                this.field_extra = true;
+              }
               this.load_data = false;
             }
           }

@@ -24,10 +24,10 @@
 
             <div class="mb-3">
                 <label for="descripcion" class="form-label text-secondary">Descipción de la cancha</label>
-                <textarea class="form-control" id="descripcion" name="descripcion" [(ngModel)]="cancha.descripcion"
-                    rows="3" placeholder="Ingrese una descripción (opcional)"></textarea>
+                <textarea class="form-control" id="descripcion" name="descripcion" [(ngModel)]="cancha.descripcion" rows="3"
+                    placeholder="Ingrese una descripción (opcional)"></textarea>
             </div>
-
+    
             <div class="row">
                 <div class="py-2 col-12 col-sm-6">
                     <label for="tipo" class="form-label text-secondary">Tipo de cancha</label>
@@ -36,31 +36,92 @@
                         <option selected disabled value="">Seleccione</option>
                         <option value="Voley">Voley</option>
                         <option value="Fútbol/Futsal">Fútbol / Futsal</option>
+                        <option value="Mixto">Mixto</option>
                     </select>
                 </div>
-
-                <div class="py-2 col-6 col-sm-3">
-                    <label for="largo" class="form-label text-secondary">Largo</label>
-                    <input type="number" class="form-control" min="0" id="largo" name="largo"
-                        [(ngModel)]="cancha.largo">
-                </div>
-
-                <div class="py-2 col-6 col-sm-3">
-                    <label for="ancho" class="form-label text-secondary">Ancho</label>
-                    <input type="number" class="form-control" min="0" id="ancho" name="ancho"
-                        [(ngModel)]="cancha.ancho">
-                </div>
-
-                <div class="py-2 col-12 col-sm-6">
-                    <label for="precio_dia" class="form-label text-secondary">Precio de día (SOLES)</label>
-                    <input type="number" class="form-control" min="0" id="precio_dia" name="precio_dia"
-                        [(ngModel)]="cancha.precio_dia">
-                </div>
-                <div class="py-2 col-12 col-sm-6">
-                    <label for="precio_noche" class="form-label text-secondary">Precio de noche (SOLES)</label>
-                    <input type="number" class="form-control" min="0" id="precio_noche" name="precio_noche"
-                        [(ngModel)]="cancha.precio_noche">
-                </div>
+    
+                <ng-container *ngIf="!field_extra">
+                    <div class="py-2 col-6 col-sm-3">
+                        <label for="largo" class="form-label text-secondary">Largo</label>
+                        <input type="number" class="form-control" min="0" id="largo" name="largo" [(ngModel)]="cancha.largo">
+                    </div>
+        
+                    <div class="py-2 col-6 col-sm-3">
+                        <label for="ancho" class="form-label text-secondary">Ancho</label>
+                        <input type="number" class="form-control" min="0" id="ancho" name="ancho" [(ngModel)]="cancha.ancho">
+                    </div>
+        
+                </ng-container>
+    
+                <ng-container *ngIf="field_extra">
+                    <div class="py-2 col-6 col-sm-3">
+                        <label for="largo" class="form-label text-secondary">Largo <em class="futsal">futsal</em></label>
+                        <input type="number" class="form-control" min="0" id="largo" name="largo" [(ngModel)]="cancha.largo">
+                    </div>
+        
+                    <div class="py-2 col-6 col-sm-3">
+                        <label for="ancho" class="form-label text-secondary">Ancho <em class="futsal">futsal</em></label>
+                        <input type="number" class="form-control" min="0" id="ancho" name="ancho" [(ngModel)]="cancha.ancho">
+                    </div>
+    
+                    <div class="py-2 col-12 col-sm-6"></div>
+                    
+    
+                    <div class="py-2 col-6 col-sm-3">
+                        <label for="largo_voley" class="form-label text-secondary">Largo <em class="voley">voley</em></label>
+                        <input type="number" class="form-control" min="0" id="largo_voley" name="largo_voley" [(ngModel)]="cancha.largo_voley">
+                    </div>
+        
+                    <div class="py-2 col-6 col-sm-3">
+                        <label for="ancho_voley" class="form-label text-secondary">Ancho <em class="voley">voley</em></label>
+                        <input type="number" class="form-control" min="0" id="ancho_voley" name="ancho_voley" [(ngModel)]="cancha.ancho_voley">
+                    </div>
+                </ng-container>
+    
+                <ng-container *ngIf="!field_extra">
+                    <div class="py-2 col-12 col-sm-6">
+                        <label for="precio_dia" class="form-label text-secondary">Precio de día (SOLES)</label>
+                        <input type="number" class="form-control" min="0" id="precio_dia" name="precio_dia"
+                            [(ngModel)]="cancha.precio_dia">
+                    </div>
+                    <div class="py-2 col-12 col-sm-6">
+                        <label for="precio_noche" class="form-label text-secondary">Precio de noche (SOLES)</label>
+                        <input type="number" class="form-control" min="0" id="precio_noche" name="precio_noche"
+                            [(ngModel)]="cancha.precio_noche">
+                    </div>
+                </ng-container>
+    
+                <ng-container *ngIf="field_extra">
+                    <div class="py-2 col-12 col-sm-6">
+                        <label for="precio_dia" class="form-label text-secondary">
+                            Precio de día <em class="futsal">futsal</em> (SOLES)
+                        </label>
+                        <input type="number" class="form-control" min="0" id="precio_dia" name="precio_dia"
+                            [(ngModel)]="cancha.precio_dia">
+                    </div>
+                    <div class="py-2 col-12 col-sm-6">
+                        <label for="precio_noche" class="form-label text-secondary">
+                            Precio de noche <em class="futsal">futsal</em> (SOLES)
+                        </label>
+                        <input type="number" class="form-control" min="0" id="precio_noche" name="precio_noche"
+                            [(ngModel)]="cancha.precio_noche">
+                    </div>
+                    
+                    <div class="py-2 col-12 col-sm-6">
+                        <label for="precio_dia_voley" class="form-label text-secondary">
+                            Precio de día <em class="voley">voley</em> (SOLES)
+                        </label>
+                        <input type="number" class="form-control" min="0" id="precio_dia_voley" name="precio_dia_voley"
+                            [(ngModel)]="cancha.precio_dia_voley">
+                    </div>
+                    <div class="py-2 col-12 col-sm-6">
+                        <label for="precio_noche_voley" class="form-label text-secondary">
+                            Precio de noche <em class="voley">voley</em> (SOLES)
+                        </label>
+                        <input type="number" class="form-control" min="0" id="precio_noche_voley" name="precio_noche_voley"
+                            [(ngModel)]="cancha.precio_noche_voley">
+                    </div>
+                </ng-container>
             </div>
 
             <div class="d-grid gap-2 pt-4">
