@@ -28,9 +28,12 @@
 
               <span *ngIf="item.tipo == 'Voley'" class="fw-light h6" style="color: rgb(241, 78, 143);">{{item.tipo}}
               </span>
+
+              <span *ngIf="item.tipo == 'Mixto'" class="fw-light h6" style="color: rgb(122, 78, 241);">{{item.tipo}}
+              </span>
             </h4>
 
-            <div class="row">
+            <div class="row" *ngIf="item.tipo != 'Mixto'">
               <div class="col-12 fw-light" style="text-align: justify;">
                 {{item.descripcion}}
               </div>
@@ -45,6 +48,36 @@
 
               <div class="col-12 col-sm-4 py-3">
                 <span class="fw-bold h5">Precio de noche: </span> <span> S/. {{item.precio_noche}} </span>
+              </div>
+            </div>
+
+            <div class="row" *ngIf="item.tipo == 'Mixto'">
+              <div class="col-12 fw-light" style="text-align: justify;">
+                {{item.descripcion}}
+              </div>
+
+              <div class="col-12 col-sm-4 py-3">
+                <span class="fw-bold h5">Medida <em class="futsal fw-light">futsal</em>: </span> <span> {{item.largo}}m x {{item.ancho}}m </span>
+              </div>
+
+              <div class="col-12 col-sm-4 py-3">
+                <span class="fw-bold h5">Precio de día: <em class="futsal fw-light">futsal</em> </span> <span> S/. {{item.precio_dia}} </span>
+              </div>
+
+              <div class="col-12 col-sm-4 py-3">
+                <span class="fw-bold h5">Precio de noche: <em class="futsal fw-light">futsal</em> </span> <span> S/. {{item.precio_noche}} </span>
+              </div>
+
+              <div class="col-12 col-sm-4">
+                <span class="fw-bold h5">Medida <em class="voley fw-light">voley</em>: </span> <span> {{item.largo_voley}}m x {{item.ancho_voley}}m </span>
+              </div>
+
+              <div class="col-12 col-sm-4">
+                <span class="fw-bold h5">Precio de día: <em class="voley fw-light">voley</em> </span> <span> S/. {{item.precio_dia_voley}} </span>
+              </div>
+
+              <div class="col-12 col-sm-4">
+                <span class="fw-bold h5">Precio de noche: <em class="voley fw-light">voley</em> </span> <span> S/. {{item.precio_noche_voley}} </span>
               </div>
             </div>
 

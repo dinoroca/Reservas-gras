@@ -10,8 +10,12 @@ var CanchaSchema = Schema({
     tipo: {type: String, required: true},
     largo: {type: Number, required: true},
     ancho: {type: Number, required: true},
+    largo_voley: {type: Number, required: false},
+    ancho_voley: {type: Number, required: false},
     precio_dia: {type: Number, required: true},
     precio_noche: {type: Number, required: true},
+    precio_dia_voley: {type: Number, required: false},
+    precio_noche_voley: {type: Number, required: false},
     n_reservas: {type: Number, required: false},
     
     createdAt: {type: Date, default: Date.now, required: true}

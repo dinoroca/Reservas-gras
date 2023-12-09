@@ -15,6 +15,12 @@
         </ng-container>
 
         <ng-container *ngIf="!load_data">
+            <h3 class="text-center fw-bold" style="color:rgb(6, 170, 115)">
+                <a [routerLink]="['/grass/datos']"><i class="text-info bi bi-arrow-left"></i></a> &nbsp; <span
+                    style="color:rgb(6, 170, 115)">
+                    Actualizar datos
+                </span>
+            </h3>
             <form #registroForm="ngForm" (ngSubmit)="actualizar(registroForm)">
                 <div class="row">
                     <div class="col-12 col-sm-6">
@@ -84,12 +90,6 @@
                     <button *ngIf="load_btn" class="btn btn-primary" type="button" disabled>
                         <span class="spinner-grow spinner-grow-sm" aria-hidden="true"></span>
                         <span role="status"> &nbsp; Actualizando...</span>
-                    </button>
-                </div>
-
-                <div class="pt-4 text-center">
-                    <button class="btn btn-warning" [routerLink]="['/grass/datos']">
-                        <i class="bi bi-arrow-left"></i>
                     </button>
                 </div>
             </form>

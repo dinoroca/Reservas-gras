@@ -26,7 +26,7 @@ export class IndexCuentasComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this._title.setTitle('ADMIN | Cuentas');
+    this._title.setTitle('GRASS | Cuentas');
 
     this.init_data();
   }

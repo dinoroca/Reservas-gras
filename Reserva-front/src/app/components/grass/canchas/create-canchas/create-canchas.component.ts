@@ -18,6 +18,8 @@ export class CreateCanchasComponent implements OnInit {
   public load_btn_crear = false;
   public btn_crear = false;
   public btn_actualzar = false;
+  public field_extra = false;
+  public procede = false;
   public cancha: any = {
     tipo: '',
     largo: 0,
@@ -26,6 +28,7 @@ export class CreateCanchasComponent implements OnInit {
     precio_noche: 0
   };
   public empresa: any = {};
+  public data: any = {};
 
   constructor(
     private _userService: UserService,
@@ -60,29 +63,64 @@ export class CreateCanchasComponent implements OnInit {
     );
   }
 
+  select_tipo() {
+    if (this.cancha.tipo == 'Mixto') {
+      this.field_extra = true;
+    } else {
+      this.field_extra = false;
+    }
+  }
+
   crear() {
     this.load_btn_crear = true;
-    let data = {
+    this.data = {
       empresa: this.id,
       descripcion: this.cancha.descripcion,
       tipo: this.cancha.tipo,
       largo: this.cancha.largo,
       ancho: this.cancha.ancho,
       precio_dia: this.cancha.precio_dia,
-      precio_noche: this.cancha.precio_noche
+      precio_noche: this.cancha.precio_noche,
     }
 
-    if (data.tipo == '' || data.largo == 0 || data.ancho == 0 || data.precio_dia == 0 || data.precio_noche == 0) {
+    if (this.cancha.precio_dia_voley && this.cancha.precio_noche_voley && 
+      this.cancha.largo_voley && this.cancha.ancho_voley) {
+
+        this.procede = true;
+      this.data = {
+        empresa: this.id,
+        descripcion: this.cancha.descripcion,
+        tipo: this.cancha.tipo,
+        largo: this.cancha.largo,
+        ancho: this.cancha.ancho,
+        largo_voley: this.cancha.largo_voley,
+        ancho_voley: this.cancha.ancho_voley,
+        precio_dia: this.cancha.precio_dia,
+        precio_noche: this.cancha.precio_noche,
+        precio_dia_voley: this.cancha.precio_dia_voley,
+        precio_noche_voley: this.cancha.precio_noche_voley,
+      }
+    } else if(this.field_extra) {
       this._toastrService.error('Verifique y complete adecuadamente', 'CAMPOS INVÁLIDOS!');
-      this.load_btn_crear = true;
-    } else {
-      this._userService.crear_cancha_empresa(this.id, this.token, data).subscribe(
+      this.procede = false;
+      this.load_btn_crear = false;
+    }
+
+    if (this.data.tipo == '' || !this.data.largo || !this.data.ancho || 
+    !this.data.precio_dia || !this.data.precio_noche) {
+
+      this._toastrService.error('Verifique y complete adecuadamente', 'CAMPOS INVÁLIDOS!');
+      this.load_btn_crear = false;
+
+    }  else if(this.procede) {
+      this.load_btn_crear = false;
+      this._userService.crear_cancha_empresa(this.id, this.token, this.data).subscribe(
         response => {
           this._toastrService.success('Se creó con éxito', 'CREADO!');
           this.load_btn_crear = false;
           this._router.navigate(['/grass/canchas']);
         }
-      ); 
+      );
     }
 
     this.init_data();
