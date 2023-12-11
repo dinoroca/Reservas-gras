@@ -7,7 +7,9 @@ var Cuenta = require('../Models/Cuenta');
 var bcrypt = require('bcrypt-nodejs');
 var jwt = require('../Helpers/jwt');
 
-// var fs = require('fs');
+var fs = require('fs');
+var path = require('path');
+
 var handlebars = require('handlebars');
 var ejs = require('ejs');
 var nodemailer = require('nodemailer');
@@ -379,6 +381,66 @@ const eliminar_cancha_empresa = async function (req, res) {
   }
 }
 
+//Galería CANCHA
+const agregar_imagen_galeria_cancha = async function (req, res) {
+
+  if (req.user) {
+      if (req.user.role == 'GRASS') {
+
+          let id = req.params['id'];
+          let data = req.body;
+
+          var img_path = req.files.imagen.path;
+          var name = img_path.split('/');
+          var imagen_name = name[2];
+
+          let reg = await Cancha.findByIdAndUpdate({ _id: id }, {
+              $push: {
+                  galeria: {
+                      imagen: imagen_name,
+                      _id: data._id
+                  }
+              }
+          });
+
+          res.status(200).send({ data: reg });
+
+
+      } else {
+          res.status(500).send({ message: 'NoAccess' });
+      }
+  } else {
+      res.status(500).send({ message: 'NoAccess' });
+  }
+}
+
+const eliminar_imagen_galeria_cancha = async function (req, res) {
+
+  if (req.user) {
+      if (req.user.role == 'GRASS') {
+
+          let id = req.params['id'];
+          let data = req.body;
+
+
+
+          let reg = await Cancha.findByIdAndUpdate({ _id: id }, {
+              $pull: {
+                  galeria: { _id: data._id }
+              }
+          });
+
+          res.status(200).send({ data: reg });
+
+
+      } else {
+          res.status(500).send({ message: 'NoAccess' });
+      }
+  } else {
+      res.status(500).send({ message: 'NoAccess' });
+  }
+}
+
 //Cuentas
 const registro_cuenta_grass = async function (req, res) {
   if (req.user) {
@@ -514,6 +576,8 @@ module.exports = {
   obtener_cancha_empresa,
   actualizar_cancha_empresa,
   eliminar_cancha_empresa,
+  agregar_imagen_galeria_cancha,
+  eliminar_imagen_galeria_cancha,
   registro_cuenta_grass,
   obtener_cuentas_grass,
   obtener_cuenta_grass,

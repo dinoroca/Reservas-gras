@@ -5,6 +5,9 @@ var EmpresaController = require('../Controllers/EmpresaController');
 var api = express.Router();
 var auth = require('../Middlewares/authenticate');
 
+var multiparty = require('connect-multiparty');
+const path = multiparty({uploadDir: './uploads/canchas'});
+
 //Peticiones Emoresa
 api.post('/registro_empresa', EmpresaController.registro_empresa);
 api.post('/login_empresa', EmpresaController.login_empresa);
@@ -24,6 +27,10 @@ api.get('/obtener_canchas_empresa/:id', auth.auth, EmpresaController.obtener_can
 api.get('/obtener_cancha_empresa/:id', auth.auth, EmpresaController.obtener_cancha_empresa);
 api.put('/actualizar_cancha_empresa/:id', auth.auth, EmpresaController.actualizar_cancha_empresa);
 api.delete('/eliminar_cancha_empresa/:id', auth.auth, EmpresaController.eliminar_cancha_empresa);
+
+/////GALERÍA
+api.put('/agregar_imagen_galeria_cancha/:id', [auth.auth, path], EmpresaController.agregar_imagen_galeria_cancha);
+api.put('/eliminar_imagen_galeria_cancha/:id', auth.auth, EmpresaController.eliminar_imagen_galeria_cancha);
 
 /////// CUENTAS
 api.post('/registro_cuenta_grass', auth.auth, EmpresaController.registro_cuenta_grass);

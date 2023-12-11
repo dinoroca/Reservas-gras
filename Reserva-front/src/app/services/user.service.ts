@@ -169,6 +169,20 @@ export class UserService {
     return this._http.get(this.url + 'obtener_cuentas', { headers: headers });
   }
 
+  //Galería
+  agregar_imagen_galeria_cancha(id: any, data: any, token: any): Observable<any> {
+    let headers = new HttpHeaders({ 'authorization': token });
+    const fd = new FormData();
+    fd.append('_id', data._id);
+
+    fd.append('imagen', data.imagen);
+    return this._http.put(this.url + 'agregar_imagen_galeria_cancha/' + id, fd, { headers: headers });
+  }
+
+  eliminar_imagen_galeria_cancha(id: any, data: any, token: any): Observable<any> {
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json', 'authorization': token });
+    return this._http.put(this.url + 'eliminar_imagen_galeria_cancha/' + id, data, { headers: headers });
+  }
 
   //MENSAJES
   enviar_mensaje_contacto(data: any): Observable<any> {

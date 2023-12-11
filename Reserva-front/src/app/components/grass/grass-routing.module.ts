@@ -11,12 +11,14 @@ import { CreateCanchasComponent } from './canchas/create-canchas/create-canchas.
 import { EditCanchasComponent } from './canchas/edit-canchas/edit-canchas.component';
 import { CreateCuentasComponent } from './cuentas/create-cuentas/create-cuentas.component';
 import { EditCuentasComponent } from './cuentas/edit-cuentas/edit-cuentas.component';
+import { GaleriaCanchasComponent } from './canchas/galeria-canchas/galeria-canchas.component';
 
 const routes: Routes = [
   {path: '', component: InicioComponent},
   {path: 'canchas', component: IndexCanchasComponent},
   {path: 'canchas/crear', component: CreateCanchasComponent},
   {path: 'canchas/:id', component: EditCanchasComponent},
+  {path: 'canchas/galeria/:id', component: GaleriaCanchasComponent},
   {path: 'caracteristicas', component: CaracteristicasComponent},
   {path: 'datos', component: IndexDatosComponent},
   {path: 'datos/actualizar', component: EditDatosComponent},
