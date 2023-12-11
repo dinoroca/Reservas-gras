@@ -391,7 +391,8 @@ const agregar_imagen_galeria_cancha = async function (req, res) {
           let data = req.body;
 
           var img_path = req.files.imagen.path;
-          var name = img_path.split('/');
+          var name = img_path.split('\\');
+          console.log(name);
           var imagen_name = name[2];
 
           let reg = await Cancha.findByIdAndUpdate({ _id: id }, {
@@ -441,6 +442,20 @@ const eliminar_imagen_galeria_cancha = async function (req, res) {
   }
 }
 
+const obtener_galeria_cancha = async function (req, res) {
+  var img = req.params['img'];
+
+  fs.stat('./uploads/canchas/' + img, function (err) {
+      if (!err) {
+          let path_img = './uploads/canchas/' + img;
+          res.status(200).sendFile(path.resolve(path_img));
+      } else {
+          let path_img = './uploads/default.jpg';
+          res.status(200).sendFile(path.resolve(path_img));
+      }
+  });
+}
+
 //Cuentas
 const registro_cuenta_grass = async function (req, res) {
   if (req.user) {
@@ -462,10 +477,11 @@ const registro_cuenta_grass = async function (req, res) {
 const obtener_cuentas_grass = async function (req, res) {
   if (req.user) {
     if (req.user.role == 'GRASS') {
+      let id = req.params['id'];
 
       let cuentas = [];
       try {
-        cuentas = await Cuenta.find().sort({ createdAt: -1 });
+        cuentas = await Cuenta.find({ empresa: id }).sort({ createdAt: -1 }).populate('empresa');
         res.status(200).send({ data: cuentas });
       } catch (error) {
         res.status(200).send({ data: undefined });
@@ -578,6 +594,7 @@ module.exports = {
   eliminar_cancha_empresa,
   agregar_imagen_galeria_cancha,
   eliminar_imagen_galeria_cancha,
+  obtener_galeria_cancha,
   registro_cuenta_grass,
   obtener_cuentas_grass,
   obtener_cuenta_grass,

@@ -4,6 +4,7 @@ var Schema = mongoose.Schema;
 
 //Se crea un modelo de objeto para el cliente
 var CuentaSchema = Schema({
+    empresa: {type: Schema.ObjectId, ref: 'empresa', required: true},
     banco: {type: String, required: true},
     titular: {type: String, required: true},
     cuenta: {type: Number, required: false},

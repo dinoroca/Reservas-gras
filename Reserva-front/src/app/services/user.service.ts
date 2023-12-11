@@ -149,9 +149,9 @@ export class UserService {
     return this._http.get(this.url + 'obtener_cuenta_grass/' + id, { headers: headers });
   }
 
-  obtener_cuentas_grass(token: any): Observable<any> {
+  obtener_cuentas_grass(id: any, token: any): Observable<any> {
     let headers = new HttpHeaders({ 'Content-Type': 'application/json', 'authorization': token });
-    return this._http.get(this.url + 'obtener_cuentas_grass', { headers: headers });
+    return this._http.get(this.url + 'obtener_cuentas_grass/' + id, { headers: headers });
   }
 
   eliminar_cuenta_grass(id: any, token: any): Observable<any> {

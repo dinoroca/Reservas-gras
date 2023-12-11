@@ -15,6 +15,7 @@ export class CreateCuentasComponent implements OnInit {
     color: '#FFFFFF'
   };
   public token;
+  public id;
   public load_btn = false;
 
   constructor(
@@ -25,6 +26,18 @@ export class CreateCuentasComponent implements OnInit {
   ) {
 
     this.token = localStorage.getItem('token') || sessionStorage.getItem('token');
+    this.id = localStorage.getItem('_id') || sessionStorage.getItem('_id');
+
+    _userService.obtener_empresa(this.id, this.token).subscribe(
+      response => {
+
+        if (response.data == undefined) {
+          this.logout();
+        } else {
+          this.cuenta.empresa = response.data._id;
+        }
+      }
+    );
   }
 
   ngOnInit(): void {
@@ -48,6 +61,13 @@ export class CreateCuentasComponent implements OnInit {
         }
       );
     }
+  }
+
+  logout() {
+    location.reload();
+    localStorage.clear();
+    sessionStorage.clear();
+    this._router.navigate(['/']);
   }
 
 }

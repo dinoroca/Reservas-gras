@@ -1,1 +1,234 @@
-<p>galeria-canchas works!</p>
+<app-nav></app-nav>
+
+
+<div class="container py-4">
+    <app-sidebar></app-sidebar>
+
+    <div class="shadow rounded mt-5 p-4">
+        <h3 class="text-center fw-bold">
+            <a [routerLink]="['/grass/canchas']">
+                <i class="text-info bi bi-arrow-left"></i>
+            </a> &nbsp; <span style="color:rgb(6, 170, 115)">
+                Galería de cancha
+            </span>
+        </h3>
+
+        <div class="border-bottom mt-4 mb-5">
+            <div class="d-flex flex-wrap flex-md-nowrap justify-content-between">
+                <div class="card-body">
+                    <div class="mx-sm-4 mx-0">
+
+                        <div class="row mb-3">
+
+                            <!-- CARD DE CANCHA -->
+                            <div class="shadow card rounded my-4" style="border: 1px solid rgb(111, 66, 193);">
+                                <div class="card-body py-2 px-sm-5 px-3">
+
+                                    <h4 class="text-center fw-bold">
+                                        <span *ngIf="cancha.tipo == 'Fútbol/Futsal'" class="fw-light h6"
+                                            style="color: rgb(0, 192, 86);">
+                                            {{cancha.tipo}}
+                                        </span>
+
+                                        <span *ngIf="cancha.tipo == 'Voley'" class="fw-light h6"
+                                            style="color: rgb(241, 78, 143);">{{cancha.tipo}}
+                                        </span>
+
+                                        <span *ngIf="cancha.tipo == 'Mixto'" class="fw-light h6"
+                                            style="color: rgb(122, 78, 241);">{{cancha.tipo}}
+                                        </span>
+                                    </h4>
+
+                                    <div class="row" *ngIf="cancha.tipo != 'Mixto'">
+                                        <div class="col-12 fw-light" style="text-align: justify;">
+                                            {{cancha.descripcion}}
+                                        </div>
+
+                                        <div class="col-12 col-sm-4 py-3">
+                                            <span class="fw-bold h6">Medida: </span> <span> {{cancha.largo}}m x
+                                                {{cancha.ancho}}m </span>
+                                        </div>
+
+                                        <div class="col-12 col-sm-4 py-3">
+                                            <span class="fw-bold h6">Precio de día: </span> <span> S/.
+                                                {{cancha.precio_dia}} </span>
+                                        </div>
+
+                                        <div class="col-12 col-sm-4 py-3">
+                                            <span class="fw-bold h6">Precio de noche: </span> <span> S/.
+                                                {{cancha.precio_noche}} </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="row" *ngIf="cancha.tipo == 'Mixto'">
+                                        <div class="col-12 fw-light" style="text-align: justify;">
+                                            {{cancha.descripcion}}
+                                        </div>
+
+                                        <div class="col-12 col-sm-4 py-3">
+                                            <span class="fw-bold h6">Medida <em class="futsal fw-light">futsal</em>:
+                                            </span> <span> {{cancha.largo}}m x {{cancha.ancho}}m </span>
+                                        </div>
+
+                                        <div class="col-12 col-sm-4 py-3">
+                                            <span class="fw-bold h6">Precio de día: <em
+                                                    class="futsal fw-light">futsal</em> </span> <span> S/.
+                                                {{cancha.precio_dia}} </span>
+                                        </div>
+
+                                        <div class="col-12 col-sm-4 py-3">
+                                            <span class="fw-bold h6">Precio de noche: <em
+                                                    class="futsal fw-light">futsal</em> </span> <span> S/.
+                                                {{cancha.precio_noche}} </span>
+                                        </div>
+
+                                        <div class="col-12 col-sm-4">
+                                            <span class="fw-bold h6">Medida <em class="voley fw-light">voley</em>:
+                                            </span> <span> {{cancha.largo_voley}}m x {{cancha.ancho_voley}}m </span>
+                                        </div>
+
+                                        <div class="col-12 col-sm-4">
+                                            <span class="fw-bold h6">Precio de día: <em
+                                                    class="voley fw-light">voley</em> </span> <span> S/.
+                                                {{cancha.precio_dia_voley}} </span>
+                                        </div>
+
+                                        <div class="col-12 col-sm-4">
+                                            <span class="fw-bold h6">Precio de noche: <em
+                                                    class="voley fw-light">voley</em> </span> <span> S/.
+                                                {{cancha.precio_noche_voley}} </span>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="form-group row align-items-center">
+                            <label class="col-form-label fs-5 fw-light text-center" for="input-img">
+                                Subir imagen
+                            </label>
+                            <div class="mb-3">
+                                <!-- Button addon on the right -->
+                                <div class="input-group">
+                                    <input id="input-img" class="form-control" type="file"
+                                        (change)="fileChangeEvent($event)">
+                                    <button *ngIf="!load_btn" class="btn btn-primary bi-upload" type="button" (click)="subir_imagen()"
+                                        [disabled]="file == undefined">
+                                        Subir
+                                    </button>
+
+                                    <!-- Button with growing spinner and text -->
+                                    <button *ngIf="load_btn" type="button" class="btn btn-secondary" disabled>
+                                        <span class="spinner-grow spinner-grow-sm me-2" role="status"
+                                            aria-hidden="true"></span>
+                                        Subiendo...
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="">
+                                <div class="table-responsive mt-2">
+
+                                    <ng-container *ngIf="load_data">
+                                        <div class="text-center">
+                                          <div class="spinner-border text-secondary" style="width: 3rem; height: 3rem" role="status">
+                                          </div>
+                                          <h4 class="text-black-50"><small>Cargando...</small></h4>
+                                        </div>
+                                      </ng-container>
+
+                                    <table class="table table-sm table-bordered text-center" *ngIf="cancha.galeria">
+                                        <thead class="thead-dark">
+                                            <tr>
+                                                <th>Imagen</th>
+                                                <th>Opciones</th>
+                                            </tr>
+                                        </thead>
+
+                                        <ng-container *ngIf="cancha.galeria.length == 0">
+                                            <tbody>
+                                                <tr>
+                                                    <td colspan="2">
+                                                        <span class="text-danger">No hay imágenes diponibles</span>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </ng-container>
+
+                                        <ng-container *ngIf="cancha.galeria.length >= 1">
+                                            <tbody *ngFor="let item of cancha.galeria; let indice = index">
+                                                <tr *ngIf="!load_data">
+                                                    <td><img [src]="url + 'obtener_galeria_cancha/' + item.imagen"
+                                                            style="width: 15vw;"></td>
+
+                                                    <td>
+                                                        <a data-bs-toggle="modal"
+                                                            [attr.data-bs-target]="'#delete-' + item._id"
+                                                            class="text-danger fs-5" type="button">
+                                                            <i class="bi bi-trash"></i>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+
+                                                <!-- Modal eliminar -->
+                                                <div class="modal fade" id="delete-{{ item._id }}" tabindex="-1"
+                                                    style="display: none" aria-hidden="true">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h4 class="modal-title text-center">
+                                                                    Eliminar imagen de galería
+                                                                </h4>
+                                                                <button type="button" class="btn-close"
+                                                                    data-bs-dismiss="modal" aria-label="Close">
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body text-center">
+                                                                <p class="fs-sm">
+                                                                    Desea eliminar esta imagen?
+                                                                </p>
+                                                                <p><img [src]="url + 'obtener_galeria_cancha/' + item.imagen"
+                                                                        style="width: 10vw;"></p>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button
+                                                                    class="btn btn-secondary btn-sm bi-x-lg"
+                                                                    type="button" data-bs-dismiss="modal">
+                                                                    Cancelar
+                                                                </button>
+                                                                <button *ngIf="!load_btn_eliminar"
+                                                                    class="btn btn-danger btn-sm bi-trash-fill"
+                                                                    (click)="eliminar(item._id)" type="button"
+                                                                    data-bs-dismiss="modal">
+                                                                    Eliminar
+                                                                </button>
+
+                                                                <!-- Button with growing spinner and text -->
+                                                                <button *ngIf="load_btn_eliminar" type="button"
+                                                                    class="btn btn-secondary">
+                                                                    <span class="spinner-grow spinner-grow-sm me-2"
+                                                                        role="status" aria-hidden="true"
+                                                                        disabled></span>
+                                                                    Eliminando...
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </tbody>
+                                        </ng-container>
+                                    </table>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

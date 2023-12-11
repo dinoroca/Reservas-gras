@@ -11,6 +11,7 @@ import { UserService } from 'src/app/services/user.service';
 export class IndexCuentasComponent implements OnInit {
 
   public token: any;
+  public id: any;
   public cuentas: Array<any> = [];
   public load_btn = false;
   public btn_crear = false;
@@ -23,6 +24,7 @@ export class IndexCuentasComponent implements OnInit {
   ) {
 
     this.token = localStorage.getItem('token') || sessionStorage.getItem('token');
+    this.id = localStorage.getItem('_id') || sessionStorage.getItem('_id');
   }
 
   ngOnInit(): void {
@@ -33,7 +35,7 @@ export class IndexCuentasComponent implements OnInit {
 
   init_data() {
     this.cuentas = [];
-    this._userService.obtener_cuentas_grass(this.token).subscribe(
+    this._userService.obtener_cuentas_grass(this.id, this.token).subscribe(
       response => {
         if (response.data.length == 0) {
           this.load_data = false;
