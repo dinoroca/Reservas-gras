@@ -5,6 +5,7 @@ var Schema = mongoose.Schema;
 
 var EmpresaSchema = Schema({
     verificado: {type: Boolean, default: false, required: true},
+    portada: {type: Object, required: false},
     token_pass: {type: String, required: false},
     nombre: {type: String, required: true},
     email: {type: String, required: true},

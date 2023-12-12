@@ -4,6 +4,115 @@
 <div class="container py-4">
     <app-sidebar></app-sidebar>
 
-<p>inicio works!</p>
+    <div class="shadow rounded mt-5 p-4">
+        <h3 class="text-center fw-bold" style="color:rgb(6, 170, 115)">Inicio</h3>
 
+        <ng-container *ngIf="load_data">
+            <div class="text-center">
+                <div class="spinner-border text-secondary" style="width: 3rem; height: 3rem" role="status">
+                </div>
+                <h4 class="text-black-50"><small>Cargando...</small></h4>
+            </div>
+        </ng-container>
+
+        <ng-container *ngIf="!load_data">
+            <div class="form-group row align-items-center">
+
+                <!-- Se muestra cuando no hay ninguna imagen de portada -->
+                <ng-container *ngIf="addImage">
+                    <label class="col-form-label fs-5 fw-light text-center" for="input-img" style="cursor: pointer;">
+                        Subir imagen de portada
+                    </label>
+                    <div class="mb-3">
+                        <!-- Button addon on the right -->
+                        <div class="input-group">
+                            <input id="input-img" class="form-control" type="file" (change)="fileChangeEvent($event)">
+                            <button *ngIf="!load_btn" class="btn btn-primary bi-upload" type="button"
+                                (click)="subir_imagen()" [disabled]="file == undefined">
+                                Subir
+                            </button>
+
+                            <!-- Button with growing spinner and text -->
+                            <button *ngIf="load_btn" type="button" class="btn btn-secondary" disabled>
+                                <span class="spinner-grow spinner-grow-sm me-2" role="status" aria-hidden="true"></span>
+                                Subiendo...
+                            </button>
+                        </div>
+                    </div>
+                </ng-container>
+
+                <div class="">
+
+                    <!-- Muestra una imagen por defecto cuando no existe uno de portada -->
+                    <ng-container *ngIf="!isImagePort">
+                        <h4 class="text-center fw-light text-danger">La siguiente portada es por defecto</h4>
+
+                        <div class="text-center">
+                            <img class="rounded" [src]="url + 'obtener_imagen_portada/' + 'defaultt'"
+                                style="width: 50vw;">
+                        </div>
+                    </ng-container>
+
+                    <ng-container *ngIf="isImagePort">
+
+                        <div class="text-center">
+                            <h5 class="fw-light"> Portada de la empresa </h5>
+                            <img class="rounded" [src]="url + 'obtener_imagen_portada/' + empresa.portada[0].imagen"
+                                style="width: 50vw;">
+                        </div>
+
+                        <div class="text-center py-3">
+                            <a data-bs-toggle="modal" [attr.data-bs-target]="'#delete-' + empresa.portada[0]._id"
+                                class="text-danger fs-5" type="button">
+                                <i class="bi bi-trash"></i>
+                            </a>
+                        </div>
+
+                        <!-- Modal eliminar -->
+                        <div class="modal fade" id="delete-{{ empresa.portada[0]._id }}" tabindex="-1"
+                            style="display: none" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title text-center">
+                                            Eliminar portada
+                                        </h4>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close">
+                                        </button>
+                                    </div>
+                                    <div class="modal-body text-center">
+                                        <p class="fs-sm">
+                                            Desea eliminar esta imagen?
+                                        </p>
+                                        <p><img class="rounded"
+                                                [src]="url + 'obtener_galeria_cancha/' + empresa.portada[0].imagen"
+                                                style="width: 25vw;"></p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button class="btn btn-secondary btn-sm bi-x-lg" type="button"
+                                            data-bs-dismiss="modal">
+                                        </button>
+                                        <button *ngIf="!load_btn_eliminar" class="btn btn-danger btn-sm bi-trash"
+                                            (click)="eliminar(empresa.portada[0]._id)" type="button"
+                                            data-bs-dismiss="modal">
+                                            Eliminar
+                                        </button>
+
+                                        <!-- Button with growing spinner and text -->
+                                        <button *ngIf="load_btn_eliminar" type="button" class="btn btn-secondary">
+                                            <span class="spinner-grow spinner-grow-sm me-2" role="status"
+                                                aria-hidden="true" disabled></span>
+                                            Eliminando...
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-container>
+                </div>
+
+            </div>
+        </ng-container>
+    </div>
 </div>

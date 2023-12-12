@@ -32,7 +32,11 @@ api.delete('/eliminar_cancha_empresa/:id', auth.auth, EmpresaController.eliminar
 api.put('/agregar_imagen_galeria_cancha/:id', [auth.auth, path], EmpresaController.agregar_imagen_galeria_cancha);
 api.put('/eliminar_imagen_galeria_cancha/:id', auth.auth, EmpresaController.eliminar_imagen_galeria_cancha);
 
+api.put('/agregar_imagen_portada/:id', [auth.auth, path], EmpresaController.agregar_imagen_portada);
+api.put('/eliminar_imagen_portada/:id', auth.auth, EmpresaController.eliminar_imagen_portada);
+
 api.get('/obtener_galeria_cancha/:img', EmpresaController.obtener_galeria_cancha);
+api.get('/obtener_imagen_portada/:img', EmpresaController.obtener_imagen_portada);
 
 /////// CUENTAS
 api.post('/registro_cuenta_grass', auth.auth, EmpresaController.registro_cuenta_grass);
