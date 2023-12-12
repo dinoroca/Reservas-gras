@@ -13,6 +13,7 @@ import { ForgotPassComponent } from './components/main/forgot-pass/forgot-pass.c
 import { AuthUserGuard } from './guards/auth-user.guard';
 import { AuthAdminGuard } from './guards/auth-admin.guard';
 import { AuthGrassGuard } from './guards/auth-grass.guard';
+import { VerGrassComponent } from './components/main/ver-grass/ver-grass.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -23,6 +24,7 @@ const routes: Routes = [
   {path: 'contacto', component: ContactosComponent},
   {path: 'verificar', component: VerifyMailComponent},
   {path: 'wait', component: WaitComponent},
+  {path: 'ver/:id', component: VerGrassComponent},
   {path: 'forgot-password', component: ForgotPassComponent},
   {path: 'politica-privacidad', component: PoliticaPrivComponent},
 

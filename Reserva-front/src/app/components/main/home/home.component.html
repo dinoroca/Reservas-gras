@@ -309,8 +309,10 @@
                             </div>
 
                             <div class="text-center" style=" padding: 10px 0px;">
-                                <a href="#" class="btn btn-reserve" style="width: 180px; border-radius: 30px;">Reservar
-                                    &nbsp; <i class="bi-greater bi-chevron-right"></i></a>
+                                <a [routerLink]="['/ver', item.empresa._id]" class="btn btn-reserve" 
+                                style="width: 180px; border-radius: 30px;">
+                                Reservar &nbsp; <i class="bi-greater bi-chevron-right"></i>
+                            </a>
                             </div>
                         </div>
                     </div>

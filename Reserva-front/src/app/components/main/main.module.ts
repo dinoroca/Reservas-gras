@@ -9,6 +9,7 @@ import { ForgotPassComponent } from './forgot-pass/forgot-pass.component';
 import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from 'src/app/app-routing.module';
 import { RouterModule } from '@angular/router';
+import { VerGrassComponent } from './ver-grass/ver-grass.component';
 
 
 
@@ -18,7 +19,8 @@ import { RouterModule } from '@angular/router';
     NosotrosComponent,
     ContactosComponent,
     PoliticaPrivComponent,
-    ForgotPassComponent
+    ForgotPassComponent,
+    VerGrassComponent
   ],
   imports: [
     CommonModule,
