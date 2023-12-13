@@ -47,9 +47,14 @@ export class InicioComponent implements OnInit {
         } else {
           this.empresa = response.data;
 
-          if (this.empresa.portada.length >= 1) {
-            this.isImagePort = true;
-            this.addImage = false;
+          if (this.empresa.portada) {
+            if (this.empresa.portada.length >= 1) {
+              this.isImagePort = true;
+              this.addImage = false;
+            } else {
+              this.isImagePort = false;
+              this.addImage = true;
+            }
           } else {
             this.isImagePort = false;
             this.addImage = true;
