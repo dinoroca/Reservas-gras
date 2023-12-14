@@ -291,12 +291,39 @@
 
 
                             <div class="grass-caracteristicas">
-                                <p><i class="bi-1 bi-pentagon-fill"></i> &nbsp; <a> {{item.canchas_futsal}} canchas de
+                                <!-- Más de una cancha -->
+                                <p *ngIf="item.canchas_futsal > 1"><i class="bi-1 bi-pentagon-fill"></i> &nbsp; <a>
+                                        {{item.canchas_futsal}} Canchas de
                                         futsal</a>
                                 </p>
-                                <p><i class="bi-1 bi-dribbble"></i> &nbsp; <a> {{item.canchas_voley}} canchas de
+
+                                <!-- Una sola cancha -->
+                                <p *ngIf="item.canchas_futsal == 1"><i class="bi-1 bi-pentagon-fill"></i> &nbsp; <a> Una
+                                        cancha de
+                                        futsal</a>
+                                </p>
+
+                                <!-- Sin cancha -->
+                                <p *ngIf="item.canchas_futsal < 1" class="text-secondary"><i class="bi-2 bi-pentagon"></i> &nbsp; 
+                                    <a> Sin canchas de futsal</a>
+                                </p>
+
+                                <!-- Más de una cancha de voley -->
+                                <p *ngIf="item.canchas_voley > 1"><i class="bi-1 bi-dribbble"></i> &nbsp; <a>
+                                        {{item.canchas_voley}} canchas de
                                         vóley</a>
                                 </p>
+
+                                <!-- Una sola cancha -->
+                                <p *ngIf="item.canchas_voley == 1"><i class="bi-1 bi-dribbble"></i> &nbsp; <a>
+                                        Una cancha de vóley</a>
+                                </p>
+
+                                <!-- Sin canchas de vóley -->
+                                <p *ngIf="item.canchas_voley < 1" class="text-secondary"><i class="bi-2 bi-dribbble"></i> &nbsp; 
+                                    <a>Sin canchas de vóley</a>
+                                </p>
+
                                 <p *ngIf="item.iluminacion"><i class="bi-1 bi-lightning-charge-fill"></i> &nbsp;
                                     <a>Iluminación LED</a>
 
