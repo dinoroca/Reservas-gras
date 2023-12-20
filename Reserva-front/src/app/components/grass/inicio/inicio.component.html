@@ -7,6 +7,10 @@
     <div class="shadow rounded mt-5 p-4">
         <h3 class="text-center fw-bold" style="color:rgb(6, 170, 115)">Inicio</h3>
 
+
+
+
+
         <ng-container *ngIf="load_data">
             <div class="text-center">
                 <div class="spinner-border text-secondary" style="width: 3rem; height: 3rem" role="status">
@@ -20,18 +24,30 @@
 
                 <!-- Se muestra cuando no hay ninguna imagen de portada -->
                 <ng-container *ngIf="addImage">
-                    <label class="col-form-label fs-5 fw-light text-center" for="input-img" style="cursor: pointer;">
-                        Subir imagen de portada
-                    </label>
+
+                    <span class="col-form-label fs-5 fw-light text-center">Subir portada del grass</span>
+
+                    <div class="group-upload">
+                        <div class="text-center">
+                            <input id="input-img" type="file" (change)="fileChangeEvent($event)">
+                            <label class="lab" for="input-img">
+                                <i class="bi bi-cloud-arrow-up-fill icon-upload"></i>
+                                <p>Subir imagen desde el equipo</p>
+                            </label>
+                            <button *ngIf="!load_btn" class="btn btn-primary bi-floppy button-upload" type="button"
+                                (click)="subir_imagen()" [disabled]="file == undefined">
+                                Guardar
+                            </button>
+                        </div>
+                        <div style="margin-left: 10px;">
+                            <img id=" previewImage" [src]="imagePreview" style="width: 40vw;">
+                        </div>
+                    </div>
+
+
                     <div class="mb-3">
                         <!-- Button addon on the right -->
                         <div class="input-group">
-                            <input id="input-img" class="form-control" type="file" (change)="fileChangeEvent($event)">
-                            <button *ngIf="!load_btn" class="btn btn-primary bi-upload" type="button"
-                                (click)="subir_imagen()" [disabled]="file == undefined">
-                                Subir
-                            </button>
-
                             <!-- Button with growing spinner and text -->
                             <button *ngIf="load_btn" type="button" class="btn btn-secondary" disabled>
                                 <span class="spinner-grow spinner-grow-sm me-2" role="status" aria-hidden="true"></span>
@@ -45,11 +61,11 @@
 
                     <!-- Muestra una imagen por defecto cuando no existe uno de portada -->
                     <ng-container *ngIf="!isImagePort">
-                        <h4 class="text-center fw-light text-danger">La siguiente portada es por defecto</h4>
+                        <h4 class="text-center fw-light text-danger">Portada del grass por defecto</h4>
 
                         <div class="text-center">
                             <img class="rounded" [src]="url + 'obtener_imagen_portada/' + 'defaultt'"
-                                style="width: 50vw;">
+                                style="width: 40vw;">
                         </div>
                     </ng-container>
 
@@ -83,7 +99,7 @@
                                     </div>
                                     <div class="modal-body text-center">
                                         <p class="fs-sm">
-                                            Desea eliminar esta imagen?
+                                            ¿Desea eliminar esta imagen?
                                         </p>
                                         <p><img class="rounded"
                                                 [src]="url + 'obtener_galeria_cancha/' + empresa.portada[0].imagen"
