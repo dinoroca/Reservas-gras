@@ -134,7 +134,10 @@ export class InicioComponent implements OnInit {
       this._userService
         .agregar_imagen_portada(this.id, data, this.token)
         .subscribe((response) => {
-          this._toastrService.success('Se subió con éxito', '¡SUBIDO!');
+          this._toastrService.success(
+            'Se subió con éxito',
+            'PORTADA ACTUALIZADA!'
+          );
           this.init_data();
           this.file = undefined;
           this.load_btn = false;

@@ -36,12 +36,12 @@ input {
   border: 1px dashed blue;
 }
 
-/* @media (hover: hover) {
+@media (hover: hover) {
   .lab:hover {
     color: blue;
     border: 1px dashed blue;
   }
-} */
+}
 
 .icon-upload {
   font-size: 4em;
@@ -59,4 +59,32 @@ input {
 .button-upload {
   width: 250px;
   margin-top: 10px;
+}
+
+.portada-defecto {
+  margin-right: 20px;
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.img-defecto {
+  width: 30vw;
+}
+
+@media (max-width: 550px) {
+  .group-upload {
+    flex-direction: column;
+    height: 600px;
+  }
+  .portada-defecto {
+    margin: 0px 0px 20px 0px;
+    height: 200px;
+  }
+
+  .img-defecto {
+    width: 50vw;
+  }
 }
