@@ -6,6 +6,7 @@ var Schema = mongoose.Schema;
 var CanchaSchema = Schema({
     empresa: {type: Schema.ObjectId, ref: 'empresa', required: true},
     galeria: [{type: Object, required: false}],
+    nombre: {type: String, required: false},
     descripcion: {type: String, required: false},
     tipo: {type: String, required: true},
     largo: {type: Number, required: true},

@@ -13,9 +13,14 @@
             </span>
         </h3>
 
+        <div class="mb-2">
+            <label for="nombre" class="form-label text-secondary">Nombre</label>
+            <input type="text" class="form-control fw-light" placeholder="P. ej. Cancha 1" id="nombre" name="nombre" [(ngModel)]="cancha.nombre">
+        </div>
+
         <div class="mb-3">
             <label for="descripcion" class="form-label text-secondary">Descipción de la cancha</label>
-            <textarea class="form-control" id="descripcion" name="descripcion" [(ngModel)]="cancha.descripcion" rows="3"
+            <textarea class="form-control fw-light" id="descripcion" name="descripcion" [(ngModel)]="cancha.descripcion" rows="3"
                 placeholder="Ingrese una descripción (opcional)"></textarea>
         </div>
 
