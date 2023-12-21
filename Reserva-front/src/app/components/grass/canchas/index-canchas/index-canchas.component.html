@@ -21,7 +21,7 @@
           style="border: 1px solid rgb(111, 66, 193);">
           <div class="card-body py-2 px-sm-5 px-3">
 
-            <h4 class="text-center fw-bold"> Cancha {{indice+1}}
+            <h4 class="text-center fw-bold"> {{item.nombre}}
               <span *ngIf="item.tipo == 'Fútbol/Futsal'" class="fw-light h6" style="color: rgb(0, 192, 86);">
                 {{item.tipo}}
               </span>
@@ -83,10 +83,14 @@
 
             <div class="d-flex flex-wrap justify-content-between pt-2" data-toggle="collapse" aria-expanded="false">
 
-              <a class="text-info fs-5" [routerLink]="['/grass/canchas', item._id]"><i class="bi bi-pencil"></i></a>
-              <a class="futsal fs-5" [routerLink]="['/grass/canchas/galeria/', item._id]"><i class="bi bi-images"></i></a>
+              <a class="text-info fs-5" [routerLink]="['/grass/canchas', item._id]" title="Editar">
+                <i class="bi bi-pencil"></i>
+              </a>
+              <a class="futsal fs-5" [routerLink]="['/grass/canchas/galeria/', item._id]" title="Agregar galería">
+                <i class="bi bi-images"></i>
+              </a>
               <a data-bs-toggle="modal" [attr.data-bs-target]="'#delete-' + item._id"
-                class="text-danger fs-5" type="button">
+                class="text-danger fs-5" type="button" title="Eliminar">
                 <i class="bi bi-trash"></i>
               </a>
             </div>

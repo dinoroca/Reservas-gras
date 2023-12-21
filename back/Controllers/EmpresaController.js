@@ -301,7 +301,7 @@ const obtener_canchas_empresa = async function (req, res) {
   if (req.user) {
     if (req.user.role == 'GRASS') {
       let id = req.params['id'];
-      let canchas = await Cancha.find({ empresa: id }).populate('empresa');
+      let canchas = await Cancha.find({ empresa: id }).sort({ createdAt: 1 }).populate('empresa');
 
       if (canchas.length >= 1) {
         res.status(200).send({ data: canchas });
