@@ -68,6 +68,11 @@ export class UserService {
     return this._http.get(this.url + 'obtener_empresa/' + id, { headers: headers });
   }
 
+  obtener_empresa_publico(id: any): Observable<any> {
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json'});
+    return this._http.get(this.url + 'obtener_empresa_publico/' + id, { headers: headers });
+  }
+
   listar_empresas_filtro(filtro: any): Observable<any> {
     return this._http.get(this.url + 'listar_empresas_filtro/' + filtro);
   }
@@ -121,6 +126,11 @@ export class UserService {
   obtener_canchas_empresa(id: any, token: any): Observable<any> {
     let headers = new HttpHeaders({ 'Content-Type': 'application/json', 'authorization': token });
     return this._http.get(this.url + 'obtener_canchas_empresa/' + id, { headers: headers });
+  }
+
+  obtener_canchas(id: any): Observable<any> {
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json'});
+    return this._http.get(this.url + 'obtener_canchas/' + id);
   }
 
   obtener_cancha_empresa(id: any, token: any): Observable<any> {

@@ -12,6 +12,7 @@ const path = multiparty({uploadDir: './uploads/canchas'});
 api.post('/registro_empresa', EmpresaController.registro_empresa);
 api.post('/login_empresa', EmpresaController.login_empresa);
 api.get('/obtener_empresa/:id', auth.auth, EmpresaController.obtener_empresa);
+api.get('/obtener_empresa_publico/:id', EmpresaController.obtener_empresa_publico);
 api.put('/actualizar_empresa/:id', auth.auth, EmpresaController.actualizar_empresa);
 api.get('/listar_empresas_publico', EmpresaController.listar_empresas_publico);
 
@@ -27,6 +28,7 @@ api.get('/obtener_canchas_empresa/:id', auth.auth, EmpresaController.obtener_can
 api.get('/obtener_cancha_empresa/:id', auth.auth, EmpresaController.obtener_cancha_empresa);
 api.put('/actualizar_cancha_empresa/:id', auth.auth, EmpresaController.actualizar_cancha_empresa);
 api.delete('/eliminar_cancha_empresa/:id', auth.auth, EmpresaController.eliminar_cancha_empresa);
+api.get('/obtener_canchas/:id', EmpresaController.obtener_canchas);
 
 /////GALERÍA
 api.put('/agregar_imagen_galeria_cancha/:id', [auth.auth, path], EmpresaController.agregar_imagen_galeria_cancha);

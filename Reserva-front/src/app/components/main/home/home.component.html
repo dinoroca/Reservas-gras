@@ -371,8 +371,7 @@
                 <div *ngFor="let item of primerosBuscado" class="col-md-4 pb-5 pt-2 col-sm-12">
                     <div class="card shadow">
                         <div class="images-grass">
-                            <ng-container *ngIf=" item.empresa.portada == undefined || item.empresa.portada.length < 1
-                ">
+                            <ng-container *ngIf=" item.empresa.portada == undefined || item.empresa.portada.length < 1">
                                 <img class="card-img-top" class="rounded"
                                     [src]="url + 'obtener_imagen_portada/' + 'defaultt'" alt="{{ item.empresa.nombre }}"
                                     style="height: 25vh" />

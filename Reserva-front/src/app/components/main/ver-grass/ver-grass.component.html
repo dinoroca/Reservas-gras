@@ -1,1 +1,122 @@
-<p>ver-grass works!</p>
+<app-header></app-header>
+<div class="container-fluid" style="padding-top: 10vh">
+
+    <!-- Canchas -->
+    <div class="row d-flex justify-content-center px-2 px-sm-5">
+        <h4 class="card-title text-center fw-bold py-4"> Canchas del {{empresa.nombre}} </h4>
+
+        <div cstyle="height: 100vh;" *ngIf="load_data">
+            <!-- Custom size border spinner -->
+            <div class="text-center">
+                <div class="spinner-border" style="width: 3rem; height: 3rem" role="status">
+                </div>
+                <h5 class="text-black-50"><small>Cargando...</small></h5>
+            </div>
+        </div>
+
+        <ng-container *ngIf="canchas.length >= 1 && !load_data">
+            <div *ngFor="let item of canchas" class="col-md-4 pb-5 pt-2 col-sm-12">
+                <div class="card shadow mx-3">
+                    <div class="images-grass">
+                        <ng-container *ngIf=" item.empresa.portada == undefined || item.empresa.portada.length < 1">
+                            <img class="card-img-top" class="rounded"
+                                [src]="url + 'obtener_imagen_portada/' + 'defaultt'" alt="{{ item.empresa.nombre }}"
+                                style="height: 25vh" />
+                        </ng-container>
+
+                        <ng-container *ngIf="item.empresa.portada != undefined">
+                            <img *ngIf="item.empresa.portada.length >= 1" class="card-img-top" class="rounded" 
+                            [src]="url + 'obtener_imagen_portada/' + item.empresa.portada[0].imagen" alt="{{ item.empresa.nombre }}" style="height: 25vh" />
+                        </ng-container>
+
+                        <div class="nombre">
+                            <h5 class="card-title fw-bold text-center">
+                                {{ item.nombre }}
+                            </h5>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+
+                        <div class="grass-caracteristicas">
+
+                            <!-- Nombre -->
+                            <p *ngIf="item.tipo == 'Voley'" style="color: rgb(241, 78, 143);">
+                                <i class="bi bi-dribbble"></i> &nbsp;
+                                <a> {{item.tipo}} </a>
+                            </p>
+
+                            <p *ngIf="item.tipo == 'Fútbol/Futsal'" style="color: rgb(0, 192, 86);">
+                                <i class="bi bi-pentagon-fill"></i> &nbsp;
+                                <a> {{item.tipo}} </a>
+                            </p>
+
+                            <!-- Más de una cancha de voley -->
+                            <p *ngIf="item.canchas_voley > 1">
+                                <i class="bi-1 bi-dribbble"></i> &nbsp;
+                                <a> {{ item.canchas_voley }} canchas de vóley</a>
+                            </p>
+
+                            <!-- Una sola cancha -->
+                            <p *ngIf="item.canchas_voley == 1">
+                                <i class="bi-1 bi-dribbble"></i> &nbsp;
+                                <a> Una cancha de vóley</a>
+                            </p>
+
+                            <!-- Sin canchas de vóley -->
+                            <p *ngIf="item.canchas_voley < 1" class="text-secondary">
+                                <i class="bi-2 bi-dribbble"></i> &nbsp;
+                                <a>Sin canchas de vóley</a>
+                            </p>
+
+                            <p *ngIf="item.iluminacion">
+                                <i class="bi-1 bi-lightning-charge-fill"></i> &nbsp;
+                                <a>Iluminación LED</a>
+                            </p>
+
+                            <p *ngIf="!item.iluminacion" class="text-secondary">
+                                <i class="bi-2 bi-lightning-charge"> </i> &nbsp;
+                                <a>Sin iluminación LED</a>
+                            </p>
+                            <p *ngIf="item.techado">
+                                <i class="bi-1 bi-cloud-lightning-rain-fill"></i> &nbsp;
+                                <a>Techado</a>
+                            </p>
+
+                            <p *ngIf="!item.techado" class="text-secondary">
+                                <i class="bi-2 bi-cloud-lightning-rain"> </i> &nbsp;
+                                <a>Sin techo</a>
+                            </p>
+                            <p *ngIf="item.garaje">
+                                <i class="bi-1 bi-car-front-fill"></i> &nbsp; <a>Garaje</a>
+                            </p>
+
+                            <p *ngIf="!item.garaje" class="text-secondary">
+                                <i class="bi-2 bi-car-front"> </i> &nbsp; <a>Sin garaje</a>
+                            </p>
+                        </div>
+
+                        <div class="text-center" style="padding: 10px 0px">
+                            <a [routerLink]="['/ver', item.empresa._id]" class="btn btn-reserve"
+                                style="width: 180px; border-radius: 30px">
+                                Reservar &nbsp; <i class="bi-greater bi-chevron-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+
+        <ng-container *ngIf="canchas.length < 1 && !load_data">
+            <div class="alert alert-danger mb-0 text-center" role="alert">
+                <span class="fs-5 fw-light">Esta empresa aún no creó sus canchas!</span>
+            </div>
+        </ng-container>
+    </div>
+
+    <div class="container py-5">
+
+    </div>
+</div>
+
+<app-footer></app-footer>

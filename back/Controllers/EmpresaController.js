@@ -102,6 +102,18 @@ const obtener_empresa = async function (req, res) {
   }
 }
 
+const obtener_empresa_publico = async function (req, res) {
+  var id = req.params['id'];
+
+  try {
+    var reg = await Empresa.findById({ _id: id });
+    res.status(200).send({ data: reg });
+
+  } catch (error) {
+    res.status(200).send({ data: undefined });
+  }
+}
+
 const listar_empresas_filtro = async function (req, res) {
 
   let filtro = req.params['filtro'];
@@ -381,63 +393,74 @@ const eliminar_cancha_empresa = async function (req, res) {
   }
 }
 
+const obtener_canchas = async function (req, res) {
+  let id = req.params['id'];
+  let canchas = await Cancha.find({ empresa: id }).sort({ createdAt: 1 }).populate('empresa');
+
+  if (canchas.length >= 1) {
+    res.status(200).send({ data: canchas });
+  } else {
+    res.status(200).send({ data: undefined });
+  }
+}
+
 //Galería CANCHA
 const agregar_imagen_galeria_cancha = async function (req, res) {
 
   if (req.user) {
-      if (req.user.role == 'GRASS') {
+    if (req.user.role == 'GRASS') {
 
-          let id = req.params['id'];
-          let data = req.body;
+      let id = req.params['id'];
+      let data = req.body;
 
-          var img_path = req.files.imagen.path;
-          var name = img_path.split('\\');
-          var imagen_name = name[2];
+      var img_path = req.files.imagen.path;
+      var name = img_path.split('\\');
+      var imagen_name = name[2];
 
-          let reg = await Cancha.findByIdAndUpdate({ _id: id }, {
-              $push: {
-                  galeria: {
-                      imagen: imagen_name,
-                      _id: data._id
-                  }
-              }
-          });
+      let reg = await Cancha.findByIdAndUpdate({ _id: id }, {
+        $push: {
+          galeria: {
+            imagen: imagen_name,
+            _id: data._id
+          }
+        }
+      });
 
-          res.status(200).send({ data: reg });
+      res.status(200).send({ data: reg });
 
 
-      } else {
-          res.status(500).send({ message: 'NoAccess' });
-      }
-  } else {
+    } else {
       res.status(500).send({ message: 'NoAccess' });
+    }
+  } else {
+    res.status(500).send({ message: 'NoAccess' });
   }
 }
 
 const eliminar_imagen_galeria_cancha = async function (req, res) {
 
   if (req.user) {
-      if (req.user.role == 'GRASS') {
+    if (req.user.role == 'GRASS') {
 
-          let id = req.params['id'];
-          let data = req.body;
-
-
-
-          let reg = await Cancha.findByIdAndUpdate({ _id: id }, {
-              $pull: {
-                  galeria: { _id: data._id }
-              }
-          });
-
-          res.status(200).send({ data: reg });
+      let id = req.params['id'];
+      let data = req.body;
 
 
-      } else {
-          res.status(500).send({ message: 'NoAccess' });
-      }
-  } else {
+
+      let reg = await Cancha.findByIdAndUpdate({ _id: id }, {
+        $pull: {
+          galeria: { _id: data._id }
+        }
+      });
+
+      res.status(200).send({ data: reg });
+
+
+    } else {
       res.status(500).send({ message: 'NoAccess' });
+    }
+  } else {
+    res.status(500).send({ message: 'NoAccess' });
   }
 }
 
@@ -445,13 +468,13 @@ const obtener_galeria_cancha = async function (req, res) {
   var img = req.params['img'];
 
   fs.stat('./uploads/canchas/' + img, function (err) {
-      if (!err) {
-          let path_img = './uploads/canchas/' + img;
-          res.status(200).sendFile(path.resolve(path_img));
-      } else {
-          let path_img = './uploads/default.jpg';
-          res.status(200).sendFile(path.resolve(path_img));
-      }
+    if (!err) {
+      let path_img = './uploads/canchas/' + img;
+      res.status(200).sendFile(path.resolve(path_img));
+    } else {
+      let path_img = './uploads/default.jpg';
+      res.status(200).sendFile(path.resolve(path_img));
+    }
   });
 }
 
@@ -459,60 +482,60 @@ const obtener_galeria_cancha = async function (req, res) {
 const agregar_imagen_portada = async function (req, res) {
 
   if (req.user) {
-      if (req.user.role == 'GRASS') {
+    if (req.user.role == 'GRASS') {
 
-          let id = req.params['id'];
-          let data = req.body;
+      let id = req.params['id'];
+      let data = req.body;
 
-          var img_path = req.files.imagen.path;
-          var name = img_path.split('\\');
-          console.log(name);
-          var imagen_name = name[2];
+      var img_path = req.files.imagen.path;
+      var name = img_path.split('\\');
+      console.log(name);
+      var imagen_name = name[2];
 
-          let reg = await Empresa.findByIdAndUpdate({ _id: id }, {
-              $push: {
-                  portada: {
-                      imagen: imagen_name,
-                      _id: data._id
-                  }
-              }
-          });
+      let reg = await Empresa.findByIdAndUpdate({ _id: id }, {
+        $push: {
+          portada: {
+            imagen: imagen_name,
+            _id: data._id
+          }
+        }
+      });
 
-          res.status(200).send({ data: reg });
+      res.status(200).send({ data: reg });
 
 
-      } else {
-          res.status(500).send({ message: 'NoAccess' });
-      }
-  } else {
+    } else {
       res.status(500).send({ message: 'NoAccess' });
+    }
+  } else {
+    res.status(500).send({ message: 'NoAccess' });
   }
 }
 
 const eliminar_imagen_portada = async function (req, res) {
 
   if (req.user) {
-      if (req.user.role == 'GRASS') {
+    if (req.user.role == 'GRASS') {
 
-          let id = req.params['id'];
-          let data = req.body;
-
-
-
-          let reg = await Empresa.findByIdAndUpdate({ _id: id }, {
-              $pull: {
-                  portada: { _id: data._id }
-              }
-          });
-
-          res.status(200).send({ data: reg });
+      let id = req.params['id'];
+      let data = req.body;
 
 
-      } else {
-          res.status(500).send({ message: 'NoAccess' });
-      }
-  } else {
+
+      let reg = await Empresa.findByIdAndUpdate({ _id: id }, {
+        $pull: {
+          portada: { _id: data._id }
+        }
+      });
+
+      res.status(200).send({ data: reg });
+
+
+    } else {
       res.status(500).send({ message: 'NoAccess' });
+    }
+  } else {
+    res.status(500).send({ message: 'NoAccess' });
   }
 }
 
@@ -520,13 +543,13 @@ const obtener_imagen_portada = async function (req, res) {
   var img = req.params['img'];
 
   fs.stat('./uploads/canchas/' + img, function (err) {
-      if (!err) {
-          let path_img = './uploads/canchas/' + img;
-          res.status(200).sendFile(path.resolve(path_img));
-      } else {
-          let path_img = './uploads/empresas/default-portada.jpg';
-          res.status(200).sendFile(path.resolve(path_img));
-      }
+    if (!err) {
+      let path_img = './uploads/canchas/' + img;
+      res.status(200).sendFile(path.resolve(path_img));
+    } else {
+      let path_img = './uploads/empresas/default-portada.jpg';
+      res.status(200).sendFile(path.resolve(path_img));
+    }
   });
 }
 
@@ -651,6 +674,7 @@ module.exports = {
   registro_empresa,
   login_empresa,
   obtener_empresa,
+  obtener_empresa_publico,
   listar_empresas_filtro,
   listar_empresas_region,
   listar_empresas_prov,
@@ -663,6 +687,7 @@ module.exports = {
   actualizar_caracteristicas_empresa,
   crear_cancha_empresa,
   obtener_canchas_empresa,
+  obtener_canchas,
   obtener_cancha_empresa,
   actualizar_cancha_empresa,
   eliminar_cancha_empresa,
