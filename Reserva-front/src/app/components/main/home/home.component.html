@@ -1,17 +1,19 @@
 <app-header></app-header>
 <!-- Waves -->
 <section class="waves">
-    <div style="height: 60px;"></div>
+    <div style="height: 60px"></div>
 
-    <div class="text-center d-flex justify-content-center" style="padding-left: 2vh; padding-right: 2vh; height: 45vh;">
+    <div class="text-center d-flex justify-content-center" style="padding-left: 2vh; padding-right: 2vh; height: 45vh">
         <div class="container my-auto">
-            <h2 class="fw-light">Somos tu puente hacia el emocionante mundo del
-                deporte en
-                césped</h2>
-            <p><em>Decubre, reserva y disfruta del juego en su máxima epresión con
-                    <strong>ReservaTuGrass.com</strong></em> </p>
-            <br>
-            <a href="#" style="text-decoration: none;">¡Reserva ahora!</a>
+            <h2 class="fw-light">
+                Somos tu puente hacia el emocionante mundo del deporte en césped
+            </h2>
+            <p>
+                <em>Decubre, reserva y disfruta del juego en su máxima epresión con
+                    <strong>ReservaTuGrass.com</strong></em>
+            </p>
+            <br />
+            <a href="#" style="text-decoration: none">¡Reserva ahora!</a>
         </div>
     </div>
 
@@ -21,12 +23,10 @@
     <div class="wave wave4"></div>
 </section>
 
-
-
+<!--? Body -->
 <div class="container-fluid" style="padding-top: 1vh">
-    <!-- Contenedor principal -->
+    <!--? Contenedor principal -->
     <div class="container">
-
         <!-- Botonees | Selector de Opción de Búsqueda -->
         <div class="button-search d-flex align-items-center justify-content-center" style="height: 100px">
             <button type="button" class="button-search-children" [class.active]="searchOption === 'name'"
@@ -41,114 +41,162 @@
             </button>
         </div>
 
-        <!--! Campo de búsqueda por Nombre -->
+        <!--? Campo de búsqueda por Nombre -->
         <div *ngIf="searchOption === 'name'">
             <div class="px-2 px-md-1 mb-4">
                 <div class="input-group">
                     <input type="text" class="form-control" placeholder="Añade el nombre del grass aquí"
                         aria-label="buscar" aria-describedby="button-addon2" name="busqueda" [(ngModel)]="busqueda"
-                        (keyup)="buscarName()">
-                    <button class="btn btn-outline-dark btn-1" type="button" id="button-addon2"
-                        (click)="buscarName()"><i class="bi bi-search buscar"></i></button>
+                        (keyup)="buscarName()" />
+                    <button class="btn btn-outline-dark btn-1" type="button" id="button-addon2" (click)="buscarName()">
+                        <i class="bi bi-search buscar"></i>
+                    </button>
                 </div>
 
-
                 <div class="text-center" *ngIf="load_search">
-                    <div class="spinner-border" style="width: 3rem; height: 3rem" role="status">
-                    </div>
+                    <div class="spinner-border" style="width: 3rem; height: 3rem" role="status"></div>
                     <h5 class="text-black-50"><small>Cargando...</small></h5>
                 </div>
 
-                <div class="rounded mt-4" *ngIf="show_alert_void" style="background-color: rgb(255, 223, 223);">
-                    <p class="text-center p-2 text-danger">ERROR: No se encontró un grass con el nombre '{{busqueda}}'
+                <div class="rounded mt-4" *ngIf="show_alert_void" style="background-color: rgb(255, 223, 223)">
+                    <p class="text-center p-2 text-danger">
+                        ERROR: No se encontró un grass con el nombre '{{ busqueda }}'
                     </p>
                 </div>
 
-                <div *ngIf="show_card_empresas" class="row d-flex justify-content-center  mt-4">
-
-                    <!-- Busqueda por name -->
+                <!-- Resultado por busqueda nombre -->
+                <div *ngIf="show_card_empresas" class="row d-flex justify-content-center mt-4">
                     <div class="col-12 col-sm-12 col-md-6 col-lg-4 pb-4 pt-2" *ngFor="let item of caracBuscada">
-
-                        <div class="card shadow" style="border-color: #aaf0c9;">
+                        <div class="card shadow" style="border-color: #aaf0c9">
                             <div class="images-grass">
-                                <img src="https://static.wixstatic.com/media/a74d9b_f677ff68338f43cf87e470b0312b7cea~mv2.jpg/v1/fill/w_1000,h_563,al_c,q_85,usm_0.66_1.00_0.01/a74d9b_f677ff68338f43cf87e470b0312b7cea~mv2.jpg"
-                                    class="card-img-top" alt="...">
+                                <ng-container
+                                    *ngIf=" item.empresa.portada == undefined || item.empresa.portada.length < 1">
+                                    <img class="card-img-top" class="rounded"
+                                        [src]="url + 'obtener_imagen_portada/' + 'defaultt'"
+                                        alt="{{ item.empresa.nombre }}" style="height: 25vh" />
+                                </ng-container>
+
+                                <ng-container *ngIf="item.empresa.portada != undefined">
+                                    <img *ngIf="item.empresa.portada.length >= 1" class="card-img-top" class="rounded"
+                                        [src]=" url + 'obtener_imagen_portada/' + item.empresa.portada[0].imagen"
+                                        alt="{{ item.empresa.nombre }}" style="height: 25vh" />
+                                </ng-container>
+
                                 <div class="nombre">
-                                    <h5 class="card-title fw-bold text-center"> {{item.empresa.nombre}} </h5>
+                                    <h5 class="card-title fw-bold text-center">
+                                        {{ item.empresa.nombre }}
+                                    </h5>
                                 </div>
 
-                                <div class="provinciaa" style="display: flex; position: absolute; right: 10px;">
+                                <div class="provinciaa" style="display: flex; position: absolute; right: 10px">
                                     <span id="name-provincia">
-                                        {{item.empresa.provincia}}
+                                        {{ item.empresa.provincia }}
                                     </span>
                                 </div>
                             </div>
 
                             <div class="card-body">
                                 <p class="text-center">
-                                    <a href="{{item.empresa.ubicacion}}" target="_blank"
-                                        style="text-decoration: none; color: #095c3d; font-style: italic;">
-                                        {{item.empresa.direccion}}
-                                    </a> &nbsp;
-                                    <a href="{{item.empresa.ubicacion}}" target="_blank">
-                                        <i class="bi bi-arrow-up-right-circle" style="color: #095c3d;"></i>
+                                    <a href="{{ item.empresa.ubicacion }}" target="_blank" style="
+                        text-decoration: none;
+                        color: #095c3d;
+                        font-style: italic;
+                      ">
+                                        {{ item.empresa.direccion }}
+                                    </a>
+                                    &nbsp;
+                                    <a href="{{ item.empresa.ubicacion }}" target="_blank">
+                                        <i class="bi bi-arrow-up-right-circle" style="color: #095c3d"></i>
                                     </a>
                                 </p>
 
                                 <div class="grass-caracteristicas">
-                                    <p>
-                                        <i class="bi-1 bi-pentagon-fill"></i> &nbsp; <a> {{item.canchas_futsal}} canchas
-                                            de futsal</a>
+                                    <!-- Más de una cancha -->
+                                    <p *ngIf="item.canchas_futsal > 1">
+                                        <i class="bi-1 bi-pentagon-fill"></i> &nbsp;
+                                        <a> {{ item.canchas_futsal }} Canchas de futsal</a>
                                     </p>
-                                    <p><i class="bi-1 bi-dribbble"></i> &nbsp; <a> {{item.canchas_voley}} canchas de
-                                            vóley</a>
+
+                                    <!-- Una sola cancha -->
+                                    <p *ngIf="item.canchas_futsal == 1">
+                                        <i class="bi-1 bi-pentagon-fill"></i> &nbsp;
+                                        <a> Una cancha de futsal</a>
                                     </p>
-                                    <p *ngIf="item.iluminacion"><i class="bi-1 bi-lightning-charge-fill"></i> &nbsp;
+
+                                    <!-- Sin cancha -->
+                                    <p *ngIf="item.canchas_futsal < 1" class="text-secondary">
+                                        <i class="bi-2 bi-pentagon"></i> &nbsp;
+                                        <a> Sin canchas de futsal</a>
+                                    </p>
+
+                                    <!-- Más de una cancha de voley -->
+                                    <p *ngIf="item.canchas_voley > 1">
+                                        <i class="bi-1 bi-dribbble"></i> &nbsp;
+                                        <a> {{ item.canchas_voley }} canchas de vóley</a>
+                                    </p>
+
+                                    <!-- Una sola cancha -->
+                                    <p *ngIf="item.canchas_voley == 1">
+                                        <i class="bi-1 bi-dribbble"></i> &nbsp;
+                                        <a> Una cancha de vóley</a>
+                                    </p>
+
+                                    <!-- Sin canchas de vóley -->
+                                    <p *ngIf="item.canchas_voley < 1" class="text-secondary">
+                                        <i class="bi-2 bi-dribbble"></i> &nbsp;
+                                        <a>Sin canchas de vóley</a>
+                                    </p>
+
+                                    <p *ngIf="item.iluminacion">
+                                        <i class="bi-1 bi-lightning-charge-fill"></i> &nbsp;
                                         <a>Iluminación LED</a>
-
-                                    <p *ngIf="!item.iluminacion" class="text-secondary"><i
-                                            class="bi-2 bi-lightning-charge">
-
-                                        </i> &nbsp; <a>Sin iluminación LED</a>
                                     </p>
-                                    <p *ngIf="item.techado"><i class="bi-1 bi-cloud-lightning-rain-fill"></i> &nbsp;
+
+                                    <p *ngIf="!item.iluminacion" class="text-secondary">
+                                        <i class="bi-2 bi-lightning-charge"> </i> &nbsp;
+                                        <a>Sin iluminación LED</a>
+                                    </p>
+                                    <p *ngIf="item.techado">
+                                        <i class="bi-1 bi-cloud-lightning-rain-fill"></i> &nbsp;
                                         <a>Techado</a>
-
-                                    <p *ngIf="!item.techado" class="text-secondary"><i
-                                            class="bi-2 bi-cloud-lightning-rain">
-
-                                        </i> &nbsp; <a>Sin techo</a>
                                     </p>
-                                    <p *ngIf="item.garaje"><i class="bi-1 bi-car-front-fill"></i> &nbsp; <a>Garaje</a>
 
-                                    <p *ngIf="!item.garaje" class="text-secondary"><i class="bi-2 bi-car-front">
+                                    <p *ngIf="!item.techado" class="text-secondary">
+                                        <i class="bi-2 bi-cloud-lightning-rain"> </i> &nbsp;
+                                        <a>Sin techo</a>
+                                    </p>
+                                    <p *ngIf="item.garaje">
+                                        <i class="bi-1 bi-car-front-fill"></i> &nbsp; <a>Garaje</a>
+                                    </p>
 
-                                        </i> &nbsp; <a>Sin garaje</a>
+                                    <p *ngIf="!item.garaje" class="text-secondary">
+                                        <i class="bi-2 bi-car-front"> </i> &nbsp; <a>Sin garaje</a>
                                     </p>
                                 </div>
 
-                                <div class="text-center" style=" padding: 10px 0px;">
-                                    <a href="#" class="btn btn-warning"
-                                        style="width: 180px; border-radius: 30px;">Reservar &nbsp; <i
-                                            class="bi bi-chevron-right"></i></a>
+                                <div class="text-center" style="padding: 10px 0px">
+                                    <a [routerLink]="['/ver', item.empresa._id]" class="btn btn-reserve"
+                                        style="width: 180px; border-radius: 30px">
+                                        Reservar &nbsp; <i class="bi-greater bi-chevron-right"></i>
+                                    </a>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
 
-        <!--! Campo de búsqueda por Ubicación -->
+        <!--? Campo de búsqueda por Ubicación -->
         <div *ngIf="searchOption === 'location'">
             <div class="row px-2 px-md-5 mb-4">
                 <div class="col-12 col-sm-4">
-                    <!-- <label for="region" class="form-label text-black-50">Región</label> -->
                     <select id="region" class="form-select" name="region" [(ngModel)]="empresa.region"
                         (change)="select_region()" required>
                         <option value="" selected disabled>Departamento</option>
-                        <option value="{{item.id}}" *ngFor="let item of regiones"> {{item.name}} </option>
+                        <option value="{{ item.id }}" *ngFor="let item of regiones">
+                            {{ item.name }}
+                        </option>
                     </select>
                 </div>
 
@@ -157,198 +205,283 @@
                     <select id="provincia" class="form-select" name="provincia" (change)="select_provincia()"
                         [(ngModel)]="empresa.provincia" required>
                         <option value="" selected disabled>Provincia</option>
-                        <option value="{{item.id}}" *ngFor="let item of provincias"> {{item.name}} </option>
+                        <option value="{{ item.id }}" *ngFor="let item of provincias">
+                            {{ item.name }}
+                        </option>
                     </select>
                 </div>
 
                 <div class="col-12 col-sm-4 mt-3 mt-sm-0">
                     <!-- <label for="distrito" class="form-label text-black-50">Distrito</label> -->
                     <select id="distrito" class="form-select" name="distrito" [(ngModel)]="empresa.distrito"
-                        (change)=" select_distrito()" required>
+                        (change)="select_distrito()" required>
                         <option value="" selected disabled>Distrito</option>
-                        <option value="{{item.name}}" *ngFor="let item of distritos"> {{item.name}} </option>
+                        <option value="{{ item.name }}" *ngFor="let item of distritos">
+                            {{ item.name }}
+                        </option>
                     </select>
                 </div>
 
                 <div class="text-center" *ngIf="load_search_ubication">
-                    <div class="spinner-border" style="width: 3rem; height: 3rem" role="status">
-                    </div>
+                    <div class="spinner-border" style="width: 3rem; height: 3rem" role="status"></div>
                     <h5 class="text-black-50"><small>Cargando...</small></h5>
                 </div>
 
                 <div class="rounded mt-4" *ngIf="show_alert_void_ubication"
-                    style="background-color: rgb(255, 223, 223);">
-                    <p class="text-center p-2 text-danger" style="margin-bottom: 0;">No se encontró ningún grass en
-                        {{namereg}} {{nameprov}} {{empresa.distrito}}</p>
+                    style="background-color: rgb(255, 223, 223)">
+                    <p class="text-center p-2 text-danger" style="margin-bottom: 0">
+                        No se encontró ningún grass en {{ namereg }} {{ nameprov }}
+                        {{ empresa.distrito }}
+                    </p>
                 </div>
 
                 <div *ngIf="show_card_empresas_ubication" class="row d-flex justify-content-center px-2 px-sm-5 mt-4">
 
-                    <!-- Búsqueda por ubicación -->
-
+                    <!-- Resultado de búsqueda por ubicación -->
                     <div class="col-12 pb-5 pt-2 col-md-6" *ngFor="let item of caracBuscada">
-                        <div class="card shadow" style="border-color: #aaf0c9;">
-                            <img src="https://static.wixstatic.com/media/a74d9b_f677ff68338f43cf87e470b0312b7cea~mv2.jpg/v1/fill/w_1000,h_563,al_c,q_85,usm_0.66_1.00_0.01/a74d9b_f677ff68338f43cf87e470b0312b7cea~mv2.jpg"
-                                class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h4 class="card-title fw-bold text-center"> {{item.empresa.nombre}} </h4>
+                        <div class="card shadow" style="border-color: #aaf0c9">
+                            <div class="images-grass">
+                                <ng-container
+                                    *ngIf=" item.empresa.portada == undefined || item.empresa.portada.length < 1">
+                                    <img class="card-img-top" class="rounded"
+                                        [src]="url + 'obtener_imagen_portada/' + 'defaultt'"
+                                        alt="{{ item.empresa.nombre }}" style="height: 25vh" />
+                                </ng-container>
 
-                                <p><i class="bi-1 bi-geo-alt-fill"></i> &nbsp;
-                                    <a href="{{item.empresa.ubicacion}}" target="_blank"
-                                        style="text-decoration: none; color: #000;">
-                                        {{item.empresa.direccion}}
+                                <ng-container *ngIf="item.empresa.portada != undefined">
+                                    <img *ngIf="item.empresa.portada.length >= 1" class="card-img-top" class="rounded"
+                                        [src]=" url + 'obtener_imagen_portada/' + item.empresa.portada[0].imagen"
+                                        alt="{{ item.empresa.nombre }}" style="height: 25vh" />
+                                </ng-container>
+
+                                <div class="nombre">
+                                    <h5 class="card-title fw-bold text-center">
+                                        {{ item.empresa.nombre }}
+                                    </h5>
+                                </div>
+
+                                <div class="provinciaa" style="display: flex; position: absolute; right: 10px">
+                                    <span id="name-provincia">
+                                        {{ item.empresa.provincia }}
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="card-body">
+                                <p class="text-center">
+                                    <a href="{{ item.empresa.ubicacion }}" target="_blank" style="
+                        text-decoration: none;
+                        color: #095c3d;
+                        font-style: italic;
+                      ">
+                                        {{ item.empresa.direccion }}
+                                    </a>
+                                    &nbsp;
+                                    <a href="{{ item.empresa.ubicacion }}" target="_blank">
+                                        <i class="bi bi-arrow-up-right-circle" style="color: #095c3d"></i>
                                     </a>
                                 </p>
-                                <p><i class="bi-1 bi-pentagon-fill"></i> &nbsp; <a> {{item.canchas_futsal}} canchas de
-                                        futsal</a>
-                                </p>
-                                <p><i class="bi-1 bi-dribbble"></i> &nbsp; <a> {{item.canchas_voley}} canchas de
-                                        vóley</a>
-                                </p>
-                                <p *ngIf="item.iluminacion"><i class="bi-1 bi-lightning-charge-fill"></i> &nbsp;
-                                    <a>Iluminación LED</a>
 
-                                <p *ngIf="!item.iluminacion" class="text-secondary"><i class="bi-2 bi-lightning-charge">
+                                <div class="grass-caracteristicas">
+                                    <!-- Más de una cancha -->
+                                    <p *ngIf="item.canchas_futsal > 1">
+                                        <i class="bi-1 bi-pentagon-fill"></i> &nbsp;
+                                        <a> {{ item.canchas_futsal }} Canchas de futsal</a>
+                                    </p>
 
-                                    </i> &nbsp; <a>Sin iluminación LED</a>
-                                </p>
-                                <p *ngIf="item.techado"><i class="bi-1 bi-cloud-lightning-rain-fill"></i> &nbsp;
-                                    <a>Techado</a>
+                                    <!-- Una sola cancha -->
+                                    <p *ngIf="item.canchas_futsal == 1">
+                                        <i class="bi-1 bi-pentagon-fill"></i> &nbsp;
+                                        <a> Una cancha de futsal</a>
+                                    </p>
 
-                                <p *ngIf="!item.techado" class="text-secondary"><i class="bi-2 bi-cloud-lightning-rain">
+                                    <!-- Sin cancha -->
+                                    <p *ngIf="item.canchas_futsal < 1" class="text-secondary">
+                                        <i class="bi-2 bi-pentagon"></i> &nbsp;
+                                        <a> Sin canchas de futsal</a>
+                                    </p>
 
-                                    </i> &nbsp; <a>Sin techo</a>
-                                </p>
-                                <p *ngIf="item.garaje"><i class="bi-1 bi-car-front-fill"></i> &nbsp; <a>Garaje</a>
+                                    <!-- Más de una cancha de voley -->
+                                    <p *ngIf="item.canchas_voley > 1">
+                                        <i class="bi-1 bi-dribbble"></i> &nbsp;
+                                        <a> {{ item.canchas_voley }} canchas de vóley</a>
+                                    </p>
 
-                                <p *ngIf="!item.garaje" class="text-secondary"><i class="bi-2 bi-car-front">
+                                    <!-- Una sola cancha -->
+                                    <p *ngIf="item.canchas_voley == 1">
+                                        <i class="bi-1 bi-dribbble"></i> &nbsp;
+                                        <a> Una cancha de vóley</a>
+                                    </p>
 
-                                    </i> &nbsp; <a>Sin garaje</a>
-                                </p>
+                                    <!-- Sin canchas de vóley -->
+                                    <p *ngIf="item.canchas_voley < 1" class="text-secondary">
+                                        <i class="bi-2 bi-dribbble"></i> &nbsp;
+                                        <a>Sin canchas de vóley</a>
+                                    </p>
 
-                                <div class="text-center">
-                                    <a href="#" class="btn btn-warning">Reservar &nbsp; <i
-                                            class="bi bi-chevron-right"></i></a>
+                                    <p *ngIf="item.iluminacion">
+                                        <i class="bi-1 bi-lightning-charge-fill"></i> &nbsp;
+                                        <a>Iluminación LED</a>
+                                    </p>
+
+                                    <p *ngIf="!item.iluminacion" class="text-secondary">
+                                        <i class="bi-2 bi-lightning-charge"> </i> &nbsp;
+                                        <a>Sin iluminación LED</a>
+                                    </p>
+                                    <p *ngIf="item.techado">
+                                        <i class="bi-1 bi-cloud-lightning-rain-fill"></i> &nbsp;
+                                        <a>Techado</a>
+                                    </p>
+
+                                    <p *ngIf="!item.techado" class="text-secondary">
+                                        <i class="bi-2 bi-cloud-lightning-rain"> </i> &nbsp;
+                                        <a>Sin techo</a>
+                                    </p>
+                                    <p *ngIf="item.garaje">
+                                        <i class="bi-1 bi-car-front-fill"></i> &nbsp; <a>Garaje</a>
+                                    </p>
+
+                                    <p *ngIf="!item.garaje" class="text-secondary">
+                                        <i class="bi-2 bi-car-front"> </i> &nbsp; <a>Sin garaje</a>
+                                    </p>
+                                </div>
+
+                                <div class="text-center" style="padding: 10px 0px">
+                                    <a [routerLink]="['/ver', item.empresa._id]" class="btn btn-reserve"
+                                        style="width: 180px; border-radius: 30px">
+                                        Reservar &nbsp; <i class="bi-greater bi-chevron-right"></i>
+                                    </a>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 
-    <!-- Grass por ubicación de usuario -->
-    <div class="pt-2" style="margin-top: 74px;">
-        <div class=" text-center fw-bold mt-2 mb-4" style="color: #095c3d">
+    <!--? Grass por ubicación de usuario -->
+    <div class="pt-2" style="margin-top: 74px">
+        <div class="text-center fw-bold mt-2 mb-4" style="color: #095c3d">
             <h2>Grasses más populares</h2>
         </div>
 
         <div class="row d-flex justify-content-center px-2 px-sm-5">
-
             <ng-container *ngIf="primeras_empresas.length > 0">
                 <div *ngFor="let item of primerosBuscado" class="col-md-4 pb-5 pt-2 col-sm-12">
-
                     <div class="card shadow">
                         <div class="images-grass">
-
-                            <ng-container *ngIf="item.empresa.portada == undefined || item.empresa.portada.length < 1">
+                            <ng-container *ngIf=" item.empresa.portada == undefined || item.empresa.portada.length < 1
+                ">
                                 <img class="card-img-top" class="rounded"
-                                    [src]="url + 'obtener_imagen_portada/' + 'defaultt'" alt="{{item.empresa.nombre}}"
-                                    style="height: 25vh;">
+                                    [src]="url + 'obtener_imagen_portada/' + 'defaultt'" alt="{{ item.empresa.nombre }}"
+                                    style="height: 25vh" />
                             </ng-container>
 
                             <ng-container *ngIf="item.empresa.portada != undefined">
                                 <img *ngIf="item.empresa.portada.length >= 1" class="card-img-top" class="rounded"
-                                    [src]="url + 'obtener_imagen_portada/' + item.empresa.portada[0].imagen"
-                                    alt="{{item.empresa.nombre}}" style="height: 25vh;">
+                                    [src]="
+                    url +
+                    'obtener_imagen_portada/' +
+                    item.empresa.portada[0].imagen
+                  " alt="{{ item.empresa.nombre }}" style="height: 25vh" />
                             </ng-container>
 
                             <div class="nombre">
-                                <h5 class="card-title fw-bold text-center"> {{item.empresa.nombre}} </h5>
+                                <h5 class="card-title fw-bold text-center">
+                                    {{ item.empresa.nombre }}
+                                </h5>
                             </div>
 
-                            <div class="provinciaa" style="display: flex; position: absolute; right: 10px;">
+                            <div class="provinciaa" style="display: flex; position: absolute; right: 10px">
                                 <span id="name-provincia">
-                                    {{item.empresa.provincia}}
+                                    {{ item.empresa.provincia }}
                                 </span>
                             </div>
                         </div>
 
-
                         <div class="card-body">
                             <p class="text-center">
-                                <a href="{{item.empresa.ubicacion}}" target="_blank"
-                                    style="text-decoration: none; color: #095c3d; font-style: italic;">
-                                    {{item.empresa.direccion}}
-                                </a> &nbsp;
-                                <a href="{{item.empresa.ubicacion}}" target="_blank">
-                                    <i class="bi bi-arrow-up-right-circle" style="color: #095c3d;"></i>
+                                <a href="{{ item.empresa.ubicacion }}" target="_blank" style="
+                    text-decoration: none;
+                    color: #095c3d;
+                    font-style: italic;
+                  ">
+                                    {{ item.empresa.direccion }}
+                                </a>
+                                &nbsp;
+                                <a href="{{ item.empresa.ubicacion }}" target="_blank">
+                                    <i class="bi bi-arrow-up-right-circle" style="color: #095c3d"></i>
                                 </a>
                             </p>
 
-
-
                             <div class="grass-caracteristicas">
                                 <!-- Más de una cancha -->
-                                <p *ngIf="item.canchas_futsal > 1"><i class="bi-1 bi-pentagon-fill"></i> &nbsp; <a>
-                                        {{item.canchas_futsal}} Canchas de
-                                        futsal</a>
+                                <p *ngIf="item.canchas_futsal > 1">
+                                    <i class="bi-1 bi-pentagon-fill"></i> &nbsp;
+                                    <a> {{ item.canchas_futsal }} Canchas de futsal</a>
                                 </p>
 
                                 <!-- Una sola cancha -->
-                                <p *ngIf="item.canchas_futsal == 1"><i class="bi-1 bi-pentagon-fill"></i> &nbsp; <a> Una
-                                        cancha de
-                                        futsal</a>
+                                <p *ngIf="item.canchas_futsal == 1">
+                                    <i class="bi-1 bi-pentagon-fill"></i> &nbsp;
+                                    <a> Una cancha de futsal</a>
                                 </p>
 
                                 <!-- Sin cancha -->
-                                <p *ngIf="item.canchas_futsal < 1" class="text-secondary"><i class="bi-2 bi-pentagon"></i> &nbsp; 
+                                <p *ngIf="item.canchas_futsal < 1" class="text-secondary">
+                                    <i class="bi-2 bi-pentagon"></i> &nbsp;
                                     <a> Sin canchas de futsal</a>
                                 </p>
 
                                 <!-- Más de una cancha de voley -->
-                                <p *ngIf="item.canchas_voley > 1"><i class="bi-1 bi-dribbble"></i> &nbsp; <a>
-                                        {{item.canchas_voley}} canchas de
-                                        vóley</a>
+                                <p *ngIf="item.canchas_voley > 1">
+                                    <i class="bi-1 bi-dribbble"></i> &nbsp;
+                                    <a> {{ item.canchas_voley }} canchas de vóley</a>
                                 </p>
 
                                 <!-- Una sola cancha -->
-                                <p *ngIf="item.canchas_voley == 1"><i class="bi-1 bi-dribbble"></i> &nbsp; <a>
-                                        Una cancha de vóley</a>
+                                <p *ngIf="item.canchas_voley == 1">
+                                    <i class="bi-1 bi-dribbble"></i> &nbsp;
+                                    <a> Una cancha de vóley</a>
                                 </p>
 
                                 <!-- Sin canchas de vóley -->
-                                <p *ngIf="item.canchas_voley < 1" class="text-secondary"><i class="bi-2 bi-dribbble"></i> &nbsp; 
+                                <p *ngIf="item.canchas_voley < 1" class="text-secondary">
+                                    <i class="bi-2 bi-dribbble"></i> &nbsp;
                                     <a>Sin canchas de vóley</a>
                                 </p>
 
-                                <p *ngIf="item.iluminacion"><i class="bi-1 bi-lightning-charge-fill"></i> &nbsp;
+                                <p *ngIf="item.iluminacion">
+                                    <i class="bi-1 bi-lightning-charge-fill"></i> &nbsp;
                                     <a>Iluminación LED</a>
-
-                                <p *ngIf="!item.iluminacion" class="text-secondary"><i class="bi-2 bi-lightning-charge">
-
-                                    </i> &nbsp; <a>Sin iluminación LED</a>
                                 </p>
-                                <p *ngIf="item.techado"><i class="bi-1 bi-cloud-lightning-rain-fill"></i> &nbsp;
+
+                                <p *ngIf="!item.iluminacion" class="text-secondary">
+                                    <i class="bi-2 bi-lightning-charge"> </i> &nbsp;
+                                    <a>Sin iluminación LED</a>
+                                </p>
+                                <p *ngIf="item.techado">
+                                    <i class="bi-1 bi-cloud-lightning-rain-fill"></i> &nbsp;
                                     <a>Techado</a>
-
-                                <p *ngIf="!item.techado" class="text-secondary"><i class="bi-2 bi-cloud-lightning-rain">
-
-                                    </i> &nbsp; <a>Sin techo</a>
                                 </p>
-                                <p *ngIf="item.garaje"><i class="bi-1 bi-car-front-fill"></i> &nbsp; <a>Garaje</a>
 
-                                <p *ngIf="!item.garaje" class="text-secondary"><i class="bi-2 bi-car-front">
+                                <p *ngIf="!item.techado" class="text-secondary">
+                                    <i class="bi-2 bi-cloud-lightning-rain"> </i> &nbsp;
+                                    <a>Sin techo</a>
+                                </p>
+                                <p *ngIf="item.garaje">
+                                    <i class="bi-1 bi-car-front-fill"></i> &nbsp; <a>Garaje</a>
+                                </p>
 
-                                    </i> &nbsp; <a>Sin garaje</a>
+                                <p *ngIf="!item.garaje" class="text-secondary">
+                                    <i class="bi-2 bi-car-front"> </i> &nbsp; <a>Sin garaje</a>
                                 </p>
                             </div>
 
-                            <div class="text-center" style=" padding: 10px 0px;">
+                            <div class="text-center" style="padding: 10px 0px">
                                 <a [routerLink]="['/ver', item.empresa._id]" class="btn btn-reserve"
-                                    style="width: 180px; border-radius: 30px;">
+                                    style="width: 180px; border-radius: 30px">
                                     Reservar &nbsp; <i class="bi-greater bi-chevron-right"></i>
                                 </a>
                             </div>
@@ -360,32 +493,34 @@
             <h3 class="text-center">Comentarios</h3>
             <div class="d-flex justify-content-center pb-3">
                 <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel"
-                    [ngStyle]="{'width': screenWidth < screenHeight ? '90vw' : '70vw' }">
+                    [ngStyle]="{ width: screenWidth < screenHeight ? '90vw' : '70vw' }">
                     <div class="carousel-inner">
                         <div class="" *ngFor="let item of reviewsDestacados; let indice = index">
-                            <div class="carousel-item" [ngClass]="{'active': indice == 0}" data-bs-interval="3000">
-                                <img src="{{imagen_fondo}}" class="w-100 rounded" alt="...">
+                            <div class="carousel-item" [ngClass]="{ active: indice == 0 }" data-bs-interval="3000">
+                                <img src="{{ imagen_fondo }}" class="w-100 rounded" alt="..." />
                                 <div class="carousel-caption">
-                                    <h4 class="text-black-50"> {{item.user.nombres}} {{item.user.apellidos}} </h4>
+                                    <h4 class="text-black-50">
+                                        {{ item.user.nombres }} {{ item.user.apellidos }}
+                                    </h4>
                                     <p class="text-black" [innerHTML]="item.comentario"></p>
 
                                     <h6>
                                         <i class="bi bi-star-fill"
-                                            [ngClass]="{'text-warning': item.estrellas >= 1}"></i>
+                                            [ngClass]="{ 'text-warning': item.estrellas >= 1 }"></i>
                                         <i class="bi bi-star-fill"
-                                            [ngClass]="{'text-warning': item.estrellas >= 2}"></i>
+                                            [ngClass]="{ 'text-warning': item.estrellas >= 2 }"></i>
                                         <i class="bi bi-star-fill"
-                                            [ngClass]="{'text-warning': item.estrellas >= 3}"></i>
+                                            [ngClass]="{ 'text-warning': item.estrellas >= 3 }"></i>
                                         <i class="bi bi-star-fill"
-                                            [ngClass]="{'text-warning': item.estrellas >= 4}"></i>
+                                            [ngClass]="{ 'text-warning': item.estrellas >= 4 }"></i>
                                         <i class="bi bi-star-fill"
-                                            [ngClass]="{'text-warning': item.estrellas >= 5}"></i>
+                                            [ngClass]="{ 'text-warning': item.estrellas >= 5 }"></i>
                                     </h6>
 
                                     <div class="text-black-50">
-                                        <i class="bi bi-calendar-event"></i> &nbsp; {{item.createdAt | date}}
+                                        <i class="bi bi-calendar-event"></i> &nbsp;
+                                        {{ item.createdAt | date }}
                                     </div>
-
                                 </div>
                             </div>
                         </div>
@@ -393,20 +528,17 @@
                     <button class="carousel-control-prev fs-6" type="button" data-bs-target="#carouselExampleInterval"
                         data-bs-slide="prev">
                         <span class="carousel-control-prev-icon" aria-hidden="true"
-                            style="background-color: rgb(148, 148, 148);"></span>
+                            style="background-color: rgb(148, 148, 148)"></span>
                     </button>
                     <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval"
                         data-bs-slide="next">
-                        <span class="carousel-control-next-icon" style="background-color: rgb(148, 148, 148);"
+                        <span class="carousel-control-next-icon" style="background-color: rgb(148, 148, 148)"
                             aria-hidden="true"></span>
                     </button>
                 </div>
             </div>
-
         </div>
     </div>
-
-
 </div>
 
 <app-footer></app-footer>

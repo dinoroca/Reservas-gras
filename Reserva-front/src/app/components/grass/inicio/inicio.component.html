@@ -5,7 +5,7 @@
     <app-sidebar></app-sidebar>
 
     <div class="shadow rounded mt-5 p-4">
-        <h3 class="text-center fw-bold" style="color:rgb(6, 170, 115)">Inicio</h3>
+        <h3 class="text-center" style="color:rgb(6, 170, 115)">Imagen de portada del grass</h3>
 
         <ng-container *ngIf="load_data">
             <div class="text-center">
@@ -20,18 +20,39 @@
 
                 <!-- Se muestra cuando no hay ninguna imagen de portada -->
                 <ng-container *ngIf="addImage">
-                    <label class="col-form-label fs-5 fw-light text-center" for="input-img" style="cursor: pointer;">
-                        Subir imagen de portada
-                    </label>
+                    <span class="col-form-label fs-5 fw-light text-center">Actualizar portada</span>
+
+                    <div class="group-upload">
+                        <!-- Muestra una imagen por defecto cuando no existe uno de portada -->
+                        <div class="portada-defecto">
+                            <ng-container *ngIf="!isImagePort">
+                                <h4 class=" fw-light text-danger">Portada por defecto</h4>
+
+                                <div class="">
+                                    <img class="rounded img-defecto"
+                                        [src]="url + 'obtener_imagen_portada/' + 'defaultt'">
+                                </div>
+                            </ng-container>
+                        </div>
+
+                        <div class="text-center">
+                            <input id="input-img" type="file" (change)="fileChangeEvent($event)">
+                            <label class="lab" for="input-img">
+                                <i class="bi bi-cloud-arrow-up-fill icon-upload"></i>
+                                <p><strong>Subir imagen desde el equipo</strong></p>
+                                <em>Formatos soportados: <br> jpg, png, webp, jpeg</em> <br>
+                                <p>Tamaño máximo: 4MB</p>
+                            </label>
+                            <button *ngIf="!load_btn" class="btn btn-primary bi-floppy button-upload" type="button"
+                                (click)="subir_imagen()" [disabled]="file == undefined">
+                                Guardar
+                            </button>
+                        </div>
+                    </div>
+
                     <div class="mb-3">
                         <!-- Button addon on the right -->
                         <div class="input-group">
-                            <input id="input-img" class="form-control" type="file" (change)="fileChangeEvent($event)">
-                            <button *ngIf="!load_btn" class="btn btn-primary bi-upload" type="button"
-                                (click)="subir_imagen()" [disabled]="file == undefined">
-                                Subir
-                            </button>
-
                             <!-- Button with growing spinner and text -->
                             <button *ngIf="load_btn" type="button" class="btn btn-secondary" disabled>
                                 <span class="spinner-grow spinner-grow-sm me-2" role="status" aria-hidden="true"></span>
@@ -39,20 +60,18 @@
                             </button>
                         </div>
                     </div>
+
+                    <div style="text-align: center;">
+                        <div
+                            style="border: 0.2rem dashed #ccc; padding: 10px; display: inline-block; box-sizing: border-box; border-radius: 0.5rem;">
+                            <em style="margin-top: 10px;">-- Previsualización de la portada --</em> <br>
+                            <img id=" previewImage" [src]="imagePreview" style="width: 40vw;">
+                        </div>
+
+                    </div>
                 </ng-container>
 
                 <div class="">
-
-                    <!-- Muestra una imagen por defecto cuando no existe uno de portada -->
-                    <ng-container *ngIf="!isImagePort">
-                        <h4 class="text-center fw-light text-danger">La siguiente portada es por defecto</h4>
-
-                        <div class="text-center">
-                            <img class="rounded" [src]="url + 'obtener_imagen_portada/' + 'defaultt'"
-                                style="width: 50vw;">
-                        </div>
-                    </ng-container>
-
                     <ng-container *ngIf="isImagePort">
 
                         <div class="text-center">
@@ -83,7 +102,7 @@
                                     </div>
                                     <div class="modal-body text-center">
                                         <p class="fs-sm">
-                                            Desea eliminar esta imagen?
+                                            ¿Desea eliminar esta imagen?
                                         </p>
                                         <p><img class="rounded"
                                                 [src]="url + 'obtener_galeria_cancha/' + empresa.portada[0].imagen"
