@@ -6,11 +6,9 @@ import { UserService } from 'src/app/services/user.service';
 @Component({
   selector: 'app-create-canchas',
   templateUrl: './create-canchas.component.html',
-  styleUrls: ['./create-canchas.component.css']
+  styleUrls: ['./create-canchas.component.css'],
 })
-
 export class CreateCanchasComponent implements OnInit {
-
   public token: any;
   public id: any;
   public load_data = false;
@@ -22,10 +20,10 @@ export class CreateCanchasComponent implements OnInit {
   public procede = false;
   public cancha: any = {
     tipo: '',
-    largo: 0,
-    ancho: 0,
-    precio_dia: 0,
-    precio_noche: 0
+    //largo: 0,
+    //ancho: 0,
+    //precio_dia: 0,
+    //precio_noche: 0,
   };
   public empresa: any = {};
   public data: any = {};
@@ -36,8 +34,8 @@ export class CreateCanchasComponent implements OnInit {
     private _title: Title,
     private _toastrService: ToastrService
   ) {
-
-    this.token = localStorage.getItem('token') || sessionStorage.getItem('token');
+    this.token =
+      localStorage.getItem('token') || sessionStorage.getItem('token');
     this.id = localStorage.getItem('_id') || sessionStorage.getItem('_id');
 
     this.init_data();
@@ -48,8 +46,9 @@ export class CreateCanchasComponent implements OnInit {
   }
 
   init_data() {
-    this._userService.obtener_empresa(this.id, this.token).subscribe(
-      response => {
+    this._userService
+      .obtener_empresa(this.id, this.token)
+      .subscribe((response) => {
         this.load_data = true;
         if (response.data == undefined) {
           this._toastrService.error('Usuario inexistente', 'ERROR!');
@@ -59,8 +58,7 @@ export class CreateCanchasComponent implements OnInit {
           this.empresa = response.data;
           this.load_data = false;
         }
-      }
-    );
+      });
   }
 
   select_tipo() {
@@ -71,8 +69,8 @@ export class CreateCanchasComponent implements OnInit {
     }
   }
 
-  registro(registroForm: any){
-    if(registroForm.valid){
+  registro(registroForm: any) {
+    if (registroForm.valid) {
       this.load_btn_crear = true;
 
       if (this.field_extra) {
@@ -89,7 +87,7 @@ export class CreateCanchasComponent implements OnInit {
           precio_noche: this.cancha.precio_noche,
           precio_dia_voley: this.cancha.precio_dia_voley,
           precio_noche_voley: this.cancha.precio_noche_voley,
-        }
+        };
       } else {
         this.data = {
           empresa: this.id,
@@ -100,19 +98,21 @@ export class CreateCanchasComponent implements OnInit {
           ancho: this.cancha.ancho,
           precio_dia: this.cancha.precio_dia,
           precio_noche: this.cancha.precio_noche,
-        }
+        };
       }
 
-      this._userService.crear_cancha_empresa(this.id, this.token, this.data).subscribe(
-        response => {
+      this._userService
+        .crear_cancha_empresa(this.id, this.token, this.data)
+        .subscribe((response) => {
           this._toastrService.success('Se creó con éxito', 'CREADO!');
           this.load_btn_crear = false;
           this._router.navigate(['/grass/canchas']);
-        }
-      );
-
+        });
     } else {
-      this._toastrService.error('Verifique y complete adecuadamente', 'CAMPOS INVÁLIDOS!');
+      this._toastrService.error(
+        'Verifique y complete adecuadamente',
+        'CAMPOS INVÁLIDOS!'
+      );
       this.load_btn_crear = false;
     }
   }
@@ -124,4 +124,3 @@ export class CreateCanchasComponent implements OnInit {
     this._router.navigate(['/']);
   }
 }
-
