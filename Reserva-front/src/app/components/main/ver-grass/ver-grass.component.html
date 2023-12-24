@@ -25,8 +25,9 @@
                         </ng-container>
 
                         <ng-container *ngIf="item.empresa.portada != undefined">
-                            <img *ngIf="item.empresa.portada.length >= 1" class="card-img-top" class="rounded" 
-                            [src]="url + 'obtener_imagen_portada/' + item.empresa.portada[0].imagen" alt="{{ item.empresa.nombre }}" style="height: 25vh" />
+                            <img *ngIf="item.empresa.portada.length >= 1" class="card-img-top" class="rounded"
+                                [src]="url + 'obtener_imagen_portada/' + item.empresa.portada[0].imagen"
+                                alt="{{ item.empresa.nombre }}" style="height: 25vh" />
                         </ng-container>
 
                         <div class="nombre">
@@ -57,89 +58,101 @@
                             </p>
 
                             <!-- Medidas -->
-                            <p *ngIf="item.tipo == 'Voley'" >
+                            <p *ngIf="item.tipo == 'Voley'">
                                 <i class="bi bi-square" style="color: rgb(241, 78, 143);"></i> &nbsp;
                                 <a> {{item.largo}}m x {{item.ancho}}m </a>
                             </p>
 
                             <p *ngIf="item.tipo == 'Fútbol/Futsal'">
-                                <i class="bi bi-square"  style="color: rgb(0, 192, 86);"></i> &nbsp;
+                                <i class="bi bi-square" style="color: rgb(0, 192, 86);"></i> &nbsp;
                                 <a> {{item.largo}}m x {{item.ancho}}m </a>
                             </p>
 
                             <p *ngIf="item.tipo == 'Mixto'">
                                 <i class="bi bi-square" style="color: rgb(111, 66, 193);"></i> &nbsp;
-                                <a> <small style="color: rgb(0, 192, 86);"><i class="bi bi-record-fill"></i></small> 
-                                    {{item.largo}}m x {{item.ancho}}m 
+                                <a> <small style="color: rgb(0, 192, 86);"><i class="bi bi-record-fill"></i></small>
+                                    {{item.largo}}m x {{item.ancho}}m
                                 </a>
 
                                 &nbsp;
 
-                                <a> <small style="color: rgb(241, 78, 143);"><i class="bi bi-record-fill"></i></small> 
-                                    {{item.largo_voley}}m x {{item.ancho_voley}}m 
+                                <a> <small style="color: rgb(241, 78, 143);"><i class="bi bi-record-fill"></i></small>
+                                    {{item.largo_voley}}m x {{item.ancho_voley}}m
                                 </a>
                             </p>
 
                             <!-- Precios -->
                             <p *ngIf="item.tipo == 'Fútbol/Futsal'">
-                                <i class="bi bi-sun"  style="color: rgb(0, 192, 86);"></i> &nbsp;
-                                <a> S/. {{item.precio_dia}} </a>
+                                <i class="bi bi-sun" style="color: rgb(0, 192, 86);"></i> &nbsp;
+                                <a> S/. {{item.precio_dia}}
+                                    <small class="fw-light text text-secondary"> <i>hora</i> </small>
+                                </a>
                             </p>
 
                             <p *ngIf="item.tipo == 'Voley'">
-                                <i class="bi bi-sun"  style="color: rgb(241, 78, 143);"></i> &nbsp;
-                                <a> S/. {{item.precio_dia}} </a>
+                                <i class="bi bi-sun" style="color: rgb(241, 78, 143);"></i> &nbsp;
+                                <a> S/. {{item.precio_dia}}
+                                    <small class="fw-light text text-secondary"> <i>hora</i> </small>
+                                </a>
                             </p>
 
                             <p *ngIf="item.tipo == 'Fútbol/Futsal'">
-                                <i class="bi bi-moon-stars"  style="color: rgb(0, 192, 86);"></i> &nbsp;
-                                <a> S/. {{item.precio_dia}} </a>
+                                <i class="bi bi-moon-stars" style="color: rgb(0, 192, 86);"></i> &nbsp;
+                                <a> S/. {{item.precio_noche}}
+                                    <small class="fw-light text text-secondary"> <i>hora</i> </small>
+                                </a>
                             </p>
 
                             <p *ngIf="item.tipo == 'Voley'">
-                                <i class="bi bi-moon-stars"  style="color: rgb(241, 78, 143);"></i> &nbsp;
-                                <a> S/. {{item.precio_dia}} </a>
+                                <i class="bi bi-moon-stars" style="color: rgb(241, 78, 143);"></i> &nbsp;
+                                <a> S/. {{item.precio_noche}}
+                                    <small class="fw-light text text-secondary"> <i>hora</i> </small>
+                                </a>
                             </p>
 
                             <p *ngIf="item.tipo == 'Mixto'">
-                                <i class="bi bi-sun"  style="color: rgb(111, 66, 193);"></i>
-                                <a> &nbsp; <small style="color: rgb(0, 192, 86);"><i class="bi bi-record-fill"></i></small> 
+                                <i class="bi bi-sun" style="color: rgb(111, 66, 193);"></i>
+                                <a> &nbsp; <small style="color: rgb(0, 192, 86);"><i
+                                            class="bi bi-record-fill"></i></small>
                                     S/. {{item.precio_dia}}
                                 </a>
 
                                 &nbsp;
 
-                                <a> <small style="color: rgb(241, 78, 143);"><i class="bi bi-record-fill"></i></small> 
+                                <a> <small style="color: rgb(241, 78, 143);"><i class="bi bi-record-fill"></i></small>
                                     S/. {{item.precio_dia_voley}}
+                                    <small class="fw-light text text-secondary"> <i>hora</i> </small>
                                 </a>
                             </p>
 
                             <p *ngIf="item.tipo == 'Mixto'">
-                                <i class="bi bi-moon-stars"  style="color: rgb(111, 66, 193);"></i>
-                                <a> &nbsp; <small style="color: rgb(0, 192, 86);"><i class="bi bi-record-fill"></i></small> 
+                                <i class="bi bi-moon-stars" style="color: rgb(111, 66, 193);"></i>
+                                <a> &nbsp; <small style="color: rgb(0, 192, 86);"><i
+                                            class="bi bi-record-fill"></i></small>
                                     S/. {{item.precio_dia}}
                                 </a>
 
                                 &nbsp;
 
-                                <a> <small style="color: rgb(241, 78, 143);"><i class="bi bi-record-fill"></i></small> 
-                                   S/. {{item.precio_dia_voley}}
+                                <a> <small style="color: rgb(241, 78, 143);"><i class="bi bi-record-fill"></i></small>
+                                    S/. {{item.precio_dia_voley}}
+                                    <small class="fw-light text text-secondary"> <i>hora</i> </small>
                                 </a>
                             </p>
 
                         </div>
 
                         <div class="text-center" style="padding: 10px 0px">
-                            <a *ngIf="item.tipo == 'Fútbol/Futsal'" [routerLink]="['/ver', item.empresa._id]" class="btn btn-reserve"
-                                style="width: 180px; border-radius: 30px">
+                            <a *ngIf="item.tipo == 'Fútbol/Futsal'" (click)="select_cancha(item._id)"
+                                class="btn btn-reserve" style="width: 180px; border-radius: 30px">
                                 Reservar &nbsp; <i class="bi-greater bi-chevron-right"></i>
                             </a>
-                            <a *ngIf="item.tipo == 'Voley'" [routerLink]="['/ver', item.empresa._id]" class="btn btn-reserve-voley"
-                                style="width: 180px; border-radius: 30px">
+                            <a *ngIf="item.tipo == 'Voley'" (click)="select_cancha(item._id)"
+                                class="btn btn-reserve-voley" style="width: 180px; border-radius: 30px">
                                 Reservar &nbsp; <i class="bi-greater bi-chevron-right"></i>
                             </a>
-                            <a *ngIf="item.tipo == 'Mixto'" [routerLink]="['/ver', item.empresa._id]" class="btn btn-reserve-mixto"
-                                style="width: 180px; border-radius: 30px">
+                            <a *ngIf="item.tipo == 'Mixto'" (click)="select_cancha(item._id)"
+                                class="btn btn-reserve-mixto" style="width: 180px; border-radius: 30px">
                                 Reservar &nbsp; <i class="bi-greater bi-chevron-right"></i>
                             </a>
                         </div>
