@@ -21,18 +21,20 @@
           style="border: 1px solid rgb(111, 66, 193);">
           <div class="card-body py-2 px-sm-5 px-3">
 
-            <h4 class="text-center fw-bold"> {{item.nombre}}
-              <span *ngIf="item.tipo == 'Fútbol/Futsal'" class="fw-light h6" style="color: rgb(0, 192, 86);">
+            <h4 class="text-center fw-bold pb-2"> {{item.nombre}} <br>
+              <span *ngIf="item.tipo == 'Fútbol/Futsal'" class="fw-light h6 futsal-tipo">
                 {{item.tipo}}
               </span>
 
-              <span *ngIf="item.tipo == 'Voley'" class="fw-light h6" style="color: rgb(241, 78, 143);">{{item.tipo}}
+              <span *ngIf="item.tipo == 'Voley'" class="fw-light h6 voley-tipo">{{item.tipo}}
               </span>
 
-              <span *ngIf="item.tipo == 'Mixto'" class="fw-light h6" style="color: rgb(122, 78, 241);">{{item.tipo}}
+              <span class="fw-light h6">Tipo de cancha: </span> <span *ngIf="item.tipo == 'Mixto'"
+                class="fw-light h6 mixto-tipo">{{item.tipo}}
               </span>
             </h4>
 
+            <!--? El tipo es futsal o voley -->
             <div class="row" *ngIf="item.tipo != 'Mixto'">
               <div class="col-12 fw-light" style="text-align: justify;">
                 {{item.descripcion}}
@@ -51,37 +53,55 @@
               </div>
             </div>
 
+            <!--? El tipo es mixto (futsal/voley) -->
             <div class="row" *ngIf="item.tipo == 'Mixto'">
               <div class="col-12 fw-light" style="text-align: justify;">
                 {{item.descripcion}}
               </div>
 
-              <div class="col-12 col-sm-4 py-3">
-                <span class="fw-bold h6">Medida <em class="futsal fw-light">futsal</em>: </span> <span> {{item.largo}}m x {{item.ancho}}m </span>
-              </div>
-
-              <div class="col-12 col-sm-4 py-3">
-                <span class="fw-bold h6">Precio de día: <em class="futsal fw-light">futsal</em> </span> <span> S/. {{item.precio_dia}} </span>
-              </div>
-
-              <div class="col-12 col-sm-4 py-3">
-                <span class="fw-bold h6">Precio de noche: <em class="futsal fw-light">futsal</em> </span> <span> S/. {{item.precio_noche}} </span>
+              <!-- futsal -->
+              <div class="col-12 pt-3">
+                <span class="futsal fw-light">Detalles de futsal/fútbol</span>
               </div>
 
               <div class="col-12 col-sm-4">
-                <span class="fw-bold h6">Medida <em class="voley fw-light">voley</em>: </span> <span> {{item.largo_voley}}m x {{item.ancho_voley}}m </span>
+                <span class="fw-bold h6">Medida: </span> <span> {{item.largo}}m
+                  x {{item.ancho}}m </span>
               </div>
 
               <div class="col-12 col-sm-4">
-                <span class="fw-bold h6">Precio de día: <em class="voley fw-light">voley</em> </span> <span> S/. {{item.precio_dia_voley}} </span>
+                <span class="fw-bold h6">Precio de día:</span> <span> S/.
+                  {{item.precio_dia}} </span>
               </div>
 
               <div class="col-12 col-sm-4">
-                <span class="fw-bold h6">Precio de noche: <em class="voley fw-light">voley</em> </span> <span> S/. {{item.precio_noche_voley}} </span>
+                <span class="fw-bold h6">Precio de noche:</span> <span> S/.
+                  {{item.precio_noche}} </span>
+              </div>
+
+              <!-- voley -->
+              <div class="col-12 pt-3">
+                <span class="voley fw-light">Detalles de voley</span>
+              </div>
+
+              <div class="col-12 col-sm-4">
+                <span class="fw-bold h6">Medida:</span> <span>
+                  {{item.largo_voley}}m x {{item.ancho_voley}}m </span>
+              </div>
+
+              <div class="col-12 col-sm-4">
+                <span class="fw-bold h6">Precio de día:</span> <span> S/.
+                  {{item.precio_dia_voley}} </span>
+              </div>
+
+              <div class="col-12 col-sm-4">
+                <span class="fw-bold h6">Precio de noche:</span> <span> S/.
+                  {{item.precio_noche_voley}} </span>
               </div>
             </div>
 
-            <div class="d-flex flex-wrap justify-content-between pt-2" data-toggle="collapse" aria-expanded="false">
+            <div class="d-flex flex-wrap justify-content-between pt-4 pb-2" data-toggle="collapse"
+              aria-expanded="false">
 
               <a class="text-info fs-5" [routerLink]="['/grass/canchas', item._id]" title="Editar">
                 <i class="bi bi-pencil"></i>
@@ -89,8 +109,8 @@
               <a class="futsal fs-5" [routerLink]="['/grass/canchas/galeria/', item._id]" title="Agregar galería">
                 <i class="bi bi-images"></i>
               </a>
-              <a data-bs-toggle="modal" [attr.data-bs-target]="'#delete-' + item._id"
-                class="text-danger fs-5" type="button" title="Eliminar">
+              <a data-bs-toggle="modal" [attr.data-bs-target]="'#delete-' + item._id" class="text-danger fs-5"
+                type="button" title="Eliminar">
                 <i class="bi bi-trash"></i>
               </a>
             </div>
