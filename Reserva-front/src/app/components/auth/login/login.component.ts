@@ -15,6 +15,7 @@ export class LoginComponent implements OnInit {
   public usuario: any = {};
   public token: any;
   public id: any;
+  public id_cancha: any;
   public user_lc: any;
   public password: any;
   public show = false;
@@ -30,6 +31,7 @@ export class LoginComponent implements OnInit {
 
     this.token = localStorage.getItem('token') || sessionStorage.getItem('token');
     this.id = localStorage.getItem('_id') || sessionStorage.getItem('_id');
+    this.id_cancha = localStorage.getItem('id_cancha');
 
     if (this.token) {
       _userService.obtener_user(this.id, this.token).subscribe(response => {
@@ -141,11 +143,23 @@ export class LoginComponent implements OnInit {
             this.usuario = response.data;
 
             if (this.usuario.role === 'USER') {
-              this._router.navigate(['/usuario']).then(() => {
-                setTimeout(() => {
-                  location.reload();
-                }, 500);
-              });
+
+              //No existe el id_cancha y se lleva al login normal
+              if (this.id_cancha == '') {
+                this._router.navigate(['/usuario']).then(() => {
+                  setTimeout(() => {
+                    location.reload();
+                  }, 500);
+                });
+
+                //Existe id_cancha
+              } else {
+                this._router.navigate(['/usuario/perfil/reservas']).then(() => {
+                  setTimeout(() => {
+                    location.reload();
+                  }, 500);
+                });
+              }
 
             } else if (this.usuario.role === 'ADMIN') {
               this._router.navigate(['/admin']).then(() => {

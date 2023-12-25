@@ -176,6 +176,41 @@ section .wave.wave4 {
     color: white;
 }
 
+.btn-reserve:hover {
+    background-color: #2bb97b;
+    border: none;
+    /* color: #effef7; */
+    color: white;
+}
+
+.btn-reserve-voley {
+    background-color: #F14E8F;
+    border: none;
+    /* color: #effef7; */
+    color: white;
+}
+
+.btn-reserve-voley:hover {
+    background-color: #d64c83;
+    border: none;
+    /* color: #effef7; */
+    color: white;
+}
+
+.btn-reserve-mixto {
+    background-color: rgb(111, 66, 193);
+    border: none;
+    /* color: #effef7; */
+    color: white;
+}
+
+.btn-reserve-mixto:hover {
+    background-color: rgb(95, 51, 178);
+    border: none;
+    /* color: #effef7; */
+    color: white;
+}
+
 .bi-1 {
     color: #0eab68;
 }

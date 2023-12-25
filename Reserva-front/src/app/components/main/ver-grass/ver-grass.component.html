@@ -25,8 +25,9 @@
                         </ng-container>
 
                         <ng-container *ngIf="item.empresa.portada != undefined">
-                            <img *ngIf="item.empresa.portada.length >= 1" class="card-img-top" class="rounded" 
-                            [src]="url + 'obtener_imagen_portada/' + item.empresa.portada[0].imagen" alt="{{ item.empresa.nombre }}" style="height: 25vh" />
+                            <img *ngIf="item.empresa.portada.length >= 1" class="card-img-top" class="rounded"
+                                [src]="url + 'obtener_imagen_portada/' + item.empresa.portada[0].imagen"
+                                alt="{{ item.empresa.nombre }}" style="height: 25vh" />
                         </ng-container>
 
                         <div class="nombre">
@@ -40,7 +41,7 @@
 
                         <div class="grass-caracteristicas">
 
-                            <!-- Nombre -->
+                            <!-- Tipo -->
                             <p *ngIf="item.tipo == 'Voley'" style="color: rgb(241, 78, 143);">
                                 <i class="bi bi-dribbble"></i> &nbsp;
                                 <a> {{item.tipo}} </a>
@@ -51,54 +52,107 @@
                                 <a> {{item.tipo}} </a>
                             </p>
 
-                            <!-- Más de una cancha de voley -->
-                            <p *ngIf="item.canchas_voley > 1">
-                                <i class="bi-1 bi-dribbble"></i> &nbsp;
-                                <a> {{ item.canchas_voley }} canchas de vóley</a>
+                            <p *ngIf="item.tipo == 'Mixto'" style="color: rgb(111, 66, 193)">
+                                <i class="bi bi-shuffle"></i> &nbsp;
+                                <a> {{item.tipo}} </a>
                             </p>
 
-                            <!-- Una sola cancha -->
-                            <p *ngIf="item.canchas_voley == 1">
-                                <i class="bi-1 bi-dribbble"></i> &nbsp;
-                                <a> Una cancha de vóley</a>
+                            <!-- Medidas -->
+                            <p *ngIf="item.tipo == 'Voley'">
+                                <i class="bi bi-square" style="color: rgb(241, 78, 143);"></i> &nbsp;
+                                <a> {{item.largo}}m x {{item.ancho}}m </a>
                             </p>
 
-                            <!-- Sin canchas de vóley -->
-                            <p *ngIf="item.canchas_voley < 1" class="text-secondary">
-                                <i class="bi-2 bi-dribbble"></i> &nbsp;
-                                <a>Sin canchas de vóley</a>
+                            <p *ngIf="item.tipo == 'Fútbol/Futsal'">
+                                <i class="bi bi-square" style="color: rgb(0, 192, 86);"></i> &nbsp;
+                                <a> {{item.largo}}m x {{item.ancho}}m </a>
                             </p>
 
-                            <p *ngIf="item.iluminacion">
-                                <i class="bi-1 bi-lightning-charge-fill"></i> &nbsp;
-                                <a>Iluminación LED</a>
+                            <p *ngIf="item.tipo == 'Mixto'">
+                                <i class="bi bi-square" style="color: rgb(111, 66, 193);"></i> &nbsp;
+                                <a> <small style="color: rgb(0, 192, 86);"><i class="bi bi-record-fill"></i></small>
+                                    {{item.largo}}m x {{item.ancho}}m
+                                </a>
+
+                                &nbsp;
+
+                                <a> <small style="color: rgb(241, 78, 143);"><i class="bi bi-record-fill"></i></small>
+                                    {{item.largo_voley}}m x {{item.ancho_voley}}m
+                                </a>
                             </p>
 
-                            <p *ngIf="!item.iluminacion" class="text-secondary">
-                                <i class="bi-2 bi-lightning-charge"> </i> &nbsp;
-                                <a>Sin iluminación LED</a>
-                            </p>
-                            <p *ngIf="item.techado">
-                                <i class="bi-1 bi-cloud-lightning-rain-fill"></i> &nbsp;
-                                <a>Techado</a>
-                            </p>
-
-                            <p *ngIf="!item.techado" class="text-secondary">
-                                <i class="bi-2 bi-cloud-lightning-rain"> </i> &nbsp;
-                                <a>Sin techo</a>
-                            </p>
-                            <p *ngIf="item.garaje">
-                                <i class="bi-1 bi-car-front-fill"></i> &nbsp; <a>Garaje</a>
+                            <!-- Precios -->
+                            <p *ngIf="item.tipo == 'Fútbol/Futsal'">
+                                <i class="bi bi-sun" style="color: rgb(0, 192, 86);"></i> &nbsp;
+                                <a> S/. {{item.precio_dia}}
+                                    <small class="fw-light text text-secondary"> <i>hora</i> </small>
+                                </a>
                             </p>
 
-                            <p *ngIf="!item.garaje" class="text-secondary">
-                                <i class="bi-2 bi-car-front"> </i> &nbsp; <a>Sin garaje</a>
+                            <p *ngIf="item.tipo == 'Voley'">
+                                <i class="bi bi-sun" style="color: rgb(241, 78, 143);"></i> &nbsp;
+                                <a> S/. {{item.precio_dia}}
+                                    <small class="fw-light text text-secondary"> <i>hora</i> </small>
+                                </a>
                             </p>
+
+                            <p *ngIf="item.tipo == 'Fútbol/Futsal'">
+                                <i class="bi bi-moon-stars" style="color: rgb(0, 192, 86);"></i> &nbsp;
+                                <a> S/. {{item.precio_noche}}
+                                    <small class="fw-light text text-secondary"> <i>hora</i> </small>
+                                </a>
+                            </p>
+
+                            <p *ngIf="item.tipo == 'Voley'">
+                                <i class="bi bi-moon-stars" style="color: rgb(241, 78, 143);"></i> &nbsp;
+                                <a> S/. {{item.precio_noche}}
+                                    <small class="fw-light text text-secondary"> <i>hora</i> </small>
+                                </a>
+                            </p>
+
+                            <p *ngIf="item.tipo == 'Mixto'">
+                                <i class="bi bi-sun" style="color: rgb(111, 66, 193);"></i>
+                                <a> &nbsp; <small style="color: rgb(0, 192, 86);"><i
+                                            class="bi bi-record-fill"></i></small>
+                                    S/. {{item.precio_dia}}
+                                </a>
+
+                                &nbsp;
+
+                                <a> <small style="color: rgb(241, 78, 143);"><i class="bi bi-record-fill"></i></small>
+                                    S/. {{item.precio_dia_voley}}
+                                    <small class="fw-light text text-secondary"> <i>hora</i> </small>
+                                </a>
+                            </p>
+
+                            <p *ngIf="item.tipo == 'Mixto'">
+                                <i class="bi bi-moon-stars" style="color: rgb(111, 66, 193);"></i>
+                                <a> &nbsp; <small style="color: rgb(0, 192, 86);"><i
+                                            class="bi bi-record-fill"></i></small>
+                                    S/. {{item.precio_dia}}
+                                </a>
+
+                                &nbsp;
+
+                                <a> <small style="color: rgb(241, 78, 143);"><i class="bi bi-record-fill"></i></small>
+                                    S/. {{item.precio_dia_voley}}
+                                    <small class="fw-light text text-secondary"> <i>hora</i> </small>
+                                </a>
+                            </p>
+
                         </div>
 
                         <div class="text-center" style="padding: 10px 0px">
-                            <a [routerLink]="['/ver', item.empresa._id]" class="btn btn-reserve"
-                                style="width: 180px; border-radius: 30px">
+                            <a *ngIf="item.tipo == 'Fútbol/Futsal'" (click)="select_cancha(item._id)"
+                                class="btn btn-reserve" style="width: 180px; border-radius: 30px">
+                                Reservar &nbsp; <i class="bi-greater bi-chevron-right"></i>
+                            </a>
+                            <a *ngIf="item.tipo == 'Voley'" (click)="select_cancha(item._id)"
+                                class="btn btn-reserve-voley" style="width: 180px; border-radius: 30px">
+                                Reservar &nbsp; <i class="bi-greater bi-chevron-right"></i>
+                            </a>
+                            <a *ngIf="item.tipo == 'Mixto'" (click)="select_cancha(item._id)"
+                                class="btn btn-reserve-mixto" style="width: 180px; border-radius: 30px">
                                 Reservar &nbsp; <i class="bi-greater bi-chevron-right"></i>
                             </a>
                         </div>

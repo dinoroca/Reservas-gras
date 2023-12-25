@@ -56,8 +56,6 @@ export class VerGrassComponent implements OnInit {
               } else if (response.data != undefined) {
                 this.btn_crear = false;
                 this.canchas = response.data;
-                console.log(this.canchas);
-                
                 this.load_data = false;
               }
             }
@@ -65,6 +63,11 @@ export class VerGrassComponent implements OnInit {
         }
       }
     );
+  }
+
+  select_cancha(id: any) {
+    localStorage.setItem('id_cancha', id);
+    this._router.navigate(['/login']);
   }
 }
 
