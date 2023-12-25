@@ -22,7 +22,7 @@
 
                             <!-- CARD DE CANCHA -->
                             <div class="shadow card rounded my-4" style="border: 1px solid rgb(111, 66, 193);">
-                                <div class="card-body py-2 px-sm-5 px-3">
+                                <div class="card-body py-2 px-sm-2 px-3">
 
                                     <h4 class="text-center fw-bold">
                                         <span *ngIf="cancha.tipo == 'Fútbol/Futsal'" class="fw-light h6"
@@ -39,6 +39,7 @@
                                         </span>
                                     </h4>
 
+                                    <!--? El tipo es futsal o voley -->
                                     <div class="row" *ngIf="cancha.tipo != 'Mixto'">
                                         <div class="col-12 fw-light" style="text-align: justify;">
                                             {{cancha.descripcion}}
@@ -60,42 +61,49 @@
                                         </div>
                                     </div>
 
-                                    <div class="row" *ngIf="cancha.tipo == 'Mixto'">
+                                    <!--? El tipo es mixto (futsal/voley) -->
+                                    <div class="row pb-3" *ngIf="cancha.tipo == 'Mixto'">
                                         <div class="col-12 fw-light" style="text-align: justify;">
                                             {{cancha.descripcion}}
                                         </div>
 
-                                        <div class="col-12 col-sm-4 py-3">
-                                            <span class="fw-bold h6">Medida <em class="futsal fw-light">futsal</em>:
-                                            </span> <span> {{cancha.largo}}m x {{cancha.ancho}}m </span>
+                                        <!-- futsal -->
+                                        <div class="col-12 pt-3">
+                                            <span class="futsal fw-light">Detalles de futsal/fútbol</span>
                                         </div>
 
-                                        <div class="col-12 col-sm-4 py-3">
-                                            <span class="fw-bold h6">Precio de día: <em
-                                                    class="futsal fw-light">futsal</em> </span> <span> S/.
+                                        <div class="col-12 col-sm-4">
+                                            <span class="fw-bold h6">Medida: </span> <span> {{cancha.largo}}m
+                                                x {{cancha.ancho}}m </span>
+                                        </div>
+
+                                        <div class="col-12 col-sm-4">
+                                            <span class="fw-bold h6">Precio de día:</span> <span> S/.
                                                 {{cancha.precio_dia}} </span>
                                         </div>
 
-                                        <div class="col-12 col-sm-4 py-3">
-                                            <span class="fw-bold h6">Precio de noche: <em
-                                                    class="futsal fw-light">futsal</em> </span> <span> S/.
+                                        <div class="col-12 col-sm-4">
+                                            <span class="fw-bold h6">Precio de noche:</span> <span> S/.
                                                 {{cancha.precio_noche}} </span>
                                         </div>
 
-                                        <div class="col-12 col-sm-4">
-                                            <span class="fw-bold h6">Medida <em class="voley fw-light">voley</em>:
-                                            </span> <span> {{cancha.largo_voley}}m x {{cancha.ancho_voley}}m </span>
+                                        <!-- voley -->
+                                        <div class="col-12 pt-3">
+                                            <span class="voley fw-light">Detalles de voley</span>
                                         </div>
 
                                         <div class="col-12 col-sm-4">
-                                            <span class="fw-bold h6">Precio de día: <em
-                                                    class="voley fw-light">voley</em> </span> <span> S/.
+                                            <span class="fw-bold h6">Medida:</span> <span>
+                                                {{cancha.largo_voley}}m x {{cancha.ancho_voley}}m </span>
+                                        </div>
+
+                                        <div class="col-12 col-sm-4">
+                                            <span class="fw-bold h6">Precio de día:</span> <span> S/.
                                                 {{cancha.precio_dia_voley}} </span>
                                         </div>
 
                                         <div class="col-12 col-sm-4">
-                                            <span class="fw-bold h6">Precio de noche: <em
-                                                    class="voley fw-light">voley</em> </span> <span> S/.
+                                            <span class="fw-bold h6">Precio de noche:</span> <span> S/.
                                                 {{cancha.precio_noche_voley}} </span>
                                         </div>
                                     </div>
@@ -105,19 +113,29 @@
 
                         </div>
 
+                        <p class="col-form-label fs-5 fw-light text-center" style="margin: 10px 0;">Galería</p>
+
+
+                        <div class=" group-upload">
+                            <div class="text-center">
+                                <input id="input-img" type="file" (change)="fileChangeEvent($event)">
+                                <label class="lab" for="input-img">
+                                    <i class="bi bi-cloud-arrow-up-fill icon-upload"></i>
+                                    <p><strong>Subir imagen desde el equipo</strong></p>
+                                    <em>Formatos soportados: <br> jpg, png, webp, jpeg</em> <br>
+                                    <p>Tamaño máximo: 4MB</p>
+                                </label>
+                            </div>
+                            <button *ngIf="!load_btn" class="btn btn-primary bi-floppy button-upload" type="button"
+                                (click)="subir_imagen()" [disabled]="file == undefined">
+                                Guardar
+                            </button>
+                        </div>
+
                         <div class="form-group row align-items-center">
-                            <label class="col-form-label fs-5 fw-light text-center" for="input-img" style="cursor: pointer;">
-                                Subir imagen
-                            </label>
                             <div class="mb-3">
                                 <!-- Button addon on the right -->
                                 <div class="input-group">
-                                    <input id="input-img" class="form-control" type="file"
-                                        (change)="fileChangeEvent($event)">
-                                    <button *ngIf="!load_btn" class="btn btn-primary bi-upload" type="button" (click)="subir_imagen()"
-                                        [disabled]="file == undefined">
-                                        Subir
-                                    </button>
 
                                     <!-- Button with growing spinner and text -->
                                     <button *ngIf="load_btn" type="button" class="btn btn-secondary" disabled>
@@ -133,11 +151,12 @@
 
                                     <ng-container *ngIf="load_data">
                                         <div class="text-center">
-                                          <div class="spinner-border text-secondary" style="width: 3rem; height: 3rem" role="status">
-                                          </div>
-                                          <h4 class="text-black-50"><small>Cargando...</small></h4>
+                                            <div class="spinner-border text-secondary" style="width: 3rem; height: 3rem"
+                                                role="status">
+                                            </div>
+                                            <h4 class="text-black-50"><small>Cargando...</small></h4>
                                         </div>
-                                      </ng-container>
+                                    </ng-container>
 
                                     <table class="table table-sm table-bordered text-center" *ngIf="cancha.galeria">
                                         <thead class="thead-dark">
@@ -193,8 +212,7 @@
                                                                         style="width: 10vw;"></p>
                                                             </div>
                                                             <div class="modal-footer">
-                                                                <button
-                                                                    class="btn btn-secondary btn-sm bi-x-lg"
+                                                                <button class="btn btn-secondary btn-sm bi-x-lg"
                                                                     type="button" data-bs-dismiss="modal">
                                                                     Cancelar
                                                                 </button>
