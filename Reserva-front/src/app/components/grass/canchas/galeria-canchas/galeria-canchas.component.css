@@ -1,7 +1,70 @@
 .voley {
-    color: rgb(241, 78, 143);
+  color: rgb(241, 78, 143);
 }
 
 .futsal {
-    color: rgb(0, 192, 86);
+  color: rgb(0, 192, 86);
+}
+
+.lab {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 260px;
+  width: 400px;
+  border-radius: 4px;
+  border: 1px dashed #999;
+  cursor: pointer;
+}
+
+.lab:hover {
+  color: blue;
+  border: 1px dashed blue;
+}
+
+.icon-upload {
+  font-size: 4em;
+}
+
+input {
+  display: none;
+}
+
+.nombre-archivo {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  display: inline-block;
+  max-width: 100%;
+}
+
+.group-upload {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.divFlex {
+  width: 500px;
+  height: 1000px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: lightcyan;
+  align-items: center;
+}
+
+.padre {
+  background-color: rgba(0, 0, 255, 0.105);
+  display: flex;
+  height: 300px;
+  align-items: center;
+  justify-content: center;
+}
+
+.button-upload {
+  margin: 8px 0;
+  width: 200px;
 }
