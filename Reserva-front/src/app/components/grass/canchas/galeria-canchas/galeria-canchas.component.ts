@@ -18,6 +18,7 @@ export class GaleriaCanchasComponent implements OnInit {
   public token: any;
   public load_data = true;
   public load_btn = false;
+  public field_upload = true;
   public url: any;
   public load_btn_eliminar = false;
   public file: File | any = undefined;
@@ -46,6 +47,14 @@ export class GaleriaCanchasComponent implements OnInit {
           this.load_data = false;
         } else {
           this.cancha = response.data;
+
+          //Limitar la galería a 5 fotos
+          if (this.cancha.galeria.length == 5) {
+            this.field_upload = false;
+          } else {
+            this.field_upload = true;
+          }
+
           this.load_data = false;
         }
       }

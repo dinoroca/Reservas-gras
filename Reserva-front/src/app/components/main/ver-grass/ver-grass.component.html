@@ -18,23 +18,84 @@
             <div *ngFor="let item of canchas" class="col-md-4 pb-5 pt-2 col-sm-12">
                 <div class="card shadow mx-3">
                     <div class="images-grass">
-                        <ng-container *ngIf=" item.empresa.portada == undefined || item.empresa.portada.length < 1">
+                        <ng-container *ngIf="item.galeria == undefined || item.galeria.length < 1">
                             <img class="card-img-top" class="rounded"
                                 [src]="url + 'obtener_imagen_portada/' + 'defaultt'" alt="{{ item.empresa.nombre }}"
                                 style="height: 25vh" />
                         </ng-container>
 
-                        <ng-container *ngIf="item.empresa.portada != undefined">
-                            <img *ngIf="item.empresa.portada.length >= 1" class="card-img-top" class="rounded"
-                                [src]="url + 'obtener_imagen_portada/' + item.empresa.portada[0].imagen"
+                        <ng-container *ngIf="item.galeria != undefined">
+                            <img *ngIf="item.galeria.length >= 1" class="card-img-top" class="rounded"
+                                [src]="url + 'obtener_imagen_portada/' + item.galeria[0].imagen"
                                 alt="{{ item.empresa.nombre }}" style="height: 25vh" />
                         </ng-container>
 
                         <div class="nombre">
                             <h5 class="card-title fw-bold text-center">
-                                {{ item.nombre }}
+                                {{ item.nombre }} &nbsp;
+                                <a data-bs-toggle="modal" [attr.data-bs-target]="'#sow-' + item._id" title="Ver fotos"
+                                    class="" type="button">
+                                    <i class="bi bi-images"></i>
+                                </a>
                             </h5>
                         </div>
+
+                        <!-- Modal Galeria-->
+                        <div class="modal fade" id="sow-{{ item._id }}" tabindex="-1" style="display: none"
+                            aria-hidden="true">
+                            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title text-center">
+                                            Fotos de {{item.nombre}}
+                                        </h4>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close">
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+
+                                        <ng-container *ngIf="item.galeria == undefined || item.galeria.length < 1">
+                                            <div class="alert alert-danger mb-0 text-center" role="alert">
+                                                <span class="fs-5 fw-light">Esta cancha aún no tiene fotos!</span>
+                                            </div>
+                                        </ng-container>
+
+                                        <!-- Galería de canchas -->
+                                        <div *ngIf="item.galeria != undefined && item.galeria.length >= 1" id="carouselExampleInterval" class="carousel slide"
+                                            data-bs-ride="carousel">
+
+                                            <div class="carousel-inner">
+
+                                                <div class="" *ngFor="let item1 of item.galeria; let indice = index">
+                                                    <div class="carousel-item" [ngClass]="{'active': indice == 0}"
+                                                        data-bs-interval="3000">
+                                                        <img [src]="url + 'obtener_imagen_portada/' + item1.imagen"
+                                                            alt="{{item1.imagen}}" class="d-block w-100 rounded">
+                                                    </div>
+                                                </div>
+
+
+                                                <button class="carousel-control-prev" type="button"
+                                                    style="background-color: #ffffff00; border: #fff;"
+                                                    data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
+                                                    <span class="carousel-control-prev-icon" aria-hidden="true"
+                                                        style="background-color: #9c9c9c7a; border-radius: 5px;"></span>
+                                                </button>
+
+                                                <button class="carousel-control-next" type="button"
+                                                    style="background-color: #ffffff00; border: #fff;"
+                                                    data-bs-target="#carouselExampleInterval" data-bs-slide="next">
+                                                    <span class="carousel-control-next-icon" aria-hidden="true"
+                                                        style="background-color: #9c9c9c7a; border-radius: 5px;"></span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
 
                     <div class="card-body">
@@ -54,7 +115,15 @@
 
                             <p *ngIf="item.tipo == 'Mixto'" style="color: rgb(111, 66, 193)">
                                 <i class="bi bi-shuffle"></i> &nbsp;
-                                <a> {{item.tipo}} </a>
+                                <a> {{item.tipo}} &nbsp;
+                                    <small style="color: rgb(0, 192, 86);"><i class="bi bi-record-fill"></i> </small>
+                                    <small class="fw-light text text-secondary"> <i> Fútbol/Futsal</i> </small>
+
+                                    &nbsp;
+
+                                    <small style="color: rgb(241, 78, 143);"><i class="bi bi-record-fill"></i> </small>
+                                    <small class="fw-light text text-secondary"> <i> Voley</i> </small>
+                                </a>
                             </p>
 
                             <!-- Medidas -->
