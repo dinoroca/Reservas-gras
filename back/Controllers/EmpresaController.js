@@ -351,6 +351,19 @@ const obtener_cancha_empresa = async function (req, res) {
   }
 }
 
+const obtener_cancha_publico = async function (req, res) {
+  var id = req.params['id'];
+
+  let cancha;
+
+  try {
+    cancha = await Cancha.findById({ _id: id });
+    res.status(200).send({ data: cancha });
+  } catch (error) {
+    res.status(200).send({ data: undefined });
+  }
+}
+
 const actualizar_cancha_empresa = async function (req, res) {
   if (req.user) {
     if (req.user.role == 'GRASS') {
@@ -687,6 +700,7 @@ module.exports = {
   actualizar_caracteristicas_empresa,
   crear_cancha_empresa,
   obtener_canchas_empresa,
+  obtener_cancha_publico,
   obtener_canchas,
   obtener_cancha_empresa,
   actualizar_cancha_empresa,

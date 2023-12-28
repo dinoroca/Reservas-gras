@@ -5,7 +5,7 @@
     <div class="row d-flex justify-content-center px-2 px-sm-5">
         <h4 class="card-title text-center fw-bold py-4"> Canchas del {{empresa.nombre}} </h4>
 
-        <div cstyle="height: 100vh;" *ngIf="load_data">
+        <div *ngIf="load_data">
             <!-- Custom size border spinner -->
             <div class="text-center">
                 <div class="spinner-border" style="width: 3rem; height: 3rem" role="status">
@@ -62,8 +62,8 @@
                                         </ng-container>
 
                                         <!-- Galería de canchas -->
-                                        <div *ngIf="item.galeria != undefined && item.galeria.length >= 1" id="carouselExampleInterval" class="carousel slide"
-                                            data-bs-ride="carousel">
+                                        <div *ngIf="item.galeria != undefined && item.galeria.length >= 1"
+                                            id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
 
                                             <div class="carousel-inner">
 
@@ -212,19 +212,87 @@
                         </div>
 
                         <div class="text-center" style="padding: 10px 0px">
-                            <a *ngIf="item.tipo == 'Fútbol/Futsal'" (click)="select_cancha(item._id)"
-                                class="btn btn-reserve" style="width: 180px; border-radius: 30px">
-                                Reservar &nbsp; <i class="bi-greater bi-chevron-right"></i>
-                            </a>
-                            <a *ngIf="item.tipo == 'Voley'" (click)="select_cancha(item._id)"
-                                class="btn btn-reserve-voley" style="width: 180px; border-radius: 30px">
-                                Reservar &nbsp; <i class="bi-greater bi-chevron-right"></i>
-                            </a>
-                            <a *ngIf="item.tipo == 'Mixto'" (click)="select_cancha(item._id)"
-                                class="btn btn-reserve-mixto" style="width: 180px; border-radius: 30px">
-                                Reservar &nbsp; <i class="bi-greater bi-chevron-right"></i>
-                            </a>
+                            <ng-container *ngIf="width_view">
+                                <a *ngIf="item.tipo == 'Fútbol/Futsal'" (click)="click_ver(item._id)"
+                                    class="btn btn-reserve" style="width: 180px; border-radius: 30px">
+                                    Ver más &nbsp; <i class="bi-greater bi-chevron-right"></i>
+                                </a>
+                                <a *ngIf="item.tipo == 'Voley'" (click)="click_ver(item._id)"
+                                    class="btn btn-reserve-voley" style="width: 180px; border-radius: 30px">
+                                    Ver más &nbsp; <i class="bi-greater bi-chevron-right"></i>
+                                </a>
+                                <a *ngIf="item.tipo == 'Mixto'" (click)="click_ver(item._id)"
+                                    class="btn btn-reserve-mixto" style="width: 180px; border-radius: 30px">
+                                    Ver más &nbsp; <i class="bi-greater bi-chevron-right"></i>
+                                </a>
+                            </ng-container>
+
+                            <ng-container *ngIf="!width_view">
+                                <a *ngIf="item.tipo == 'Fútbol/Futsal'" (click)="click_ver(item._id)"
+                                    type="button" data-bs-toggle="collapse"
+                                    [attr.data-bs-target]="'#open-' + item._id" aria-expanded="false"
+                                    aria-controls="collapseExample"
+                                    class="btn btn-reserve" style="width: 180px; border-radius: 30px">
+                                    Ver más &nbsp; <i class="bi-greater bi-chevron-right"></i>
+                                </a>
+
+                                <a *ngIf="item.tipo == 'Voley'" (click)="click_ver(item._id)"
+                                    type="button" data-bs-toggle="collapse"
+                                    [attr.data-bs-target]="'#open-' + item._id" aria-expanded="false"
+                                    aria-controls="collapseExample"
+                                    class="btn btn-reserve-voley" style="width: 180px; border-radius: 30px">
+                                    Ver más &nbsp; <i class="bi-greater bi-chevron-right"></i>
+                                </a>
+                                <a *ngIf="item.tipo == 'Mixto'" (click)="click_ver(item._id)"
+                                    type="button" data-bs-toggle="collapse"
+                                    [attr.data-bs-target]="'#open-' + item._id" aria-expanded="false"
+                                    aria-controls="collapseExample"
+                                    class="btn btn-reserve-mixto" style="width: 180px; border-radius: 30px">
+                                    Ver más &nbsp; <i class="bi-greater bi-chevron-right"></i>
+                                </a>
+                            </ng-container>
+
                         </div>
+                    </div>
+                </div>
+
+                <ng-container *ngIf="!width_view">
+                    <div *ngIf="load_btn_ver">
+                        <!-- Custom size border spinner -->
+                        <div class="text-center">
+                            <div class="spinner-border" style="width: 3rem; height: 3rem" role="status">
+                            </div>
+                            <h5 class="text-black-50"><small>Cargando...</small></h5>
+                        </div>
+                    </div>
+
+                    <div class="container pt-5">
+                        <div class="collapse" id="open-{{ item._id }}">
+                            <div class="card card-body">
+                                Some placeholder content for the collapse component. This panel is hidden by default but
+                                revealed when the user activates the relevant trigger.
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+        </ng-container>
+
+        <ng-container *ngIf="width_view">
+            <div *ngIf="load_btn_ver">
+                <!-- Custom size border spinner -->
+                <div class="text-center">
+                    <div class="spinner-border" style="width: 3rem; height: 3rem" role="status">
+                    </div>
+                    <h5 class="text-black-50"><small>Cargando...</small></h5>
+                </div>
+            </div>
+
+            <div *ngIf="ver_caracteristicas" class="pb-5">
+                <div class="">
+                    <div class="card card-body">
+                        Some placeholder content for the collapse component. This panel is hidden by default but
+                        revealed when the user activates the relevant trigger.
                     </div>
                 </div>
             </div>
@@ -237,9 +305,7 @@
         </ng-container>
     </div>
 
-    <div class="container py-5">
 
-    </div>
 </div>
 
 <app-footer></app-footer>

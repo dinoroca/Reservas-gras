@@ -138,6 +138,11 @@ export class UserService {
     return this._http.get(this.url + 'obtener_cancha_empresa/' + id, { headers: headers });
   }
 
+  obtener_cancha_publico(id: any): Observable<any> {
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this._http.get(this.url + 'obtener_cancha_publico/' + id, { headers: headers });
+  }
+
   actualizar_cancha_empresa(id: any, data: any, token: any): Observable<any> {
     let headers = new HttpHeaders({ 'Content-Type': 'application/json', 'authorization': token });
     return this._http.put(this.url + 'actualizar_cancha_empresa/' + id, data, { headers: headers });

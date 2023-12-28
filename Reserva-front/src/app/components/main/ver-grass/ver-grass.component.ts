@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { GLOBAL } from 'src/app/services/global';
@@ -15,16 +15,37 @@ export class VerGrassComponent implements OnInit {
   public url: any;
   public load_data = false;
   public load_btn = false;
+  public load_btn_ver = false;
   public load_btn_crear = false;
+  public width_view = true;
   public btn_crear = false;
+  public ver_caracteristicas = false;
   public canchas: any = [];
+  public cancha_ver: any = {};
   public empresa: any = {};
+  screenWidth: number = 0;
+  screenHeight: number = 0;
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    this.screenWidth = window.innerWidth;
+    this.screenHeight = window.innerHeight;
+  }
 
   constructor(
     private _router: Router,
     private _userService: UserService,
     private _title: Title
   ) {
+
+    this.screenWidth = window.innerWidth;
+    this.screenHeight = window.innerHeight;
+
+    if (this.screenWidth >= this.screenHeight) {
+      this.width_view = true;
+    } else {
+      this.width_view = false;
+    }
 
     this.url = GLOBAL.url;
     const ruta = _router.url.split('/');
@@ -60,6 +81,23 @@ export class VerGrassComponent implements OnInit {
               }
             }
           );
+        }
+      }
+    );
+  }
+
+  click_ver(id: any) {
+    this.load_btn_ver = true;
+    this.ver_caracteristicas = !this.ver_caracteristicas;
+
+    this._userService.obtener_cancha_publico(id).subscribe(
+      response => {
+        if (response === undefined) {
+          this.cancha_ver = undefined;
+          this.load_btn_ver = false;
+        } else {
+          this.cancha_ver = response.data;
+          this.load_btn_ver = false;
         }
       }
     );

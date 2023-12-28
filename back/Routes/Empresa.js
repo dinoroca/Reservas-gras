@@ -29,6 +29,7 @@ api.get('/obtener_cancha_empresa/:id', auth.auth, EmpresaController.obtener_canc
 api.put('/actualizar_cancha_empresa/:id', auth.auth, EmpresaController.actualizar_cancha_empresa);
 api.delete('/eliminar_cancha_empresa/:id', auth.auth, EmpresaController.eliminar_cancha_empresa);
 api.get('/obtener_canchas/:id', EmpresaController.obtener_canchas);
+api.get('/obtener_cancha_publico/:id', EmpresaController.obtener_cancha_publico);
 
 /////GALERÍA
 api.put('/agregar_imagen_galeria_cancha/:id', [auth.auth, path], EmpresaController.agregar_imagen_galeria_cancha);
