@@ -2,7 +2,7 @@
 <div class="container-fluid" style="padding-top: 10vh">
 
     <!-- Canchas -->
-    <div class="row d-flex justify-content-center px-2 px-sm-5">
+    <div class="row d-flex justify-content-center px-2 px-sm-5 pb-5">
         <h4 class="card-title text-center fw-bold py-4"> Canchas del {{empresa.nombre}} </h4>
 
         <div *ngIf="load_data">
@@ -33,68 +33,9 @@
                         <div class="nombre">
                             <h5 class="card-title fw-bold text-center">
                                 {{ item.nombre }} &nbsp;
-                                <a data-bs-toggle="modal" [attr.data-bs-target]="'#sow-' + item._id" title="Ver fotos"
-                                    class="" type="button">
-                                    <i class="bi bi-images"></i>
-                                </a>
                             </h5>
                         </div>
 
-                        <!-- Modal Galeria-->
-                        <div class="modal fade" id="sow-{{ item._id }}" tabindex="-1" style="display: none"
-                            aria-hidden="true">
-                            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h4 class="modal-title text-center">
-                                            Fotos de {{item.nombre}}
-                                        </h4>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close">
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-
-                                        <ng-container *ngIf="item.galeria == undefined || item.galeria.length < 1">
-                                            <div class="alert alert-danger mb-0 text-center" role="alert">
-                                                <span class="fs-5 fw-light">Esta cancha aún no tiene fotos!</span>
-                                            </div>
-                                        </ng-container>
-
-                                        <!-- Galería de canchas -->
-                                        <div *ngIf="item.galeria != undefined && item.galeria.length >= 1"
-                                            id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
-
-                                            <div class="carousel-inner">
-
-                                                <div class="" *ngFor="let item1 of item.galeria; let indice = index">
-                                                    <div class="carousel-item" [ngClass]="{'active': indice == 0}"
-                                                        data-bs-interval="3000">
-                                                        <img [src]="url + 'obtener_imagen_portada/' + item1.imagen"
-                                                            alt="{{item1.imagen}}" class="d-block w-100 rounded">
-                                                    </div>
-                                                </div>
-
-
-                                                <button class="carousel-control-prev" type="button"
-                                                    style="background-color: #ffffff00; border: #fff;"
-                                                    data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
-                                                    <span class="carousel-control-prev-icon" aria-hidden="true"
-                                                        style="background-color: #9c9c9c7a; border-radius: 5px;"></span>
-                                                </button>
-
-                                                <button class="carousel-control-next" type="button"
-                                                    style="background-color: #ffffff00; border: #fff;"
-                                                    data-bs-target="#carouselExampleInterval" data-bs-slide="next">
-                                                    <span class="carousel-control-next-icon" aria-hidden="true"
-                                                        style="background-color: #9c9c9c7a; border-radius: 5px;"></span>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
 
                     </div>
 
@@ -228,26 +169,23 @@
                             </ng-container>
 
                             <ng-container *ngIf="!width_view">
-                                <a *ngIf="item.tipo == 'Fútbol/Futsal'" (click)="click_ver(item._id)"
-                                    type="button" data-bs-toggle="collapse"
-                                    [attr.data-bs-target]="'#open-' + item._id" aria-expanded="false"
-                                    aria-controls="collapseExample"
-                                    class="btn btn-reserve" style="width: 180px; border-radius: 30px">
+                                <a *ngIf="item.tipo == 'Fútbol/Futsal'" (click)="click_ver(item._id)" type="button"
+                                    data-bs-toggle="collapse" [attr.data-bs-target]="'#open-' + item._id"
+                                    aria-expanded="false" aria-controls="collapseExample" class="btn btn-reserve"
+                                    style="width: 180px; border-radius: 30px">
                                     Ver más &nbsp; <i class="bi-greater bi-chevron-right"></i>
                                 </a>
 
-                                <a *ngIf="item.tipo == 'Voley'" (click)="click_ver(item._id)"
-                                    type="button" data-bs-toggle="collapse"
-                                    [attr.data-bs-target]="'#open-' + item._id" aria-expanded="false"
-                                    aria-controls="collapseExample"
-                                    class="btn btn-reserve-voley" style="width: 180px; border-radius: 30px">
+                                <a *ngIf="item.tipo == 'Voley'" (click)="click_ver(item._id)" type="button"
+                                    data-bs-toggle="collapse" [attr.data-bs-target]="'#open-' + item._id"
+                                    aria-expanded="false" aria-controls="collapseExample" class="btn btn-reserve-voley"
+                                    style="width: 180px; border-radius: 30px">
                                     Ver más &nbsp; <i class="bi-greater bi-chevron-right"></i>
                                 </a>
-                                <a *ngIf="item.tipo == 'Mixto'" (click)="click_ver(item._id)"
-                                    type="button" data-bs-toggle="collapse"
-                                    [attr.data-bs-target]="'#open-' + item._id" aria-expanded="false"
-                                    aria-controls="collapseExample"
-                                    class="btn btn-reserve-mixto" style="width: 180px; border-radius: 30px">
+                                <a *ngIf="item.tipo == 'Mixto'" (click)="click_ver(item._id)" type="button"
+                                    data-bs-toggle="collapse" [attr.data-bs-target]="'#open-' + item._id"
+                                    aria-expanded="false" aria-controls="collapseExample" class="btn btn-reserve-mixto"
+                                    style="width: 180px; border-radius: 30px">
                                     Ver más &nbsp; <i class="bi-greater bi-chevron-right"></i>
                                 </a>
                             </ng-container>
@@ -288,11 +226,55 @@
                 </div>
             </div>
 
-            <div *ngIf="ver_caracteristicas" class="pb-5">
+            <div *ngIf="ver_caracteristicas" class="">
                 <div class="">
                     <div class="card card-body">
-                        Some placeholder content for the collapse component. This panel is hidden by default but
-                        revealed when the user activates the relevant trigger.
+                        <h4 class="text-center fw-bold"> {{cancha_ver.nombre}} </h4>
+                        <p class="fs-5 fw-light" style="text-align: justify;"> {{cancha_ver.descripcion}} </p>
+
+                        <ng-container *ngIf="cancha_ver.galeria == undefined || cancha_ver.galeria.length < 1">
+                            <div class="alert alert-danger mb-0 text-center" role="alert">
+                                <span class="fs-5 fw-light">Esta cancha aún no tiene fotos!</span>
+                            </div>
+                        </ng-container>
+
+                        <!-- Galería de canchas -->
+                        <div *ngIf="cancha_ver.galeria != undefined && cancha_ver.galeria.length >= 1"
+                            id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
+
+                            <div class="px-5">
+                                <div class="carousel-inner">
+
+                                    <div class="" *ngFor="let item1 of cancha_ver.galeria; let indice = index">
+                                        <div class="carousel-item text-center" [ngClass]="{'active': indice == 0}"
+                                            data-bs-interval="3000">
+                                            <img [src]="url + 'obtener_imagen_portada/' + item1.imagen"
+                                                alt="{{cancha_ver.empresa.nombre}}" class="rounded" style="height: 40vh;">
+                                        </div>
+                                    </div>
+
+
+                                    <button class="carousel-control-prev" type="button"
+                                        style="background-color: #ffffff00; border: #fff;"
+                                        data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"
+                                            style="background-color: #9c9c9c7a; border-radius: 5px;"></span>
+                                    </button>
+
+                                    <button class="carousel-control-next" type="button"
+                                        style="background-color: #ffffff00; border: #fff;"
+                                        data-bs-target="#carouselExampleInterval" data-bs-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"
+                                            style="background-color: #9c9c9c7a; border-radius: 5px;"></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="py-5">
+                            <full-calendar [options]="calendarOptions"></full-calendar>
+                        </div>
+
                     </div>
                 </div>
             </div>

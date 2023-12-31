@@ -357,7 +357,7 @@ const obtener_cancha_publico = async function (req, res) {
   let cancha;
 
   try {
-    cancha = await Cancha.findById({ _id: id });
+    cancha = await Cancha.findById({ _id: id }).populate('empresa');
     res.status(200).send({ data: cancha });
   } catch (error) {
     res.status(200).send({ data: undefined });

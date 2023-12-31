@@ -9,6 +9,7 @@ import { SharedModule } from './components/shared/shared.module';
 import { AuthModule } from './components/auth/auth.module';
 import { MainModule } from './components/main/main.module';
 import { ToastrModule } from 'ngx-toastr';
+import { FullCalendarModule } from '@fullcalendar/angular';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { ToastrModule } from 'ngx-toastr';
     MainModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    FullCalendarModule,
     ToastrModule.forRoot()
   ],
   providers: [],
