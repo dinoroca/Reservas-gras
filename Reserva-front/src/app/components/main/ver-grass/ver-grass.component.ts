@@ -1,10 +1,24 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit, ChangeDetectionStrategy, ViewChild, TemplateRef, } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { GLOBAL } from 'src/app/services/global';
 import { UserService } from 'src/app/services/user.service';
-import { CalendarOptions } from '@fullcalendar/core';
-import dayGridPlugin from '@fullcalendar/daygrid';
+import { startOfDay, endOfDay, subDays,
+  addDays,
+  endOfMonth,
+  isSameDay,
+  isSameMonth,
+  addHours,
+} from 'date-fns';
+import { Subject } from 'rxjs';
+//import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import {
+  CalendarEvent,
+  CalendarEventAction,
+  CalendarEventTimesChangedEvent,
+  CalendarView,
+} from 'angular-calendar';
+import { EventColor } from 'calendar-utils';
 
 @Component({
   selector: 'app-ver-grass',
@@ -28,7 +42,6 @@ export class VerGrassComponent implements OnInit {
   public empresa: any = {};
   screenWidth: number = 0;
   screenHeight: number = 0;
-  public calendarOptions: CalendarOptions|undefined;
 
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
@@ -56,11 +69,6 @@ export class VerGrassComponent implements OnInit {
 
     this.id = ruta[ruta.length - 1];
     this.init_data();
-
-    this.calendarOptions= {
-      initialView: 'dayGridMonth',
-      plugins: [dayGridPlugin]
-    };
   }
 
   ngOnInit(): void {

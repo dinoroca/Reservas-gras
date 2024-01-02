@@ -10,9 +10,6 @@ import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from 'src/app/app-routing.module';
 import { RouterModule } from '@angular/router';
 import { VerGrassComponent } from './ver-grass/ver-grass.component';
-import { FullCalendarModule } from '@fullcalendar/angular';
-
-
 
 @NgModule({
   declarations: [
@@ -28,7 +25,6 @@ import { FullCalendarModule } from '@fullcalendar/angular';
     SharedModule,
     FormsModule,
     AppRoutingModule,
-    FullCalendarModule,
     RouterModule
   ]
 })

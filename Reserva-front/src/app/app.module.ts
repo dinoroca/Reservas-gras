@@ -9,7 +9,8 @@ import { SharedModule } from './components/shared/shared.module';
 import { AuthModule } from './components/auth/auth.module';
 import { MainModule } from './components/main/main.module';
 import { ToastrModule } from 'ngx-toastr';
-import { FullCalendarModule } from '@fullcalendar/angular';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 
 @NgModule({
   declarations: [
@@ -23,8 +24,8 @@ import { FullCalendarModule } from '@fullcalendar/angular';
     MainModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    FullCalendarModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory })
   ],
   providers: [],
   bootstrap: [AppComponent]
