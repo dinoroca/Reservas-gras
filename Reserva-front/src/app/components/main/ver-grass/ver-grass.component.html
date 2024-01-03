@@ -280,19 +280,28 @@
                                     <thead>
                                         <tr>
                                             <th></th>
-                                            <th *ngFor="let dia of diasSemana">{{ dia.nombre | titlecase }} 
-                                                <small> <small>{{ dia.fecha | date:'shortDate' }}</small> </small> </th>
+                                            <th *ngFor="let dia of diasSemana">{{ dia.nombre | titlecase }}
+                                                <small> <small>{{ dia.fecha | date:'shortDate' }}</small> </small>
+                                            </th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr *ngFor="let intervalo of intervalosHorarios">
-                                            <th scope="row"> <small> <small> {{ intervalo.inicio }} - {{ intervalo.fin }} </small> </small></th>
+                                            <th scope="row"> <small> <small> {{ intervalo.inicio }} - {{ intervalo.fin
+                                                        }} </small> </small></th>
                                             <td *ngFor="let dia of diasSemana">
-                                                <button class="btn btn-outline-secondary">Actividad</button>
-                                                <!-- Puedes ajustar el contenido de cada celda según tus necesidades -->
+                                                <button class="btn" [class.btn-light]="intervalo.estado === 'libre'"
+                                                    [class.btn-warning]="intervalo.estado === 'ocupado'"
+                                                    [class.btn-info]="intervalo.estado === 'reservado'"
+                                                    [class.btn-secondary]="intervalo.estado === 'finalizado'"
+                                                    [disabled]="isHoraPasada(dia.fecha, intervalo.inicio)"
+                                                    (click)="onHoraSeleccionada(dia.fecha, intervalo.inicio)">
+                                                    <span class="fw-light">{{ intervalo.estado }}</span>
+                                                </button>
                                             </td>
                                         </tr>
                                     </tbody>
+
                                 </table>
                             </div>
                         </div>
