@@ -1,25 +1,8 @@
-import { Component, HostListener, OnInit, ChangeDetectionStrategy, ViewChild, TemplateRef, } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { GLOBAL } from 'src/app/services/global';
 import { UserService } from 'src/app/services/user.service';
-import { startOfDay, endOfDay, subDays,
-  addDays,
-  endOfMonth,
-  isSameDay,
-  isSameMonth,
-  addHours,
-} from 'date-fns';
-import { Subject } from 'rxjs';
-//import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import {
-  CalendarEvent,
-  CalendarEventAction,
-  CalendarEventTimesChangedEvent,
-  CalendarView,
-} from 'angular-calendar';
-import { EventColor } from 'calendar-utils';
-
 @Component({
   selector: 'app-ver-grass',
   templateUrl: './ver-grass.component.html',
@@ -40,6 +23,9 @@ export class VerGrassComponent implements OnInit {
   public canchas: any = [];
   public cancha_ver: any = {};
   public empresa: any = {};
+  diasSemana: { nombre: string; fecha: Date }[] = [];
+  horasDia: string[] = [];
+  intervalosHorarios: { inicio: string; fin: string }[] = [];
   screenWidth: number = 0;
   screenHeight: number = 0;
 
@@ -73,7 +59,32 @@ export class VerGrassComponent implements OnInit {
 
   ngOnInit(): void {
     this._title.setTitle('Ver Canchas');
+    this.calcularDiasSemana();
+    this.calcularIntervalosHorarios();
   }
+
+  private calcularDiasSemana() {
+    const hoy = new Date();
+    const primerDiaSemana = hoy.getDay(); // Ajuste para que el primer día sea el actual
+    const primerDia = new Date(hoy.setDate(primerDiaSemana));
+
+    for (let i = 0; i <= 7; i++) {
+      const dia = new Date(primerDia);
+      dia.setDate(primerDia.getDate() + i);
+      this.diasSemana.push({ nombre: dia.toLocaleDateString('es-ES', { weekday: 'long' }).slice(0, 3), fecha: dia });
+    }
+  }
+
+
+  private calcularIntervalosHorarios() {
+    for (let i = 0; i < 24; i++) {
+      const inicio = i < 10 ? `0${i}:00` : `${i}:00`;
+      const fin = (i + 1) < 10 ? `0${i + 1}:00` : `${i + 1}:00`;
+
+      this.intervalosHorarios.push({ inicio, fin });
+    }
+  }
+
 
   init_data() {
     this.load_data = true;

@@ -249,7 +249,8 @@
                                         <div class="carousel-item text-center" [ngClass]="{'active': indice == 0}"
                                             data-bs-interval="3000">
                                             <img [src]="url + 'obtener_imagen_portada/' + item1.imagen"
-                                                alt="{{cancha_ver.empresa.nombre}}" class="rounded" style="height: 40vh;">
+                                                alt="{{cancha_ver.empresa.nombre}}" class="rounded"
+                                                style="height: 40vh;">
                                         </div>
                                     </div>
 
@@ -272,7 +273,28 @@
                         </div>
 
                         <div class="py-5">
-                            
+                            <div class="container mt-4">
+                                <h2>Horario Semanal</h2>
+
+                                <table class="table table-responsive">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th *ngFor="let dia of diasSemana">{{ dia.nombre | titlecase }} 
+                                                <small> <small>{{ dia.fecha | date:'shortDate' }}</small> </small> </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let intervalo of intervalosHorarios">
+                                            <th scope="row"> <small> <small> {{ intervalo.inicio }} - {{ intervalo.fin }} </small> </small></th>
+                                            <td *ngFor="let dia of diasSemana">
+                                                <button class="btn btn-outline-secondary">Actividad</button>
+                                                <!-- Puedes ajustar el contenido de cada celda según tus necesidades -->
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
 
                     </div>
