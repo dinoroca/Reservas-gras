@@ -286,18 +286,22 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr *ngFor="let intervalo of intervalosHorarios">
-                                            <th scope="row"> <small> <small> {{ intervalo.inicio }} - {{ intervalo.fin
-                                                        }} </small> </small></th>
-                                            <td *ngFor="let dia of diasSemana">
-                                                <button class="btn" [class.btn-light]="intervalo.estado === 'libre'"
-                                                    [class.btn-warning]="intervalo.estado === 'ocupado'"
-                                                    [class.btn-info]="intervalo.estado === 'reservado'"
-                                                    [class.btn-secondary]="intervalo.estado === 'finalizado'"
-                                                    [disabled]="isHoraPasada(dia.fecha, intervalo.inicio)"
-                                                    (click)="onHoraSeleccionada(dia.fecha, intervalo.inicio)">
-                                                    <span class="fw-light">{{ intervalo.estado }}</span>
+                                        <tr *ngFor="let intervalo of intervalosHorarios; let i = index">
+                                            <th scope="row">
+                                                <small><small>{{ intervalo.inicio }} - {{ intervalo.fin
+                                                        }}</small></small>
+                                            </th>
+                                            <td *ngFor="let dia of diasSemana; let j = index">
+                                                <button class="btn"
+                                                    [class.btn-light]="botonesHoras[j][i].estado === 'libre'"
+                                                    [class.btn-warning]="botonesHoras[j][i].estado === 'ocupado'"
+                                                    [class.btn-info]="botonesHoras[j][i].estado === 'reservado'"
+                                                    [class.btn-secondary]="botonesHoras[j][i].estado === 'finalizado'"
+                                                    [disabled]="!botonesHoras[j][i].disponible"
+                                                    (click)="onHoraSeleccionada(j, i)">
+                                                    <span class="fw-light">{{ botonesHoras[j][i].estado }}</span>
                                                 </button>
+                                                <!-- Puedes ajustar el contenido de cada celda según tus necesidades -->
                                             </td>
                                         </tr>
                                     </tbody>

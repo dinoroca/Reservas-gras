@@ -4,10 +4,18 @@ import { Router } from '@angular/router';
 import { GLOBAL } from 'src/app/services/global';
 import { UserService } from 'src/app/services/user.service';
 
+interface BotonHora {
+  estado: string;
+  fecha: Date;
+  hora: string;
+  disponible: boolean;
+  // Otras propiedades según sea necesario
+}
+
 @Component({
   selector: 'app-ver-grass',
   templateUrl: './ver-grass.component.html',
-  styleUrls: ['./../home/home.component.css']
+  styleUrls: ['./../home/home.component.css', './ver-grass.component.css']
 })
 export class VerGrassComponent implements OnInit {
   public id: any;
@@ -23,7 +31,8 @@ export class VerGrassComponent implements OnInit {
   public cancha_ver: any = {};
   public empresa: any = {};
   diasSemana: { nombre: string; fecha: Date }[] = [];
-  intervalosHorarios: { inicio: string; fin: string; estado: string }[] = [];
+  intervalosHorarios: { inicio: string; fin: string }[] = [];
+  botonesHoras: BotonHora[][] = [];
   fechaHoraSeleccionada: { fecha: Date; hora: string } | null = null;
   screenWidth: number = 0;
   screenHeight: number = 0;
@@ -60,6 +69,7 @@ export class VerGrassComponent implements OnInit {
     this._title.setTitle('Ver Canchas');
     this.calcularDiasSemana();
     this.calcularIntervalosHorarios();
+    this.inicializarBotonesHoras();
   }
 
   private calcularDiasSemana() {
@@ -79,15 +89,34 @@ export class VerGrassComponent implements OnInit {
       const inicio = i < 10 ? `0${i}:00` : `${i}:00`;
       const fin = (i + 1) < 10 ? `0${i + 1}:00` : `${i + 1}:00`;
 
-      // Establecer el estado inicial a 'libre' para todos los intervalos
-      this.intervalosHorarios.push({ inicio, fin, estado: 'libre' });
+      this.intervalosHorarios.push({ inicio, fin });
     }
   }
 
-  onHoraSeleccionada(fecha: Date, hora: string) {
-    this.fechaHoraSeleccionada = { fecha, hora };
-    const fechaFormateada = new Intl.DateTimeFormat('es-ES', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }).format(fecha);
-    console.log(fechaFormateada, hora);
+  private inicializarBotonesHoras() {
+    for (let i = 0; i <= 7; i++) {
+      const fila: BotonHora[] = [];
+      for (let j = 5; j < 24; j++) {
+        const inicio = j < 10 ? `0${j}:00` : `${j}:00`;
+        const fecha = new Date(this.diasSemana[i].fecha);
+        const hora = inicio;
+        const disponible = !this.isHoraPasada(fecha, inicio); // Establecer disponibilidad según la lógica necesaria
+        const boton: BotonHora = { estado: 'libre', fecha, hora, disponible };
+        fila.push(boton);
+      }
+      this.botonesHoras.push(fila);
+    }
+  }
+
+  onHoraSeleccionada(fila: number, columna: number) {
+    const boton = this.botonesHoras[fila][columna];
+    if (boton.disponible) {
+      boton.estado = boton.estado === 'libre' ? 'reservado' : 'libre';
+
+      // Accede a la información de la fecha y hora
+      const fechaFormateada = new Intl.DateTimeFormat('es-ES', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }).format(boton.fecha);
+      console.log(fechaFormateada, boton.hora);
+    }
   }
 
   isHoraPasada(fecha: Date, hora: string): boolean {

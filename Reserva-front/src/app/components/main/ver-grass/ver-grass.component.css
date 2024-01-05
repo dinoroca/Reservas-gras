@@ -1,0 +1,19 @@
+th {
+    text-align: center;
+  }
+  
+  th, td {
+    padding: 10px;
+  }
+  
+  th {
+    background-color: #f0f0f0;
+  }
+  
+  td {
+    border: 1px solid #ddd;
+  }
+  
+  button {
+    width: 100%;
+  }

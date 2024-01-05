@@ -257,23 +257,3 @@ section .wave.wave4 {
     margin-right: -0.65rem;
     color: white
 }
-
-th {
-    text-align: center;
-  }
-  
-  th, td {
-    padding: 10px;
-  }
-  
-  th {
-    background-color: #f0f0f0;
-  }
-  
-  td {
-    border: 1px solid #ddd;
-  }
-  
-  button {
-    width: 100%;
-  }
