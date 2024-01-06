@@ -1,6 +1,7 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { concat } from 'rxjs';
 import { GLOBAL } from 'src/app/services/global';
 import { UserService } from 'src/app/services/user.service';
 
@@ -9,6 +10,7 @@ interface BotonHora {
   fecha: Date;
   hora: string;
   disponible: boolean;
+  id: string;
   // Otras propiedades según sea necesario
 }
 
@@ -30,6 +32,7 @@ export class VerGrassComponent implements OnInit {
   public canchas: any = [];
   public cancha_ver: any = {};
   public empresa: any = {};
+  public horasReserva: number = 1;
   diasSemana: { nombre: string; fecha: Date }[] = [];
   intervalosHorarios: { inicio: string; fin: string }[] = [];
   botonesHoras: BotonHora[][] = [];
@@ -70,6 +73,7 @@ export class VerGrassComponent implements OnInit {
     this.calcularDiasSemana();
     this.calcularIntervalosHorarios();
     this.inicializarBotonesHoras();
+    this.horasReserva = 1;
   }
 
   private calcularDiasSemana() {
@@ -101,7 +105,8 @@ export class VerGrassComponent implements OnInit {
         const fecha = new Date(this.diasSemana[i].fecha);
         const hora = inicio;
         const disponible = !this.isHoraPasada(fecha, inicio); // Establecer disponibilidad según la lógica necesaria
-        const boton: BotonHora = { estado: 'libre', fecha, hora, disponible };
+        const id = `0${i}${j}`;
+        const boton: BotonHora = { estado: 'libre', fecha, hora, disponible, id };
         fila.push(boton);
       }
       this.botonesHoras.push(fila);
@@ -115,7 +120,7 @@ export class VerGrassComponent implements OnInit {
 
       // Accede a la información de la fecha y hora
       const fechaFormateada = new Intl.DateTimeFormat('es-ES', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }).format(boton.fecha);
-      console.log(fechaFormateada, boton.hora);
+      console.log(fechaFormateada, boton);
     }
   }
 

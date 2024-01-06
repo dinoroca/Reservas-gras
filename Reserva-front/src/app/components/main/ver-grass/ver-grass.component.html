@@ -292,16 +292,58 @@
                                                         }}</small></small>
                                             </th>
                                             <td *ngFor="let dia of diasSemana; let j = index">
-                                                <button class="btn"
+                                                <button class="btn" style="width: 100%;"
                                                     [class.btn-light]="botonesHoras[j][i].estado === 'libre'"
                                                     [class.btn-warning]="botonesHoras[j][i].estado === 'ocupado'"
                                                     [class.btn-info]="botonesHoras[j][i].estado === 'reservado'"
                                                     [class.btn-secondary]="botonesHoras[j][i].estado === 'finalizado'"
-                                                    [disabled]="!botonesHoras[j][i].disponible"
-                                                    (click)="onHoraSeleccionada(j, i)">
+                                                    [disabled]="!botonesHoras[j][i].disponible" data-bs-toggle="modal"
+                                                    [attr.data-bs-target]="'#ver-' + botonesHoras[j][i].id">
                                                     <span class="fw-light">{{ botonesHoras[j][i].estado }}</span>
                                                 </button>
                                                 <!-- Puedes ajustar el contenido de cada celda según tus necesidades -->
+
+                                                <div class="modal fade" id="ver-{{ botonesHoras[j][i].id }}"
+                                                    tabindex="-1" style="display: none" aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h4 class="modal-title text-center">
+                                                                    Reservar {{ cancha_ver.nombre }}
+                                                                </h4>
+                                                                <button type="button" class="btn-close"
+                                                                    data-bs-dismiss="modal" aria-label="Close">
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body text-center">
+                                                                Ingrese la cantidad de horas
+
+                                                                <div class="my-4">
+                                                                    <div class="input-group">
+                                                                        <span class="input-group-text">
+                                                                            Cantidad de horas
+                                                                        </span>
+                                                                        <input type="number" class="form-control"
+                                                                            id="horasReserva" min="1"
+                                                                            [(ngModel)]="horasReserva">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button class="btn btn-secondary btn-sm bi-x-lg"
+                                                                    type="button" data-bs-dismiss="modal">
+                                                                </button>
+                                                                <button *ngIf="!load_btn" class="btn btn-primary btn-sm"
+                                                                    data-bs-dismiss="modal" [disabled]="horasReserva < 1"
+                                                                    (click)="onHoraSeleccionada(j, i)" type="button"> <i
+                                                                        class="bi bi-plus-lg"></i>
+                                                                    &nbsp;
+                                                                    Reservar
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </td>
                                         </tr>
                                     </tbody>
