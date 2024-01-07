@@ -288,8 +288,7 @@
                                     <tbody>
                                         <tr *ngFor="let intervalo of intervalosHorarios; let i = index">
                                             <th scope="row">
-                                                <small><small>{{ intervalo.inicio }} - {{ intervalo.fin
-                                                        }}</small></small>
+                                                <small><small>{{ intervalo.inicio }} - {{ intervalo.fin }}</small></small>
                                             </th>
                                             <td *ngFor="let dia of diasSemana; let j = index">
                                                 <button class="btn" style="width: 100%;"
@@ -309,23 +308,29 @@
                                                         <div class="modal-content">
                                                             <div class="modal-header">
                                                                 <h4 class="modal-title text-center">
-                                                                    Reservar {{ cancha_ver.nombre }}
+                                                                    Reservar {{ cancha_ver.nombre }} a las {{ botonesHoras[j][i].hora }}
                                                                 </h4>
                                                                 <button type="button" class="btn-close"
                                                                     data-bs-dismiss="modal" aria-label="Close">
                                                                 </button>
                                                             </div>
-                                                            <div class="modal-body text-center">
-                                                                Ingrese la cantidad de horas
+                                                            <div class="modal-body">
+                                                                <i class="fs-5 bi bi-calendar-event" style="color: rgb(255, 95, 95);"></i> &nbsp;
+                                                                {{ botonesHoras[j][i].fecha | date:'fullDate':'es'}} <br>
 
-                                                                <div class="my-4">
+                                                                <i class="fs-5 bi bi-clock" style="color: rgb(255, 95, 250);"></i> &nbsp;
+                                                                Hora de Inicio: {{ botonesHoras[j][i].hora }}
+
+                                                                <div class="my-4 text-center">
+                                                                    <span class="fw-light">Ingrese la cantidad de horas</span>
                                                                     <div class="input-group">
                                                                         <span class="input-group-text">
                                                                             Cantidad de horas
                                                                         </span>
                                                                         <input type="number" class="form-control"
                                                                             id="horasReserva" min="1"
-                                                                            [(ngModel)]="horasReserva">
+                                                                            [(ngModel)]="horasReserva"
+                                                                            (change)="select_mas_una_hora ()">
                                                                     </div>
                                                                 </div>
                                                             </div>

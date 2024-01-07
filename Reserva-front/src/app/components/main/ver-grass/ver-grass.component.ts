@@ -19,6 +19,7 @@ interface BotonHora {
   templateUrl: './ver-grass.component.html',
   styleUrls: ['./../home/home.component.css', './ver-grass.component.css']
 })
+
 export class VerGrassComponent implements OnInit {
   public id: any;
   public url: any;
@@ -33,6 +34,7 @@ export class VerGrassComponent implements OnInit {
   public cancha_ver: any = {};
   public empresa: any = {};
   public horasReserva: number = 1;
+  public masDeUno: boolean = false;
   diasSemana: { nombre: string; fecha: Date }[] = [];
   intervalosHorarios: { inicio: string; fin: string }[] = [];
   botonesHoras: BotonHora[][] = [];
@@ -104,9 +106,17 @@ export class VerGrassComponent implements OnInit {
         const inicio = j < 10 ? `0${j}:00` : `${j}:00`;
         const fecha = new Date(this.diasSemana[i].fecha);
         const hora = inicio;
+        var est: string;
         const disponible = !this.isHoraPasada(fecha, inicio); // Establecer disponibilidad según la lógica necesaria
-        const id = `0${i}${j}`;
-        const boton: BotonHora = { estado: 'libre', fecha, hora, disponible, id };
+
+        if (disponible) {
+          est = 'libre';
+        } else {
+          est = 'finalizado';
+        }
+
+        const id = `00${i}${j}`;
+        const boton: BotonHora = { estado: est, fecha, hora, disponible, id };
         fila.push(boton);
       }
       this.botonesHoras.push(fila);
@@ -130,6 +140,14 @@ export class VerGrassComponent implements OnInit {
     horaSeleccionada.setHours(parseInt(hora.split(':')[0], 10), 0);
 
     return ahora > horaSeleccionada;
+  }
+
+  select_mas_una_hora () {
+    if (this.horasReserva > 1) {
+      this.masDeUno = true;
+    } else {
+      this.masDeUno = false;
+    }
   }
 
   init_data() {
