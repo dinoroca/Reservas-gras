@@ -169,22 +169,19 @@
                             </ng-container>
 
                             <ng-container *ngIf="!width_view">
-                                <a *ngIf="item.tipo == 'Fútbol/Futsal'" (click)="click_ver(item._id)" type="button"
-                                    data-bs-toggle="collapse" [attr.data-bs-target]="'#open-' + item._id"
-                                    aria-expanded="false" aria-controls="collapseExample" class="btn btn-reserve"
+                                <a *ngIf="item.tipo == 'Fútbol/Futsal'" [routerLink]="['/ver-movil', item._id]" type="button"
+                                    class="btn btn-reserve" (click) = "click_ver_movil(item._id)"
                                     style="width: 180px; border-radius: 30px">
                                     Ver más &nbsp; <i class="bi-greater bi-chevron-right"></i>
                                 </a>
 
-                                <a *ngIf="item.tipo == 'Voley'" (click)="click_ver(item._id)" type="button"
-                                    data-bs-toggle="collapse" [attr.data-bs-target]="'#open-' + item._id"
-                                    aria-expanded="false" aria-controls="collapseExample" class="btn btn-reserve-voley"
+                                <a *ngIf="item.tipo == 'Voley'" [routerLink]="['/ver-movil', item._id]" type="button"
+                                    class="btn btn-reserve-voley" (click) = "click_ver_movil(item._id)"
                                     style="width: 180px; border-radius: 30px">
                                     Ver más &nbsp; <i class="bi-greater bi-chevron-right"></i>
                                 </a>
-                                <a *ngIf="item.tipo == 'Mixto'" (click)="click_ver(item._id)" type="button"
-                                    data-bs-toggle="collapse" [attr.data-bs-target]="'#open-' + item._id"
-                                    aria-expanded="false" aria-controls="collapseExample" class="btn btn-reserve-mixto"
+                                <a *ngIf="item.tipo == 'Mixto'" [routerLink]="['/ver-movil', item._id]" type="button"
+                                    class="btn btn-reserve-mixto" (click) = "click_ver_movil(item._id)"
                                     style="width: 180px; border-radius: 30px">
                                     Ver más &nbsp; <i class="bi-greater bi-chevron-right"></i>
                                 </a>

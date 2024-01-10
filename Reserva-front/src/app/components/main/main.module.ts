@@ -10,6 +10,7 @@ import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from 'src/app/app-routing.module';
 import { RouterModule } from '@angular/router';
 import { VerGrassComponent } from './ver-grass/ver-grass.component';
+import { VerMovilComponent } from './ver-movil/ver-movil.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { VerGrassComponent } from './ver-grass/ver-grass.component';
     ContactosComponent,
     PoliticaPrivComponent,
     ForgotPassComponent,
-    VerGrassComponent
+    VerGrassComponent,
+    VerMovilComponent
   ],
   imports: [
     CommonModule,

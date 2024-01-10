@@ -13,11 +13,13 @@ interface BotonHora {
 }
 
 @Component({
-  selector: 'app-ver-grass',
-  templateUrl: './ver-grass.component.html',
-  styleUrls: ['./../home/home.component.css', './ver-grass.component.css']
+  selector: 'app-ver-movil',
+  templateUrl: './ver-movil.component.html',
+  styleUrls: ['./../home/home.component.css', './ver-movil.component.css']
 })
-export class VerGrassComponent implements OnInit {
+
+
+export class VerMovilComponent implements OnInit {
   public id: any;
   public url: any;
   public load_data = false;
@@ -28,7 +30,7 @@ export class VerGrassComponent implements OnInit {
   public btn_crear = false;
   public ver_caracteristicas = false;
   public canchas: any = [];
-  public cancha_ver: any = {};
+  public cancha: any = {};
   public empresa: any = {};
   public horasInicio: number = 0;
   public horasFinal: number = 0;
@@ -102,7 +104,7 @@ export class VerGrassComponent implements OnInit {
   private inicializarBotonesHoras() {
     const ahora = new Date();
     const primerDiaSemana = ahora.getDay();
-  
+
     for (let i = primerDiaSemana; i <= primerDiaSemana + 7; i++) {
       const fila: BotonHora[] = [];
       for (let j = 5; j < 24; j++) {
@@ -110,11 +112,11 @@ export class VerGrassComponent implements OnInit {
         const fecha = new Date(ahora);
         fecha.setDate(ahora.getDate() + (i - primerDiaSemana));
         const hora = inicio;
-  
+
         const esDiaActual = i === primerDiaSemana;
         const est: string = (esDiaActual && ahora.getHours() >= j) ? 'Pasado' : 'Libre';
         const disponible = esDiaActual ? ahora.getHours() < j : true;
-  
+
         const id = `00${i}${j}`.slice(-4); // Asegurar que el ID tenga cuatro dígitos
         const boton: BotonHora = { estado: est, fecha, hora, disponible, id };
         fila.push(boton);
@@ -122,7 +124,7 @@ export class VerGrassComponent implements OnInit {
       this.botonesHoras.push(fila);
     }
   }
-  
+
 
   onHoraSeleccionada(filaIndex: number, columnaIndex: number) {
     const boton = this.botonesHoras[filaIndex][columnaIndex];
@@ -166,51 +168,25 @@ export class VerGrassComponent implements OnInit {
   init_data() {
     this.load_data = true;
 
-    this._userService.obtener_empresa_publico(this.id).subscribe(
-      response => {
-        if (response.data == undefined) {
-          // Manejo de datos indefinidos
-        } else {
-          this.empresa = response.data;
-
-          this._userService.obtener_canchas(this.id).subscribe(
-            response => {
-              if (response.data == undefined) {
-                this.load_data = false;
-                this.btn_crear = true;
-              } else if (response.data != undefined) {
-                this.btn_crear = false;
-                this.canchas = response.data;
-                this.load_data = false;
-              }
-            }
-          );
-        }
-      }
-    );
-  }
-
-  click_ver(id: any) {
-    this.load_btn_ver = true;
-    this.ver_caracteristicas = !this.ver_caracteristicas;
-
-    this._userService.obtener_cancha_publico(id).subscribe(
+    this._userService.obtener_cancha_publico(this.id).subscribe(
       response => {
         if (response === undefined) {
-          this.cancha_ver = undefined;
-          this.load_btn_ver = false;
+          this.cancha = undefined;
+          this.load_data = false;
         } else {
-          this.cancha_ver = response.data;
-          this.load_btn_ver = false;
+          this.cancha = response.data;
+          this.load_data = false;
         }
       }
     );
-    localStorage.clear();
+  }
+
+  click_reservar(id: any) {
     localStorage.setItem('id_cancha', id);
   }
 
-  click_ver_movil(id: any) {
-    localStorage.clear();
-    localStorage.setItem('id_cancha', id);
-  }
+  volverAtras() {
+  window.history.back();
 }
+}
+
