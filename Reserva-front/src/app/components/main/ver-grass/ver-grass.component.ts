@@ -33,6 +33,8 @@ export class VerGrassComponent implements OnInit {
   public canchas: any = [];
   public cancha_ver: any = {};
   public empresa: any = {};
+  public horasInicio: number = 0;
+  public horasFinal: number = 0;
   public horasReserva: number = 1;
   public masDeUno: boolean = false;
   diasSemana: { nombre: string; fecha: Date }[] = [];
@@ -79,18 +81,20 @@ export class VerGrassComponent implements OnInit {
   }
 
   private calcularDiasSemana() {
+    this.diasSemana = [];
     const hoy = new Date();
-    const primerDiaSemana = hoy.getDay();
-    const primerDia = new Date(hoy.setDate(primerDiaSemana));
-
-    for (let i = 0; i <= 7; i++) {
+    const primerDia = new Date(hoy);
+  
+    for (let i = 0; i < 7; i++) {
       const dia = new Date(primerDia);
       dia.setDate(primerDia.getDate() + i);
       this.diasSemana.push({ nombre: dia.toLocaleDateString('es-ES', { weekday: 'long' }).slice(0, 3), fecha: dia });
     }
   }
+  
 
   private calcularIntervalosHorarios() {
+    this.intervalosHorarios = [];
     for (let i = 5; i < 24; i++) {
       const inicio = i < 10 ? `0${i}:00` : `${i}:00`;
       const fin = (i + 1) < 10 ? `0${i + 1}:00` : `${i + 1}:00`;
@@ -100,21 +104,35 @@ export class VerGrassComponent implements OnInit {
   }
 
   private inicializarBotonesHoras() {
-    for (let i = 0; i <= 7; i++) {
+    const ahora = new Date();
+    const primerDiaSemana = ahora.getDay();
+  
+    for (let i = primerDiaSemana; i < 7; i++) {
       const fila: BotonHora[] = [];
       for (let j = 5; j < 24; j++) {
         const inicio = j < 10 ? `0${j}:00` : `${j}:00`;
         const fecha = new Date(this.diasSemana[i].fecha);
         const hora = inicio;
-        var est: string;
-        const disponible = !this.isHoraPasada(fecha, inicio); // Establecer disponibilidad según la lógica necesaria
-
-        if (disponible) {
-          est = 'libre';
-        } else {
-          est = 'finalizado';
-        }
-
+        const est: string = ahora > fecha || (ahora.getDate() === fecha.getDate() && ahora.getHours() >= j) ? 'Pasado' : 'Libre';
+        const disponible = ahora.getDate() < fecha.getDate() || (ahora.getDate() === fecha.getDate() && ahora.getHours() <= j);
+  
+        const id = `00${i}${j}`;
+        const boton: BotonHora = { estado: est, fecha, hora, disponible, id };
+        fila.push(boton);
+      }
+      this.botonesHoras.push(fila);
+    }
+  
+    for (let i = 0; i < primerDiaSemana; i++) {
+      const fila: BotonHora[] = [];
+      for (let j = 5; j < 24; j++) {
+        const inicio = j < 10 ? `0${j}:00` : `${j}:00`;
+        const fecha = new Date(this.diasSemana[i].fecha);
+        fecha.setDate(fecha.getDate() + 7);  // Agregar una semana a la fecha
+        const hora = inicio;
+        const est: string = 'Libre';
+        const disponible = true;
+  
         const id = `00${i}${j}`;
         const boton: BotonHora = { estado: est, fecha, hora, disponible, id };
         fila.push(boton);
@@ -122,15 +140,19 @@ export class VerGrassComponent implements OnInit {
       this.botonesHoras.push(fila);
     }
   }
-
+  
   onHoraSeleccionada(fila: number, columna: number) {
     const boton = this.botonesHoras[fila][columna];
     if (boton.disponible) {
-      boton.estado = boton.estado === 'libre' ? 'reservado' : 'libre';
+      boton.estado = boton.estado === 'Libre' ? 'Reservado' : 'Libre';
 
       // Accede a la información de la fecha y hora
       const fechaFormateada = new Intl.DateTimeFormat('es-ES', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }).format(boton.fecha);
-      console.log(fechaFormateada, boton);
+
+      localStorage.setItem('fecha_reserva', fechaFormateada);
+      localStorage.setItem('hora_inicio', this.horasInicio.toString());
+      localStorage.setItem('hora_fin', this.horasFinal.toString());
+      this._router.navigate(['/login']);
     }
   }
 
@@ -142,12 +164,22 @@ export class VerGrassComponent implements OnInit {
     return ahora > horaSeleccionada;
   }
 
-  select_mas_una_hora () {
+  select_mas_una_hora (hora: string) {
     if (this.horasReserva > 1) {
+
+      this.horasInicio = parseInt(hora);
+      this.horasFinal = this.horasInicio + this.horasReserva;
+      
       this.masDeUno = true;
     } else {
+      this.horasInicio = parseInt(hora);
+      this.horasFinal = this.horasInicio + 1;
       this.masDeUno = false;
     }
+  }
+
+  reset_horas_reserva() {
+    this.horasReserva = 1;
   }
 
   init_data() {
@@ -192,10 +224,7 @@ export class VerGrassComponent implements OnInit {
         }
       }
     );
-  }
 
-  select_cancha(id: any) {
     localStorage.setItem('id_cancha', id);
-    this._router.navigate(['/login']);
   }
 }

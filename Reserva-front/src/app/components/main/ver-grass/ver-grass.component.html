@@ -15,7 +15,7 @@
         </div>
 
         <ng-container *ngIf="canchas.length >= 1 && !load_data">
-            <div *ngFor="let item of canchas" class="col-md-4 pb-5 pt-2 col-sm-12">
+            <div *ngFor="let item of canchas" class="col-md-4 pb-3 pt-2 col-sm-12">
                 <div class="card shadow mx-3">
                     <div class="images-grass">
                         <ng-container *ngIf="item.galeria == undefined || item.galeria.length < 1">
@@ -207,8 +207,120 @@
                     <div class="container pt-5">
                         <div class="collapse" id="open-{{ item._id }}">
                             <div class="card card-body">
-                                Some placeholder content for the collapse component. This panel is hidden by default but
-                                revealed when the user activates the relevant trigger.
+                                <div>
+                                    <div class="container mt-4 table-responsive">
+                                        <h2 class="text-center">Horario</h2>
+
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th></th>
+                                                    <th *ngFor="let dia of diasSemana">{{ dia.nombre | titlecase }}
+                                                        <small> <small>{{ dia.fecha | date:'shortDate' }}</small>
+                                                        </small>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let intervalo of intervalosHorarios; let i = index">
+                                                    <th scope="row">
+                                                        <small>
+                                                            <small>
+                                                                {{ intervalo.inicio }} - {{ intervalo.fin }}
+                                                            </small>
+                                                        </small>
+                                                    </th>
+                                                    <td *ngFor="let dia of diasSemana; let j = index">
+                                                        <button class="btn" style="width: 100%; height: 100;"
+                                                            [class.btn-light]="botonesHoras[j][i].estado === 'Libre'"
+                                                            [class.btn-warning]="botonesHoras[j][i].estado === 'Ocupado'"
+                                                            [class.btn-info]="botonesHoras[j][i].estado === 'Reservado'"
+                                                            [class.btn-secondary]="botonesHoras[j][i].estado === 'Pasado'"
+                                                            [disabled]="!botonesHoras[j][i].disponible"
+                                                            data-bs-toggle="modal"
+                                                            [attr.data-bs-target]="'#ver-' + botonesHoras[j][i].id"
+                                                            (click)="select_mas_una_hora(botonesHoras[j][i].hora)">
+                                                            <span class="fw-light">
+                                                                {{ botonesHoras[j][i].estado }}
+                                                            </span>
+                                                        </button>
+
+                                                        <!-- Modal ver fecha y hora -->
+                                                        <div class="modal fade" id="ver-{{ botonesHoras[j][i].id }}"
+                                                            data-bs-backdrop="static" data-bs-keyboard="false"
+                                                            tabindex="-1" style="display: none" aria-hidden="true">
+                                                            <div class="modal-dialog modal-dialog-centered"
+                                                                role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h4 class="modal-title text-center">
+                                                                            Reservar {{ cancha_ver.nombre }}
+                                                                        </h4>
+                                                                        <button type="button" class="btn-close"
+                                                                            data-bs-dismiss="modal" aria-label="Close"
+                                                                            (click)="reset_horas_reserva()">
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <i class="fs-5 bi bi-calendar-event"
+                                                                            style="color: rgb(255, 95, 95);"></i> &nbsp;
+                                                                        {{ botonesHoras[j][i].fecha |
+                                                                        date:'fullDate':'es'}} <br>
+
+                                                                        <i class="fs-5 bi bi-clock"
+                                                                            style="color: rgb(255, 95, 250);"></i>
+                                                                        &nbsp;
+
+                                                                        <span *ngIf="!masDeUno">
+                                                                            Desde {{ horasInicio }}:00 hasta {{
+                                                                            horasInicio + 1 }}:00
+                                                                        </span>
+
+                                                                        <span *ngIf="masDeUno">
+                                                                            Desde {{ horasInicio }}:00 hasta {{
+                                                                            horasFinal }}:00
+                                                                        </span>
+
+                                                                        <div class="my-4 text-center">
+                                                                            <span class="fw-light">Ingrese la cantidad
+                                                                                de horas</span>
+                                                                            <div class="input-group">
+                                                                                <span class="input-group-text">
+                                                                                    Cantidad de horas
+                                                                                </span>
+                                                                                <input type="number"
+                                                                                    class="form-control"
+                                                                                    id="horasReserva" min="1"
+                                                                                    [(ngModel)]="horasReserva"
+                                                                                    (change)="select_mas_una_hora(botonesHoras[j][i].hora)">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button class="btn btn-secondary btn-sm bi-x-lg"
+                                                                            type="button" data-bs-dismiss="modal"
+                                                                            (click)="reset_horas_reserva()">
+                                                                        </button>
+                                                                        <button *ngIf="!load_btn"
+                                                                            class="btn btn-primary btn-sm"
+                                                                            data-bs-dismiss="modal"
+                                                                            [disabled]="horasReserva < 1"
+                                                                            (click)="onHoraSeleccionada(j, i)"
+                                                                            type="button"> <i class="bi bi-plus-lg"></i>
+                                                                            &nbsp;
+                                                                            Reservar
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+
+                                        </table>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -274,7 +386,7 @@
 
                         <div class="py-5">
                             <div class="container mt-4">
-                                <h2>Horario Semanal</h2>
+                                <h2 class="text-center">Horario</h2>
 
                                 <table class="table table-responsive">
                                     <thead>
@@ -288,41 +400,57 @@
                                     <tbody>
                                         <tr *ngFor="let intervalo of intervalosHorarios; let i = index">
                                             <th scope="row">
-                                                <small><small>{{ intervalo.inicio }} - {{ intervalo.fin }}</small></small>
+                                                <small><small>{{ intervalo.inicio }} - {{ intervalo.fin
+                                                        }}</small></small>
                                             </th>
                                             <td *ngFor="let dia of diasSemana; let j = index">
                                                 <button class="btn" style="width: 100%;"
-                                                    [class.btn-light]="botonesHoras[j][i].estado === 'libre'"
-                                                    [class.btn-warning]="botonesHoras[j][i].estado === 'ocupado'"
-                                                    [class.btn-info]="botonesHoras[j][i].estado === 'reservado'"
-                                                    [class.btn-secondary]="botonesHoras[j][i].estado === 'finalizado'"
+                                                    [class.btn-light]="botonesHoras[j][i].estado === 'Libre'"
+                                                    [class.btn-warning]="botonesHoras[j][i].estado === 'Ocupado'"
+                                                    [class.btn-info]="botonesHoras[j][i].estado === 'Reservado'"
+                                                    [class.btn-secondary]="botonesHoras[j][i].estado === 'Pasado'"
                                                     [disabled]="!botonesHoras[j][i].disponible" data-bs-toggle="modal"
-                                                    [attr.data-bs-target]="'#ver-' + botonesHoras[j][i].id">
+                                                    [attr.data-bs-target]="'#ver-' + botonesHoras[j][i].id"
+                                                    (click)="select_mas_una_hora(botonesHoras[j][i].hora)">
                                                     <span class="fw-light">{{ botonesHoras[j][i].estado }}</span>
                                                 </button>
                                                 <!-- Puedes ajustar el contenido de cada celda según tus necesidades -->
 
                                                 <div class="modal fade" id="ver-{{ botonesHoras[j][i].id }}"
-                                                    tabindex="-1" style="display: none" aria-hidden="true">
+                                                    data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                                                    style="display: none" aria-hidden="true">
                                                     <div class="modal-dialog modal-dialog-centered" role="document">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
                                                                 <h4 class="modal-title text-center">
-                                                                    Reservar {{ cancha_ver.nombre }} a las {{ botonesHoras[j][i].hora }}
+                                                                    Reservar {{ cancha_ver.nombre }}
                                                                 </h4>
                                                                 <button type="button" class="btn-close"
-                                                                    data-bs-dismiss="modal" aria-label="Close">
+                                                                    data-bs-dismiss="modal" aria-label="Close"
+                                                                    (click)="reset_horas_reserva()">
                                                                 </button>
                                                             </div>
                                                             <div class="modal-body">
-                                                                <i class="fs-5 bi bi-calendar-event" style="color: rgb(255, 95, 95);"></i> &nbsp;
-                                                                {{ botonesHoras[j][i].fecha | date:'fullDate':'es'}} <br>
+                                                                <i class="fs-5 bi bi-calendar-event"
+                                                                    style="color: rgb(255, 95, 95);"></i> &nbsp;
+                                                                {{ botonesHoras[j][i].fecha | date:'fullDate':'es'}}
+                                                                <br>
 
-                                                                <i class="fs-5 bi bi-clock" style="color: rgb(255, 95, 250);"></i> &nbsp;
-                                                                Hora de Inicio: {{ botonesHoras[j][i].hora }}
+                                                                <i class="fs-5 bi bi-clock"
+                                                                    style="color: rgb(255, 95, 250);"></i> &nbsp;
+
+                                                                <span *ngIf="!masDeUno">
+                                                                    Desde {{ horasInicio }}:00 hasta {{ horasInicio + 1
+                                                                    }}:00
+                                                                </span>
+
+                                                                <span *ngIf="masDeUno">
+                                                                    Desde {{ horasInicio }}:00 hasta {{ horasFinal }}:00
+                                                                </span>
 
                                                                 <div class="my-4 text-center">
-                                                                    <span class="fw-light">Ingrese la cantidad de horas</span>
+                                                                    <span class="fw-light">Ingrese la cantidad de
+                                                                        horas</span>
                                                                     <div class="input-group">
                                                                         <span class="input-group-text">
                                                                             Cantidad de horas
@@ -330,16 +458,18 @@
                                                                         <input type="number" class="form-control"
                                                                             id="horasReserva" min="1"
                                                                             [(ngModel)]="horasReserva"
-                                                                            (change)="select_mas_una_hora ()">
+                                                                            (change)="select_mas_una_hora(botonesHoras[j][i].hora)">
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <button class="btn btn-secondary btn-sm bi-x-lg"
-                                                                    type="button" data-bs-dismiss="modal">
+                                                                    type="button" data-bs-dismiss="modal"
+                                                                    (click)="reset_horas_reserva()">
                                                                 </button>
                                                                 <button *ngIf="!load_btn" class="btn btn-primary btn-sm"
-                                                                    data-bs-dismiss="modal" [disabled]="horasReserva < 1"
+                                                                    data-bs-dismiss="modal"
+                                                                    [disabled]="horasReserva < 1"
                                                                     (click)="onHoraSeleccionada(j, i)" type="button"> <i
                                                                         class="bi bi-plus-lg"></i>
                                                                     &nbsp;
