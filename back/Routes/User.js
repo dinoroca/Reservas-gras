@@ -16,6 +16,9 @@ api.put('/actualizar_password_user/:id', auth.auth, UserController.actualizar_pa
 ///// Correos de confirmación
 api.put('/actualizar_user_verificado/:id/:codigo', UserController.actualizar_user_verificado);
 
+////RESERVACION
+api.post('/crear_reservacion_user', auth.auth, UserController.crear_reservacion_user);
+
 ////Contacto
 api.post('/enviar_mensaje_contacto', UserController.enviar_mensaje_contacto);
 

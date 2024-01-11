@@ -135,6 +135,7 @@ export class VerGrassComponent implements OnInit {
       localStorage.setItem('fecha_reserva', fechaFormateada);
       localStorage.setItem('hora_inicio', this.horasInicio.toString());
       localStorage.setItem('hora_fin', this.horasFinal.toString());
+      localStorage.setItem('afuera', 'Y');
       this._router.navigate(['/login']);
     }
   }

@@ -214,6 +214,12 @@ export class UserService {
     return this._http.put(this.url + 'eliminar_imagen_portada/' + id, data, { headers: headers });
   }
 
+  //Reservacion
+  crear_reservacion_user(data: any, token: any): Observable<any> {
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json', 'authorization': token });
+    return this._http.post(this.url + 'crear_reservacion_user', data, { headers: headers });
+  }
+
   //MENSAJES
   enviar_mensaje_contacto(data: any): Observable<any> {
     let headers = new HttpHeaders().set('Content-Type', 'application/json');

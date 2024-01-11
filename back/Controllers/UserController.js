@@ -1,6 +1,7 @@
 'use strict';
 
 var User = require('../Models/User');
+var Reservacion = require('../Models/Reservacion');
 var bcrypt = require('bcrypt-nodejs');
 var jwt = require('../Helpers/jwt');
 
@@ -189,6 +190,23 @@ const actualizar_password_user = async function (req, res) {
   }
 }
 
+//Reservaciones
+const crear_reservacion_user = async function (req, res) {
+  if (req.user) {
+    if (req.user.role == 'USER') {
+
+      var data = req.body;
+
+      let reg = await Reservacion.create(data);
+      res.status(200).send({ data: reg });
+
+    } else {
+      res.status(500).send({ message: 'NoAccess' });
+    }
+  } else {
+    res.status(500).send({ message: 'NoAccess' });
+  }
+}
 
 ////////CONTACTO
 const enviar_mensaje_contacto = async function (req, res) {
@@ -208,5 +226,6 @@ module.exports = {
     actualizar_user,
     comparar_password,
     actualizar_password_user,
+    crear_reservacion_user,
     enviar_mensaje_contacto
 }
