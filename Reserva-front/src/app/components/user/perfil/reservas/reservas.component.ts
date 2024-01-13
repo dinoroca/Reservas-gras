@@ -12,8 +12,10 @@ export class ReservasComponent implements OnInit {
 
   public pagos: Array<any> = [];
   public cuentas: Array<any> = [];
+  public reservaciones: Array<any> = [];
 
   public load_data: boolean = true;
+  public load_reservas: boolean = true;
   public load_btn = false;
   public activePagos: boolean = false;
   public viewButton: boolean = false;
@@ -31,6 +33,7 @@ export class ReservasComponent implements OnInit {
    public horaFin;
    public descuento = '';
    public fromOut: boolean = false;
+   public existReservas: boolean = false;
 
   constructor(
     private _userService: UserService,
@@ -64,10 +67,31 @@ export class ReservasComponent implements OnInit {
   ngOnInit() {
     this._title.setTitle('Perfil | Mis reservaciones');
     this.calcular_subtotal();
+    this.obtener_reservas();
+
+    if (this.reservaciones.length >= 1) {
+      this.existReservas = true;
+    } else {
+      this.existReservas = false;
+    }
   }
 
   calcular_subtotal() {
     this.subtotal = (parseInt(this.horaFin!) - parseInt(this.horaInicio!)) * 10;
+  }
+
+  obtener_reservas() {
+    this.load_reservas = true;
+    this._userService.obtener_reservaciones_user(this.cliente, this.token).subscribe(
+      response => {
+        if (response === undefined) {
+          this.reservaciones = [];
+        } else {
+          this.reservaciones = response.data;
+          this.load_reservas = false;
+        }
+      }
+    );
   }
 
   crear_reservacion() {
@@ -90,6 +114,11 @@ export class ReservasComponent implements OnInit {
             this._toastrService.error(response.message, 'ERROR');
           } else {
             this._toastrService.success('Se reservó con éxito', 'RESERVADO!');
+            localStorage.removeItem('afuera');
+            localStorage.removeItem('fecha_reserva');
+            localStorage.removeItem('hora_inicio');
+            localStorage.removeItem('hora_fin');
+            localStorage.removeItem('id_cancha');
             this.load_btn = false;
             //this._router.navigate(['/usuario']);
           }

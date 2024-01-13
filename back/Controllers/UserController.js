@@ -190,15 +190,32 @@ const actualizar_password_user = async function (req, res) {
   }
 }
 
-//Reservaciones
+// Reservaciones
 const crear_reservacion_user = async function (req, res) {
   if (req.user) {
     if (req.user.role == 'USER') {
 
       var data = req.body;
 
-      let reg = await Reservacion.create(data);
-      res.status(200).send({ data: reg });
+      // Verificar si hay reservas existentes que se solapen con la nueva reserva
+      const reservasExistente = await Reservacion.find({
+        cancha: data.cancha,
+        fecha: data.fecha,
+        $or: [
+          { $and: [{ hora_inicio: { $lt: data.hora_fin } }, { hora_fin: { $gt: data.hora_inicio } }] },
+          { $and: [{ hora_inicio: { $lte: data.hora_fin } }, { hora_fin: { $gte: data.hora_fin } }] },
+          { $and: [{ hora_inicio: { $lte: data.hora_inicio } }, { hora_fin: { $gte: data.hora_inicio } }] }
+        ]
+      });
+
+      // Si hay reservas existentes, enviar un mensaje de conflicto
+      if (reservasExistente.length > 0) {
+        res.status(200).send({ data: undefined, message: 'La cancha ya está reservada para ese horario' });
+      } else {
+        // Si no hay conflictos, crear la reserva
+        let reg = await Reservacion.create(data);
+        res.status(200).send({ data: reg });
+      }
 
     } else {
       res.status(500).send({ message: 'NoAccess' });
@@ -207,6 +224,28 @@ const crear_reservacion_user = async function (req, res) {
     res.status(500).send({ message: 'NoAccess' });
   }
 }
+
+const obtener_reservaciones_user = async function (req, res) {
+  if (req.user) {
+    if (req.user.role == 'USER') {
+      let id = req.params['id'];
+
+      let reservas = [];
+      try {
+        reservas = await Reservacion.find({ cliente: id }).sort({ createdAt: -1 }).populate('empresa').populate('cancha');
+        res.status(200).send({ data: reservas });
+      } catch (error) {
+        res.status(200).send({ data: undefined });
+      }
+    } else {
+      res.status(500).send({ message: 'NoAccess' });
+    }
+  } else {
+    res.status(500).send({ message: 'NoAccess' });
+  }
+}
+
+
 
 ////////CONTACTO
 const enviar_mensaje_contacto = async function (req, res) {
@@ -227,5 +266,6 @@ module.exports = {
     comparar_password,
     actualizar_password_user,
     crear_reservacion_user,
+    obtener_reservaciones_user,
     enviar_mensaje_contacto
 }

@@ -220,6 +220,11 @@ export class UserService {
     return this._http.post(this.url + 'crear_reservacion_user', data, { headers: headers });
   }
 
+  obtener_reservaciones_user(id: any, token: any): Observable<any> {
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json', 'authorization': token });
+    return this._http.get(this.url + 'obtener_reservaciones_user/' + id, { headers: headers });
+  }
+
   //MENSAJES
   enviar_mensaje_contacto(data: any): Observable<any> {
     let headers = new HttpHeaders().set('Content-Type', 'application/json');
