@@ -12,6 +12,7 @@ import { ActualizarComponent } from './perfil/actualizar/actualizar.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { FormsModule } from '@angular/forms';
 import { UpdatePasswordComponent } from './perfil/update-password/update-password.component';
+import { QRCodeModule } from 'angularx-qrcode';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { UpdatePasswordComponent } from './perfil/update-password/update-passwor
   imports: [
     CommonModule,
     UserRoutingModule,
-    FormsModule
+    FormsModule,
+    QRCodeModule
   ]
 })
 export class UserModule { }

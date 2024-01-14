@@ -20,27 +20,28 @@ export class ReservasComponent implements OnInit {
   public activePagos: boolean = false;
   public viewButton: boolean = false;
 
-   public empresa = '';
-   public token: any;
-   public cancha: any = {};
-   public user_lc: any = {};
-   public afuera: any = {};
-   public idCancha: any;
-   public cliente: any;
-   public subtotal: number = 0;
-   public fecha;
-   public horaInicio;
-   public horaFin;
-   public descuento = '';
-   public fromOut: boolean = false;
-   public existReservas: boolean = false;
+  public empresa = '';
+  public token: any;
+  public cancha: any = {};
+  public user_lc: any = {};
+  public afuera: any = {};
+  public idCancha: any;
+  public cliente: any;
+  public subtotal: number = 0;
+  public fecha;
+  public horaInicio;
+  public horaFin;
+  public descuento = '';
+  public fromOut: boolean = false;
+  public existReservas: boolean = false;
+  public myAngularxQrCode: string = '';
 
   constructor(
     private _userService: UserService,
     private _title: Title,
     private _toastrService: ToastrService
   ) {
-    
+
     this.idCancha = localStorage.getItem('id_cancha');
     this.fecha = localStorage.getItem('fecha_reserva');
     this.horaInicio = localStorage.getItem('hora_inicio');
@@ -49,6 +50,8 @@ export class ReservasComponent implements OnInit {
     this.cliente = localStorage.getItem('_id') || sessionStorage.getItem('_id');
     this.token = localStorage.getItem('token') || sessionStorage.getItem('token');
     this.user_lc = JSON.parse(localStorage.getItem('user_data')!);
+
+    this.myAngularxQrCode = 'Esto ';
 
     if (this.afuera === 'Y') {
       this.fromOut = true;
@@ -60,6 +63,12 @@ export class ReservasComponent implements OnInit {
       response => {
         this.cancha = response.data;
         this.load_data = false;
+      }
+    );
+
+    _userService.obtener_cuentas(this.token).subscribe(
+      response => {
+        this.cuentas = response.data;
       }
     );
   }
@@ -110,20 +119,30 @@ export class ReservasComponent implements OnInit {
 
     this._userService.crear_reservacion_user(data, this.token).subscribe(
       response => {
-          if (response.data == undefined) {
-            this._toastrService.error(response.message, 'ERROR');
-          } else {
-            this._toastrService.success('Se reservó con éxito', 'RESERVADO!');
-            localStorage.removeItem('afuera');
-            localStorage.removeItem('fecha_reserva');
-            localStorage.removeItem('hora_inicio');
-            localStorage.removeItem('hora_fin');
-            localStorage.removeItem('id_cancha');
-            this.load_btn = false;
-            //this._router.navigate(['/usuario']);
-          }
+        if (response.data == undefined) {
+          this._toastrService.error(response.message, 'ERROR');
+        } else {
+          this._toastrService.success('Se reservó con éxito', 'RESERVADO!');
+          localStorage.removeItem('afuera');
+          localStorage.removeItem('fecha_reserva');
+          localStorage.removeItem('hora_inicio');
+          localStorage.removeItem('hora_fin');
+          localStorage.removeItem('id_cancha');
+          this.load_btn = false;
+          //this._router.navigate(['/usuario']);
         }
+      }
     );
+  }
+
+  eliminar_pre_reserva() {
+    localStorage.removeItem('afuera');
+    localStorage.removeItem('fecha_reserva');
+    localStorage.removeItem('hora_inicio');
+    localStorage.removeItem('hora_fin');
+    localStorage.removeItem('id_cancha');
+
+    window.location.reload();
   }
 
 }

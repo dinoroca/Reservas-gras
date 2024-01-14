@@ -143,18 +143,20 @@ export class LoginComponent implements OnInit {
             this.usuario = response.data;
 
             if (this.usuario.role === 'USER') {
+              console.log(this.id_cancha);
+              
 
               //No existe el id_cancha y se lleva al login normal
-              if (this.id_cancha == '') {
-                this._router.navigate(['/usuario']).then(() => {
+              if (this.id_cancha !== null) {
+                this._router.navigate(['/usuario/perfil/reservas']).then(() => {
                   setTimeout(() => {
                     location.reload();
                   }, 500);
                 });
 
                 //Existe id_cancha
-              } else {
-                this._router.navigate(['/usuario/perfil/reservas']).then(() => {
+              } else if (this.id_cancha == null) {
+                this._router.navigate(['/usuario']).then(() => {
                   setTimeout(() => {
                     location.reload();
                   }, 500);
