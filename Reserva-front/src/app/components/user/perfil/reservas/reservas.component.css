@@ -7,3 +7,10 @@
     color:rgb(255, 77, 77); 
     font-size: 1.3rem;
 }
+
+.pasos {
+    font-size: 1.4rem; 
+    color: #ffffff; 
+    background-color: #ff7ff4;
+    border-radius: 20px;
+}

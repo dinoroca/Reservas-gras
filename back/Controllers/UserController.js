@@ -245,6 +245,19 @@ const obtener_reservaciones_user = async function (req, res) {
   }
 }
 
+const obtener_reservaciones_public = async function (req, res) {
+  let id = req.params['id'];
+
+  let reservas = [];
+  try {
+    reservas = await Reservacion.find({ cancha: id }).sort({ createdAt: -1 }).populate('empresa').populate('cancha');
+    res.status(200).send({ data: reservas });
+  } catch (error) {
+    res.status(200).send({ data: undefined });
+  }
+}
+
+
 
 
 ////////CONTACTO
@@ -258,14 +271,15 @@ const enviar_mensaje_contacto = async function (req, res) {
 
 
 module.exports = {
-    registro_user,
-    login_user,
-    actualizar_user_verificado,
-    obtener_user,
-    actualizar_user,
-    comparar_password,
-    actualizar_password_user,
-    crear_reservacion_user,
-    obtener_reservaciones_user,
-    enviar_mensaje_contacto
+  registro_user,
+  login_user,
+  actualizar_user_verificado,
+  obtener_user,
+  actualizar_user,
+  comparar_password,
+  actualizar_password_user,
+  crear_reservacion_user,
+  obtener_reservaciones_user,
+  obtener_reservaciones_public,
+  enviar_mensaje_contacto
 }

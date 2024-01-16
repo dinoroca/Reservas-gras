@@ -19,6 +19,7 @@ api.put('/actualizar_user_verificado/:id/:codigo', UserController.actualizar_use
 ////RESERVACION
 api.post('/crear_reservacion_user', auth.auth, UserController.crear_reservacion_user);
 api.get('/obtener_reservaciones_user/:id', auth.auth, UserController.obtener_reservaciones_user);
+api.get('/obtener_reservaciones_public/:id', UserController.obtener_reservaciones_public);
 
 ////Contacto
 api.post('/enviar_mensaje_contacto', UserController.enviar_mensaje_contacto);

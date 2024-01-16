@@ -129,6 +129,7 @@ export class ReservasComponent implements OnInit {
           localStorage.removeItem('hora_fin');
           localStorage.removeItem('id_cancha');
           this.load_btn = false;
+          window.location.reload();
           //this._router.navigate(['/usuario']);
         }
       }
