@@ -13,6 +13,9 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { FormsModule } from '@angular/forms';
 import { UpdatePasswordComponent } from './perfil/update-password/update-password.component';
 import { QRCodeModule } from 'angularx-qrcode';
+import { FootUserComponent } from './foot-user/foot-user.component';
+import { VerGrassComponent } from './ver-grass/ver-grass.component';
+import { VerMovilComponent } from './ver-movil/ver-movil.component';
 
 
 @NgModule({
@@ -25,7 +28,10 @@ import { QRCodeModule } from 'angularx-qrcode';
     ReservasComponent,
     ActualizarComponent,
     SidebarComponent,
-    UpdatePasswordComponent
+    UpdatePasswordComponent,
+    FootUserComponent,
+    VerGrassComponent,
+    VerMovilComponent
   ],
   imports: [
     CommonModule,

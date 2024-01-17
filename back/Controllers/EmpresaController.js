@@ -136,6 +136,23 @@ const listar_empresas_publico = async function (req, res) {
   }
 }
 
+const listar_empresas_user = async function (req, res) {
+  if (req.user) {
+
+    let region = req.params['region'];
+
+    let reg = await Empresa.find({ region: new RegExp(region, 'i') }).sort({ createdAt: 1 }).limit(6);
+    if (reg.length > 0) {
+      res.status(200).send({ data: reg });
+    } else {
+      res.status(200).send({ data: undefined });
+    }
+
+  } else {
+    res.status(500).send({ message: 'NoAccess' });
+  }
+}
+
 const listar_empresas_region = async function (req, res) {
 
   let region = req.params['region'];
@@ -697,6 +714,7 @@ module.exports = {
   obtener_caracteristicas_empresa,
   obtener_caracteristicas_empresa_publico,
   listar_empresas_publico,
+  listar_empresas_user,
   actualizar_caracteristicas_empresa,
   crear_cancha_empresa,
   obtener_canchas_empresa,

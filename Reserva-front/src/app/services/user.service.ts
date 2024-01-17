@@ -112,6 +112,11 @@ export class UserService {
     return this._http.get(this.url + 'listar_empresas_publico');
   }
 
+  listar_empresas_user(region: any, token: any): Observable<any> {
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json', 'authorization': token });
+    return this._http.get(this.url + 'listar_empresas_user/' + region, { headers: headers });
+  }
+
   actualizar_caracteristicas_empresa(id: any, token: any, data: any): Observable<any> {
     let headers = new HttpHeaders({ 'Content-Type': 'application/json', 'authorization': token });
     return this._http.put(this.url + 'actualizar_caracteristicas_empresa/' + id, data, { headers: headers });

@@ -1,6 +1,7 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { GLOBAL } from 'src/app/services/global';
 import { UserService } from 'src/app/services/user.service';
 
@@ -15,12 +16,15 @@ interface BotonHora {
 @Component({
   selector: 'app-ver-movil',
   templateUrl: './ver-movil.component.html',
-  styleUrls: ['./../home/home.component.css', './ver-movil.component.css']
+  styleUrls: [ './../inicio/inicio.component.css', './ver-movil.component.css']
 })
-
 
 export class VerMovilComponent implements OnInit {
   public id: any;
+  public id_user: any;
+  public token: any;
+  public id_cancha: any;
+  public user_lc: any;
   public url: any;
   public load_data = false;
   public load_btn = false;
@@ -55,7 +59,8 @@ export class VerMovilComponent implements OnInit {
   constructor(
     private _router: Router,
     private _userService: UserService,
-    private _title: Title
+    private _title: Title,
+    private _toastrService: ToastrService
   ) {
     this.screenWidth = window.innerWidth;
     this.screenHeight = window.innerHeight;
@@ -65,6 +70,10 @@ export class VerMovilComponent implements OnInit {
     } else {
       this.width_view = false;
     }
+
+    this.id_user = localStorage.getItem('_id') || sessionStorage.getItem('_id');
+    this.token = localStorage.getItem('token') || sessionStorage.getItem('token');
+    this.user_lc = JSON.parse(localStorage.getItem('user_data')!);
 
     this.url = GLOBAL.url;
     const ruta = _router.url.split('/');
@@ -126,15 +135,30 @@ export class VerMovilComponent implements OnInit {
 
   onHoraSeleccionada(filaIndex: number, columnaIndex: number) {
     const boton = this.botonesHoras[filaIndex][columnaIndex];
-    console.log(boton);
 
     if (boton.disponible) {
-      boton.estado = boton.estado === 'Libre' ? 'Reservado' : 'Libre';
-      localStorage.setItem('fecha_reserva', boton.fecha.toDateString());
-      localStorage.setItem('hora_inicio', this.horasInicio.toString());
-      localStorage.setItem('hora_fin', this.horasFinal.toString());
-      localStorage.setItem('afuera', 'Y');
-      this._router.navigate(['/login']);
+      
+      let data = {
+        empresa: this.cancha.empresa._id,
+        cancha: this.cancha._id,
+        cliente: this.id_user,
+        subtotal: this.horasReserva * 10,
+        fecha: boton.fecha.toDateString(),
+        hora_inicio: this.horasInicio,
+        hora_fin: this.horasFinal
+      }
+
+      this._userService.crear_reservacion_user(data, this.token).subscribe(
+        response => {
+          if (response.data == undefined) {
+            this._toastrService.error(response.message, 'ERROR');
+          } else {
+            this._toastrService.success('Se reservó con éxito', 'RESERVADO!');
+            this._router.navigate(['/usuario/perfil/reservas']);
+          }
+        }
+      );
+      
     }
   }
 
@@ -253,4 +277,5 @@ export class VerMovilComponent implements OnInit {
     window.history.back();
   }
 }
+
 

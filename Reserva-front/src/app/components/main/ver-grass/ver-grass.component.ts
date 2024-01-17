@@ -243,6 +243,10 @@ export class VerGrassComponent implements OnInit {
                     const esDiaActual = i === primerDiaSemana;
                     const est: string = (esDiaActual && ahora.getHours() >= j) ? 'Pasado' : estadoBoton;
                     const disponible = esDiaActual ? ahora.getHours() < j : true;
+
+                    if (!disponible) {
+                      disponibleBtn = false;
+                    }
               
                     const id = `00${i}${j}`.slice(-4); // Asegurar que el ID tenga cuatro dígitos
                     const boton: BotonHora = { estado: est, fecha, hora, disponible: disponibleBtn, id };

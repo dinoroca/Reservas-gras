@@ -7,6 +7,8 @@ import { DatosComponent } from './perfil/datos/datos.component';
 import { ReservasComponent } from './perfil/reservas/reservas.component';
 import { ActualizarComponent } from './perfil/actualizar/actualizar.component';
 import { UpdatePasswordComponent } from './perfil/update-password/update-password.component';
+import { VerGrassComponent } from './ver-grass/ver-grass.component';
+import { VerMovilComponent } from './ver-movil/ver-movil.component';
 
 const routes: Routes = [
   {path: '', component: InicioComponent},
@@ -14,6 +16,8 @@ const routes: Routes = [
   {path: 'contacto', component: ContactoComponent},
   {path: 'perfil', component: DatosComponent},
   {path: 'perfil/reservas', component: ReservasComponent},
+  {path: 'ver/:id', component: VerGrassComponent},
+  {path: 'ver-movil/:id', component: VerMovilComponent},
   {path: 'perfil/actualizar', component: ActualizarComponent},
   {path: 'perfil/update-password', component: UpdatePasswordComponent}
 ];

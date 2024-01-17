@@ -3,6 +3,7 @@ import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { GLOBAL } from 'src/app/services/global';
 import { UserService } from 'src/app/services/user.service';
+import { ToastrService } from 'ngx-toastr';
 
 interface BotonHora {
   estado: string;
@@ -13,14 +14,17 @@ interface BotonHora {
 }
 
 @Component({
-  selector: 'app-ver-movil',
-  templateUrl: './ver-movil.component.html',
-  styleUrls: ['./../home/home.component.css', './ver-movil.component.css']
+  selector: 'app-ver-grass',
+  templateUrl: './ver-grass.component.html',
+  styleUrls: ['./../inicio/inicio.component.css', './ver-grass.component.css']
 })
 
-
-export class VerMovilComponent implements OnInit {
+export class VerGrassComponent implements OnInit {
   public id: any;
+  public id_user: any;
+  public token: any;
+  public id_cancha: any;
+  public user_lc: any;
   public url: any;
   public load_data = false;
   public load_btn = false;
@@ -31,7 +35,7 @@ export class VerMovilComponent implements OnInit {
   public ver_caracteristicas = false;
   public canchas: any = [];
   public reservaciones: any = [];
-  public cancha: any = {};
+  public cancha_ver: any = {};
   public empresa: any = {};
   public horasInicio: number = 0;
   public horasFinal: number = 0;
@@ -55,7 +59,8 @@ export class VerMovilComponent implements OnInit {
   constructor(
     private _router: Router,
     private _userService: UserService,
-    private _title: Title
+    private _title: Title,
+    private _toastrService: ToastrService
   ) {
     this.screenWidth = window.innerWidth;
     this.screenHeight = window.innerHeight;
@@ -65,6 +70,10 @@ export class VerMovilComponent implements OnInit {
     } else {
       this.width_view = false;
     }
+
+    this.id_user = localStorage.getItem('_id') || sessionStorage.getItem('_id');
+    this.token = localStorage.getItem('token') || sessionStorage.getItem('token');
+    this.user_lc = JSON.parse(localStorage.getItem('user_data')!);
 
     this.url = GLOBAL.url;
     const ruta = _router.url.split('/');
@@ -126,15 +135,30 @@ export class VerMovilComponent implements OnInit {
 
   onHoraSeleccionada(filaIndex: number, columnaIndex: number) {
     const boton = this.botonesHoras[filaIndex][columnaIndex];
-    console.log(boton);
 
     if (boton.disponible) {
-      boton.estado = boton.estado === 'Libre' ? 'Reservado' : 'Libre';
-      localStorage.setItem('fecha_reserva', boton.fecha.toDateString());
-      localStorage.setItem('hora_inicio', this.horasInicio.toString());
-      localStorage.setItem('hora_fin', this.horasFinal.toString());
-      localStorage.setItem('afuera', 'Y');
-      this._router.navigate(['/login']);
+      
+      let data = {
+        empresa: this.cancha_ver.empresa._id,
+        cancha: this.cancha_ver._id,
+        cliente: this.id_user,
+        subtotal: this.horasReserva * 10,
+        fecha: boton.fecha.toDateString(),
+        hora_inicio: this.horasInicio,
+        hora_fin: this.horasFinal
+      }
+
+      this._userService.crear_reservacion_user(data, this.token).subscribe(
+        response => {
+          if (response.data == undefined) {
+            this._toastrService.error(response.message, 'ERROR');
+          } else {
+            this._toastrService.success('Se reservó con éxito', 'RESERVADO!');
+            this._router.navigate(['/usuario/perfil/reservas']);
+          }
+        }
+      );
+      
     }
   }
 
@@ -163,43 +187,71 @@ export class VerMovilComponent implements OnInit {
   }
 
   init_data() {
+    this.load_data = true;
+
+    this._userService.obtener_empresa_publico(this.id).subscribe(
+      response => {
+        if (response.data == undefined) {
+          // Manejo de datos indefinidos
+        } else {
+          this.empresa = response.data;
+
+          this._userService.obtener_canchas(this.id).subscribe(
+            response => {
+              if (response.data == undefined) {
+                this.load_data = false;
+                this.btn_crear = true;
+              } else if (response.data != undefined) {
+                this.btn_crear = false;
+                this.canchas = response.data;
+                this.load_data = false;
+              }
+            }
+          );
+        }
+      }
+    );
+  }
+
+  click_ver(id: any) {
     this.botonesHoras = [];
     this.load_btn_ver = true;
     this.ver_caracteristicas = !this.ver_caracteristicas;
 
-    this._userService.obtener_cancha_publico(this.id).subscribe(
+    this._userService.obtener_cancha_publico(id).subscribe(
       response => {
         if (response === undefined) {
-          this.cancha = undefined;
+          this.cancha_ver = undefined;
+          this.load_btn_ver = false;
         } else {
-          this.cancha = response.data;
+          this.cancha_ver = response.data;
 
-          this._userService.obtener_reservaciones_public(this.cancha._id).subscribe(
+          this._userService.obtener_reservaciones_public(this.cancha_ver._id).subscribe(
             response => {
               this.reservaciones = response.data;
 
               if (this.reservaciones.length >= 1) {
                 const ahora = new Date();
                 const primerDiaSemana = ahora.getDay();
-
+              
                 for (let i = primerDiaSemana; i <= primerDiaSemana + 7; i++) {
                   const fila: BotonHora[] = [];
-
+              
                   for (let j = 5; j < 24; j++) {
                     const inicio = j < 10 ? `0${j}` : `${j}`;
                     const fecha = new Date(ahora);
                     fecha.setDate(ahora.getDate() + (i - primerDiaSemana));
                     const hora = inicio;
-
+              
                     let estadoBoton = 'Libre';
                     let disponibleBtn = true;
-
+              
                     for (let k = 0; k < this.reservaciones.length; k++) {
                       const reservacion = this.reservaciones[k];
                       const reservacionFecha = new Date(reservacion.fecha);
                       const reservacionHoraInicio = reservacion.hora_inicio;
                       const reservacionHoraFin = reservacion.hora_fin;
-
+              
                       if (
                         fecha.getDate() === reservacionFecha.getDate() &&
                         fecha.getMonth() === reservacionFecha.getMonth() &&
@@ -212,7 +264,7 @@ export class VerMovilComponent implements OnInit {
                         break;
                       }
                     }
-
+              
                     const esDiaActual = i === primerDiaSemana;
                     const est: string = (esDiaActual && ahora.getHours() >= j) ? 'Pasado' : estadoBoton;
                     const disponible = esDiaActual ? ahora.getHours() < j : true;
@@ -220,12 +272,12 @@ export class VerMovilComponent implements OnInit {
                     if (!disponible) {
                       disponibleBtn = false;
                     }
-
+              
                     const id = `00${i}${j}`.slice(-4); // Asegurar que el ID tenga cuatro dígitos
                     const boton: BotonHora = { estado: est, fecha, hora, disponible: disponibleBtn, id };
                     fila.push(boton);
                   }
-
+              
                   this.botonesHoras.push(fila);
                 }
               } else {
@@ -245,12 +297,8 @@ export class VerMovilComponent implements OnInit {
     );
   }
 
-  click_reservar(id: any) {
+  click_ver_movil(id: any) {
     localStorage.setItem('id_cancha', id);
-  }
-
-  volverAtras() {
-    window.history.back();
   }
 }
 

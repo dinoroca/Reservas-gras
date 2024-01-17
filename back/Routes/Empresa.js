@@ -56,6 +56,7 @@ api.get('/listar_empresas_filtro/:filtro?', EmpresaController.listar_empresas_fi
 api.get('/listar_empresas_region/:region?', EmpresaController.listar_empresas_region);
 api.get('/listar_empresas_prov/:region?/:provincia?', EmpresaController.listar_empresas_prov);
 api.get('/listar_empresas_dist/:region?/:provincia?/:distrito?', EmpresaController.listar_empresas_dist);
+api.get('/listar_empresas_user/:region?', auth.auth, EmpresaController.listar_empresas_user);
 
 
 
