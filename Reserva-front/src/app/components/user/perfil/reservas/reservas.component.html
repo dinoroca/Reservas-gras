@@ -26,9 +26,14 @@
           </div>
 
           <ng-container *ngIf="fromOut && !load_data">
-            <div class="card">
+            <div class="card" style="border-color: #FFC107;">
               <div class="card-body">
                 <div class="text-center">
+                  <span class="badge rounded-pill text-bg-warning px-3">Reservación pendiente &nbsp;
+                    <a class="" type="" disabled>
+                      <span class="spinner-grow spinner-grow-sm fs-6" aria-hidden="true"></span>
+                    </a>
+                  </span>
                   <h4> {{cancha.nombre}} <span class="fw-light fs-5">del</span> {{cancha.empresa.nombre}} </h4>
                   <span class="fw-light"> {{cancha.empresa.direccion}} </span>
 
@@ -69,42 +74,8 @@
             </div>
           </ng-container>
 
-          <!-- <ng-container *ngIf="!load_reservas && reservaciones.length >= 1">
-            <div *ngFor="let item of reservaciones; let indice = index" class="card my-3">
-              <div class="card-body">
-                <div class="text-center">
-                  <p class="m-0"> Reservación N° {{indice + 1}} </p>
-                  <span class="fs-5"> {{item.cancha.nombre}} <span class="fw-light fs-6">del</span> {{item.empresa.nombre}} </span> &nbsp;
-                  <span class="fw-light"> {{item.cancha.empresa.direccion}} </span>
-                  <span *ngIf="item.estado == 'Ocupado'" class="badge rounded-pill text-bg-secondary">Ocupado</span>
-                  <span *ngIf="item.estado == 'Reservado'" class="badge rounded-pill" style="background-color: rgb(0, 192, 86);">Reservado</span>
-                  <span *ngIf="item.estado == 'Finalizado'" class="badge rounded-pill text-bg-danger">Finalizado</span>
-                </div>
-
-                <div class="row py-2">
-                  <div class="col-12 col-sm-4"> <i class="bi bi-person fs-4" style="color:rgb(0, 192, 86);"></i>
-                    &nbsp; {{user_lc.nombres}}
-                  </div>
-                  <div class="col-12 col-sm-4"><i class="bi bi-calendar-event fs-4" style="color:rgb(0, 192, 86);"></i>
-                    &nbsp; {{item.fecha }}
-                  </div>
-                  <div class="col-12 col-sm-4"> <i class="bi bi-clock fs-4" style="color:rgb(0, 192, 86);"></i>
-                    &nbsp; {{item.hora_inicio}}:00 a {{item.hora_fin}}:00
-                  </div>
-                </div>
-
-                <div class="text-center mt-1">
-                  <p class="fw-light m-0"> Subtotal </p>
-                  <span style="color:rgb(0, 192, 86); font-size: 3rem;" class="fw-light"> S/. {{item.subtotal}} </span>
-                  <p class="fw-light m-0"> {{ item.createdAt | date: 'medium' }} </p>
-                </div>
-
-              </div>
-            </div>
-          </ng-container> -->
-
           <ng-container *ngIf="!load_reservas && reservaciones.length >= 1">
-            <div *ngFor="let item of reservaciones; let indice = index" class="card my-3">
+            <div *ngFor="let item of reservaciones; let indice = index" class="card my-3" style="border-color: #00C056;">
               <div class="card-body">
                 <div class="text-center">
                   <span class="m-0"> Reservación N° {{reservaciones.length - indice}} </span> &nbsp;

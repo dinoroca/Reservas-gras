@@ -4,7 +4,7 @@
     <!-- Canchas -->
     <div class="row d-flex justify-content-center px-2 px-sm-5 pb-5">
 
-        <div *ngIf="load_data">
+        <div *ngIf="load_data || load_btn_ver">
             <!-- Custom size border spinner -->
             <div class="text-center">
                 <div class="spinner-border" style="width: 3rem; height: 3rem" role="status">
@@ -13,7 +13,7 @@
             </div>
         </div>
 
-        <ng-container *ngIf="!load_data">
+        <ng-container *ngIf="!load_data && !load_btn_ver">
             <div class="col-md-4 pb-3 pt-2 col-sm-12">
                 <div class="card shadow mx-3">
                     <div class="images-grass">
