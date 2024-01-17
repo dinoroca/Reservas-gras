@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { InicioComponent } from './inicio/inicio.component';
-import { ReservacionesComponent } from './reservaciones/reservaciones.component';
 import { IndexCuentasComponent } from './cuentas/index-cuentas/index-cuentas.component';
 import { IndexDatosComponent } from './datos/index-datos/index-datos.component';
 import { EditDatosComponent } from './datos/edit-datos/edit-datos.component';
@@ -12,6 +11,8 @@ import { EditCanchasComponent } from './canchas/edit-canchas/edit-canchas.compon
 import { CreateCuentasComponent } from './cuentas/create-cuentas/create-cuentas.component';
 import { EditCuentasComponent } from './cuentas/edit-cuentas/edit-cuentas.component';
 import { GaleriaCanchasComponent } from './canchas/galeria-canchas/galeria-canchas.component';
+import { IndexResComponent } from './reservaciones/index-res/index-res.component';
+import { CreateResComponent } from './reservaciones/create-res/create-res.component';
 
 const routes: Routes = [
   {path: '', component: InicioComponent},
@@ -22,7 +23,8 @@ const routes: Routes = [
   {path: 'caracteristicas', component: CaracteristicasComponent},
   {path: 'datos', component: IndexDatosComponent},
   {path: 'datos/actualizar', component: EditDatosComponent},
-  {path: 'reservaciones', component: ReservacionesComponent},
+  {path: 'reservaciones', component: IndexResComponent},
+  {path: 'reservaciones/crear', component: CreateResComponent},
   {path: 'cuentas', component: IndexCuentasComponent},
   {path: 'cuentas/crear', component: CreateCuentasComponent},
   {path: 'cuentas/:id', component: EditCuentasComponent},

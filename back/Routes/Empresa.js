@@ -31,6 +31,10 @@ api.delete('/eliminar_cancha_empresa/:id', auth.auth, EmpresaController.eliminar
 api.get('/obtener_canchas/:id', EmpresaController.obtener_canchas);
 api.get('/obtener_cancha_publico/:id', EmpresaController.obtener_cancha_publico);
 
+//REservaciones
+api.get('/obtener_reservaciones_empresa/:id', auth.auth, EmpresaController.obtener_reservaciones_empresa);
+api.delete('/eliminar_reservacion_empresa/:id', auth.auth, EmpresaController.eliminar_reservacion_empresa);
+
 /////GALERÍA
 api.put('/agregar_imagen_galeria_cancha/:id', [auth.auth, path], EmpresaController.agregar_imagen_galeria_cancha);
 api.put('/eliminar_imagen_galeria_cancha/:id', auth.auth, EmpresaController.eliminar_imagen_galeria_cancha);
@@ -48,8 +52,6 @@ api.get('/obtener_cuenta_grass/:id', auth.auth, EmpresaController.obtener_cuenta
 api.delete('/eliminar_cuenta_grass/:id', auth.auth, EmpresaController.eliminar_cuenta_grass);
 api.put('/actualizar_cuenta_grass/:id', auth.auth, EmpresaController.actualizar_cuenta_grass);
 api.get('/obtener_cuentas', auth.auth, EmpresaController.obtener_cuentas);
-
-
 
 //Buscar empresa
 api.get('/listar_empresas_filtro/:filtro?', EmpresaController.listar_empresas_filtro);

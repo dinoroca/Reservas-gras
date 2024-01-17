@@ -158,6 +158,17 @@ export class UserService {
     return this._http.delete(this.url + 'eliminar_cancha_empresa/' + id, { headers: headers });
   }
 
+  //Reservaciones
+  obtener_reservaciones_empresa(id: any, token: any): Observable<any> {
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json', 'authorization': token });
+    return this._http.get(this.url + 'obtener_reservaciones_empresa/' + id, { headers: headers });
+  }
+
+  eliminar_reservacion_empresa(id: any, token: any): Observable<any> {
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json', 'authorization': token });
+    return this._http.delete(this.url + 'eliminar_reservacion_empresa/' + id, { headers: headers });
+  }
+
   //Cuentas
   registro_cuenta_grass(data: any, token: any): Observable<any> {
     let headers = new HttpHeaders({ 'Content-Type': 'application/json', 'authorization': token });

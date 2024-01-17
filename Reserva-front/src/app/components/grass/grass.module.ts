@@ -6,7 +6,6 @@ import { InicioComponent } from './inicio/inicio.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { NavComponent } from './nav/nav.component';
 import { FormsModule } from '@angular/forms';
-import { ReservacionesComponent } from './reservaciones/reservaciones.component';
 import { IndexCuentasComponent } from './cuentas/index-cuentas/index-cuentas.component';
 import { CreateCuentasComponent } from './cuentas/create-cuentas/create-cuentas.component';
 import { EditCuentasComponent } from './cuentas/edit-cuentas/edit-cuentas.component';
@@ -17,6 +16,9 @@ import { IndexCanchasComponent } from './canchas/index-canchas/index-canchas.com
 import { CreateCanchasComponent } from './canchas/create-canchas/create-canchas.component';
 import { EditCanchasComponent } from './canchas/edit-canchas/edit-canchas.component';
 import { GaleriaCanchasComponent } from './canchas/galeria-canchas/galeria-canchas.component';
+import { IndexResComponent } from './reservaciones/index-res/index-res.component';
+import { CreateResComponent } from './reservaciones/create-res/create-res.component';
+import { QRCodeModule } from 'angularx-qrcode';
 
 
 @NgModule({
@@ -24,7 +26,6 @@ import { GaleriaCanchasComponent } from './canchas/galeria-canchas/galeria-canch
     InicioComponent,
     SidebarComponent,
     NavComponent,
-    ReservacionesComponent,
     IndexCuentasComponent,
     CreateCuentasComponent,
     EditCuentasComponent,
@@ -34,12 +35,15 @@ import { GaleriaCanchasComponent } from './canchas/galeria-canchas/galeria-canch
     IndexCanchasComponent,
     CreateCanchasComponent,
     EditCanchasComponent,
-    GaleriaCanchasComponent
+    GaleriaCanchasComponent,
+    IndexResComponent,
+    CreateResComponent
   ],
   imports: [
     CommonModule,
     GrassRoutingModule,
-    FormsModule
+    FormsModule,
+    QRCodeModule
   ]
 })
 export class GrassModule { }

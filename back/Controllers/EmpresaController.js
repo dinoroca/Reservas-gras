@@ -4,6 +4,7 @@ var Empresa = require('../Models/Empresa');
 var Caracteristicas = require('../Models/Caracteristicas');
 var Cancha = require('../Models/Cancha');
 var Cuenta = require('../Models/Cuenta');
+var Reservacion = require('../Models/Reservacion');
 var bcrypt = require('bcrypt-nodejs');
 var jwt = require('../Helpers/jwt');
 
@@ -434,6 +435,43 @@ const obtener_canchas = async function (req, res) {
   }
 }
 
+/////RESERVACIONES
+const obtener_reservaciones_empresa = async function (req, res) {
+  if (req.user) {
+    if (req.user.role == 'GRASS') {
+      let id = req.params['id'];
+
+      let reservas = await Reservacion.find({ empresa: id }).sort({ createdAt: 1 }).populate('empresa').populate('cancha').populate({ path: 'cliente', model: 'user' });
+
+      if (reservas.length >= 1) {
+        res.status(200).send({ data: reservas });
+      } else {
+        res.status(200).send({ data: undefined });
+      }
+    } else {
+      res.status(500).send({ message: 'NoAccess' });
+    }
+  } else {
+    res.status(500).send({ message: 'NoAccess' });
+  }
+}
+
+const eliminar_reservacion_empresa = async function (req, res) {
+  if (req.user) {
+    if (req.user.role == 'GRASS') {
+
+      var id = req.params['id'];
+      let reg = await Reservacion.findByIdAndRemove({ _id: id });
+      res.status(200).send({ data: reg });
+
+    } else {
+      res.status(500).send({ message: 'NoAccess' });
+    }
+  } else {
+    res.status(500).send({ message: 'NoAccess' });
+  }
+}
+
 //Galería CANCHA
 const agregar_imagen_galeria_cancha = async function (req, res) {
 
@@ -720,6 +758,8 @@ module.exports = {
   obtener_canchas_empresa,
   obtener_cancha_publico,
   obtener_canchas,
+  obtener_reservaciones_empresa,
+  eliminar_reservacion_empresa,
   obtener_cancha_empresa,
   actualizar_cancha_empresa,
   eliminar_cancha_empresa,
