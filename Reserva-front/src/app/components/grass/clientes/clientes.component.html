@@ -1,0 +1,93 @@
+<app-nav></app-nav>
+
+<div class="container py-4">
+    <app-sidebar></app-sidebar>
+
+    <div class="shadow rounded mt-5 p-4">
+        <h3 class="text-center fw-bold" style="color: rgb(6, 170, 115)">
+            Clientes
+        </h3>
+
+        <ng-container *ngIf="load_data">
+            <div class="text-center">
+                <div class="spinner-border text-secondary" style="width: 3rem; height: 3rem" role="status"></div>
+                <h4 class="text-black-50"><small>Cargando...</small></h4>
+            </div>
+        </ng-container>
+
+        <ng-container *ngIf="!load_data && clientes.length >= 1">
+            <p class="fs-5 fw-light text-center">
+                En esta sección se muestan los clientes que realizaron por lo menos una
+                reservación
+            </p>
+            <div class="row">
+                <div *ngFor="
+            let item of clientes
+              | paginate : { itemsPerPage: 12, currentPage: p }
+          " class="card col-12 col-sm-3 my-3 mx-sm-0 mx-md-2">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-3">
+                                <i class="bi bi-person fs-2"></i>
+                                <small *ngIf="item.nombres != 'Generado por Grass'" style="color: rgb(0, 192, 86)">
+                                    {{ item.nombres }}
+                                </small>
+                                <small *ngIf="item.nombres == 'Generado por Grass'">
+                                    <span class="badge rounded-pill"
+                                        style="background-color: rgb(0, 192, 86)">GRASS</span>
+                                </small>
+                            </div>
+                            <div class="col-9">
+                                <table class="table table-sm">
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row" c>
+                                                <a href="tel:{{ item.telefono }}"
+                                                    style="text-decoration: none; color: rgb(0, 192, 86)">
+                                                    <i class="bi bi-phone"></i>
+                                                </a>
+                                                &nbsp;
+
+                                                <a href="https://wa.me/51{{ item.telefono }}" target="_blank"
+                                                    style="text-decoration: none; color: rgb(0, 192, 86)">
+                                                    <i class="bi bi-whatsapp"></i>
+                                                </a>
+                                            </th>
+                                            <td>{{ item.telefono }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">
+                                                <a href="mailto:{{ item.email }}" target="_blank"
+                                                    style="text-decoration: none; color: rgb(255, 87, 87)">
+                                                    <i class="bi bi-envelope"></i>
+                                                </a>
+                                            </th>
+                                            <td>{{ item.email }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row" style="color: rgb(125, 81, 255)">
+                                                <i class="bi bi-geo-alt"></i>
+                                            </th>
+                                            <td colspan="2">{{ item.ciudad }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-footer text-center">
+                <pagination-controls (pageChange)="p = $event" [responsive]="true" previousLabel="" nextLabel="">
+                </pagination-controls>
+            </div>
+        </ng-container>
+
+        <ng-container *ngIf="!load_data && clientes.length < 1">
+            <div class="alert alert-danger mt-3 mb-0 text-center" role="alert">
+                Aún no existen clientes
+            </div>
+        </ng-container>
+    </div>
+</div>

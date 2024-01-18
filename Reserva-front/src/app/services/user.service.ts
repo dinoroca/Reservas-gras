@@ -169,6 +169,11 @@ export class UserService {
     return this._http.get(this.url + 'obtener_reservaciones_empresa/' + id, { headers: headers });
   }
 
+  obtener_clientes_empresa(id: any, token: any): Observable<any> {
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json', 'authorization': token });
+    return this._http.get(this.url + 'obtener_clientes_empresa/' + id, { headers: headers });
+  }
+
   eliminar_reservacion_empresa(id: any, token: any): Observable<any> {
     let headers = new HttpHeaders({ 'Content-Type': 'application/json', 'authorization': token });
     return this._http.delete(this.url + 'eliminar_reservacion_empresa/' + id, { headers: headers });

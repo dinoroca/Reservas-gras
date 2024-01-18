@@ -75,7 +75,8 @@
           </ng-container>
 
           <ng-container *ngIf="!load_reservas && reservaciones.length >= 1">
-            <div *ngFor="let item of reservaciones; let indice = index" class="card my-3" style="border-color: #00C056;">
+            <div *ngFor="let item of reservaciones | paginate: { itemsPerPage: 3, currentPage: p }; let indice = index"
+              class="card my-3" style="border-color: #00C056;">
               <div class="card-body">
                 <div class="text-center">
                   <span class="m-0"> Reservación N° {{reservaciones.length - indice}} </span> &nbsp;
@@ -97,9 +98,9 @@
                           </p>
 
                           <button data-bs-toggle="modal" [attr.data-bs-target]="'#ver-' + item._id"
-                              class="btn btn-secondary btn-sm mt-2" type="button" title="Ver instrucciones">
-                              <i class="bi bi-eye"></i> &nbsp; Ver instrucciones
-                            </button>
+                            class="btn btn-secondary btn-sm mt-2" type="button" title="Ver instrucciones">
+                            <i class="bi bi-eye"></i> &nbsp; Ver instrucciones
+                          </button>
                         </div>
                       </div>
                     </div>
@@ -120,8 +121,8 @@
                         <div class="modal-body px-lg-5">
 
                           <p>
-                            <span class="fw-bold pasos px-2">Paso 1</span> &nbsp; 
-                            Realizar un pago de 
+                            <span class="fw-bold pasos px-2">Paso 1</span> &nbsp;
+                            Realizar un pago de
                             <span class="icono">S/. {{ item.subtotal }} </span> a una de las siguientes cuentas.
                           </p>
 
@@ -135,48 +136,48 @@
                                     </h5>
                                   </div>
                                 </div>
-        
+
                                 <div class="row">
                                   <div class="col-md-4 col-12">
                                     <span class="badge rounded-pill text-bg-light"><strong>Titular: </strong>
                                       {{item.titular}}</span>
                                   </div>
-        
+
                                   <div class="col-md-4 col-12">
                                     <span class="fs-6 mx-3"> <strong>Cuenta: </strong> {{item.cuenta}}</span>
                                   </div>
-        
+
                                   <div class="col-md-4 col-12">
                                     <span class="fs-6 mx-3"> <strong>CCI: </strong> {{item.cci}}</span>
                                   </div>
                                 </div>
                               </div>
-        
+
                             </ng-container>
                           </div>
 
                           <p>
                             <span class="fw-bold pasos px-2">Paso 2</span> &nbsp;
-                            Enviar el comprobante del pago al 
+                            Enviar el comprobante del pago al
                             Whatsapp <span class="fw-bold">
                               <a href="https://wa.me/51928899925" target="_blank">
                                 <i class="bi bi-whatsapp icono"></i>
-                              </a> 
-                               90002329 </span> o al correro
-                               <a href="mailto:reservatugrass@gmail.com" target="_blank" style="text-decoration: none;">
-                                 <i class="bi bi-envelope gmail"></i> reservatugrass&#64;gmail.com.
-                               </a>
-                               <span class="fw-bold"></span>
-                                
+                              </a>
+                              90002329 </span> o al correro
+                            <a href="mailto:reservatugrass@gmail.com" target="_blank" style="text-decoration: none;">
+                              <i class="bi bi-envelope gmail"></i> reservatugrass&#64;gmail.com.
+                            </a>
+                            <span class="fw-bold"></span>
+
                           </p>
 
                           <p>
-                            <span class="fw-bold pasos px-2">Paso 3</span> &nbsp; 
-                            Enviar el código 
+                            <span class="fw-bold pasos px-2">Paso 3</span> &nbsp;
+                            Enviar el código
                             <span class="icono"> {{item._id}} </span>
                             al mismo número o correo.
                           </p>
-                          
+
                         </div>
                       </div>
                     </div>
@@ -232,11 +233,16 @@
             </div>
           </ng-container>
 
+          <div class="card-footer text-center">
+            <pagination-controls (pageChange)="p = $event" [responsive]="true" previousLabel="" nextLabel="">
+            </pagination-controls>
+          </div>
+
           <ng-container *ngIf="reservaciones.length < 1">
             <div class="alert alert-danger mt-3 mb-0 text-center" role="alert">
-                Aún no existen reservaciones
+              Aún no existen reservaciones
             </div>
-        </ng-container>
+          </ng-container>
         </div>
       </div>
     </div>

@@ -473,6 +473,31 @@ const obtener_reservaciones_empresa = async function (req, res) {
   }
 }
 
+const obtener_clientes_empresa = async function (req, res) {
+  if (req.user) {
+    if (req.user.role == 'GRASS') {
+      let id = req.params['id'];
+
+      let reservas = await Reservacion.find({ empresa: id }).sort({ createdAt: -1 })
+        .populate('empresa').populate('cancha').populate({ path: 'cliente', model: 'user' });
+
+      let uniqueClients = new Set();
+
+      reservas.forEach(reserva => { 
+        if (!uniqueClients.has(reserva.cliente)) { 
+          uniqueClients.add(reserva.cliente); 
+        } 
+      });
+
+      if (uniqueClients.size >= 1) {
+        res.status(200).send({ data: Array.from(uniqueClients) });
+      } else {
+        res.status(200).send({ data: undefined });
+      }
+    } else { res.status(500).send({ message: 'NoAccess' }); }
+  } else { res.status(500).send({ message: 'NoAccess' }); }
+}
+
 const eliminar_reservacion_empresa = async function (req, res) {
   if (req.user) {
     if (req.user.role == 'GRASS') {
@@ -777,6 +802,7 @@ module.exports = {
   obtener_canchas,
   registro_reservacion_grass,
   obtener_reservaciones_empresa,
+  obtener_clientes_empresa,
   eliminar_reservacion_empresa,
   obtener_cancha_empresa,
   actualizar_cancha_empresa,

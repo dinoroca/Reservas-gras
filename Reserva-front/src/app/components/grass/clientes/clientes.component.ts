@@ -4,22 +4,21 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { UserService } from 'src/app/services/user.service';
 
+
 @Component({
-  selector: 'app-index-res',
-  templateUrl: './index-res.component.html',
-  styleUrls: ['./index-res.component.css']
+  selector: 'app-clientes',
+  templateUrl: './clientes.component.html',
+  styleUrls: ['./clientes.component.css']
 })
 
-
-export class IndexResComponent implements OnInit {
+export class ClientesComponent implements OnInit {
   public user_lc: any = {};
   public empresa: any = {};
   public token: any;
   public id: any;
-  public load_data = false;
-  public load_btn = false;
-  public exist_res = true;
-  public reservaciones: Array<any> = [];
+  public load_data = true;
+  public exist_client = true;
+  public clientes: Array<any> = [];
   p: number = 1;
 
   constructor(
@@ -37,7 +36,7 @@ export class IndexResComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this._title.setTitle('GRASS | Mis reservaciones');
+    this._title.setTitle('GRASS | Clientes');
   }
 
   init_data() {
@@ -52,31 +51,19 @@ export class IndexResComponent implements OnInit {
 
           this.empresa = response.data;
           
-          this._userService.obtener_reservaciones_empresa(this.empresa._id, this.token).subscribe(
+          this._userService.obtener_clientes_empresa(this.empresa._id, this.token).subscribe(
             response => {
               if (response.data == undefined) {
-                this.exist_res = false;
+                this.exist_client = false;
               } else {
-                this.exist_res = true;
-                this.reservaciones = response.data;
+                this.exist_client = true;
+                this.clientes = response.data;
               }
             }
           );
           
           this.load_data = false;
         }
-      }
-    );
-  }
-
-  eliminar_reservacion(id: any) {
-    this.load_btn = true;
-    this._userService.eliminar_reservacion_empresa(id, this.token).subscribe(
-      response => {
-        this._toastrService.success('Se eliminó con éxito', 'ELIMINADO!');
-
-        this.load_btn = false;
-        this.init_data();
       }
     );
   }
@@ -88,4 +75,5 @@ export class IndexResComponent implements OnInit {
     this._router.navigate(['/']);
   }
 }
+
 

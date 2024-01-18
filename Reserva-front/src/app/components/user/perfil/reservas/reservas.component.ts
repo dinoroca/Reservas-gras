@@ -35,6 +35,7 @@ export class ReservasComponent implements OnInit {
   public fromOut: boolean = false;
   public existReservas: boolean = false;
   public myAngularxQrCode: string = '';
+  p: number = 1;
 
   constructor(
     private _userService: UserService,

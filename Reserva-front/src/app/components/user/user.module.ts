@@ -16,6 +16,7 @@ import { QRCodeModule } from 'angularx-qrcode';
 import { FootUserComponent } from './foot-user/foot-user.component';
 import { VerGrassComponent } from './ver-grass/ver-grass.component';
 import { VerMovilComponent } from './ver-movil/ver-movil.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 @NgModule({
@@ -37,7 +38,8 @@ import { VerMovilComponent } from './ver-movil/ver-movil.component';
     CommonModule,
     UserRoutingModule,
     FormsModule,
-    QRCodeModule
+    QRCodeModule,
+    NgxPaginationModule
   ]
 })
 export class UserModule { }

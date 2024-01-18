@@ -20,6 +20,8 @@ import { IndexResComponent } from './reservaciones/index-res/index-res.component
 import { CreateResComponent } from './reservaciones/create-res/create-res.component';
 import { QRCodeModule } from 'angularx-qrcode';
 import { CrearResIdComponent } from './reservaciones/crear-res-id/crear-res-id.component';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { ClientesComponent } from './clientes/clientes.component';
 
 
 @NgModule({
@@ -39,13 +41,15 @@ import { CrearResIdComponent } from './reservaciones/crear-res-id/crear-res-id.c
     GaleriaCanchasComponent,
     IndexResComponent,
     CreateResComponent,
-    CrearResIdComponent
+    CrearResIdComponent,
+    ClientesComponent
   ],
   imports: [
     CommonModule,
     GrassRoutingModule,
     FormsModule,
-    QRCodeModule
+    QRCodeModule,
+    NgxPaginationModule
   ]
 })
 export class GrassModule { }

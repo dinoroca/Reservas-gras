@@ -14,6 +14,7 @@ import { GaleriaCanchasComponent } from './canchas/galeria-canchas/galeria-canch
 import { IndexResComponent } from './reservaciones/index-res/index-res.component';
 import { CreateResComponent } from './reservaciones/create-res/create-res.component';
 import { CrearResIdComponent } from './reservaciones/crear-res-id/crear-res-id.component';
+import { ClientesComponent } from './clientes/clientes.component';
 
 const routes: Routes = [
   {path: '', component: InicioComponent},
@@ -30,6 +31,7 @@ const routes: Routes = [
   {path: 'cuentas', component: IndexCuentasComponent},
   {path: 'cuentas/crear', component: CreateCuentasComponent},
   {path: 'cuentas/:id', component: EditCuentasComponent},
+  {path: 'clientes', component: ClientesComponent},
 ];
 
 @NgModule({

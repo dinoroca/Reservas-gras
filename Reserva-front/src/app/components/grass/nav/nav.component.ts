@@ -52,7 +52,7 @@ export class NavComponent implements OnInit {
     location.reload();
     localStorage.clear();
     sessionStorage.clear();
-    this._router.navigate(['/']);
+    this._router.navigate(['/login']);
   }
 
 }
