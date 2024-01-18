@@ -1,1 +1,27 @@
-<p>sidebar works!</p>
+
+<div class="mt-5">
+    <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions"
+        aria-controls="offcanvasWithBothOptions">Menú</button>
+
+    <div class="offcanvas offcanvas-start text-bg-dark w-auto" data-bs-scroll="true" tabindex="-1"
+        id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel"></h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div class="pt-4 px-3 pl-0">
+                <h4>Menú de opciones</h4>
+                <hr class="hr-gradient hr-light mb-2 opacity-25">
+            
+                <nav>
+                    <a class="nav-link p-3" [routerLink]="['/admin']" [routerLink]="['/admin']" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"><i class="bi bi-house"></i> &nbsp; &nbsp; Inicio</a>
+                    <a class="nav-link p-3" [routerLink]="['/admin/empresas']" routerLinkActive="active"><i class="bi bi-vr"></i> &nbsp; &nbsp; Empresas</a>
+                    <a class="nav-link p-3" [routerLink]="['/admin/reservaciones']" routerLinkActive="active"><i class="bi bi-ticket-perforated"></i> &nbsp; &nbsp; Reservaciones</a>
+                    <a class="nav-link p-3" [routerLink]="['/admin/cuentas']" routerLinkActive="active"><i class="bi bi-credit-card-2-front"></i> &nbsp; &nbsp; Cuentas</a>
+                    <a class="nav-link p-3" [routerLink]="['/admin/clientes']" routerLinkActive="active"><i class="bi bi-person"></i> &nbsp; &nbsp; Clientes</a>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
