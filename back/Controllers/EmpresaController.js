@@ -436,12 +436,29 @@ const obtener_canchas = async function (req, res) {
 }
 
 /////RESERVACIONES
+const registro_reservacion_grass = async function (req, res) {
+  if (req.user) {
+    if (req.user.role == 'GRASS') {
+
+      var data = req.body;
+
+      let reg = await Reservacion.create(data);
+      res.status(200).send({ data: reg });
+
+    } else {
+      res.status(500).send({ message: 'NoAccess' });
+    }
+  } else {
+    res.status(500).send({ message: 'NoAccess' });
+  }
+}
+
 const obtener_reservaciones_empresa = async function (req, res) {
   if (req.user) {
     if (req.user.role == 'GRASS') {
       let id = req.params['id'];
 
-      let reservas = await Reservacion.find({ empresa: id }).sort({ createdAt: 1 }).populate('empresa').populate('cancha').populate({ path: 'cliente', model: 'user' });
+      let reservas = await Reservacion.find({ empresa: id }).sort({ createdAt: -1 }).populate('empresa').populate('cancha').populate({ path: 'cliente', model: 'user' });
 
       if (reservas.length >= 1) {
         res.status(200).send({ data: reservas });
@@ -758,6 +775,7 @@ module.exports = {
   obtener_canchas_empresa,
   obtener_cancha_publico,
   obtener_canchas,
+  registro_reservacion_grass,
   obtener_reservaciones_empresa,
   eliminar_reservacion_empresa,
   obtener_cancha_empresa,

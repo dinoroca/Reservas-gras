@@ -1,1 +1,46 @@
-<p>create-res works!</p>
+<app-nav></app-nav>
+
+
+<div class="container py-4">
+    <app-sidebar></app-sidebar>
+
+    <div class="shadow rounded mt-5 p-4">
+        <h3 class="text-center fw-bold" style="color:rgb(6, 170, 115)">
+            <a [routerLink]="['/grass/reservaciones']">
+                <i class="text-info bi bi-arrow-left"></i>
+            </a> &nbsp;
+            Crear reservaciones
+        </h3>
+
+        <ng-container *ngIf="load_btn">
+            <div class="text-center">
+                <div class="spinner-border text-secondary" style="width: 3rem; height: 3rem" role="status">
+                </div>
+                <h4 class="text-black-50"><small>Cargando...</small></h4>
+            </div>
+        </ng-container>
+
+        <ng-container *ngIf="!load_btn && canchas.length >= 1">
+            <p class="fs-5 fw-light text-center">Seleccione una de las canchas para realizar la reservación</p>
+
+            <div class="text-center">
+                <button *ngFor="let item of canchas" type="button" class="btn btn-primary col-12 col-sm-3 m-3"
+                [routerLink]="['/grass/reservaciones/crear', item._id]"> 
+                    {{item.nombre}} 
+                </button>
+            </div>
+
+        </ng-container>
+
+        <ng-container *ngIf="!load_btn && canchas.length < 1">
+            <div class="alert alert-danger mt-3 mb-0 text-center" role="alert">
+                No existen canchas, cree una almenos!! <br>
+
+                <a [routerLink]="['/grass/canchas']" type="btn" class="btn btn-danger mt-2">
+                    Crear cancha &nbsp; <i class="bi bi-arrow-right"></i>
+                </a>
+            </div>
+        </ng-container>
+
+    </div>
+</div>

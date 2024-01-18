@@ -13,6 +13,7 @@ import { EditCuentasComponent } from './cuentas/edit-cuentas/edit-cuentas.compon
 import { GaleriaCanchasComponent } from './canchas/galeria-canchas/galeria-canchas.component';
 import { IndexResComponent } from './reservaciones/index-res/index-res.component';
 import { CreateResComponent } from './reservaciones/create-res/create-res.component';
+import { CrearResIdComponent } from './reservaciones/crear-res-id/crear-res-id.component';
 
 const routes: Routes = [
   {path: '', component: InicioComponent},
@@ -25,6 +26,7 @@ const routes: Routes = [
   {path: 'datos/actualizar', component: EditDatosComponent},
   {path: 'reservaciones', component: IndexResComponent},
   {path: 'reservaciones/crear', component: CreateResComponent},
+  {path: 'reservaciones/crear/:id', component: CrearResIdComponent},
   {path: 'cuentas', component: IndexCuentasComponent},
   {path: 'cuentas/crear', component: CreateCuentasComponent},
   {path: 'cuentas/:id', component: EditCuentasComponent},

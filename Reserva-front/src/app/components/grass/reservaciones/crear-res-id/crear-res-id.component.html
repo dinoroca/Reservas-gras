@@ -1,0 +1,306 @@
+<app-nav></app-nav>
+
+
+<div class="container py-4">
+    <app-sidebar></app-sidebar>
+
+    <div class="shadow rounded mt-5 p-4">
+        <h3 class="text-center fw-bold" style="color:rgb(6, 170, 115)">
+            Crear reservaciones
+        </h3>
+
+        <!-- Canchas -->
+    <div class="row d-flex justify-content-center px-2 px-sm-2 pb-5">
+
+        <div *ngIf="load_data || load_btn_ver">
+            <!-- Custom size border spinner -->
+            <div class="text-center">
+                <div class="spinner-border" style="width: 3rem; height: 3rem" role="status">
+                </div>
+                <h5 class="text-black-50"><small>Cargando...</small></h5>
+            </div>
+        </div>
+
+        <ng-container *ngIf="!load_data && !load_btn_ver">
+            <div class="col-md-5 pb-3 pt-2 col-sm-12">
+                <div class="card shadow mx-3">
+                    <div class="images-grass">
+                        <ng-container *ngIf="cancha.galeria == undefined || cancha.galeria.length < 1">
+                            <img class="card-img-top" class="rounded"
+                                [src]="url + 'obtener_imagen_portada/' + 'defaultt'" alt="{{ cancha.empresa.nombre }}"
+                                style="height: 25vh" />
+                        </ng-container>
+
+                        <ng-container *ngIf="cancha.galeria != undefined">
+                            <img *ngIf="cancha.galeria.length >= 1" class="card-img-top" class="rounded"
+                                [src]="url + 'obtener_imagen_portada/' + cancha.galeria[0].imagen"
+                                alt="{{ cancha.empresa.nombre }}" style="height: 25vh" />
+                        </ng-container>
+
+                        <div class="nombre">
+                            <h5 class="card-title fw-bold text-center">
+                                {{ cancha.nombre }}
+                            </h5>
+                        </div>
+
+
+                    </div>
+
+                    <div class="card-body">
+
+                        <div class="grass-caracteristicas">
+
+                            <!-- Tipo -->
+                            <p *ngIf="cancha.tipo == 'Voley'" style="color: rgb(241, 78, 143);">
+                                <i class="bi bi-dribbble"></i> &nbsp;
+                                <a> {{cancha.tipo}} </a>
+                            </p>
+
+                            <p *ngIf="cancha.tipo == 'Fútbol/Futsal'" style="color: rgb(0, 192, 86);">
+                                <i class="bi bi-pentagon-fill"></i> &nbsp;
+                                <a> {{cancha.tipo}} </a>
+                            </p>
+
+                            <p *ngIf="cancha.tipo == 'Mixto'" style="color: rgb(111, 66, 193)">
+                                <i class="bi bi-shuffle"></i> &nbsp;
+                                <a> {{cancha.tipo}} &nbsp;
+                                    <small style="color: rgb(0, 192, 86);"><i class="bi bi-record-fill"></i> </small>
+                                    <small class="fw-light text text-secondary"> <i> Fútbol/Futsal</i> </small>
+
+                                    &nbsp;
+
+                                    <small style="color: rgb(241, 78, 143);"><i class="bi bi-record-fill"></i> </small>
+                                    <small class="fw-light text text-secondary"> <i> Voley</i> </small>
+                                </a>
+                            </p>
+
+                            <!-- Medidas -->
+                            <p *ngIf="cancha.tipo == 'Voley'">
+                                <i class="bi bi-square" style="color: rgb(241, 78, 143);"></i> &nbsp;
+                                <a> {{cancha.largo}}m x {{cancha.ancho}}m </a>
+                            </p>
+
+                            <p *ngIf="cancha.tipo == 'Fútbol/Futsal'">
+                                <i class="bi bi-square" style="color: rgb(0, 192, 86);"></i> &nbsp;
+                                <a> {{cancha.largo}}m x {{cancha.ancho}}m </a>
+                            </p>
+
+                            <p *ngIf="cancha.tipo == 'Mixto'">
+                                <i class="bi bi-square" style="color: rgb(111, 66, 193);"></i> &nbsp;
+                                <a> <small style="color: rgb(0, 192, 86);"><i class="bi bi-record-fill"></i></small>
+                                    {{cancha.largo}}m x {{cancha.ancho}}m
+                                </a>
+
+                                &nbsp;
+
+                                <a> <small style="color: rgb(241, 78, 143);"><i class="bi bi-record-fill"></i></small>
+                                    {{cancha.largo_voley}}m x {{cancha.ancho_voley}}m
+                                </a>
+                            </p>
+
+                            <!-- Precios -->
+                            <p *ngIf="cancha.tipo == 'Fútbol/Futsal'">
+                                <i class="bi bi-sun" style="color: rgb(0, 192, 86);"></i> &nbsp;
+                                <a> S/. {{cancha.precio_dia}}
+                                    <small class="fw-light text text-secondary"> <i>hora</i> </small>
+                                </a>
+                            </p>
+
+                            <p *ngIf="cancha.tipo == 'Voley'">
+                                <i class="bi bi-sun" style="color: rgb(241, 78, 143);"></i> &nbsp;
+                                <a> S/. {{cancha.precio_dia}}
+                                    <small class="fw-light text text-secondary"> <i>hora</i> </small>
+                                </a>
+                            </p>
+
+                            <p *ngIf="cancha.tipo == 'Fútbol/Futsal'">
+                                <i class="bi bi-moon-stars" style="color: rgb(0, 192, 86);"></i> &nbsp;
+                                <a> S/. {{cancha.precio_noche}}
+                                    <small class="fw-light text text-secondary"> <i>hora</i> </small>
+                                </a>
+                            </p>
+
+                            <p *ngIf="cancha.tipo == 'Voley'">
+                                <i class="bi bi-moon-stars" style="color: rgb(241, 78, 143);"></i> &nbsp;
+                                <a> S/. {{cancha.precio_noche}}
+                                    <small class="fw-light text text-secondary"> <i>hora</i> </small>
+                                </a>
+                            </p>
+
+                            <p *ngIf="cancha.tipo == 'Mixto'">
+                                <i class="bi bi-sun" style="color: rgb(111, 66, 193);"></i>
+                                <a> &nbsp; <small style="color: rgb(0, 192, 86);"><i
+                                            class="bi bi-record-fill"></i></small>
+                                    S/. {{cancha.precio_dia}}
+                                </a>
+
+                                &nbsp;
+
+                                <a> <small style="color: rgb(241, 78, 143);"><i class="bi bi-record-fill"></i></small>
+                                    S/. {{cancha.precio_dia_voley}}
+                                    <small class="fw-light text text-secondary"> <i>hora</i> </small>
+                                </a>
+                            </p>
+
+                            <p *ngIf="cancha.tipo == 'Mixto'">
+                                <i class="bi bi-moon-stars" style="color: rgb(111, 66, 193);"></i>
+                                <a> &nbsp; <small style="color: rgb(0, 192, 86);"><i
+                                            class="bi bi-record-fill"></i></small>
+                                    S/. {{cancha.precio_dia}}
+                                </a>
+
+                                &nbsp;
+
+                                <a> <small style="color: rgb(241, 78, 143);"><i class="bi bi-record-fill"></i></small>
+                                    S/. {{cancha.precio_dia_voley}}
+                                    <small class="fw-light text text-secondary"> <i>hora</i> </small>
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pt-4 text-center">
+                    <a *ngIf="cancha.tipo == 'Fútbol/Futsal'" (click)="volverAtras()" type="button"
+                        class="btn btn-reserve" style="width: 180px; border-radius: 30px">
+                        <i class="bi-greater bi-chevron-left"></i> &nbsp; Volver
+                    </a>
+
+                    <a *ngIf="cancha.tipo == 'Voley'" (click)="volverAtras()" type="button"
+                        class="btn btn-reserve-voley" style="width: 180px; border-radius: 30px">
+                        <i class="bi-greater bi-chevron-left"></i> &nbsp; Volver
+                    </a>
+                    <a *ngIf="cancha.tipo == 'Mixto'" (click)="volverAtras()" type="button"
+                        class="btn btn-reserve-mixto" style="width: 180px; border-radius: 30px">
+                        <i class="bi-greater bi-chevron-left"></i> &nbsp; Volver
+                    </a>
+                </div>
+
+            </div>
+
+            <ng-container>
+
+                <div class="container pt-2">
+                    <div>
+                        <div class="card card-body">
+                            <h2 class="text-center">Horario</h2>
+                            <div>
+                                <div class="container mt-3 table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th></th>
+                                                <th *ngFor="let dia of diasSemana">{{ dia.nombre | titlecase }}
+                                                    <small> <small>{{ dia.fecha | date:'shortDate' }}</small>
+                                                    </small>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let intervalo of intervalosHorarios; let i = index">
+                                                <th scope="row">
+                                                    <small>
+                                                        <small>
+                                                            {{ intervalo.inicio }} - {{ intervalo.fin }}
+                                                        </small>
+                                                    </small>
+                                                </th>
+                                                <td *ngFor="let dia of diasSemana; let j = index">
+                                                    <button class="btn" style="width: 100%; height: 100;"
+                                                        [class.btn-light]="botonesHoras[j][i].estado === 'Libre'"
+                                                        [class.btn-warning]="botonesHoras[j][i].estado === 'Ocupado'"
+                                                        [class.btn-info]="botonesHoras[j][i].estado === 'Reservado'"
+                                                        [class.btn-secondary]="botonesHoras[j][i].estado === 'Pasado'"
+                                                        [disabled]="!botonesHoras[j][i].disponible"
+                                                        data-bs-toggle="modal"
+                                                        [attr.data-bs-target]="'#ver-' + botonesHoras[j][i].id"
+                                                        (click)="select_mas_una_hora(botonesHoras[j][i].hora)">
+                                                        <span class="fw-light">
+                                                            {{ botonesHoras[j][i].estado }}
+                                                        </span>
+                                                    </button>
+
+                                                    <!-- Modal ver fecha y hora -->
+                                                    <div class="modal fade" id="ver-{{ botonesHoras[j][i].id }}"
+                                                        data-bs-backdrop="static" data-bs-keyboard="false"
+                                                        tabindex="-1" style="display: none" aria-hidden="true">
+                                                        <div class="modal-dialog modal-dialog-centered"
+                                                            role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h4 class="modal-title text-center">
+                                                                        Reservar {{ cancha.nombre }}
+                                                                    </h4>
+                                                                    <button type="button" class="btn-close"
+                                                                        data-bs-dismiss="modal" aria-label="Close"
+                                                                        (click)="reset_horas_reserva()">
+                                                                    </button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <i class="fs-5 bi bi-calendar-event"
+                                                                        style="color: rgb(255, 95, 95);"></i> &nbsp;
+                                                                    {{ botonesHoras[j][i].fecha |
+                                                                    date:'fullDate':'es'}} <br>
+
+                                                                    <i class="fs-5 bi bi-clock"
+                                                                        style="color: rgb(255, 95, 250);"></i>
+                                                                    &nbsp;
+
+                                                                    <span *ngIf="!masDeUno">
+                                                                        Desde {{ horasInicio }}:00 hasta {{
+                                                                        horasInicio + 1 }}:00
+                                                                    </span>
+
+                                                                    <span *ngIf="masDeUno">
+                                                                        Desde {{ horasInicio }}:00 hasta {{
+                                                                        horasFinal }}:00
+                                                                    </span>
+
+                                                                    <div class="my-4 text-center">
+                                                                        <span class="fw-light">Ingrese la cantidad
+                                                                            de horas</span>
+                                                                        <div class="input-group">
+                                                                            <span class="input-group-text">
+                                                                                Cantidad de horas
+                                                                            </span>
+                                                                            <input type="number"
+                                                                                class="form-control"
+                                                                                id="horasReserva" min="1"
+                                                                                [(ngModel)]="horasReserva"
+                                                                                (change)="select_mas_una_hora(botonesHoras[j][i].hora)">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button class="btn btn-secondary btn-sm bi-x-lg"
+                                                                        type="button" data-bs-dismiss="modal"
+                                                                        (click)="reset_horas_reserva()">
+                                                                    </button>
+                                                                    <button *ngIf="!load_btn"
+                                                                        class="btn btn-primary btn-sm"
+                                                                        data-bs-dismiss="modal"
+                                                                        [disabled]="horasReserva < 1"
+                                                                        (click)="onHoraSeleccionada(j, i)"
+                                                                        type="button"> <i class="bi bi-plus-lg"></i>
+                                                                        &nbsp;
+                                                                        Reservar
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+        </ng-container>
+    </div>
+    </div>
+</div>

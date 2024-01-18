@@ -1,0 +1,123 @@
+
+/* Clase para opacidad al 100% */
+.opacidad-100 {
+    opacity: 1;
+}
+
+/* Clase para opacidad al 50% */
+.opacidad-50 {
+    opacity: 0.5;
+}
+
+/* Clase para color de borde y texto */
+.border-color {
+    border: 2px solid #19ce81;
+    background: transparent;
+    color: #19ce81;
+}
+
+/** Clase para cursiva del contenido del atributo placeholder **/
+::placeholder {
+    font-style: italic;
+}
+
+
+/* ! OJO */
+.card-text {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    /* Número de líneas que deseas mostrar */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+.btn-reserve {
+    background-color: #19ce81;
+    border: none;
+    /* color: #effef7; */
+    color: white;
+}
+
+.btn-reserve:hover {
+    background-color: #2bb97b;
+    border: none;
+    /* color: #effef7; */
+    color: white;
+}
+
+.btn-reserve-voley {
+    background-color: #F14E8F;
+    border: none;
+    /* color: #effef7; */
+    color: white;
+}
+
+.btn-reserve-voley:hover {
+    background-color: #d64c83;
+    border: none;
+    /* color: #effef7; */
+    color: white;
+}
+
+.btn-reserve-mixto {
+    background-color: rgb(111, 66, 193);
+    border: none;
+    /* color: #effef7; */
+    color: white;
+}
+
+.btn-reserve-mixto:hover {
+    background-color: rgb(95, 51, 178);
+    border: none;
+    /* color: #effef7; */
+    color: white;
+}
+
+.bi-1 {
+    color: #0eab68;
+}
+
+.bi-2 {
+    color: rgb(124, 124, 124);
+}
+
+/* .buscar {
+    color: black;
+} */
+
+.bi-greater {
+    color: #effef7;
+}
+
+.images-grass {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.nombre {
+    margin-top: auto;
+    background: linear-gradient(to top, rgba(0, 1, 30, 0.7) 50%, rgba(10, 0, 11, 0)100%);
+    padding: 10px;
+    text-align: center;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    color: white;
+    ;
+}
+
+
+.grass-caracteristicas p {
+    margin-bottom: 8px;
+}
+
+#name-provincia {
+    background-color: #19ce81;
+    border-radius: 0px 0.3rem 0px 0.75rem;
+    padding: 0.125rem 0.4rem;
+    margin-right: -0.65rem;
+    color: white
+}

@@ -19,6 +19,7 @@ import { GaleriaCanchasComponent } from './canchas/galeria-canchas/galeria-canch
 import { IndexResComponent } from './reservaciones/index-res/index-res.component';
 import { CreateResComponent } from './reservaciones/create-res/create-res.component';
 import { QRCodeModule } from 'angularx-qrcode';
+import { CrearResIdComponent } from './reservaciones/crear-res-id/crear-res-id.component';
 
 
 @NgModule({
@@ -37,7 +38,8 @@ import { QRCodeModule } from 'angularx-qrcode';
     EditCanchasComponent,
     GaleriaCanchasComponent,
     IndexResComponent,
-    CreateResComponent
+    CreateResComponent,
+    CrearResIdComponent
   ],
   imports: [
     CommonModule,
