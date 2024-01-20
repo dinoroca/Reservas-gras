@@ -76,7 +76,7 @@
 
           <ng-container *ngIf="!load_reservas && reservaciones.length >= 1">
             <div *ngFor="let item of reservaciones | paginate: { itemsPerPage: 3, currentPage: p }; let indice = index"
-              class="card my-3" style="border-color: #00C056;">
+              class="card my-3" style="border-color: #00C056;" id="{{item._id}}">
               <div class="card-body">
                 <div class="text-center">
                   <span class="m-0"> Reservación N° {{reservaciones.length - indice}} </span> &nbsp;
@@ -85,6 +85,17 @@
                   <span *ngIf="item.estado == 'Reservado'" class="badge rounded-pill"
                     style="background-color: rgb(0, 192, 86);">Reservado</span>
                   <span *ngIf="item.estado == 'Finalizado'" class="badge rounded-pill text-bg-danger">Finalizado</span>
+                  &nbsp;
+
+                  <ng-container *ngIf="item.estado == 'Reservado'">
+                    <a *ngIf="!descargando" (click)="captureAndSaveView(item._id)"><i class="bi bi-download"></i></a>
+                    <a *ngIf="descargando">
+                      <div class="spinner-border spinner-border-sm" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                      </div>
+                    </a>
+                  </ng-container>
+
                 </div>
 
                 <div class="row">
@@ -210,7 +221,7 @@
                           </td>
                         </tr>
                         <tr>
-                          <td colspan="2"><i class="bi bi-calendar-event icono"></i> &nbsp; {{ item.fecha }}</td>
+                          <td colspan="2"><i class="bi bi-calendar-event icono"></i> &nbsp; {{ item.fecha | date: 'fullDate' }}</td>
                         </tr>
                         <tr>
                           <td><i class="bi bi-clock icono"></i> &nbsp; {{item.hora_inicio}}:00 a {{item.hora_fin}}:00

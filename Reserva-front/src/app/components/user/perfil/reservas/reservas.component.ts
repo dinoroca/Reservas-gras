@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ToastrService } from 'ngx-toastr';
 import { UserService } from 'src/app/services/user.service';
+import html2canvas from 'html2canvas';
+
 
 @Component({
   selector: 'app-reservas',
@@ -17,6 +19,7 @@ export class ReservasComponent implements OnInit {
   public load_data: boolean = true;
   public load_reservas: boolean = true;
   public load_btn = false;
+  public descargando = false;
   public activePagos: boolean = false;
   public viewButton: boolean = false;
 
@@ -136,6 +139,56 @@ export class ReservasComponent implements OnInit {
       }
     );
   }
+
+  captureAndSaveView(id: any) {
+    this.descargando = true;
+  
+    const container = document.getElementById(id);
+  
+    if (container) {
+      // Ruta a la imagen del marco en la carpeta assets
+      const marcoImagePath = '../../../../../assets/img/marco-ticket.png';
+  
+      // Cargar la imagen del marco
+      const marcoImg = new Image();
+      marcoImg.src = marcoImagePath;
+  
+      // Capturar el contenido del contenedor
+      html2canvas(container).then(contentCanvas => {
+        // Crear un nuevo canvas para combinar la imagen del marco y el contenido capturado
+        const combinedCanvas = document.createElement('canvas');
+        combinedCanvas.width = Math.max(contentCanvas.width, marcoImg.width);
+        combinedCanvas.height = Math.max(contentCanvas.height, marcoImg.height);
+  
+        const ctx = combinedCanvas.getContext('2d')!;
+  
+        // Dibujar la imagen del marco
+        ctx.drawImage(marcoImg, 0, 0, marcoImg.width, marcoImg.height);
+  
+        // Dibujar el contenido capturado sobre el marco
+        ctx.drawImage(contentCanvas, 10, 10); // Ajusta las coordenadas según sea necesario
+  
+        // Obtener la imagen combinada como una URL
+        const combinedImage = combinedCanvas.toDataURL('image/png');
+  
+        // Crear un elemento a para la descarga
+        const downloadLink = document.createElement('a');
+        downloadLink.href = combinedImage;
+        downloadLink.download = 'reservacion_grass.png'; // Puedes cambiar el nombre del archivo si lo deseas
+  
+        // Simular el clic en el enlace
+        const clickEvent = new MouseEvent('click', { bubbles: true, cancelable: true, view: window });
+        downloadLink.dispatchEvent(clickEvent);
+  
+        // Reiniciar la propiedad descargando después de la simulación del clic
+        this.descargando = false;
+      });
+    } else {
+      // Si no se encuentra el contenedor, también debes reiniciar la propiedad descargando
+      this.descargando = false;
+    }
+  }
+  
 
   eliminar_pre_reserva() {
     localStorage.removeItem('afuera');
