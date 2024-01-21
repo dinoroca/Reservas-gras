@@ -146,29 +146,19 @@ export class ReservasComponent implements OnInit {
     const container = document.getElementById(id);
   
     if (container) {
-      // Ruta a la imagen del marco en la carpeta assets
-      const marcoImagePath = '../../../../../assets/img/marco-ticket.png';
-  
-      // Cargar la imagen del marco
-      const marcoImg = new Image();
-      marcoImg.src = marcoImagePath;
-  
       // Capturar el contenido del contenedor
       html2canvas(container).then(contentCanvas => {
-        // Crear un nuevo canvas para combinar la imagen del marco y el contenido capturado
+        // Crear un nuevo canvas solo para el contenido capturado
         const combinedCanvas = document.createElement('canvas');
-        combinedCanvas.width = Math.max(contentCanvas.width, marcoImg.width);
-        combinedCanvas.height = Math.max(contentCanvas.height, marcoImg.height);
+        combinedCanvas.width = contentCanvas.width;
+        combinedCanvas.height = contentCanvas.height;
   
         const ctx = combinedCanvas.getContext('2d')!;
   
-        // Dibujar la imagen del marco
-        ctx.drawImage(marcoImg, 0, 0, marcoImg.width, marcoImg.height);
+        // Dibujar el contenido capturado
+        ctx.drawImage(contentCanvas, 0, 0);
   
-        // Dibujar el contenido capturado sobre el marco
-        ctx.drawImage(contentCanvas, 10, 10); // Ajusta las coordenadas según sea necesario
-  
-        // Obtener la imagen combinada como una URL
+        // Obtener la imagen capturada como una URL
         const combinedImage = combinedCanvas.toDataURL('image/png');
   
         // Crear un elemento a para la descarga
@@ -188,7 +178,6 @@ export class ReservasComponent implements OnInit {
       this.descargando = false;
     }
   }
-  
 
   eliminar_pre_reserva() {
     localStorage.removeItem('afuera');
