@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { UserService } from 'src/app/services/user.service';
 import { v4 as uuidv4 } from 'uuid';
 import { GLOBAL } from '../../../services/global';
+import Chart from 'chart.js/auto';
 
 @Component({
   selector: 'app-inicio',
@@ -13,9 +14,17 @@ import { GLOBAL } from '../../../services/global';
 })
 export class InicioComponent implements OnInit {
   public empresa: any = {};
+  public chart: any;
+  public cantidad = 0;
+  public ganancia_total = 0;
+  public total_mes = 0;
+  public total_mes_anterior = 0;
+  public total_mes_sim = 0;
+  public total_mes_anterior_sim = 0;
+  public count_ventas = 0;
+  public load_data = true;
   public id: any;
   public token: any;
-  public load_data = true;
   public load_btn = false;
   public isImagePort = false;
   public addImage = true;
@@ -31,8 +40,7 @@ export class InicioComponent implements OnInit {
     private _title: Title,
     private _toastrService: ToastrService
   ) {
-    this.token =
-      localStorage.getItem('token') || sessionStorage.getItem('token');
+    this.token = localStorage.getItem('token') || sessionStorage.getItem('token');
     this.id = localStorage.getItem('_id') || sessionStorage.getItem('_id');
     this.url = GLOBAL.url;
 
@@ -68,8 +76,63 @@ export class InicioComponent implements OnInit {
       });
   }
 
+  init_chart() {
+    this._userService.kpi_ganancias_mensuales_grass(this.id, this.token).subscribe(
+      response => {
+        this.ganancia_total = response.ganancia_total;
+        this.total_mes = response.total_mes;
+        this.total_mes_anterior = response.total_mes_anterior;
+        this.count_ventas = response.count_ventas;
+        this.chart = new Chart("MyChart", {
+          type: 'line', //this denotes tha type of chart
+
+          data: {// values on X-Axis
+            labels: ['Enero',
+              'Febrero',
+              'Marzo',
+              'Abril',
+              'Mayo',
+              'Junio',
+              'Julio',
+              'Agosto',
+              'Septiembre',
+              'Octubre',
+              'Noviembre',
+              'Diciembre'],
+            datasets: [
+              {
+                label: "Pagos en S/.",
+                data: [response.enero,
+                response.febrero,
+                response.marzo,
+                response.abril,
+                response.mayo,
+                response.junio,
+                response.julio,
+                response.agosto,
+                response.septiembre,
+                response.octubre,
+                response.noviembre,
+                response.diciembre],
+                backgroundColor: 'rgb(20, 203, 139)'
+              }
+            ]
+          },
+          options: {
+            aspectRatio: 2
+          }
+
+        });
+
+      }
+    );
+    
+    this.load_data = false;
+  }
+
   ngOnInit(): void {
     this._title.setTitle('GRASS | Galería de canchas');
+    this.init_chart();
   }
   //--------------------------------------------------------------
   fileChangeEvent(event: any): void {

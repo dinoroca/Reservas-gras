@@ -179,6 +179,12 @@ export class UserService {
     return this._http.delete(this.url + 'eliminar_reservacion_empresa/' + id, { headers: headers });
   }
 
+  //KPI
+  kpi_ganancias_mensuales_grass(id: any, token: any): Observable<any> {
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json', 'authorization': token });
+    return this._http.get(this.url + 'kpi_ganancias_mensuales_grass/' + id, { headers: headers });
+  }
+
   //Cuentas
   registro_cuenta_grass(data: any, token: any): Observable<any> {
     let headers = new HttpHeaders({ 'Content-Type': 'application/json', 'authorization': token });

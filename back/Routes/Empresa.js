@@ -37,6 +37,9 @@ api.get('/obtener_reservaciones_empresa/:id', auth.auth, EmpresaController.obten
 api.get('/obtener_clientes_empresa/:id', auth.auth, EmpresaController.obtener_clientes_empresa);
 api.delete('/eliminar_reservacion_empresa/:id', auth.auth, EmpresaController.eliminar_reservacion_empresa);
 
+////KPI
+api.get('/kpi_ganancias_mensuales_grass/:id', auth.auth, EmpresaController.kpi_ganancias_mensuales_grass);
+
 /////GALERÍA
 api.put('/agregar_imagen_galeria_cancha/:id', [auth.auth, path], EmpresaController.agregar_imagen_galeria_cancha);
 api.put('/eliminar_imagen_galeria_cancha/:id', auth.auth, EmpresaController.eliminar_imagen_galeria_cancha);

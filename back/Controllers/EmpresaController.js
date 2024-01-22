@@ -514,6 +514,148 @@ const eliminar_reservacion_empresa = async function (req, res) {
   }
 }
 
+/////KPI
+const kpi_ganancias_mensuales_grass = async function (req, res) {
+  if (req.user) {
+    if (req.user.role == 'GRASS') {
+      let id = req.params['id'];
+      var enero = 0;
+      var febrero = 0;
+      var marzo = 0;
+      var abril = 0;
+      var mayo = 0;
+      var junio = 0;
+      var julio = 0;
+      var agosto = 0;
+      var septiembre = 0;
+      var octubre = 0;
+      var noviembre = 0;
+      var diciembre = 0;
+
+      var nv_enero = 0;
+      var nv_febrero = 0;
+      var nv_marzo = 0;
+      var nv_abril = 0;
+      var nv_mayo = 0;
+      var nv_junio = 0;
+      var nv_julio = 0;
+      var nv_agosto = 0;
+      var nv_septiembre = 0;
+      var nv_octubre = 0;
+      var nv_noviembre = 0;
+      var nv_diciembre = 0;
+
+      var ganancia_total = 0;
+      var total_mes = 0;
+      var total_mes_anterior = 0;
+      var count_ventas = 0;
+
+      var reg = await Reservacion.find({
+        $and: [{ $or: [{ estado: 'Reservado' }, { estado: 'Finalizado' }] }, { empresa: id }]
+      });
+      let current_date = new Date();
+      let current_year = current_date.getFullYear();
+      let current_month = current_date.getMonth() + 1;
+
+      for (var item of reg) {
+        let createdAt_date = new Date(item.createdAt);
+        let mes = createdAt_date.getMonth() + 1;
+
+        if (createdAt_date.getFullYear() == current_year) {
+
+          ganancia_total = ganancia_total + item.subtotal;
+
+          if (mes == current_month) {
+            total_mes = total_mes + item.subtotal;
+            count_ventas = count_ventas + 1;
+          }
+
+          if (mes == current_month - 1) {
+            total_mes_anterior = total_mes_anterior + item.subtotal;
+          }
+
+          if (mes == 1) {
+            enero = enero + item.subtotal;
+            nv_enero = nv_enero + item.cantidad;
+          } else if (mes == 2) {
+            febrero = febrero + item.subtotal;
+            nv_febrero = nv_febrero + item.cantidad;
+          } else if (mes == 3) {
+            marzo = marzo + item.subtotal;
+            nv_marzo = nv_marzo + item.cantidad;
+          } else if (mes == 4) {
+            abril = abril + item.subtotal;
+            nv_abril = nv_abril + item.cantidad;
+          } else if (mes == 5) {
+            mayo = mayo + item.subtotal;
+            nv_mayo = nv_mayo + item.cantidad;
+          } else if (mes == 6) {
+            junio = junio + item.subtotal;
+            nv_junio = nv_junio + item.cantidad;
+          } else if (mes == 7) {
+            julio = julio + item.subtotal;
+            nv_julio = nv_julio + item.cantidad;
+          } else if (mes == 8) {
+            agosto = agosto + item.subtotal;
+            nv_agosto = nv_agosto + item.cantidad;
+          } else if (mes == 9) {
+            septiembre = septiembre + item.subtotal;
+            nv_septiembre = nv_septiembre + item.cantidad;
+          } else if (mes == 10) {
+            octubre = octubre + item.subtotal;
+            nv_octubre = nv_octubre + item.cantidad;
+          } else if (mes == 11) {
+            noviembre = noviembre + item.subtotal;
+            nv_noviembre = nv_noviembre + item.cantidad;
+          } else if (mes == 12) {
+            diciembre = diciembre + item.subtotal;
+            nv_diciembre = nv_diciembre + item.cantidad;
+          }
+        }
+      }
+
+      res.status(200).send({
+        enero: enero,
+        febrero: febrero,
+        marzo: marzo,
+        abril: abril,
+        mayo: mayo,
+        junio: junio,
+        julio: julio,
+        agosto: agosto,
+        septiembre: septiembre,
+        octubre: octubre,
+        noviembre: noviembre,
+        diciembre: diciembre,
+
+        nv_enero: nv_enero,
+        nv_febrero: nv_febrero,
+        nv_marzo: nv_marzo,
+        nv_abril: nv_abril,
+        nv_mayo: nv_mayo,
+        nv_junio: nv_junio,
+        nv_julio: nv_julio,
+        nv_agosto: nv_agosto,
+        nv_septiembre: nv_septiembre,
+        nv_octubre: nv_octubre,
+        nv_noviembre: nv_noviembre,
+        nv_diciembre: nv_diciembre,
+
+        ganancia_total: ganancia_total,
+        total_mes: total_mes,
+        total_mes_anterior: total_mes_anterior,
+        count_ventas: count_ventas
+      });
+
+    } else {
+      res.status(500).send({ message: 'NoAccess' });
+    }
+  } else {
+    res.status(500).send({ message: 'NoAccess' });
+  }
+}
+
+
 //Galería CANCHA
 const agregar_imagen_galeria_cancha = async function (req, res) {
 
@@ -804,6 +946,7 @@ module.exports = {
   obtener_reservaciones_empresa,
   obtener_clientes_empresa,
   eliminar_reservacion_empresa,
+  kpi_ganancias_mensuales_grass,
   obtener_cancha_empresa,
   actualizar_cancha_empresa,
   eliminar_cancha_empresa,
