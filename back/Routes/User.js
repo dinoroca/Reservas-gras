@@ -13,6 +13,14 @@ api.put('/actualizar_user/:id', auth.auth, UserController.actualizar_user);
 api.post('/comparar_password', UserController.comparar_password);
 api.put('/actualizar_password_user/:id', auth.auth, UserController.actualizar_password_user);
 
+/////// CUENTAS
+api.post('/registro_cuenta_admin', auth.auth, UserController.registro_cuenta_admin);
+api.get('/obtener_cuentas_admin/:id', auth.auth, UserController.obtener_cuentas_admin);
+api.get('/obtener_cuenta_admin/:id', auth.auth, UserController.obtener_cuenta_admin);
+api.delete('/eliminar_cuenta_admin/:id', auth.auth, UserController.eliminar_cuenta_admin);
+api.put('/actualizar_cuenta_admin/:id', auth.auth, UserController.actualizar_cuenta_admin);
+api.get('/obtener_cuentas_de_admin', auth.auth, UserController.obtener_cuentas_de_admin);
+
 ///// Correos de confirmación
 api.put('/actualizar_user_verificado/:id/:codigo', UserController.actualizar_user_verificado);
 

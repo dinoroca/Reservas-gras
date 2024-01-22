@@ -216,6 +216,37 @@ export class UserService {
     return this._http.get(this.url + 'obtener_cuentas', { headers: headers });
   }
 
+  //CUENTAS ADMIN
+  registro_cuenta_admin(data: any, token: any): Observable<any> {
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json', 'authorization': token });
+    return this._http.post(this.url + 'registro_cuenta_admin', data, { headers: headers });
+  }
+
+  obtener_cuenta_admin(id: any, token: any): Observable<any> {
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json', 'authorization': token });
+    return this._http.get(this.url + 'obtener_cuenta_admin/' + id, { headers: headers });
+  }
+
+  obtener_cuentas_admin(id: any, token: any): Observable<any> {
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json', 'authorization': token });
+    return this._http.get(this.url + 'obtener_cuentas_admin/' + id, { headers: headers });
+  }
+
+  eliminar_cuenta_admin(id: any, token: any): Observable<any> {
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json', 'authorization': token });
+    return this._http.delete(this.url + 'eliminar_cuenta_admin/' + id, { headers: headers });
+  }
+
+  actualizar_cuenta_admin(id: any, data: any, token: any): Observable<any> {
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json', 'authorization': token });
+    return this._http.put(this.url + 'actualizar_cuenta_admin/' + id, data, { headers: headers });
+  }
+
+  obtener_cuentas_de_admin(token: any): Observable<any> {
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json', 'authorization': token });
+    return this._http.get(this.url + 'obtener_cuentas_de_admin', { headers: headers });
+  }
+
   //Galería
   agregar_imagen_galeria_cancha(id: any, data: any, token: any): Observable<any> {
     let headers = new HttpHeaders({ 'authorization': token });

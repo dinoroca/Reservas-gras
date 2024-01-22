@@ -70,7 +70,7 @@ export class ReservasComponent implements OnInit {
       }
     );
 
-    _userService.obtener_cuentas(this.token).subscribe(
+    _userService.obtener_cuentas_de_admin(this.token).subscribe(
       response => {
         this.cuentas = response.data;
       }

@@ -2,6 +2,8 @@
 
 var User = require('../Models/User');
 var Reservacion = require('../Models/Reservacion');
+var Reservacion = require('../Models/Reservacion');
+var Cuenta = require('../Models/Cuenta');
 var bcrypt = require('bcrypt-nodejs');
 var jwt = require('../Helpers/jwt');
 
@@ -9,6 +11,7 @@ var jwt = require('../Helpers/jwt');
 var handlebars = require('handlebars');
 var ejs = require('ejs');
 var nodemailer = require('nodemailer');
+const CuentaAdmin = require('../Models/CuentaAdmin');
 
 const registro_user = async function (req, res) {
   //Obtiene los parámetros del cliente
@@ -257,7 +260,121 @@ const obtener_reservaciones_public = async function (req, res) {
   }
 }
 
+//Cuentas ADMIN
+const registro_cuenta_admin = async function (req, res) {
+  if (req.user) {
+    if (req.user.role == 'ADMIN') {
 
+      var data = req.body;
+
+      let reg = await CuentaAdmin.create(data);
+      res.status(200).send({ data: reg });
+
+    } else {
+      res.status(500).send({ message: 'NoAccess' });
+    }
+  } else {
+    res.status(500).send({ message: 'NoAccess' });
+  }
+}
+
+const obtener_cuentas_admin = async function (req, res) {
+  if (req.user) {
+    if (req.user.role == 'ADMIN') {
+      let id = req.params['id'];
+
+      let cuentas = [];
+      try {
+        cuentas = await CuentaAdmin.find().sort({ createdAt: -1 });
+        res.status(200).send({ data: cuentas });
+      } catch (error) {
+        res.status(200).send({ data: undefined });
+      }
+    } else {
+      res.status(500).send({ message: 'NoAccess' });
+    }
+  } else {
+    res.status(500).send({ message: 'NoAccess' });
+  }
+}
+
+const obtener_cuenta_admin = async function (req, res) {
+  if (req.user) {
+    if (req.user.role == 'ADMIN') {
+
+      var id = req.params['id'];
+
+      let cuenta;
+
+      try {
+        cuenta = await CuentaAdmin.findById({ _id: id });
+        res.status(200).send({ data: cuenta });
+      } catch (error) {
+        res.status(200).send({ data: undefined });
+      }
+    } else {
+      res.status(500).send({ message: 'NoAccess' });
+    }
+  } else {
+    res.status(500).send({ message: 'NoAccess' });
+  }
+}
+
+const eliminar_cuenta_admin = async function (req, res) {
+  if (req.user) {
+    if (req.user.role == 'ADMIN') {
+
+      var id = req.params['id'];
+      let reg = await CuentaAdmin.findByIdAndRemove({ _id: id });
+      res.status(200).send({ data: reg });
+
+    } else {
+      res.status(500).send({ message: 'NoAccess' });
+    }
+  } else {
+    res.status(500).send({ message: 'NoAccess' });
+  }
+}
+
+const actualizar_cuenta_admin = async function (req, res) {
+  if (req.user) {
+    if (req.user.role == 'ADMIN') {
+
+      var id = req.params['id'];
+      var data = req.body;
+
+      var reg = await CuentaAdmin.findByIdAndUpdate({ _id: id }, {
+        banco: data.banco,
+        titular: data.titular,
+        cuenta: data.cuenta,
+        cci: data.cci,
+        color: data.color
+      });
+
+      res.status(200).send({ data: reg });
+
+    } else {
+      res.status(500).send({ message: 'NoAccess' });
+    }
+  } else {
+    res.status(500).send({ message: 'NoAccess' });
+  }
+}
+
+const obtener_cuentas_de_admin = async function (req, res) {
+  if (req.user) {
+
+    let cuentas = [];
+    try {
+      cuentas = await CuentaAdmin.find();
+      res.status(200).send({ data: cuentas });
+    } catch (error) {
+      res.status(200).send({ data: undefined });
+    }
+  } else {
+    res.status(500).send({ message: 'NoAccess' });
+  }
+}
 
 
 ////////CONTACTO
@@ -268,7 +385,6 @@ const enviar_mensaje_contacto = async function (req, res) {
 
   res.status(200).send({ data: reg })
 }
-
 
 module.exports = {
   registro_user,
@@ -281,5 +397,11 @@ module.exports = {
   crear_reservacion_user,
   obtener_reservaciones_user,
   obtener_reservaciones_public,
+  registro_cuenta_admin,
+  obtener_cuentas_admin,
+  obtener_cuenta_admin,
+  eliminar_cuenta_admin,
+  actualizar_cuenta_admin,
+  obtener_cuentas_de_admin,
   enviar_mensaje_contacto
 }

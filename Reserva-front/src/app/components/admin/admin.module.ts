@@ -11,6 +11,7 @@ import { IndexCuentasComponent } from './cuentas/index-cuentas/index-cuentas.com
 import { CreateCuentasComponent } from './cuentas/create-cuentas/create-cuentas.component';
 import { EditCuentasComponent } from './cuentas/edit-cuentas/edit-cuentas.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { UsuariosComponent } from './usuarios/usuarios.component';
   ],
   imports: [
     CommonModule,
-    AdminRoutingModule
+    AdminRoutingModule,
+    FormsModule
   ]
 })
 export class AdminModule { }
