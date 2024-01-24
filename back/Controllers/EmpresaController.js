@@ -458,7 +458,15 @@ const obtener_reservaciones_empresa = async function (req, res) {
     if (req.user.role == 'GRASS') {
       let id = req.params['id'];
 
-      let reservas = await Reservacion.find({ empresa: id }).sort({ createdAt: -1 }).populate('empresa').populate('cancha').populate({ path: 'cliente', model: 'user' });
+      let reservas = await Reservacion.find({
+        empresa: id,
+        estado: { $in: ['Reservado', 'Finalizado'] }
+      })
+        .sort({ createdAt: -1 })
+        .populate('empresa')
+        .populate('cancha')
+        .populate({ path: 'cliente', model: 'user' });
+      
 
       if (reservas.length >= 1) {
         res.status(200).send({ data: reservas });

@@ -4,14 +4,15 @@ var User = require('../Models/User');
 var Reservacion = require('../Models/Reservacion');
 var Reservacion = require('../Models/Reservacion');
 var Cuenta = require('../Models/Cuenta');
+const CuentaAdmin = require('../Models/CuentaAdmin');
 var bcrypt = require('bcrypt-nodejs');
 var jwt = require('../Helpers/jwt');
+const moment = require('moment');
 
 // var fs = require('fs');
 var handlebars = require('handlebars');
 var ejs = require('ejs');
 var nodemailer = require('nodemailer');
-const CuentaAdmin = require('../Models/CuentaAdmin');
 
 const registro_user = async function (req, res) {
   //Obtiene los parámetros del cliente
@@ -259,6 +260,59 @@ const obtener_reservaciones_public = async function (req, res) {
     res.status(200).send({ data: undefined });
   }
 }
+
+// Función para eliminar reservas vencidas
+const eliminarReservasVencidas = async () => {
+  try {
+    // Define el límite de tiempo para las reservas (en minutos)
+    const limiteTiempo = 15;
+
+    // Calcula la fecha límite para eliminar las reservas
+    const fechaLimite = moment().subtract(limiteTiempo, 'minutes');
+
+    // Busca las reservas con estado 'Ocupado' y fecha de creación anterior a la fecha límite
+    const reservasVencidas = await Reservacion.find({
+      estado: 'Ocupado',
+      createdAt: { $lte: fechaLimite.toDate() }
+    });
+
+    // Elimina las reservas vencidas
+    for (const reserva of reservasVencidas) {
+      await Reservacion.findByIdAndDelete(reserva._id);
+    }
+  } catch (error) {
+    console.error('Error al eliminar reservas vencidas:', error);
+  }
+};
+
+setInterval(eliminarReservasVencidas, 60 * 1000);
+
+// Función para actualizar el estado de las reservas
+const actualizarEstadoReservas = async () => {
+  try {
+    // Obtiene la fecha y hora actual
+    const ahora = new Date();
+
+    // Busca las reservas con estado 'Reservado' y fecha y hora de inicio menores o iguales a la fecha y hora actual
+    const reservasPendientes = await Reservacion.find({
+      estado: 'Reservado',
+      fecha: { $lte: ahora },
+      hora_inicio: { $lte: ahora }
+    });
+
+    // Actualiza el estado de las reservas encontradas a 'Finalizado'
+    for (const reserva of reservasPendientes) {
+      await Reservacion.findByIdAndUpdate(reserva._id, { estado: 'Finalizado' });
+      console.log(`La reserva con ID ${reserva._id} ha sido actualizada a 'Finalizado'.`);
+    }
+  } catch (error) {
+    console.error('Error al actualizar el estado de las reservas:', error);
+  }
+};
+
+// Configura un temporizador para ejecutar la función cada hora
+setInterval(actualizarEstadoReservas, 60 * 60 * 1000); // Cada hora en milisegundos
+
 
 //Cuentas ADMIN
 const registro_cuenta_admin = async function (req, res) {

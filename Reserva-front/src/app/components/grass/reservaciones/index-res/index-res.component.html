@@ -25,56 +25,6 @@
         class="card my-3" style="border-color: #00C056;">
         <div class="card-body">
           <div class="row">
-            <ng-container *ngIf="item.estado == 'Ocupado'">
-              <div class="col-12 col-md-4">
-                <div class="shadow rounded my-3">
-                  <div class="text-center p-4">
-                    <p class="fw-light m-0">
-                      La reservación está por ser confirmada, si no se hace el pago en 15 minutos
-                      se elimina automáticamente.
-                    </p>
-
-                    <p class="fw-light text-danger">
-                      <small>Si tiene una reserva pendiente, puedes eliminarla.</small>
-                    </p>
-
-                    <button data-bs-toggle="modal" [attr.data-bs-target]="'#ver-' + item._id"
-                      class="btn btn-danger btn-sm mt-2" type="button" title="Eliminar">
-                      <i class="bi bi-trash"></i>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </ng-container>
-
-            <!-- Modal eliminar reservaciones -->
-            <div class="modal fade" id="ver-{{ item._id }}" tabindex="-1" style="display: none" aria-hidden="true">
-              <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title text-center fw-bold">
-                      Eliminar
-                    </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                    </button>
-                  </div>
-                  <div class="modal-body">
-
-                    Eliminar la reservación <span class="icono"> {{item._id}} </span>?
-
-                  </div>
-
-                  <div class="modal-footer">
-                    <button class="btn btn-secondary btn-sm bi-x-lg" type="button" data-bs-dismiss="modal">
-                    </button>
-                    <button *ngIf="!load_btn" class="btn btn-danger btn-sm" data-bs-dismiss="modal"
-                      (click)="eliminar_reservacion(item._id)" type="button"> <i class="bi bi-trash-fill"></i> &nbsp;
-                      Eliminar
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
 
             <ng-container *ngIf="item.estado == 'Reservado' || item.estado == 'Finalizado'">
               <div class="col-12 col-md-4">
@@ -113,7 +63,6 @@
                   <tr>
                     <td>
                       <i class="bi bi-gear icono"></i> &nbsp;
-                      <span *ngIf="item.estado == 'Ocupado'" class="badge rounded-pill text-bg-secondary">Ocupado</span>
                       <span *ngIf="item.estado == 'Reservado'" class="badge rounded-pill"
                         style="background-color: rgb(0, 192, 86);">Reservado</span>
                       <span *ngIf="item.estado == 'Finalizado'"
