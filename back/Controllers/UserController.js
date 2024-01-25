@@ -293,25 +293,28 @@ const actualizarEstadoReservas = async () => {
     // Obtiene la fecha y hora actual
     const ahora = new Date();
 
-    // Busca las reservas con estado 'Reservado' y fecha y hora de inicio menores o iguales a la fecha y hora actual
-    const reservasPendientes = await Reservacion.find({
-      estado: 'Reservado',
-      fecha: { $lte: ahora },
-      hora_inicio: { $lte: ahora }
-    });
+    // Ejecuta la actualización solo si la hora actual es en el minuto 00
+    if (ahora.getMinutes() === 0) {
+      // Busca las reservas con estado 'Reservado' y fecha y hora de inicio menores o iguales a la fecha y hora actual
+      const reservasPendientes = await Reservacion.find({
+        estado: 'Reservado',
+        fecha: { $lte: ahora },
+        hora_inicio: { $lte: ahora }
+      });
 
-    // Actualiza el estado de las reservas encontradas a 'Finalizado'
-    for (const reserva of reservasPendientes) {
-      await Reservacion.findByIdAndUpdate(reserva._id, { estado: 'Finalizado' });
-      console.log(`La reserva con ID ${reserva._id} ha sido actualizada a 'Finalizado'.`);
+      // Actualiza el estado de las reservas encontradas a 'Finalizado'
+      for (const reserva of reservasPendientes) {
+        await Reservacion.findByIdAndUpdate(reserva._id, { estado: 'Finalizado' });
+        console.log(`La reserva con ID ${reserva._id} ha sido actualizada a 'Finalizado'.`);
+      }
     }
   } catch (error) {
     console.error('Error al actualizar el estado de las reservas:', error);
   }
 };
 
-// Configura un temporizador para ejecutar la función cada hora
-setInterval(actualizarEstadoReservas, 60 * 60 * 1000); // Cada hora en milisegundos
+// Configura un temporizador para verificar y ejecutar la función cada minuto
+setInterval(actualizarEstadoReservas, 60 * 1000);
 
 
 //Cuentas ADMIN

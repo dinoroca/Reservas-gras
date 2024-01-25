@@ -146,23 +146,23 @@
             <h3>Dashboard</h3>
         </div>
 
-        <div class="col-6 col-sm-3 mt-3">
+        <div class="col-6 col-sm-4 mt-3">
             <div class="card">
                 <div class="card-body">
                     <div class="row gx-0">
                         <div class="col">
                             <h6 class="text-muted mb-2">
-                                Ganancia total
+                                N° de ventas
                             </h6>
                             <span class="h5 mb-0">
-                                S/. {{ganancia_total}}
+                                {{total_ventas}}
                             </span>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-6 col-sm-3 mt-3">
+        <div class="col-6 col-sm-4 mt-3">
             <div class="card">
                 <div class="card-body">
                     <div class="row">
@@ -171,7 +171,7 @@
                                 Mes actual
                             </h6>
                             <span class="h5 mb-0">
-                                S/. {{total_mes}} &nbsp;
+                                {{total_mes}} &nbsp;
                             </span>
 
                             <small class="text-success mb-0" *ngIf="total_mes - total_mes_anterior > 0">
@@ -188,24 +188,8 @@
                 </div>
             </div>
         </div>
-        <div class="col-6 col-sm-3 mt-3">
-            <div class="card">
-                <div class="card-body">
-                    <div class="row gx-0">
-                        <div class="col">
-                            <h6 class="text-muted mb-2">
-                                N° Ventas total
-                            </h6>
-                            <span class="h5 mb-0">
-                                {{count_ventas}}
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
 
-        <div class="col-6 col-sm-3 mt-3">
+        <div class="col-6 col-sm-4 mt-3">
             <div class="">
                 <div class="card">
                     <div class="card-body">
@@ -215,7 +199,7 @@
                                     Mes anterior
                                 </h6>
                                 <span class="h5 mb-0">
-                                    S/. {{total_mes_anterior}}
+                                    {{total_mes_anterior}}
                                 </span>
                             </div>
                         </div>

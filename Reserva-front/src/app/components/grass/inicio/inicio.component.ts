@@ -16,7 +16,7 @@ export class InicioComponent implements OnInit {
   public empresa: any = {};
   public chart: any;
   public cantidad = 0;
-  public ganancia_total = 0;
+  public total_ventas = 0;
   public total_mes = 0;
   public total_mes_anterior = 0;
   public total_mes_sim = 0;
@@ -79,10 +79,12 @@ export class InicioComponent implements OnInit {
   init_chart() {
     this._userService.kpi_ganancias_mensuales_grass(this.id, this.token).subscribe(
       response => {
-        this.ganancia_total = response.ganancia_total;
+        this.total_ventas = response.total_ventas;
         this.total_mes = response.total_mes;
         this.total_mes_anterior = response.total_mes_anterior;
         this.count_ventas = response.count_ventas;
+        console.log(response.reservacionesPorCancha);
+        
         this.chart = new Chart("MyChart", {
           type: 'line', //this denotes tha type of chart
 
@@ -103,6 +105,22 @@ export class InicioComponent implements OnInit {
               {
                 label: "Pagos en S/.",
                 data: [response.enero,
+                response.febrero,
+                response.marzo,
+                response.abril,
+                response.mayo,
+                response.junio,
+                response.julio,
+                response.agosto,
+                response.septiembre,
+                response.octubre,
+                response.noviembre,
+                response.diciembre],
+                backgroundColor: 'rgb(20, 203, 139)'
+              },
+              {
+                label: "Pagos en S/.",
+                data: [response.enero+3,
                 response.febrero,
                 response.marzo,
                 response.abril,

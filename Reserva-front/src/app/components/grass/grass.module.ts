@@ -22,6 +22,8 @@ import { QRCodeModule } from 'angularx-qrcode';
 import { CrearResIdComponent } from './reservaciones/crear-res-id/crear-res-id.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { ClientesComponent } from './clientes/clientes.component';
+import { ContactarComponent } from './contactar/contactar.component';
+import { AyudaComponent } from './ayuda/ayuda.component';
 
 
 @NgModule({
@@ -42,7 +44,9 @@ import { ClientesComponent } from './clientes/clientes.component';
     IndexResComponent,
     CreateResComponent,
     CrearResIdComponent,
-    ClientesComponent
+    ClientesComponent,
+    ContactarComponent,
+    AyudaComponent
   ],
   imports: [
     CommonModule,

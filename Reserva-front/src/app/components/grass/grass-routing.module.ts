@@ -15,6 +15,8 @@ import { IndexResComponent } from './reservaciones/index-res/index-res.component
 import { CreateResComponent } from './reservaciones/create-res/create-res.component';
 import { CrearResIdComponent } from './reservaciones/crear-res-id/crear-res-id.component';
 import { ClientesComponent } from './clientes/clientes.component';
+import { ContactarComponent } from './contactar/contactar.component';
+import { AyudaComponent } from './ayuda/ayuda.component';
 
 const routes: Routes = [
   {path: '', component: InicioComponent},
@@ -32,6 +34,8 @@ const routes: Routes = [
   {path: 'cuentas/crear', component: CreateCuentasComponent},
   {path: 'cuentas/:id', component: EditCuentasComponent},
   {path: 'clientes', component: ClientesComponent},
+  {path: 'contactar', component: ContactarComponent},
+  {path: 'ayuda', component: AyudaComponent},
 ];
 
 @NgModule({

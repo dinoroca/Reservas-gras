@@ -540,20 +540,7 @@ const kpi_ganancias_mensuales_grass = async function (req, res) {
       var noviembre = 0;
       var diciembre = 0;
 
-      var nv_enero = 0;
-      var nv_febrero = 0;
-      var nv_marzo = 0;
-      var nv_abril = 0;
-      var nv_mayo = 0;
-      var nv_junio = 0;
-      var nv_julio = 0;
-      var nv_agosto = 0;
-      var nv_septiembre = 0;
-      var nv_octubre = 0;
-      var nv_noviembre = 0;
-      var nv_diciembre = 0;
-
-      var ganancia_total = 0;
+      var total_ventas = 0;
       var total_mes = 0;
       var total_mes_anterior = 0;
       var count_ventas = 0;
@@ -561,6 +548,7 @@ const kpi_ganancias_mensuales_grass = async function (req, res) {
       var reg = await Reservacion.find({
         $and: [{ $or: [{ estado: 'Reservado' }, { estado: 'Finalizado' }] }, { empresa: id }]
       });
+
       let current_date = new Date();
       let current_year = current_date.getFullYear();
       let current_month = current_date.getMonth() + 1;
@@ -571,53 +559,41 @@ const kpi_ganancias_mensuales_grass = async function (req, res) {
 
         if (createdAt_date.getFullYear() == current_year) {
 
-          ganancia_total = ganancia_total + item.subtotal;
+          total_ventas += 1;
 
           if (mes == current_month) {
-            total_mes = total_mes + item.subtotal;
-            count_ventas = count_ventas + 1;
+            total_mes += 1;
+            count_ventas += 1;
           }
 
           if (mes == current_month - 1) {
-            total_mes_anterior = total_mes_anterior + item.subtotal;
+            total_mes_anterior += 1;
           }
 
           if (mes == 1) {
-            enero = enero + item.subtotal;
-            nv_enero = nv_enero + item.cantidad;
+            enero += 1;
           } else if (mes == 2) {
-            febrero = febrero + item.subtotal;
-            nv_febrero = nv_febrero + item.cantidad;
+            febrero += 1;
           } else if (mes == 3) {
-            marzo = marzo + item.subtotal;
-            nv_marzo = nv_marzo + item.cantidad;
+            marzo += 1;
           } else if (mes == 4) {
-            abril = abril + item.subtotal;
-            nv_abril = nv_abril + item.cantidad;
+            abril += 1;
           } else if (mes == 5) {
-            mayo = mayo + item.subtotal;
-            nv_mayo = nv_mayo + item.cantidad;
+            mayo += 1;
           } else if (mes == 6) {
-            junio = junio + item.subtotal;
-            nv_junio = nv_junio + item.cantidad;
+            junio += 1;
           } else if (mes == 7) {
-            julio = julio + item.subtotal;
-            nv_julio = nv_julio + item.cantidad;
+            julio += 1;
           } else if (mes == 8) {
-            agosto = agosto + item.subtotal;
-            nv_agosto = nv_agosto + item.cantidad;
+            agosto += 1;
           } else if (mes == 9) {
-            septiembre = septiembre + item.subtotal;
-            nv_septiembre = nv_septiembre + item.cantidad;
+            septiembre += 1;
           } else if (mes == 10) {
-            octubre = octubre + item.subtotal;
-            nv_octubre = nv_octubre + item.cantidad;
+            octubre += 1;
           } else if (mes == 11) {
-            noviembre = noviembre + item.subtotal;
-            nv_noviembre = nv_noviembre + item.cantidad;
+            noviembre += 1;
           } else if (mes == 12) {
-            diciembre = diciembre + item.subtotal;
-            nv_diciembre = nv_diciembre + item.cantidad;
+            diciembre += 1;
           }
         }
       }
@@ -636,20 +612,7 @@ const kpi_ganancias_mensuales_grass = async function (req, res) {
         noviembre: noviembre,
         diciembre: diciembre,
 
-        nv_enero: nv_enero,
-        nv_febrero: nv_febrero,
-        nv_marzo: nv_marzo,
-        nv_abril: nv_abril,
-        nv_mayo: nv_mayo,
-        nv_junio: nv_junio,
-        nv_julio: nv_julio,
-        nv_agosto: nv_agosto,
-        nv_septiembre: nv_septiembre,
-        nv_octubre: nv_octubre,
-        nv_noviembre: nv_noviembre,
-        nv_diciembre: nv_diciembre,
-
-        ganancia_total: ganancia_total,
+        total_ventas: total_ventas,
         total_mes: total_mes,
         total_mes_anterior: total_mes_anterior,
         count_ventas: count_ventas
@@ -662,7 +625,6 @@ const kpi_ganancias_mensuales_grass = async function (req, res) {
     res.status(500).send({ message: 'NoAccess' });
   }
 }
-
 
 //Galería CANCHA
 const agregar_imagen_galeria_cancha = async function (req, res) {
