@@ -31,6 +31,8 @@ export class InicioComponent implements OnInit {
   public url: any;
   public load_btn_eliminar = false;
   public file: File | any = undefined;
+  public colores = ['rgb(20, 203, 139)', 'rgb(169, 19, 249)', 'rgb(249, 84, 183)', 'rgb(20, 120, 252)', 'rgb(255, 124, 25)'];
+  public canchas: Array<any> = [];
 
   imagePreview: string | ArrayBuffer | null = null;
 
@@ -77,76 +79,58 @@ export class InicioComponent implements OnInit {
   }
 
   init_chart() {
-    this._userService.kpi_ganancias_mensuales_grass(this.id, this.token).subscribe(
-      response => {
-        this.total_ventas = response.total_ventas;
-        this.total_mes = response.total_mes;
-        this.total_mes_anterior = response.total_mes_anterior;
-        this.count_ventas = response.count_ventas;
-        console.log(response.reservacionesPorCancha);
-        
-        this.chart = new Chart("MyChart", {
-          type: 'line', //this denotes tha type of chart
-
-          data: {// values on X-Axis
-            labels: ['Enero',
-              'Febrero',
-              'Marzo',
-              'Abril',
-              'Mayo',
-              'Junio',
-              'Julio',
-              'Agosto',
-              'Septiembre',
-              'Octubre',
-              'Noviembre',
-              'Diciembre'],
-            datasets: [
-              {
-                label: "Pagos en S/.",
-                data: [response.enero,
-                response.febrero,
-                response.marzo,
-                response.abril,
-                response.mayo,
-                response.junio,
-                response.julio,
-                response.agosto,
-                response.septiembre,
-                response.octubre,
-                response.noviembre,
-                response.diciembre],
-                backgroundColor: 'rgb(20, 203, 139)'
-              },
-              {
-                label: "Pagos en S/.",
-                data: [response.enero+3,
-                response.febrero,
-                response.marzo,
-                response.abril,
-                response.mayo,
-                response.junio,
-                response.julio,
-                response.agosto,
-                response.septiembre,
-                response.octubre,
-                response.noviembre,
-                response.diciembre],
-                backgroundColor: 'rgb(20, 203, 139)'
+    this._userService.obtener_canchas_empresa(this.id, this.token).subscribe(
+      canchasResponse => {
+        this.canchas = canchasResponse.data;
+  
+        // Objeto para almacenar datos de todas las canchas
+        const datasets: any = [];
+  
+        // Iterar sobre cada cancha
+        this.canchas.forEach((cancha, index) => {
+          this._userService.kpi_ganancias_mensuales_grass(cancha._id, this.token).subscribe(
+            response => {
+              // Obtener color dinámicamente del arreglo de colores
+              const color = this.colores[index % this.colores.length];
+  
+              // Almacenar resultados de cada cancha con el color correspondiente
+              const canchaData = {
+                label: cancha.nombre,
+                data: [response.enero, response.febrero, response.marzo, response.abril, response.mayo, response.junio, response.julio, response.agosto, response.septiembre, response.octubre, response.noviembre, response.diciembre],
+                backgroundColor: color,
+                borderColor: color,
+                tension: 0.4
+              };
+  
+              datasets.push(canchaData);
+  
+              // Crear el gráfico después de obtener todos los datos
+              if (datasets.length === this.canchas.length) {
+                this.createChart(datasets);
               }
-            ]
-          },
-          options: {
-            aspectRatio: 2
-          }
-
+            }
+          );
         });
-
       }
     );
-    
+  }
+  
+  createChart(datasets: any) {
+    // Crear el gráfico con todos los datos de las canchas
+    this.chart = new Chart("MyChart", {
+      type: 'line',
+      data: {
+        labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+        datasets: datasets
+      },
+      options: {
+        aspectRatio: 2
+      }
+    });
+  
     this.load_data = false;
   }
+  
 
   ngOnInit(): void {
     this._title.setTitle('GRASS | Galería de canchas');

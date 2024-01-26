@@ -546,7 +546,7 @@ const kpi_ganancias_mensuales_grass = async function (req, res) {
       var count_ventas = 0;
 
       var reg = await Reservacion.find({
-        $and: [{ $or: [{ estado: 'Reservado' }, { estado: 'Finalizado' }] }, { empresa: id }]
+        $and: [{ $or: [{ estado: 'Reservado' }, { estado: 'Finalizado' }] }, { cancha: id }]
       });
 
       let current_date = new Date();

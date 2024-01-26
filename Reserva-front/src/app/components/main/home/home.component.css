@@ -154,6 +154,7 @@ section .wave.wave4 {
 
 /** Clase para cursiva del contenido del atributo placeholder **/
 ::placeholder {
+    font-weight: 300;
     font-style: italic;
 }
 
