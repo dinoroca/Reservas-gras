@@ -101,6 +101,8 @@ export class InicioComponent implements OnInit {
                 borderColor: color,
                 tension: 0.4
               };
+
+              this.count_ventas += response.count_ventas;
   
               datasets.push(canchaData);
   
