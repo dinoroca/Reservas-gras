@@ -287,7 +287,7 @@
                                                                                 </span>
                                                                                 <input type="number"
                                                                                     class="form-control"
-                                                                                    id="horasReserva" min="1"
+                                                                                    id="horasReserva" min="1" max="4"
                                                                                     [(ngModel)]="horasReserva"
                                                                                     (change)="select_mas_una_hora(botonesHoras[j][i].hora)">
                                                                             </div>
@@ -453,7 +453,7 @@
                                                                             Cantidad de horas
                                                                         </span>
                                                                         <input type="number" class="form-control"
-                                                                            id="horasReserva" min="1"
+                                                                            id="horasReserva" min="1" max="4"
                                                                             [(ngModel)]="horasReserva"
                                                                             (change)="select_mas_una_hora(botonesHoras[j][i].hora)">
                                                                     </div>
