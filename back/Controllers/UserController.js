@@ -3,7 +3,8 @@
 var User = require('../Models/User');
 var Reservacion = require('../Models/Reservacion');
 var Reservacion = require('../Models/Reservacion');
-var Cuenta = require('../Models/Cuenta');
+var Empresa = require('../Models/Empresa');
+var Caracteristicas = require('../Models/Caracteristicas');
 const CuentaAdmin = require('../Models/CuentaAdmin');
 var bcrypt = require('bcrypt-nodejs');
 var jwt = require('../Helpers/jwt');
@@ -261,6 +262,47 @@ const obtener_reservaciones_public = async function (req, res) {
   }
 }
 
+const obtener_reservaciones_admin = async function (req, res) {
+  if (req.user) {
+    if (req.user.role == 'ADMIN') {
+
+      let reservaciones = [];
+      try {
+        reservaciones = await Reservacion.find().sort({ createdAt: -1 })
+        .populate('empresa')
+        .populate('cancha')
+        .populate({ path: 'cliente', model: 'user' });
+
+        res.status(200).send({ data: reservaciones });
+      } catch (error) {
+        res.status(200).send({ data: undefined });
+      }
+    } else {
+      res.status(500).send({ message: 'NoAccess' });
+    }
+  } else {
+    res.status(500).send({ message: 'NoAccess' });
+  }
+}
+
+const actualizar_reserva_reservado_admin = async function (req, res) {
+  if (req.user) {
+    if (req.user.role == 'ADMIN') {
+
+      var id = req.params['id'];
+
+      var reg = await Reservacion.findByIdAndUpdate({ _id: id }, { estado: 'Reservado' });
+
+      res.status(200).send({ data: reg });
+
+    } else {
+      res.status(500).send({ message: 'NoAccess' });
+    }
+  } else {
+    res.status(500).send({ message: 'NoAccess' });
+  }
+}
+
 // Función para eliminar reservas vencidas
 const eliminarReservasVencidas = async () => {
   try {
@@ -292,21 +334,30 @@ const actualizarEstadoReservas = async () => {
   try {
     // Obtiene la fecha y hora actual
     const ahora = new Date();
+    const horaActual = ahora.getHours();
 
-    // Ejecuta la actualización solo si la hora actual es en el minuto 00
-    if (ahora.getMinutes() === 0) {
-      // Busca las reservas con estado 'Reservado' y fecha y hora de inicio menores o iguales a la fecha y hora actual
-      const reservasPendientes = await Reservacion.find({
-        estado: 'Reservado',
-        fecha: { $lte: ahora },
-        hora_inicio: { $lte: ahora }
-      });
+    // Busca las reservas con estado 'Reservado' y fecha y hora de fin menor o igual a la fecha y hora actual
+    const reservasPendientes = await Reservacion.find({
+      estado: 'Reservado',
+      $or: [
+        {
+          $and: [
+            { fecha: { $lt: ahora.toISOString().split('T')[0] } }, // Fecha pasada
+            { hora_fin: { $lte: horaActual } } // Hora pasada o igual
+          ]
+        },
+        {
+          $and: [
+            { fecha: ahora.toISOString().split('T')[0] }, // Fecha actual
+            { hora_fin: { $lte: horaActual } } // Hora pasada o igual
+          ]
+        }
+      ]
+    });
 
-      // Actualiza el estado de las reservas encontradas a 'Finalizado'
-      for (const reserva of reservasPendientes) {
-        await Reservacion.findByIdAndUpdate(reserva._id, { estado: 'Finalizado' });
-        console.log(`La reserva con ID ${reserva._id} ha sido actualizada a 'Finalizado'.`);
-      }
+    // Actualiza el estado de las reservas encontradas a 'Finalizado'
+    for (const reserva of reservasPendientes) {
+      await Reservacion.findByIdAndUpdate(reserva._id, { estado: 'Finalizado' });
     }
   } catch (error) {
     console.error('Error al actualizar el estado de las reservas:', error);
@@ -315,6 +366,7 @@ const actualizarEstadoReservas = async () => {
 
 // Configura un temporizador para verificar y ejecutar la función cada minuto
 setInterval(actualizarEstadoReservas, 60 * 1000);
+
 
 
 //Cuentas ADMIN
@@ -433,6 +485,65 @@ const obtener_cuentas_de_admin = async function (req, res) {
   }
 }
 
+//EMPRESA
+const obtener_empresas_admin = async function (req, res) {
+  if (req.user) {
+    if (req.user.role == 'ADMIN') {
+
+      let empresas = [];
+      try {
+        empresas = await Caracteristicas.find().sort({ createdAt: -1 }).populate('empresa');
+        res.status(200).send({ data: empresas });
+      } catch (error) {
+        res.status(200).send({ data: undefined });
+      }
+    } else {
+      res.status(500).send({ message: 'NoAccess' });
+    }
+  } else {
+    res.status(500).send({ message: 'NoAccess' });
+  }
+}
+
+const actualizar_empresa_verificado_admin = async function (req, res) {
+  if (req.user) {
+    if (req.user.role == 'ADMIN') {
+
+      var id = req.params['id'];
+
+      var reg = await Empresa.findByIdAndUpdate({ _id: id }, { verificado: true });
+
+      res.status(200).send({ data: reg });
+
+    } else {
+      res.status(500).send({ message: 'NoAccess' });
+    }
+  } else {
+    res.status(500).send({ message: 'NoAccess' });
+  }
+}
+
+const obtener_caracteristicas_admin = async function (req, res) {
+  if (req.user) {
+    if (req.user.role == 'ADMIN') {
+      let id = req.params['id'];
+
+      let caracteristicas = await Caracteristicas.find({ empresa: id });
+      
+
+      if (caracteristicas.length >= 1) {
+        res.status(200).send({ data: caracteristicas });
+      } else {
+        res.status(200).send({ data: undefined });
+      }
+    } else {
+      res.status(500).send({ message: 'NoAccess' });
+    }
+  } else {
+    res.status(500).send({ message: 'NoAccess' });
+  }
+}
+
 
 ////////CONTACTO
 const enviar_mensaje_contacto = async function (req, res) {
@@ -454,11 +565,17 @@ module.exports = {
   crear_reservacion_user,
   obtener_reservaciones_user,
   obtener_reservaciones_public,
+  obtener_reservaciones_admin,
+  actualizar_reserva_reservado_admin,
   registro_cuenta_admin,
   obtener_cuentas_admin,
   obtener_cuenta_admin,
   eliminar_cuenta_admin,
   actualizar_cuenta_admin,
   obtener_cuentas_de_admin,
+  obtener_empresas_admin,
+  actualizar_empresa_verificado_admin,
+  obtener_caracteristicas_admin,
+  
   enviar_mensaje_contacto
 }

@@ -179,6 +179,16 @@ export class UserService {
     return this._http.delete(this.url + 'eliminar_reservacion_empresa/' + id, { headers: headers });
   }
 
+  obtener_reservaciones_admin(token: any): Observable<any> {
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json', 'authorization': token });
+    return this._http.get(this.url + 'obtener_reservaciones_admin', { headers: headers });
+  }
+
+  actualizar_reserva_reservado_admin(id: any, token: any): Observable<any> {
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json', 'authorization': token });
+    return this._http.put(this.url + 'actualizar_reserva_reservado_admin/' + id, { data: true }, {headers: headers});
+  }
+
   //KPI
   kpi_ganancias_mensuales_grass(id: any, token: any): Observable<any> {
     let headers = new HttpHeaders({ 'Content-Type': 'application/json', 'authorization': token });
@@ -245,6 +255,22 @@ export class UserService {
   obtener_cuentas_de_admin(token: any): Observable<any> {
     let headers = new HttpHeaders({ 'Content-Type': 'application/json', 'authorization': token });
     return this._http.get(this.url + 'obtener_cuentas_de_admin', { headers: headers });
+  }
+
+  ////EMPRESA
+  obtener_empresas_admin(token: any): Observable<any> {
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json', 'authorization': token });
+    return this._http.get(this.url + 'obtener_empresas_admin', { headers: headers });
+  }
+
+  actualizar_empresa_verificado_admin(id: any, token: any): Observable<any> {
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json', 'authorization': token });
+    return this._http.put(this.url + 'actualizar_empresa_verificado_admin/' + id, { data: true }, {headers: headers});
+  }
+
+  obtener_caracteristicas_admin(id: any, token: any): Observable<any> {
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json', 'authorization': token });
+    return this._http.get(this.url + 'obtener_caracteristicas_admin/' + id, { headers: headers });
   }
 
   //Galería

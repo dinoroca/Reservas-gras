@@ -7,6 +7,7 @@ import { IndexCuentasComponent } from './cuentas/index-cuentas/index-cuentas.com
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { CreateCuentasComponent } from './cuentas/create-cuentas/create-cuentas.component';
 import { EditCuentasComponent } from './cuentas/edit-cuentas/edit-cuentas.component';
+import { MensajesComponent } from './mensajes/mensajes.component';
 
 const routes: Routes = [
   {path: '', component: InicioComponent},
@@ -16,6 +17,7 @@ const routes: Routes = [
   {path: 'cuentas/crear', component: CreateCuentasComponent},
   {path: 'cuentas/:id', component: EditCuentasComponent},
   {path: 'clientes', component: UsuariosComponent},
+  {path: 'mensajes', component: MensajesComponent},
 ];
 
 @NgModule({

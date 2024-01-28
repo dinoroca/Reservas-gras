@@ -9,7 +9,7 @@ var ReservacionSchema = Schema({
     cliente: {type: Schema.ObjectId, ref: 'cliente', required: true},
     subtotal: {type: Number, required: true},
     estado: {type: String, default: 'Ocupado', required: true},
-    fecha: {type: String, required: true},
+    fecha: {type: Date, required: true},
     hora_inicio: {type: Number, required: true},
     hora_fin: {type: Number, required: true},
     descuento: {type: Number, required: false},
