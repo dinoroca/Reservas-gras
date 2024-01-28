@@ -262,6 +262,47 @@ const obtener_reservaciones_public = async function (req, res) {
   }
 }
 
+const obtener_reservaciones_admin = async function (req, res) {
+  if (req.user) {
+    if (req.user.role == 'ADMIN') {
+
+      let reservaciones = [];
+      try {
+        reservaciones = await Reservacion.find().sort({ createdAt: -1 })
+        .populate('empresa')
+        .populate('cancha')
+        .populate({ path: 'cliente', model: 'user' });
+
+        res.status(200).send({ data: reservaciones });
+      } catch (error) {
+        res.status(200).send({ data: undefined });
+      }
+    } else {
+      res.status(500).send({ message: 'NoAccess' });
+    }
+  } else {
+    res.status(500).send({ message: 'NoAccess' });
+  }
+}
+
+const actualizar_reserva_reservado_admin = async function (req, res) {
+  if (req.user) {
+    if (req.user.role == 'ADMIN') {
+
+      var id = req.params['id'];
+
+      var reg = await Reservacion.findByIdAndUpdate({ _id: id }, { estado: 'Reservado' });
+
+      res.status(200).send({ data: reg });
+
+    } else {
+      res.status(500).send({ message: 'NoAccess' });
+    }
+  } else {
+    res.status(500).send({ message: 'NoAccess' });
+  }
+}
+
 // Función para eliminar reservas vencidas
 const eliminarReservasVencidas = async () => {
   try {
@@ -472,6 +513,27 @@ const actualizar_empresa_verificado_admin = async function (req, res) {
   }
 }
 
+const obtener_caracteristicas_admin = async function (req, res) {
+  if (req.user) {
+    if (req.user.role == 'ADMIN') {
+      let id = req.params['id'];
+
+      let caracteristicas = await Caracteristicas.find({ empresa: id });
+      
+
+      if (caracteristicas.length >= 1) {
+        res.status(200).send({ data: caracteristicas });
+      } else {
+        res.status(200).send({ data: undefined });
+      }
+    } else {
+      res.status(500).send({ message: 'NoAccess' });
+    }
+  } else {
+    res.status(500).send({ message: 'NoAccess' });
+  }
+}
+
 
 ////////CONTACTO
 const enviar_mensaje_contacto = async function (req, res) {
@@ -493,6 +555,8 @@ module.exports = {
   crear_reservacion_user,
   obtener_reservaciones_user,
   obtener_reservaciones_public,
+  obtener_reservaciones_admin,
+  actualizar_reserva_reservado_admin,
   registro_cuenta_admin,
   obtener_cuentas_admin,
   obtener_cuenta_admin,
@@ -501,5 +565,7 @@ module.exports = {
   obtener_cuentas_de_admin,
   obtener_empresas_admin,
   actualizar_empresa_verificado_admin,
+  obtener_caracteristicas_admin,
+  
   enviar_mensaje_contacto
 }

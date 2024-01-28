@@ -28,10 +28,13 @@ api.put('/actualizar_user_verificado/:id/:codigo', UserController.actualizar_use
 api.post('/crear_reservacion_user', auth.auth, UserController.crear_reservacion_user);
 api.get('/obtener_reservaciones_user/:id', auth.auth, UserController.obtener_reservaciones_user);
 api.get('/obtener_reservaciones_public/:id', UserController.obtener_reservaciones_public);
+api.get('/obtener_reservaciones_admin', auth.auth, UserController.obtener_reservaciones_admin);
+api.put('/actualizar_reserva_reservado_admin/:id', auth.auth, UserController.actualizar_reserva_reservado_admin);
 
 //////EMPRESA
 api.get('/obtener_empresas_admin', auth.auth, UserController.obtener_empresas_admin);
 api.put('/actualizar_empresa_verificado_admin/:id', auth.auth, UserController.actualizar_empresa_verificado_admin);
+api.get('/obtener_caracteristicas_admin/:id', auth.auth, UserController.obtener_caracteristicas_admin);
 
 ////Contacto
 api.post('/enviar_mensaje_contacto', UserController.enviar_mensaje_contacto);

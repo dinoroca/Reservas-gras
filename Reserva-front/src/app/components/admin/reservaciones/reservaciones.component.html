@@ -8,6 +8,480 @@
         <h3 class="text-center fw-bold" style="color:rgb(6, 170, 115)">
             Reservaciones
         </h3>
+
+        <ng-container *ngIf="load_data">
+            <div class="text-center">
+                <div class="spinner-border text-secondary" style="width: 3rem; height: 3rem" role="status">
+                </div>
+                <h4 class="text-black-50"><small>Cargando...</small></h4>
+            </div>
+        </ng-container>
+
+        <ng-container *ngIf="!load_data && reservaciones.length >= 1">
+            <div class="row d-flex justify-content-center">
+                <div *ngFor="let item of reservaciones | paginate: { itemsPerPage: 10, currentPage: p } "
+                    class="card m-3 col-12 col-md-5" style="border-color: #00C056;">
+                    <div class="card-body">
+                        <div class="row">
+
+                            <div class="col-12 col-md-4">
+                                <div class="shadow rounded my-3">
+                                    <div class="text-center">
+                                        <p class="fw-light m-0"> {{ item._id }} </p>
+                                    </div>
+                                </div>
+
+                                <div class="text-center">
+                                    <button *ngIf="item.estado == 'Ocupado'" type="button" class="btn btn-primary m-2"
+                                        data-bs-toggle="modal" [attr.data-bs-target]="'#confirmar-' + item._id">
+                                        Confirmar &nbsp; <i class="bi bi-check-lg"></i>
+                                    </button>
+
+                                    <button type="button" class="btn btn-light m-2" data-bs-toggle="modal"
+                                        [attr.data-bs-target]="'#verempresa-' + item._id"
+                                        (click)="obtener_caracteristicas(item.empresa._id)">
+                                        Ver &nbsp; <i class="bi bi-house icono"></i>
+                                    </button>
+
+                                    <button type="button" class="btn btn-light m-2" data-bs-toggle="modal"
+                                    [attr.data-bs-target]="'#cancha-' + item._id">
+                                        Ver &nbsp; <i class="bi bi-square icono"></i>
+                                    </button>
+
+                                    <button type="button" class="btn btn-light m-2" data-bs-toggle="modal"
+                                    [attr.data-bs-target]="'#user-' + item._id">
+                                        Ver &nbsp; <i class="bi bi-person icono"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-md-8">
+                                <table class="table table-sm">
+                                    <tbody>
+                                        <tr>
+                                            <td><i class="bi bi-house icono"></i> &nbsp; {{ item.empresa.nombre }}</td>
+                                            <td><i class="bi bi-square icono"></i> &nbsp; {{ item.cancha.nombre }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2"><i class="bi bi-geo-alt icono"></i> &nbsp;
+                                                <a href="{{ item.empresa.ubicacion }}" target="_blank"
+                                                    style="text-decoration: none; color: #000;">
+                                                    {{item.empresa.direccion}}
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2"><i class="bi bi-calendar-event icono"></i> &nbsp; {{
+                                                item.fecha | date: 'fullDate' }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><i class="bi bi-clock icono"></i> &nbsp; {{item.hora_inicio}}:00 a
+                                                {{item.hora_fin}}:00
+                                            </td>
+                                            <td><i class="bi bi-person icono"></i> &nbsp; {{ item.cliente.nombres }}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <i class="bi bi-gear icono"></i> &nbsp;
+                                                <span *ngIf="item.estado == 'Reservado'" class="badge rounded-pill"
+                                                    style="background-color: rgb(0, 192, 86);">Reservado
+                                                </span>
+                                                <span *ngIf="item.estado == 'Finalizado'"
+                                                    class="badge rounded-pill text-bg-danger">Finalizado
+                                                </span>
+                                                <span *ngIf="item.estado == 'Ocupado'"
+                                                    class="badge rounded-pill text-bg-secondary">Ocupado
+                                                </span>
+                                            </td>
+                                            <td><i class="bi  bi-cash-coin icono"></i> &nbsp; S/. {{ item.subtotal }}
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+
+                                <p class="fw-light m-0">Creación: {{ item.createdAt | date: 'medium' }} </p>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Modal confirmar reserva -->
+                    <div class="modal fade" id="confirmar-{{ item._id }}" tabindex="-1" style="display: none"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title text-center">
+                                        Confirmar reservación
+                                    </h4>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                    </button>
+                                </div>
+                                <div class="modal-body text-center">
+                                    Confirmar la reservación <span class="fw-bold">{{item._id}}</span> para la empresa
+                                    <span class="fw-bold">{{item.empresa.nombre}}</span>?
+                                </div>
+                                <div class="modal-footer">
+                                    <button class="btn btn-light btn-sm bi-x-lg" type="button" data-bs-dismiss="modal">
+                                    </button>
+                                    <button *ngIf="!load_btn" class="btn btn-primary btn-sm" data-bs-dismiss="modal"
+                                        (click)="confirmar_reservacion(item._id)" type="button">
+                                        <i class="bi bi-check-lg"></i> &nbsp;
+                                        Confirmar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modal Ver EMPRESA -->
+                    <div class="modal fade" id="verempresa-{{ item._id }}" tabindex="-1" style="display: none"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title text-center">
+                                        Info. de la empresa
+                                    </h4>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                    </button>
+                                </div>
+                                <div class="modal-body mx-2">
+                                    <ng-container *ngIf="load_car">
+                                        <div class="text-center">
+                                            <div class="spinner-border text-secondary" style="width: 3rem; height: 3rem"
+                                                role="status">
+                                            </div>
+                                            <h4 class="text-black-50"><small>Cargando...</small></h4>
+                                        </div>
+                                    </ng-container>
+
+                                    <div *ngIf="!load_car">
+
+                                        <h5 class="card-title fw-bold text-center">
+                                            {{ item.empresa.nombre }}
+                                        </h5>
+
+                                        <p class="text-center">
+                                            <a href="{{ item.empresa.ubicacion }}" target="_blank"
+                                                style="text-decoration: none; color: #095c3d; font-style: italic;">
+                                                {{ item.empresa.direccion }}
+                                            </a>
+                                            &nbsp;
+                                            <a href="{{ item.empresa.ubicacion }}" target="_blank">
+                                                <i class="bi bi-arrow-up-right-circle" style="color: #095c3d"></i>
+                                            </a>
+                                        </p>
+
+                                        <div class="grass-caracteristicas">
+                                            <!-- Más de una cancha -->
+                                            <p *ngIf="caracteristicas.canchas_futsal > 1">
+                                                <i class="bi-1 bi-pentagon-fill"></i> &nbsp;
+                                                <a> {{ caracteristicas.canchas_futsal }} Canchas de futsal</a>
+                                            </p>
+
+                                            <!-- Una sola cancha -->
+                                            <p *ngIf="caracteristicas.canchas_futsal == 1">
+                                                <i class="bi-1 bi-pentagon-fill"></i> &nbsp;
+                                                <a> Una cancha de futsal</a>
+                                            </p>
+
+                                            <!-- Sin cancha -->
+                                            <p *ngIf="caracteristicas.canchas_futsal < 1" class="text-secondary">
+                                                <i class="bi-2 bi-pentagon"></i> &nbsp;
+                                                <a> Sin canchas de futsal</a>
+                                            </p>
+
+                                            <!-- Más de una cancha de voley -->
+                                            <p *ngIf="caracteristicas.canchas_voley > 1">
+                                                <i class="bi-1 bi-dribbble"></i> &nbsp;
+                                                <a> {{ caracteristicas.canchas_voley }} canchas de vóley</a>
+                                            </p>
+
+                                            <!-- Una sola cancha -->
+                                            <p *ngIf="caracteristicas.canchas_voley == 1">
+                                                <i class="bi-1 bi-dribbble"></i> &nbsp;
+                                                <a> Una cancha de vóley</a>
+                                            </p>
+
+                                            <!-- Sin canchas de vóley -->
+                                            <p *ngIf="caracteristicas.canchas_voley < 1" class="text-secondary">
+                                                <i class="bi-2 bi-dribbble"></i> &nbsp;
+                                                <a>Sin canchas de vóley</a>
+                                            </p>
+
+                                            <p *ngIf="caracteristicas.iluminacion">
+                                                <i class="bi-1 bi-lightning-charge-fill"></i> &nbsp;
+                                                <a>Iluminación LED</a>
+                                            </p>
+
+                                            <p *ngIf="!caracteristicas.iluminacion" class="text-secondary">
+                                                <i class="bi-2 bi-lightning-charge"> </i> &nbsp;
+                                                <a>Sin iluminación LED</a>
+                                            </p>
+                                            <p *ngIf="caracteristicas.techado">
+                                                <i class="bi-1 bi-cloud-lightning-rain-fill"></i> &nbsp;
+                                                <a>Techado</a>
+                                            </p>
+
+                                            <p *ngIf="!caracteristicas.techado" class="text-secondary">
+                                                <i class="bi-2 bi-cloud-lightning-rain"> </i> &nbsp;
+                                                <a>Sin techo</a>
+                                            </p>
+                                            <p *ngIf="caracteristicas.garaje">
+                                                <i class="bi-1 bi-car-front-fill"></i> &nbsp; <a>Garaje</a>
+                                            </p>
+
+                                            <p *ngIf="!caracteristicas.garaje" class="text-secondary">
+                                                <i class="bi-2 bi-car-front"> </i> &nbsp; <a>Sin garaje</a>
+                                            </p>
+                                        </div>
+
+                                        <p>{{item.empresa | json}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modal ver cancha -->
+                    <div class="modal fade" id="cancha-{{ item._id }}" tabindex="-1" style="display: none"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title text-center">
+                                        {{item.cancha.nombre}} de {{item.empresa.nombre}}
+                                    </h4>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+
+                                    <div class="card-body">
+
+                                        <div class="grass-caracteristicas">
+
+                                            <!-- Tipo -->
+                                            <p *ngIf="item.cancha.tipo == 'Voley'"
+                                                style="color: rgb(241, 78, 143);">
+                                                <i class="bi bi-dribbble"></i> &nbsp;
+                                                <a> {{item.cancha.tipo}} </a>
+                                            </p>
+
+                                            <p *ngIf="item.cancha.tipo == 'Fútbol/Futsal'"
+                                                style="color: rgb(0, 192, 86);">
+                                                <i class="bi bi-pentagon-fill"></i> &nbsp;
+                                                <a> {{item.cancha.tipo}} </a>
+                                            </p>
+
+                                            <p *ngIf="item.cancha.tipo == 'Mixto'"
+                                                style="color: rgb(111, 66, 193)">
+                                                <i class="bi bi-shuffle"></i> &nbsp;
+                                                <a> {{item.cancha.tipo}} &nbsp;
+                                                    <small style="color: rgb(0, 192, 86);"><i
+                                                            class="bi bi-record-fill"></i> </small>
+                                                    <small class="fw-light text text-secondary"> <i>
+                                                            Fútbol/Futsal</i> </small>
+
+                                                    &nbsp;
+
+                                                    <small style="color: rgb(241, 78, 143);"><i
+                                                            class="bi bi-record-fill"></i> </small>
+                                                    <small class="fw-light text text-secondary"> <i>
+                                                            Voley</i> </small>
+                                                </a>
+                                            </p>
+
+                                            <!-- Medidas -->
+                                            <p *ngIf="item.cancha.tipo == 'Voley'">
+                                                <i class="bi bi-square"
+                                                    style="color: rgb(241, 78, 143);"></i> &nbsp;
+                                                <a> {{item.cancha.largo}}m x {{item.cancha.ancho}}m </a>
+                                            </p>
+
+                                            <p *ngIf="item.cancha.tipo == 'Fútbol/Futsal'">
+                                                <i class="bi bi-square" style="color: rgb(0, 192, 86);"></i>
+                                                &nbsp;
+                                                <a> {{item.cancha.largo}}m x {{item.cancha.ancho}}m </a>
+                                            </p>
+
+                                            <p *ngIf="item.cancha.tipo == 'Mixto'">
+                                                <i class="bi bi-square"
+                                                    style="color: rgb(111, 66, 193);"></i> &nbsp;
+                                                <a> <small style="color: rgb(0, 192, 86);"><i
+                                                            class="bi bi-record-fill"></i></small>
+                                                    {{item.cancha.largo}}m x {{item.cancha.ancho}}m
+                                                </a>
+
+                                                &nbsp;
+
+                                                <a> <small style="color: rgb(241, 78, 143);"><i
+                                                            class="bi bi-record-fill"></i></small>
+                                                    {{item.cancha.largo_voley}}m x {{item.cancha.ancho_voley}}m
+                                                </a>
+                                            </p>
+
+                                            <!-- Precios -->
+                                            <p *ngIf="item.cancha.tipo == 'Fútbol/Futsal'">
+                                                <i class="bi bi-sun" style="color: rgb(0, 192, 86);"></i>
+                                                &nbsp;
+                                                <a> S/. {{item.cancha.precio_dia}}
+                                                    <small class="fw-light text text-secondary"> <i>hora</i>
+                                                    </small>
+                                                </a>
+                                            </p>
+
+                                            <p *ngIf="item.cancha.tipo == 'Voley'">
+                                                <i class="bi bi-sun" style="color: rgb(241, 78, 143);"></i>
+                                                &nbsp;
+                                                <a> S/. {{item.cancha.precio_dia}}
+                                                    <small class="fw-light text text-secondary"> <i>hora</i>
+                                                    </small>
+                                                </a>
+                                            </p>
+
+                                            <p *ngIf="item.cancha.tipo == 'Fútbol/Futsal'">
+                                                <i class="bi bi-moon-stars"
+                                                    style="color: rgb(0, 192, 86);"></i> &nbsp;
+                                                <a> S/. {{item.cancha.precio_noche}}
+                                                    <small class="fw-light text text-secondary"> <i>hora</i>
+                                                    </small>
+                                                </a>
+                                            </p>
+
+                                            <p *ngIf="item.cancha.tipo == 'Voley'">
+                                                <i class="bi bi-moon-stars"
+                                                    style="color: rgb(241, 78, 143);"></i> &nbsp;
+                                                <a> S/. {{item.cancha.precio_noche}}
+                                                    <small class="fw-light text text-secondary"> <i>hora</i>
+                                                    </small>
+                                                </a>
+                                            </p>
+
+                                            <p *ngIf="item.cancha.tipo == 'Mixto'">
+                                                <i class="bi bi-sun" style="color: rgb(111, 66, 193);"></i>
+                                                <a> &nbsp; <small style="color: rgb(0, 192, 86);"><i
+                                                            class="bi bi-record-fill"></i></small>
+                                                    S/. {{item.cancha.precio_dia}}
+                                                </a>
+
+                                                &nbsp;
+
+                                                <a> <small style="color: rgb(241, 78, 143);"><i
+                                                            class="bi bi-record-fill"></i></small>
+                                                    S/. {{item.cancha.precio_dia_voley}}
+                                                    <small class="fw-light text text-secondary"> <i>hora</i>
+                                                    </small>
+                                                </a>
+                                            </p>
+
+                                            <p *ngIf="item.cancha.tipo == 'Mixto'">
+                                                <i class="bi bi-moon-stars"
+                                                    style="color: rgb(111, 66, 193);"></i>
+                                                <a> &nbsp; <small style="color: rgb(0, 192, 86);"><i
+                                                            class="bi bi-record-fill"></i></small>
+                                                    S/. {{item.cancha.precio_dia}}
+                                                </a>
+
+                                                &nbsp;
+
+                                                <a> <small style="color: rgb(241, 78, 143);"><i
+                                                            class="bi bi-record-fill"></i></small>
+                                                    S/. {{item.cancha.precio_dia_voley}}
+                                                    <small class="fw-light text text-secondary"> <i>hora</i>
+                                                    </small>
+                                                </a>
+                                            </p>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modal Ver CLIENTE -->
+                    <div class="modal fade" id="user-{{ item._id }}" tabindex="-1" style="display: none"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title text-center">
+                                        Cliente {{item.cliente.nombres}}
+                                    </h4>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-3">
+                                            <i class="bi bi-person fs-2"></i>
+                                            <small *ngIf="item.cliente.nombres != 'Generado por Grass'" style="color: rgb(0, 192, 86)">
+                                                {{ item.cliente.nombres }}
+                                            </small>
+                                            <small *ngIf="item.cliente.nombres == 'Generado por Grass'">
+                                                <span class="badge rounded-pill"
+                                                    style="background-color: rgb(0, 192, 86)">GRASS</span>
+                                            </small>
+                                        </div>
+                                        <div class="col-9">
+                                            <table class="table table-sm">
+                                                <tbody>
+                                                    <tr>
+                                                        <th scope="row" c>
+                                                            <a href="tel:{{ item.cliente.telefono }}"
+                                                                style="text-decoration: none; color: rgb(0, 192, 86)">
+                                                                <i class="bi bi-phone"></i>
+                                                            </a>
+                                                            &nbsp;
+            
+                                                            <a href="https://wa.me/51{{ item.cliente.telefono }}" target="_blank"
+                                                                style="text-decoration: none; color: rgb(0, 192, 86)">
+                                                                <i class="bi bi-whatsapp"></i>
+                                                            </a>
+                                                        </th>
+                                                        <td>{{ item.cliente.telefono }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">
+                                                            <a href="mailto:{{ item.cliente.email }}" target="_blank"
+                                                                style="text-decoration: none; color: rgb(255, 87, 87)">
+                                                                <i class="bi bi-envelope"></i>
+                                                            </a>
+                                                        </th>
+                                                        <td>{{ item.cliente.email }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row" style="color: rgb(125, 81, 255)">
+                                                            <i class="bi bi-geo-alt"></i>
+                                                        </th>
+                                                        <td colspan="2">{{ item.cliente.ciudad }}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-footer text-center">
+                <pagination-controls (pageChange)="p = $event" [responsive]="true" previousLabel="" nextLabel="">
+                </pagination-controls>
+            </div>
+        </ng-container>
+
+        <ng-container *ngIf="!load_data && !exist_res">
+            <div class="alert alert-danger mt-3 mb-0 text-center" role="alert">
+                Aún no existen reservaciones
+            </div>
+        </ng-container>
     </div>
 </div>
-
