@@ -247,6 +247,17 @@ export class UserService {
     return this._http.get(this.url + 'obtener_cuentas_de_admin', { headers: headers });
   }
 
+  ////EMPRESA
+  obtener_empresas_admin(token: any): Observable<any> {
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json', 'authorization': token });
+    return this._http.get(this.url + 'obtener_empresas_admin', { headers: headers });
+  }
+
+  actualizar_empresa_verificado_admin(id: any, token: any): Observable<any> {
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json', 'authorization': token });
+    return this._http.put(this.url + 'actualizar_empresa_verificado_admin/' + id, { data: true }, {headers: headers});
+  }
+
   //Galería
   agregar_imagen_galeria_cancha(id: any, data: any, token: any): Observable<any> {
     let headers = new HttpHeaders({ 'authorization': token });

@@ -29,6 +29,10 @@ api.post('/crear_reservacion_user', auth.auth, UserController.crear_reservacion_
 api.get('/obtener_reservaciones_user/:id', auth.auth, UserController.obtener_reservaciones_user);
 api.get('/obtener_reservaciones_public/:id', UserController.obtener_reservaciones_public);
 
+//////EMPRESA
+api.get('/obtener_empresas_admin', auth.auth, UserController.obtener_empresas_admin);
+api.put('/actualizar_empresa_verificado_admin/:id', auth.auth, UserController.actualizar_empresa_verificado_admin);
+
 ////Contacto
 api.post('/enviar_mensaje_contacto', UserController.enviar_mensaje_contacto);
 

@@ -12,6 +12,8 @@ import { CreateCuentasComponent } from './cuentas/create-cuentas/create-cuentas.
 import { EditCuentasComponent } from './cuentas/edit-cuentas/edit-cuentas.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { FormsModule } from '@angular/forms';
+import { MensajesComponent } from './mensajes/mensajes.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -23,12 +25,14 @@ import { FormsModule } from '@angular/forms';
     IndexCuentasComponent,
     CreateCuentasComponent,
     EditCuentasComponent,
-    UsuariosComponent
+    UsuariosComponent,
+    MensajesComponent
   ],
   imports: [
     CommonModule,
     AdminRoutingModule,
-    FormsModule
+    FormsModule,
+    NgxPaginationModule
   ]
 })
 export class AdminModule { }

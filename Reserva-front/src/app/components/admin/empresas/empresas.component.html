@@ -8,6 +8,318 @@
         <h3 class="text-center fw-bold" style="color:rgb(6, 170, 115)">
             Empresas
         </h3>
+
+        <div class="row d-flex justify-content-center">
+            <div *ngFor="let item of empresas | paginate: { itemsPerPage: 9, currentPage: p }"
+                class="col-12 col-md-4 pb-5 pt-2">
+                <div class="card shadow" style="border-color: #aaf0c9">
+
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold text-center">
+                            {{ item.empresa.nombre }}
+                        </h5>
+
+                        <p class="text-center">
+                            <a href="{{ item.empresa.ubicacion }}" target="_blank"
+                                style="text-decoration: none; color: #095c3d; font-style: italic;">
+                                {{ item.empresa.direccion }}
+                            </a>
+                            &nbsp;
+                            <a href="{{ item.empresa.ubicacion }}" target="_blank">
+                                <i class="bi bi-arrow-up-right-circle" style="color: #095c3d"></i>
+                            </a>
+                        </p>
+
+                        <div class="grass-caracteristicas">
+                            <!-- Más de una cancha -->
+                            <p *ngIf="item.canchas_futsal > 1">
+                                <i class="bi-1 bi-pentagon-fill"></i> &nbsp;
+                                <a> {{ item.canchas_futsal }} Canchas de futsal</a>
+                            </p>
+
+                            <!-- Una sola cancha -->
+                            <p *ngIf="item.canchas_futsal == 1">
+                                <i class="bi-1 bi-pentagon-fill"></i> &nbsp;
+                                <a> Una cancha de futsal</a>
+                            </p>
+
+                            <!-- Sin cancha -->
+                            <p *ngIf="item.canchas_futsal < 1" class="text-secondary">
+                                <i class="bi-2 bi-pentagon"></i> &nbsp;
+                                <a> Sin canchas de futsal</a>
+                            </p>
+
+                            <!-- Más de una cancha de voley -->
+                            <p *ngIf="item.canchas_voley > 1">
+                                <i class="bi-1 bi-dribbble"></i> &nbsp;
+                                <a> {{ item.canchas_voley }} canchas de vóley</a>
+                            </p>
+
+                            <!-- Una sola cancha -->
+                            <p *ngIf="item.canchas_voley == 1">
+                                <i class="bi-1 bi-dribbble"></i> &nbsp;
+                                <a> Una cancha de vóley</a>
+                            </p>
+
+                            <!-- Sin canchas de vóley -->
+                            <p *ngIf="item.canchas_voley < 1" class="text-secondary">
+                                <i class="bi-2 bi-dribbble"></i> &nbsp;
+                                <a>Sin canchas de vóley</a>
+                            </p>
+
+                            <p *ngIf="item.iluminacion">
+                                <i class="bi-1 bi-lightning-charge-fill"></i> &nbsp;
+                                <a>Iluminación LED</a>
+                            </p>
+
+                            <p *ngIf="!item.iluminacion" class="text-secondary">
+                                <i class="bi-2 bi-lightning-charge"> </i> &nbsp;
+                                <a>Sin iluminación LED</a>
+                            </p>
+                            <p *ngIf="item.techado">
+                                <i class="bi-1 bi-cloud-lightning-rain-fill"></i> &nbsp;
+                                <a>Techado</a>
+                            </p>
+
+                            <p *ngIf="!item.techado" class="text-secondary">
+                                <i class="bi-2 bi-cloud-lightning-rain"> </i> &nbsp;
+                                <a>Sin techo</a>
+                            </p>
+                            <p *ngIf="item.garaje">
+                                <i class="bi-1 bi-car-front-fill"></i> &nbsp; <a>Garaje</a>
+                            </p>
+
+                            <p *ngIf="!item.garaje" class="text-secondary">
+                                <i class="bi-2 bi-car-front"> </i> &nbsp; <a>Sin garaje</a>
+                            </p>
+                        </div>
+
+                        <div class="text-center" style="padding: 10px 0px" *ngIf="!item.empresa.verificado">
+                            <a data-bs-toggle="modal" [attr.data-bs-target]="'#verificar-' + item._id"
+                                class="btn btn-reserve" style="width: 180px; border-radius: 30px">
+                                Confirmar &nbsp; <i class="bi bi-check-lg"></i>
+                            </a>
+                        </div>
+
+                        <div class="text-center" style="padding: 10px 0px" *ngIf="item.empresa.verificado">
+                            <a data-bs-toggle="modal" [attr.data-bs-target]="'#canchas-' + item._id"
+                                class="btn btn-light" style="width: 180px; border-radius: 30px"
+                                (click)="obtener_canchas(item.empresa._id)">
+                                Ver canchas &nbsp; <i class="bi-chevron-right"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Modal verificar -->
+                    <div class="modal fade" id="verificar-{{ item._id }}" tabindex="-1" style="display: none"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title text-center">
+                                        Verificar empresa
+                                    </h4>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                    </button>
+                                </div>
+                                <div class="modal-body text-center">
+                                    Desea confirmar el registro de la ampresa {{item.empresa.nombre}}?
+                                </div>
+                                <div class="modal-footer">
+                                    <button class="btn btn-secondary btn-sm bi-x-lg" type="button"
+                                        data-bs-dismiss="modal">
+                                    </button>
+                                    <button *ngIf="!load_btn" class="btn btn-reserve btn-sm" data-bs-dismiss="modal"
+                                        (click)="verificar_empresa(item.empresa._id)" type="button"> <i
+                                            class="bi bi-check-lg"></i> &nbsp;
+                                        Verificar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modal ver canchas -->
+                    <div class="modal fade" id="canchas-{{ item._id }}" tabindex="-1" style="display: none"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title text-center">
+                                        Canchas de {{item.empresa.nombre}}
+                                    </h4>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="text-center" *ngIf="load_canchas">
+                                        <div class="spinner-border" style="width: 3rem; height: 3rem" role="status">
+                                        </div>
+                                        <h5 class="text-black-50"><small>Cargando...</small></h5>
+                                    </div>
+
+                                    <ng-container *ngIf="canchas.length < 1 && !load_canchas">
+                                        <div class="alert alert-danger mb-0 text-center" role="alert">
+                                            <span class="fs-5 fw-light">Esta empresa aún no creó sus canchas!</span>
+                                        </div>
+                                    </ng-container>
+
+                                    <div class="row d-flex justify-content-center">
+                                        <div *ngFor="let item of canchas" class="col-sm-12 col-md-6 pb-3 pt-2">
+                                            <div class="card shadow mx-3">
+                                                <div class="card-body">
+
+                                                    <div class="grass-caracteristicas">
+
+                                                        <!-- Tipo -->
+                                                        <p *ngIf="item.tipo == 'Voley'"
+                                                            style="color: rgb(241, 78, 143);">
+                                                            <i class="bi bi-dribbble"></i> &nbsp;
+                                                            <a> {{item.tipo}} </a>
+                                                        </p>
+
+                                                        <p *ngIf="item.tipo == 'Fútbol/Futsal'"
+                                                            style="color: rgb(0, 192, 86);">
+                                                            <i class="bi bi-pentagon-fill"></i> &nbsp;
+                                                            <a> {{item.tipo}} </a>
+                                                        </p>
+
+                                                        <p *ngIf="item.tipo == 'Mixto'"
+                                                            style="color: rgb(111, 66, 193)">
+                                                            <i class="bi bi-shuffle"></i> &nbsp;
+                                                            <a> {{item.tipo}} &nbsp;
+                                                                <small style="color: rgb(0, 192, 86);"><i
+                                                                        class="bi bi-record-fill"></i> </small>
+                                                                <small class="fw-light text text-secondary"> <i>
+                                                                        Fútbol/Futsal</i> </small>
+
+                                                                &nbsp;
+
+                                                                <small style="color: rgb(241, 78, 143);"><i
+                                                                        class="bi bi-record-fill"></i> </small>
+                                                                <small class="fw-light text text-secondary"> <i>
+                                                                        Voley</i> </small>
+                                                            </a>
+                                                        </p>
+
+                                                        <!-- Medidas -->
+                                                        <p *ngIf="item.tipo == 'Voley'">
+                                                            <i class="bi bi-square"
+                                                                style="color: rgb(241, 78, 143);"></i> &nbsp;
+                                                            <a> {{item.largo}}m x {{item.ancho}}m </a>
+                                                        </p>
+
+                                                        <p *ngIf="item.tipo == 'Fútbol/Futsal'">
+                                                            <i class="bi bi-square" style="color: rgb(0, 192, 86);"></i>
+                                                            &nbsp;
+                                                            <a> {{item.largo}}m x {{item.ancho}}m </a>
+                                                        </p>
+
+                                                        <p *ngIf="item.tipo == 'Mixto'">
+                                                            <i class="bi bi-square"
+                                                                style="color: rgb(111, 66, 193);"></i> &nbsp;
+                                                            <a> <small style="color: rgb(0, 192, 86);"><i
+                                                                        class="bi bi-record-fill"></i></small>
+                                                                {{item.largo}}m x {{item.ancho}}m
+                                                            </a>
+
+                                                            &nbsp;
+
+                                                            <a> <small style="color: rgb(241, 78, 143);"><i
+                                                                        class="bi bi-record-fill"></i></small>
+                                                                {{item.largo_voley}}m x {{item.ancho_voley}}m
+                                                            </a>
+                                                        </p>
+
+                                                        <!-- Precios -->
+                                                        <p *ngIf="item.tipo == 'Fútbol/Futsal'">
+                                                            <i class="bi bi-sun" style="color: rgb(0, 192, 86);"></i>
+                                                            &nbsp;
+                                                            <a> S/. {{item.precio_dia}}
+                                                                <small class="fw-light text text-secondary"> <i>hora</i>
+                                                                </small>
+                                                            </a>
+                                                        </p>
+
+                                                        <p *ngIf="item.tipo == 'Voley'">
+                                                            <i class="bi bi-sun" style="color: rgb(241, 78, 143);"></i>
+                                                            &nbsp;
+                                                            <a> S/. {{item.precio_dia}}
+                                                                <small class="fw-light text text-secondary"> <i>hora</i>
+                                                                </small>
+                                                            </a>
+                                                        </p>
+
+                                                        <p *ngIf="item.tipo == 'Fútbol/Futsal'">
+                                                            <i class="bi bi-moon-stars"
+                                                                style="color: rgb(0, 192, 86);"></i> &nbsp;
+                                                            <a> S/. {{item.precio_noche}}
+                                                                <small class="fw-light text text-secondary"> <i>hora</i>
+                                                                </small>
+                                                            </a>
+                                                        </p>
+
+                                                        <p *ngIf="item.tipo == 'Voley'">
+                                                            <i class="bi bi-moon-stars"
+                                                                style="color: rgb(241, 78, 143);"></i> &nbsp;
+                                                            <a> S/. {{item.precio_noche}}
+                                                                <small class="fw-light text text-secondary"> <i>hora</i>
+                                                                </small>
+                                                            </a>
+                                                        </p>
+
+                                                        <p *ngIf="item.tipo == 'Mixto'">
+                                                            <i class="bi bi-sun" style="color: rgb(111, 66, 193);"></i>
+                                                            <a> &nbsp; <small style="color: rgb(0, 192, 86);"><i
+                                                                        class="bi bi-record-fill"></i></small>
+                                                                S/. {{item.precio_dia}}
+                                                            </a>
+
+                                                            &nbsp;
+
+                                                            <a> <small style="color: rgb(241, 78, 143);"><i
+                                                                        class="bi bi-record-fill"></i></small>
+                                                                S/. {{item.precio_dia_voley}}
+                                                                <small class="fw-light text text-secondary"> <i>hora</i>
+                                                                </small>
+                                                            </a>
+                                                        </p>
+
+                                                        <p *ngIf="item.tipo == 'Mixto'">
+                                                            <i class="bi bi-moon-stars"
+                                                                style="color: rgb(111, 66, 193);"></i>
+                                                            <a> &nbsp; <small style="color: rgb(0, 192, 86);"><i
+                                                                        class="bi bi-record-fill"></i></small>
+                                                                S/. {{item.precio_dia}}
+                                                            </a>
+
+                                                            &nbsp;
+
+                                                            <a> <small style="color: rgb(241, 78, 143);"><i
+                                                                        class="bi bi-record-fill"></i></small>
+                                                                S/. {{item.precio_dia_voley}}
+                                                                <small class="fw-light text text-secondary"> <i>hora</i>
+                                                                </small>
+                                                            </a>
+                                                        </p>
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-footer text-center">
+                <pagination-controls (pageChange)="p = $event" [responsive]="true" previousLabel="" nextLabel="">
+                </pagination-controls>
+            </div>
+        </div>
     </div>
 </div>
-

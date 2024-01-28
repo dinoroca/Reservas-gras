@@ -3,7 +3,8 @@
 var User = require('../Models/User');
 var Reservacion = require('../Models/Reservacion');
 var Reservacion = require('../Models/Reservacion');
-var Cuenta = require('../Models/Cuenta');
+var Empresa = require('../Models/Empresa');
+var Caracteristicas = require('../Models/Caracteristicas');
 const CuentaAdmin = require('../Models/CuentaAdmin');
 var bcrypt = require('bcrypt-nodejs');
 var jwt = require('../Helpers/jwt');
@@ -433,6 +434,44 @@ const obtener_cuentas_de_admin = async function (req, res) {
   }
 }
 
+//EMPRESA
+const obtener_empresas_admin = async function (req, res) {
+  if (req.user) {
+    if (req.user.role == 'ADMIN') {
+
+      let empresas = [];
+      try {
+        empresas = await Caracteristicas.find().sort({ createdAt: -1 }).populate('empresa');
+        res.status(200).send({ data: empresas });
+      } catch (error) {
+        res.status(200).send({ data: undefined });
+      }
+    } else {
+      res.status(500).send({ message: 'NoAccess' });
+    }
+  } else {
+    res.status(500).send({ message: 'NoAccess' });
+  }
+}
+
+const actualizar_empresa_verificado_admin = async function (req, res) {
+  if (req.user) {
+    if (req.user.role == 'ADMIN') {
+
+      var id = req.params['id'];
+
+      var reg = await Empresa.findByIdAndUpdate({ _id: id }, { verificado: true });
+
+      res.status(200).send({ data: reg });
+
+    } else {
+      res.status(500).send({ message: 'NoAccess' });
+    }
+  } else {
+    res.status(500).send({ message: 'NoAccess' });
+  }
+}
+
 
 ////////CONTACTO
 const enviar_mensaje_contacto = async function (req, res) {
@@ -460,5 +499,7 @@ module.exports = {
   eliminar_cuenta_admin,
   actualizar_cuenta_admin,
   obtener_cuentas_de_admin,
+  obtener_empresas_admin,
+  actualizar_empresa_verificado_admin,
   enviar_mensaje_contacto
 }
