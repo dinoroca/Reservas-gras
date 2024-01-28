@@ -30,6 +30,40 @@
                             </a>
                         </p>
 
+                        <p>
+                            <i class="bi-1 bi-geo-alt"></i> &nbsp; <small>
+                            {{item.empresa.region}} - {{item.empresa.provincia}} - {{item.empresa.distrito}}
+                            </small>
+                        </p>
+
+                        <p>
+                            <a href="tel:{{ item.empresa.telefono }}" style="text-decoration: none; color: #0EAB68">
+                                <i class="bi bi-phone"></i>
+                            </a>
+                            &nbsp;
+
+                            <a href="https://wa.me/51{{ item.empresa.telefono }}" target="_blank"
+                                style="text-decoration: none; color: #0EAB68">
+                                <i class="bi bi-whatsapp"></i>
+                            </a> &nbsp; {{ item.empresa.telefono }}
+                        </p>
+
+                        <p>
+                            <a href="mailto:{{ item.empresa.email }}" target="_blank"
+                                style="text-decoration: none; color: rgb(255, 87, 87)">
+                                <i class="bi bi-envelope"></i>
+                            </a> &nbsp; {{ item.empresa.email }}
+                        </p>
+
+                        <p class="fw-light">
+                            <i class="bi-1 bi-calendar-event"></i> &nbsp;
+                            Creación: {{ item.createdAt | date: 'medium' }} 
+                        </p>
+
+                        <!-- CARACTERÍSTICAS -->
+                        <h5 class="card-title text-center" style="color: #0EAB68;">
+                            Catacterísticas
+                        </h5>
                         <div class="grass-caracteristicas">
                             <!-- Más de una cancha -->
                             <p *ngIf="item.canchas_futsal > 1">
