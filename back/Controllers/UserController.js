@@ -544,6 +544,25 @@ const obtener_caracteristicas_admin = async function (req, res) {
   }
 }
 
+////CLIENTES
+const obtener_clientes_admin = async function (req, res) {
+  if (req.user) {
+    if (req.user.role == 'ADMIN') {
+
+      let clientes = [];
+      try {
+        clientes = await User.find().sort({ createdAt: -1 });
+        res.status(200).send({ data: clientes });
+      } catch (error) {
+        res.status(200).send({ data: undefined });
+      }
+    } else {
+      res.status(500).send({ message: 'NoAccess' });
+    }
+  } else {
+    res.status(500).send({ message: 'NoAccess' });
+  }
+}
 
 ////////CONTACTO
 const enviar_mensaje_contacto = async function (req, res) {
@@ -576,6 +595,7 @@ module.exports = {
   obtener_empresas_admin,
   actualizar_empresa_verificado_admin,
   obtener_caracteristicas_admin,
+  obtener_clientes_admin,
   
   enviar_mensaje_contacto
 }

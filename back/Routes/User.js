@@ -36,6 +36,9 @@ api.get('/obtener_empresas_admin', auth.auth, UserController.obtener_empresas_ad
 api.put('/actualizar_empresa_verificado_admin/:id', auth.auth, UserController.actualizar_empresa_verificado_admin);
 api.get('/obtener_caracteristicas_admin/:id', auth.auth, UserController.obtener_caracteristicas_admin);
 
+/////CLIENTES
+api.get('/obtener_clientes_admin', auth.auth, UserController.obtener_clientes_admin);
+
 ////Contacto
 api.post('/enviar_mensaje_contacto', UserController.enviar_mensaje_contacto);
 
