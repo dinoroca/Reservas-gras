@@ -564,6 +564,120 @@ const obtener_clientes_admin = async function (req, res) {
   }
 }
 
+/////KPI ADMIN
+const kpi_ganancias_mensuales_admin = async function (req, res) {
+  if (req.user) {
+    if (req.user.role == 'ADMIN') {
+      var enero = 0;
+      var febrero = 0;
+      var marzo = 0;
+      var abril = 0;
+      var mayo = 0;
+      var junio = 0;
+      var julio = 0;
+      var agosto = 0;
+      var septiembre = 0;
+      var octubre = 0;
+      var noviembre = 0;
+      var diciembre = 0;
+
+      var ganancia_total = 0;
+      var total_mes = 0;
+      var total = 0;
+      var total_mes_anterior = 0;
+      var count_ventas = 0;
+
+      var reg = await Reservacion.find({$or: [{estado: 'Reservado'}, {estado: 'Finalizado'}]});
+      let current_date = new Date();
+      let current_year = current_date.getFullYear();
+      let current_month = current_date.getMonth() + 1;
+
+      for (var item of reg) {
+        let createdAt_date = new Date(item.createdAt);
+        let mes = createdAt_date.getMonth() + 1;
+
+        if (createdAt_date.getFullYear() == current_year) {
+
+          ganancia_total += item.subtotal/10;
+
+          if (mes == current_month) {
+            total_mes += item.subtotal/10;
+            count_ventas = count_ventas + 1;
+          }
+
+          if (mes == current_month - 1) {
+            total_mes_anterior += item.subtotal/10;
+          }
+
+          if (mes == 1) {
+            enero += item.subtotal/10;
+            
+          } else if (mes == 2) {
+            febrero += item.subtotal/10;
+            
+          } else if (mes == 3) {
+            marzo += item.subtotal/10;
+            
+          } else if (mes == 4) {
+            abril += item.subtotal/10;
+            
+          } else if (mes == 5) {
+            mayo = mayo + item.subtotal/10;
+            
+          } else if (mes == 6) {
+            junio += item.subtotal/10;
+            
+          } else if (mes == 7) {
+            julio += item.subtotal/10;
+            
+          } else if (mes == 8) {
+            agosto += item.subtotal/10;
+            
+          } else if (mes == 9) {
+            septiembre += item.subtotal/10;
+            
+          } else if (mes == 10) {
+            octubre += item.subtotal/10;
+            
+          } else if (mes == 11) {
+            noviembre += item.subtotal/10;
+            
+          } else if (mes == 12) {
+            diciembre += item.subtotal/10;
+            
+          }
+        }
+      }
+
+      res.status(200).send({
+        enero: enero,
+        febrero: febrero,
+        marzo: marzo,
+        abril: abril,
+        mayo: mayo,
+        junio: junio,
+        julio: julio,
+        agosto: agosto,
+        septiembre: septiembre,
+        octubre: octubre,
+        noviembre: noviembre,
+        diciembre: diciembre,
+
+        ganancia_total: ganancia_total,
+        total_mes: total_mes,
+        total_mes_anterior: total_mes_anterior,
+        count_ventas: count_ventas
+      });
+
+    } else {
+      res.status(500).send({ message: 'NoAccess' });
+    }
+  } else {
+    res.status(500).send({ message: 'NoAccess' });
+  }
+}
+
+
 ////////CONTACTO
 const enviar_mensaje_contacto = async function (req, res) {
   let data = req.body;
@@ -596,6 +710,7 @@ module.exports = {
   actualizar_empresa_verificado_admin,
   obtener_caracteristicas_admin,
   obtener_clientes_admin,
+  kpi_ganancias_mensuales_admin,
   
   enviar_mensaje_contacto
 }

@@ -279,6 +279,12 @@ export class UserService {
     return this._http.get(this.url + 'obtener_clientes_admin', { headers: headers });
   }
 
+  /////KPI ADMIN
+  kpi_ganancias_mensuales_admin(token: any): Observable<any> {
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json', 'authorization': token });
+    return this._http.get(this.url + 'kpi_ganancias_mensuales_admin', { headers: headers });
+  }
+
   //Galería
   agregar_imagen_galeria_cancha(id: any, data: any, token: any): Observable<any> {
     let headers = new HttpHeaders({ 'authorization': token });

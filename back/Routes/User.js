@@ -39,6 +39,9 @@ api.get('/obtener_caracteristicas_admin/:id', auth.auth, UserController.obtener_
 /////CLIENTES
 api.get('/obtener_clientes_admin', auth.auth, UserController.obtener_clientes_admin);
 
+////KPI
+api.get('/kpi_ganancias_mensuales_admin', auth.auth, UserController.kpi_ganancias_mensuales_admin);
+
 ////Contacto
 api.post('/enviar_mensaje_contacto', UserController.enviar_mensaje_contacto);
 
