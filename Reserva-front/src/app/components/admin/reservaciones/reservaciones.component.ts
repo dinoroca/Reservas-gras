@@ -16,8 +16,10 @@ export class ReservacionesComponent implements OnInit {
   public load_data = false;
   public load_btn = false;
   public load_car = true;
+  public load_cuentas = true;
   public exist_res = true;
   public reservaciones: Array<any> = [];
+  public cuentas: Array<any> = [];
   public caracteristicas: any;
   p: number = 1;
 
@@ -56,13 +58,22 @@ export class ReservacionesComponent implements OnInit {
 
   obtener_caracteristicas(id: any) {
     this.load_car = true;
+    this.load_cuentas = true;
     this._userService.obtener_caracteristicas_admin(id, this.token).subscribe(
       response => {
         this.caracteristicas = response.data[0];
         this.load_car = false;
       }
     );
+
+    this._userService.obtener_cuentas_de_empresa_admin(id, this.token).subscribe(
+      response => {
+        this.cuentas = response.data;
+        this.load_cuentas = false;
+      }
+    );
   }
+
   confirmar_reservacion(id: any) {
     this.load_btn = true;
     this._userService.actualizar_reserva_reservado_admin(id, this.token).subscribe(

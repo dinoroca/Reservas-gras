@@ -35,6 +35,8 @@ api.put('/actualizar_reserva_reservado_admin/:id', auth.auth, UserController.act
 api.get('/obtener_empresas_admin', auth.auth, UserController.obtener_empresas_admin);
 api.put('/actualizar_empresa_verificado_admin/:id', auth.auth, UserController.actualizar_empresa_verificado_admin);
 api.get('/obtener_caracteristicas_admin/:id', auth.auth, UserController.obtener_caracteristicas_admin);
+api.delete('/eliminar_empresa_admin/:id', auth.auth, UserController.eliminar_empresa_admin);
+api.get('/obtener_cuentas_de_empresa_admin/:id', auth.auth, UserController.obtener_cuentas_de_empresa_admin);
 
 /////CLIENTES
 api.get('/obtener_clientes_admin', auth.auth, UserController.obtener_clientes_admin);

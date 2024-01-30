@@ -32,7 +32,7 @@
 
                         <p>
                             <i class="bi-1 bi-geo-alt"></i> &nbsp; <small>
-                            {{item.empresa.region}} - {{item.empresa.provincia}} - {{item.empresa.distrito}}
+                                {{item.empresa.region}} - {{item.empresa.provincia}} - {{item.empresa.distrito}}
                             </small>
                         </p>
 
@@ -57,7 +57,7 @@
 
                         <p class="fw-light">
                             <i class="bi-1 bi-calendar-event"></i> &nbsp;
-                            Creación: {{ item.createdAt | date: 'medium' }} 
+                            Creación: {{ item.createdAt | date: 'medium' }}
                         </p>
 
                         <!-- CARACTERÍSTICAS -->
@@ -132,6 +132,10 @@
                             <a data-bs-toggle="modal" [attr.data-bs-target]="'#verificar-' + item._id"
                                 class="btn btn-reserve" style="width: 180px; border-radius: 30px">
                                 Confirmar &nbsp; <i class="bi bi-check-lg"></i>
+                            </a> &nbsp;
+                            <a data-bs-toggle="modal" [attr.data-bs-target]="'#delete-' + item._id" class="text-danger"
+                                type="button">
+                                <i class="bi bi-trash-fill"></i>
                             </a>
                         </div>
 
@@ -343,6 +347,35 @@
                                             </div>
                                         </div>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modal eliminar -->
+                    <div class="modal fade" id="delete-{{ item._id }}" tabindex="-1" style="display: none"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title text-center">
+                                        Eliminar cancha
+                                    </h4>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                    </button>
+                                </div>
+                                <div class="modal-body text-center">
+                                    Desea eliminar la empresa {{item.empresa.nombre}}?
+                                </div>
+                                <div class="modal-footer">
+                                    <button class="btn btn-secondary btn-sm bi-x-lg" type="button"
+                                        data-bs-dismiss="modal">
+                                    </button>
+                                    <button *ngIf="!load_btn" class="btn btn-danger btn-sm" data-bs-dismiss="modal"
+                                        (click)="eliminar_cancha(item.empresa._id)" type="button"> <i class="bi bi-trash-fill"></i>
+                                        &nbsp;
+                                        Eliminar
+                                    </button>
                                 </div>
                             </div>
                         </div>

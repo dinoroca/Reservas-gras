@@ -6,6 +6,7 @@ var Reservacion = require('../Models/Reservacion');
 var Empresa = require('../Models/Empresa');
 var Caracteristicas = require('../Models/Caracteristicas');
 const CuentaAdmin = require('../Models/CuentaAdmin');
+const Cuenta = require('../Models/Cuenta');
 var bcrypt = require('bcrypt-nodejs');
 var jwt = require('../Helpers/jwt');
 const moment = require('moment');
@@ -544,6 +545,51 @@ const obtener_caracteristicas_admin = async function (req, res) {
   }
 }
 
+const eliminar_empresa_admin = async function (req, res) {
+  if (req.user) {
+    if (req.user.role === 'ADMIN') {
+      var id = req.params['id'];
+
+      try {
+        // Eliminar la empresa por _id
+        let reg = await Empresa.findByIdAndRemove({ _id: id });
+
+        // Eliminar características por el campo empresa
+        let reg1 = await Caracteristicas.deleteMany({ empresa: id });
+
+        res.status(200).send({ data: reg, reg1 });
+      } catch (error) {
+        res.status(200).send({ data: undefined, message: error });
+      }
+
+    } else {
+      res.status(500).send({ message: 'NoAccess' });
+    }
+  } else {
+    res.status(500).send({ message: 'NoAccess' });
+  }
+};
+
+const obtener_cuentas_de_empresa_admin = async function (req, res) {
+  if (req.user) {
+    if (req.user.role == 'ADMIN') {
+      let id = req.params['id'];
+
+      let cuentas = [];
+      try {
+        cuentas = await Cuenta.find({empresa: id}).sort({ createdAt: -1 });
+        res.status(200).send({ data: cuentas });
+      } catch (error) {
+        res.status(200).send({ data: undefined });
+      }
+    } else {
+      res.status(500).send({ message: 'NoAccess' });
+    }
+  } else {
+    res.status(500).send({ message: 'NoAccess' });
+  }
+}
+
 ////CLIENTES
 const obtener_clientes_admin = async function (req, res) {
   if (req.user) {
@@ -709,6 +755,8 @@ module.exports = {
   obtener_empresas_admin,
   actualizar_empresa_verificado_admin,
   obtener_caracteristicas_admin,
+  eliminar_empresa_admin,
+  obtener_cuentas_de_empresa_admin,
   obtener_clientes_admin,
   kpi_ganancias_mensuales_admin,
   

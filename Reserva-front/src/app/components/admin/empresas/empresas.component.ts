@@ -83,4 +83,17 @@ export class EmpresasComponent implements OnInit {
     );
   }
 
+  eliminar_cancha(id: any) {
+    this._userService.eliminar_empresa_admin(id, this.token).subscribe(
+      response => {
+        if (response.data == undefined) {
+          this._toastrService.error(response.message, 'ERROR');
+        } else {
+          this._toastrService.success('Se eliminó con éxito', 'ELIMINADO!');
+          this.init_data();
+        }
+      }
+    );
+  }
+
 }
