@@ -15,6 +15,7 @@ import { AuthAdminGuard } from './guards/auth-admin.guard';
 import { AuthGrassGuard } from './guards/auth-grass.guard';
 import { VerGrassComponent } from './components/main/ver-grass/ver-grass.component';
 import { VerMovilComponent } from './components/main/ver-movil/ver-movil.component';
+import { TermCondicionesComponent } from './components/main/term-condiciones/term-condiciones.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -29,6 +30,7 @@ const routes: Routes = [
   {path: 'ver-movil/:id', component: VerMovilComponent},
   {path: 'forgot-password', component: ForgotPassComponent},
   {path: 'politica-privacidad', component: PoliticaPrivComponent},
+  {path: 'terminos-condiciones', component: TermCondicionesComponent},
 
   //Lazy load de modulo de usuario
   {

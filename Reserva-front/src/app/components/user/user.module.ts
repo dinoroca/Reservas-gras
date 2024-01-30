@@ -17,6 +17,8 @@ import { FootUserComponent } from './foot-user/foot-user.component';
 import { VerGrassComponent } from './ver-grass/ver-grass.component';
 import { VerMovilComponent } from './ver-movil/ver-movil.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { PoliticaPrivComponent } from './politica-priv/politica-priv.component';
+import { TermCondicionesComponent } from './term-condiciones/term-condiciones.component';
 
 
 @NgModule({
@@ -32,7 +34,9 @@ import { NgxPaginationModule } from 'ngx-pagination';
     UpdatePasswordComponent,
     FootUserComponent,
     VerGrassComponent,
-    VerMovilComponent
+    VerMovilComponent,
+    PoliticaPrivComponent,
+    TermCondicionesComponent
   ],
   imports: [
     CommonModule,

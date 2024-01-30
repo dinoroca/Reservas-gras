@@ -11,6 +11,7 @@ import { AppRoutingModule } from 'src/app/app-routing.module';
 import { RouterModule } from '@angular/router';
 import { VerGrassComponent } from './ver-grass/ver-grass.component';
 import { VerMovilComponent } from './ver-movil/ver-movil.component';
+import { TermCondicionesComponent } from './term-condiciones/term-condiciones.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { VerMovilComponent } from './ver-movil/ver-movil.component';
     PoliticaPrivComponent,
     ForgotPassComponent,
     VerGrassComponent,
-    VerMovilComponent
+    VerMovilComponent,
+    TermCondicionesComponent
   ],
   imports: [
     CommonModule,
