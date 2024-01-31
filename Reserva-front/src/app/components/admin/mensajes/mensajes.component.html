@@ -8,6 +8,110 @@
         <h3 class="text-center fw-bold" style="color:rgb(6, 170, 115)">
             Mensajes
         </h3>
+
+        <div class="card-body text-center">
+
+            <div class="">
+                <div class="text-center" *ngIf="load_data">
+                    <div class="spinner-border" style="width: 3rem; height: 3rem" role="status">
+                    </div>
+                    <h5 class="text-black-50"><small>Cargando...</small></h5>
+                </div>
+
+                <ng-container *ngIf="!load_data && mensajes.length > 0">
+
+                    <!-- CARDS -->
+                    <div class="row">
+                        <ng-container
+                            *ngFor="let item of mensajes | paginate: { itemsPerPage: 10, currentPage: p }; let indice = index">
+
+                            <div class="col-md-6">
+                                <div class="card shadow my-4" style="border-color: rgb(1, 228, 115);">
+                                    <div class="card-header" style="background: rgb(226, 255, 241);">
+                                        Mensaje N° {{mensajes.length - indice}} &nbsp; &nbsp; &nbsp;
+                                        <strong>{{item.cliente}}</strong>
+                                        &nbsp; &nbsp; &nbsp;
+
+                                        <span class="badge rounded-pill bg-success" *ngIf="item.estado == 'Cerrado'">
+                                            <i class="bi bi-lock"></i> {{item.estado}} </span>
+                                        <span class="badge rounded-pill text-bg-secondary"
+                                            *ngIf="item.estado == 'Abierto'">
+                                            <i class="bi bi-unlock"></i> &nbsp; {{item.estado}} </span>
+                                    </div>
+                                    <div class="card-body">
+                                        <h5 class="card-title fw-bold text-black-50">{{item.asunto }}</h5>
+                                        <p class="text-center">{{item.mensaje }}</p>
+                                        <p class="card-text text-black-50"> <i class="bi bi-calendar-event"></i>
+                                            &nbsp;
+                                            <strong>
+                                                {{item.createdAt | date}} </strong>
+                                        </p>
+
+                                        <p class="text-black-50" *ngIf="item.estado == 'Abierto'"> Contactar por:
+                                            &nbsp;
+                                            <a href="https://wa.me/51{{item.telefono}}" target="_blank">
+                                                <i class="bi bi-whatsapp text-success"></i>
+                                            </a> &nbsp;
+                                            <a href="mailto: {{item.correo}}" target="_blank">
+                                                <i class="bi bi-envelope-at text-primary"></i>
+                                            </a>
+                                        </p>
+
+                                        <!-- Button trigger modal -->
+                                        <button *ngIf="item.estado == 'Abierto'" type="button" class="btn btn-success"
+                                            data-bs-toggle="modal" [attr.data-bs-target]="'#modalCerrar-' + item._id">
+                                            <i class="bi bi-lock"></i> &nbsp;
+                                            Cerrar mensaje
+                                        </button>
+
+                                        <!-- Modal Confirmar pago-->
+                                        <div class="modal fade" id="modalCerrar-{{ item._id }}" tabindex="-1"
+                                            aria-labelledby="modalCerrarLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h1 class="modal-title fs-5" id="modalCerrarLabel">
+                                                            Cerrar mensaje
+                                                        </h1>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        Cerrar mensaje <strong>{{ item.asunto}}</strong>?
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-light"
+                                                            data-bs-dismiss="modal"><i class="bi bi-x-lg"></i>
+                                                        </button>
+
+                                                        <button type="button" class="btn btn-success"
+                                                            data-bs-dismiss="modal" (click)="cerrar_mensaje(item._id)">
+                                                            <i class="bi bi-lock"></i> &nbsp;
+                                                            Cerrar mensaje
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-container>
+                    </div>
+
+                    <div class="card-footer text-center">
+                        <pagination-controls (pageChange)="p = $event" [responsive]="true" previousLabel="" nextLabel="">
+                        </pagination-controls>
+                    </div>
+                </ng-container>
+
+            </div>
+            <ng-container *ngIf="mensajes.length < 1 && !load_data">
+                <div class="alert alert-danger mb-0" role="alert">
+                    Aún no existen mensajes!
+                </div>
+            </ng-container>
+        </div>
     </div>
 </div>
 

@@ -46,6 +46,8 @@ api.get('/kpi_ganancias_mensuales_admin', auth.auth, UserController.kpi_ganancia
 
 ////Contacto
 api.post('/enviar_mensaje_contacto', UserController.enviar_mensaje_contacto);
+api.get('/obtener_mensajes_admin', auth.auth, UserController.obtener_mensajes_admin);
+api.put('/cerrar_mensaje_admin/:id', auth.auth, UserController.cerrar_mensaje_admin);
 
 
 //Exportar los módulos

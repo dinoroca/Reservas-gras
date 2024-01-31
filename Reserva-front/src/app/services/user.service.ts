@@ -347,6 +347,16 @@ export class UserService {
     return this._http.post(this.url + 'enviar_mensaje_contacto', data, { headers: headers });
   }
 
+  obtener_mensajes_admin(token: any): Observable<any> {
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json', 'authorization': token });
+    return this._http.get(this.url + 'obtener_mensajes_admin', { headers: headers });
+  }
+
+  cerrar_mensaje_admin(id: any, data: any, token: any): Observable<any> {
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json', 'authorization': token });
+    return this._http.put(this.url + 'cerrar_mensaje_admin/' + id, data, { headers: headers });
+  }
+
 
   public isAutenticatedUser(): Boolean {
 

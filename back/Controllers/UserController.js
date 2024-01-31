@@ -5,8 +5,9 @@ var Reservacion = require('../Models/Reservacion');
 var Reservacion = require('../Models/Reservacion');
 var Empresa = require('../Models/Empresa');
 var Caracteristicas = require('../Models/Caracteristicas');
-const CuentaAdmin = require('../Models/CuentaAdmin');
-const Cuenta = require('../Models/Cuenta');
+var CuentaAdmin = require('../Models/CuentaAdmin');
+var Cuenta = require('../Models/Cuenta');
+var Contacto = require('../Models/Contacto');
 var bcrypt = require('bcrypt-nodejs');
 var jwt = require('../Helpers/jwt');
 const moment = require('moment');
@@ -733,6 +734,40 @@ const enviar_mensaje_contacto = async function (req, res) {
   res.status(200).send({ data: reg })
 }
 
+const obtener_mensajes_admin = async function (req, res) {
+  if (req.user) {
+    if (req.user.role == 'ADMIN') {
+
+      let reg = await Contacto.find().sort({ createdAt: -1 });
+
+      res.status(200).send({ data: reg });
+
+    } else {
+      res.status(500).send({ message: 'NoAccess' });
+    }
+  } else {
+    res.status(500).send({ message: 'NoAccess' });
+  }
+}
+
+const cerrar_mensaje_admin = async function (req, res) {
+  if (req.user) {
+    if (req.user.role == 'ADMIN') {
+
+      let id = req.params['id'];
+
+      let reg = await Contacto.findByIdAndUpdate({ _id: id }, { estado: 'Cerrado' });
+
+      res.status(200).send({ data: reg });
+
+    } else {
+      res.status(500).send({ message: 'NoAccess' });
+    }
+  } else {
+    res.status(500).send({ message: 'NoAccess' });
+  }
+}
+
 module.exports = {
   registro_user,
   login_user,
@@ -760,5 +795,7 @@ module.exports = {
   obtener_clientes_admin,
   kpi_ganancias_mensuales_admin,
   
-  enviar_mensaje_contacto
+  enviar_mensaje_contacto,
+  obtener_mensajes_admin,
+  cerrar_mensaje_admin
 }

@@ -11,7 +11,7 @@
                     <div class="card-body">
                         <p class="lead text-center py-2">
                             Nuestro equipo se pondrá en contacto contigo</p>
-                        <form #registroForm="ngForm">
+                        <form #registroForm="ngForm" (ngSubmit)="registro(registroForm)">
                             <div class="row px-4">
                                 <div class="col-sm-6 form-group py-2">
                                     <label for="cont-name" class="form-label">Nombres y apellidos
