@@ -52,6 +52,11 @@ export class UserService {
     return this._http.put(this.url + 'actualizar_password_user/' + id, data, { headers: headers });
   }
 
+  eliminar_cuenta_user(id: any, token: any): Observable<any> {
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json', 'authorization': token });
+    return this._http.delete(this.url + 'eliminar_cuenta_user/' + id, { headers: headers });
+  }
+
   //EMPRESA
   registro_empresa(data: any): Observable<any> {
     let headers = new HttpHeaders({ 'Content-Type': 'application/json' });

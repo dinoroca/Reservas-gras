@@ -197,6 +197,31 @@ const actualizar_password_user = async function (req, res) {
   }
 }
 
+
+const eliminar_cuenta_user = async function (req, res) {
+  try {
+    if (req.user) {
+      var id = req.params['id'];
+
+      // Obtener las reservaciones del usuario
+      const reservacionesUsuario = await Reservacion.find({ cliente: id });
+
+      // Actualizar el campo cliente en las reservaciones
+      await Reservacion.updateMany({ cliente: id }, { cliente: '65a89082d0979c1b8c050008' });
+
+      // Eliminar al usuario por _id
+      let reg = await User.findByIdAndRemove({ _id: id });
+
+      res.status(200).send({ data: reg, reservacionesUsuario });
+    } else {
+      res.status(500).send({ message: 'NoAccess' });
+    }
+  } catch (error) {
+    console.error('Error al eliminar la cuenta del usuario:', error);
+  }
+};
+
+
 // Reservaciones
 const crear_reservacion_user = async function (req, res) {
   if (req.user) {
@@ -271,9 +296,9 @@ const obtener_reservaciones_admin = async function (req, res) {
       let reservaciones = [];
       try {
         reservaciones = await Reservacion.find().sort({ createdAt: -1 })
-        .populate('empresa')
-        .populate('cancha')
-        .populate({ path: 'cliente', model: 'user' });
+          .populate('empresa')
+          .populate('cancha')
+          .populate({ path: 'cliente', model: 'user' });
 
         res.status(200).send({ data: reservaciones });
       } catch (error) {
@@ -531,7 +556,7 @@ const obtener_caracteristicas_admin = async function (req, res) {
       let id = req.params['id'];
 
       let caracteristicas = await Caracteristicas.find({ empresa: id });
-      
+
 
       if (caracteristicas.length >= 1) {
         res.status(200).send({ data: caracteristicas });
@@ -578,7 +603,7 @@ const obtener_cuentas_de_empresa_admin = async function (req, res) {
 
       let cuentas = [];
       try {
-        cuentas = await Cuenta.find({empresa: id}).sort({ createdAt: -1 });
+        cuentas = await Cuenta.find({ empresa: id }).sort({ createdAt: -1 });
         res.status(200).send({ data: cuentas });
       } catch (error) {
         res.status(200).send({ data: undefined });
@@ -639,9 +664,9 @@ const kpi_ganancias_mensuales_admin = async function (req, res) {
           { estado: 'Reservado' },
           { estado: 'Finalizado' }
         ],
-        cliente: { $ne: '65a89082d0979c1b8c050008' } // Excluye al cliente por _id
+        cliente: { $ne: '65a89082d0979c1b8c050008' } // Excluye al cliente generado por grass mediante su ID
       });
-      
+
       let current_date = new Date();
       let current_year = current_date.getFullYear();
       let current_month = current_date.getMonth() + 1;
@@ -652,53 +677,53 @@ const kpi_ganancias_mensuales_admin = async function (req, res) {
 
         if (createdAt_date.getFullYear() == current_year) {
 
-          ganancia_total += item.subtotal/10;
+          ganancia_total += item.subtotal / 10;
 
           if (mes == current_month) {
-            total_mes += item.subtotal/10;
+            total_mes += item.subtotal / 10;
             count_ventas = count_ventas + 1;
           }
 
           if (mes == current_month - 1) {
-            total_mes_anterior += item.subtotal/10;
+            total_mes_anterior += item.subtotal / 10;
           }
 
           if (mes == 1) {
-            enero += item.subtotal/10;
-            
+            enero += item.subtotal / 10;
+
           } else if (mes == 2) {
-            febrero += item.subtotal/10;
-            
+            febrero += item.subtotal / 10;
+
           } else if (mes == 3) {
-            marzo += item.subtotal/10;
-            
+            marzo += item.subtotal / 10;
+
           } else if (mes == 4) {
-            abril += item.subtotal/10;
-            
+            abril += item.subtotal / 10;
+
           } else if (mes == 5) {
-            mayo = mayo + item.subtotal/10;
-            
+            mayo = mayo + item.subtotal / 10;
+
           } else if (mes == 6) {
-            junio += item.subtotal/10;
-            
+            junio += item.subtotal / 10;
+
           } else if (mes == 7) {
-            julio += item.subtotal/10;
-            
+            julio += item.subtotal / 10;
+
           } else if (mes == 8) {
-            agosto += item.subtotal/10;
-            
+            agosto += item.subtotal / 10;
+
           } else if (mes == 9) {
-            septiembre += item.subtotal/10;
-            
+            septiembre += item.subtotal / 10;
+
           } else if (mes == 10) {
-            octubre += item.subtotal/10;
-            
+            octubre += item.subtotal / 10;
+
           } else if (mes == 11) {
-            noviembre += item.subtotal/10;
-            
+            noviembre += item.subtotal / 10;
+
           } else if (mes == 12) {
-            diciembre += item.subtotal/10;
-            
+            diciembre += item.subtotal / 10;
+
           }
         }
       }
@@ -783,6 +808,7 @@ module.exports = {
   actualizar_user,
   comparar_password,
   actualizar_password_user,
+  eliminar_cuenta_user,
   crear_reservacion_user,
   obtener_reservaciones_user,
   obtener_reservaciones_public,
@@ -801,7 +827,7 @@ module.exports = {
   obtener_cuentas_de_empresa_admin,
   obtener_clientes_admin,
   kpi_ganancias_mensuales_admin,
-  
+
   enviar_mensaje_contacto,
   obtener_mensajes_admin,
   cerrar_mensaje_admin

@@ -24,26 +24,6 @@ export class SidebarComponent {
     this.user = JSON.parse(localStorage.getItem('user_data')!);
     this.token = localStorage.getItem('token') || sessionStorage.getItem('token');
     this.id = localStorage.getItem('_id') || sessionStorage.getItem('_id');
-
-    // this._userService
-    //   .obtener_pagos_cliente(this.id, this.token)
-    //   .subscribe((response) => {
-    //     this.pagos = response.data;
-
-    //     if (this.pagos) {
-    //       for (let i = 0; i < this.pagos.length; i++) {
-          
-    //         if (this.pagos[i].estado == 'Confirmado') {
-    //           this.activePagos = true;
-    //           break;
-    //         } else {
-    //           this.activePagos = false;
-    //         }
-    //       } 
-    //     } else {
-    //       this.activePagos = false;
-    //     }
-    //   });
   }
 
   logout() {

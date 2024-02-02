@@ -12,6 +12,7 @@ api.get('/obtener_user/:id', auth.auth, UserController.obtener_user);
 api.put('/actualizar_user/:id', auth.auth, UserController.actualizar_user);
 api.post('/comparar_password', UserController.comparar_password);
 api.put('/actualizar_password_user/:id', auth.auth, UserController.actualizar_password_user);
+api.delete('/eliminar_cuenta_user/:id', auth.auth, UserController.eliminar_cuenta_user);
 
 /////// CUENTAS
 api.post('/registro_cuenta_admin', auth.auth, UserController.registro_cuenta_admin);

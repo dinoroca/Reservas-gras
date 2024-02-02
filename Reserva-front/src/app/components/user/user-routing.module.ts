@@ -11,6 +11,7 @@ import { VerGrassComponent } from './ver-grass/ver-grass.component';
 import { VerMovilComponent } from './ver-movil/ver-movil.component';
 import { PoliticaPrivComponent } from './politica-priv/politica-priv.component';
 import { TermCondicionesComponent } from './term-condiciones/term-condiciones.component';
+import { DeleteAccountComponent } from './perfil/delete-account/delete-account.component';
 
 const routes: Routes = [
   {path: '', component: InicioComponent},
@@ -23,7 +24,8 @@ const routes: Routes = [
   {path: 'ver/:id', component: VerGrassComponent},
   {path: 'ver-movil/:id', component: VerMovilComponent},
   {path: 'perfil/actualizar', component: ActualizarComponent},
-  {path: 'perfil/update-password', component: UpdatePasswordComponent}
+  {path: 'perfil/update-password', component: UpdatePasswordComponent},
+  {path: 'perfil/eliminar-cuenta', component: DeleteAccountComponent}
 ];
 
 @NgModule({

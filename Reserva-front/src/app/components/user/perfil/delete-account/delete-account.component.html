@@ -1,0 +1,72 @@
+<app-nav></app-nav>
+
+<div class="container py-5">
+    <div class="shadow rounded mt-5 p-4">
+        <div class="row">
+            <div class="col-sm-3 col-12 mt-3">
+                <app-sidebar></app-sidebar>
+            </div>
+            <!-- actualizar contraseña -->
+            <div class="col-sm-9 col-12 mt-3">
+                <h3 class="text-center fw-bold py-4" style="color:rgb(255, 86, 86)">ELIMINAR CUENTA</h3>
+                <!-- Body -->
+                <div class="d-flex">
+                    <div class="flex-fill border-box d-none d-lg-block"
+                        style="width: 5%; border-left: 1px solid rgb(6, 170, 115);">
+                    </div>
+
+                    <div class="flex-fill" style="width: 95%;">
+                        <div class="text-center">
+
+                            <div class="alert alert-danger mt-2 text-center" role="alert">
+                                <em>Esta es una acción irreversible, si elimina su cuenta, 
+                                    se eliminrá sus datos y no tendrá acceso a su cuenta.</em>
+                            </div>
+
+                            Estimado usuario, para proceder a eliminar su cuenta debe confirmar su conraseña!!!
+
+                            <div class="row">
+                                <div class="col-12 col-sm-6 mt-3">
+                                    <label for="inputPassword2" class="visually-hidden">Password</label>
+                                    <input type="password" class="form-control" id="inputPassword2"
+                                        placeholder="Ingrese su contraseña actual" [(ngModel)]="pass">
+                                </div>
+                                <div class="col-12 col-sm-6 mt-3">
+
+                                    <button type="submit" class="btn btn-primary mb-3" (click)="comparar_password()"
+                                        *ngIf="!verificado">
+                                        <i class="bi bi-check-lg"></i>
+                                        &nbsp; Verificar
+                                    </button>
+
+                                    <button type="submit" class="btn btn-success mb-3" (click)="comparar_password()"
+                                        *ngIf="verificado" disabled>
+                                        <i class="bi bi-check-lg"></i>
+                                        &nbsp; Verificado
+                                    </button>
+
+                                </div>
+                            </div>
+
+                            <!-- Botón eliminar -->
+                            <div class="d-grid gap-2 mt-3" *ngIf="verificado && !deleting">
+                                <button class="btn btn-danger" type="button" (click)="eliminar_cuenta()">
+                                    <i class="bi bi-trash"></i> &nbsp;
+                                    Eliminar
+                                </button>
+                            </div>
+
+                            <!-- Botón eliminando... -->
+                            <div class="d-grid gap-2 mt-3" *ngIf="deleting">
+                                <button class="btn btn-secondary" type="button" disabled>
+                                    <span class="spinner-border spinner-border-sm" aria-hidden="true"></span> &nbsp;
+                                    <span role="status">Eliminando...</span>
+                                  </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

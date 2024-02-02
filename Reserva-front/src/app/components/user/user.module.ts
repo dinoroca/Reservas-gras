@@ -19,6 +19,7 @@ import { VerMovilComponent } from './ver-movil/ver-movil.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { PoliticaPrivComponent } from './politica-priv/politica-priv.component';
 import { TermCondicionesComponent } from './term-condiciones/term-condiciones.component';
+import { DeleteAccountComponent } from './perfil/delete-account/delete-account.component';
 
 
 @NgModule({
@@ -36,7 +37,8 @@ import { TermCondicionesComponent } from './term-condiciones/term-condiciones.co
     VerGrassComponent,
     VerMovilComponent,
     PoliticaPrivComponent,
-    TermCondicionesComponent
+    TermCondicionesComponent,
+    DeleteAccountComponent
   ],
   imports: [
     CommonModule,
