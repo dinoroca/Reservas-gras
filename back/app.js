@@ -1,6 +1,7 @@
 'use strict';
 
 var express = require('express');
+const {whatsapp} = require('./lib/whatsapp');
 var app = express();
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
@@ -30,6 +31,8 @@ var empresa_route = require('./Routes/Empresa');
 // var pagos_route = require('./Routes/Pago');
 // var examen_route = require('./Routes/Examen');
 // var reviews_route = require('./Routes/Reviews');
+
+whatsapp.initialize();
 
 // Conexión a la base de datos MongoDB local con promesas
 mongoose

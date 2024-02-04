@@ -17,6 +17,7 @@ var handlebars = require('handlebars');
 var ejs = require('ejs');
 var nodemailer = require('nodemailer');
 var { google } = require('googleapis');
+const { whatsapp } = require('../lib/whatsapp');
 
 const CLIENT_ID = '465301277520-vtde6k9bjbp9bifqst4fv5bupa48i2aj.apps.googleusercontent.com';
 const CLIENT_SECRET = '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';
@@ -126,6 +127,8 @@ const enviar_correo_confirmacion = async function (req, res) {
     };
     res.status(200).send({ data: true });
 
+    enviar_whatsapp_confirmacion(user);
+
     transporter.sendMail(mailOptions, function (error, info) {
       if (!error) {
         console.log('Email sent: ' + info.response);
@@ -134,6 +137,19 @@ const enviar_correo_confirmacion = async function (req, res) {
 
   });
 }
+
+const enviar_whatsapp_confirmacion = async (user) => {
+  const tel = '+51' + user.telefono;
+  const chatId = tel.substring(1) + "@c.us";
+  const number_details = await whatsapp.getNumberId(chatId);
+  if (number_details) {
+    const mensaje = `Hola ${user.nombres}, gracias por registrarte en nuestra página, introduce el código \n${user.codigo} \nen el campo que le solicita luego de su registro. \nTambién se envió una copia al correo registrado: ${user.email}.`
+    await whatsapp.sendMessage(chatId, mensaje);
+  } else {
+    console.log('Whatsapp no existe');
+  }
+};
+
 
 const login_user = async function (req, res) {
   var data = req.body;
