@@ -17,29 +17,34 @@
                 <div class="row">
                     <div class="col-6 mt-3">
                         <label for="banco" class="form-label">Banco</label>
-                        <input class="form-control" type="text" id="banco" name="banco" [(ngModel)]="cuenta.banco"
-                            placeholder="Ingrese nombre del Banco" required />
-                    </div>
+                        <select id="banco" class="form-select" name="banco" [(ngModel)]="cuenta.banco" (ngModelChange)="onBancoChange()" required>
+                          <option value="" selected disabled>Seleccionar</option>
+                          <option value="{{item}}" *ngFor="let item of bancos"> {{item}} </option>
+                        </select>
+                      </div>
                     <div class="col-6 mt-3">
                         <label for="titular" class="form-label">Nombre del titular</label>
                         <input class="form-control" type="text" id="titular" name="titular" [(ngModel)]="cuenta.titular"
                             placeholder="Ingrese nombre del titular" required />
                     </div>
                     <div class="col-md-4 mt-3">
-                        <label for="cuenta" class="form-label">N° Cuenta</label>
+                        <label for="cuenta" class="form-label">N° 
+                            <span *ngIf="esCuenta">Cuenta</span>
+                            <span *ngIf="!esCuenta">Celular</span>
+                        </label>
                         <input class="form-control" type="text" id="cuenta" name="cuenta" [(ngModel)]="cuenta.cuenta"
-                            placeholder="Número de cuenta" min="0" required />
+                            placeholder="Número de cuenta" min="0" maxlength="{{limiteCuenta}}" required />
                     </div>
 
-                    <div class="col-md-4 mt-3">
+                    <div class="col-md-4 mt-3" *ngIf="esCuenta">
                         <label for="cci" class="form-label">CCI</label>
-                        <input class="form-control" type="text" id="cci" name="cci" [(ngModel)]="cuenta.cci" placeholder="CCI"
-                            min="0" />
+                        <input class="form-control" type="text" id="cci" name="cci" [(ngModel)]="cuenta.cci"
+                            placeholder="CCI" min="0" />
                     </div>
                     <div class="col-md-4 mt-3">
                         <label for="color-input" class="form-label">Color de fondo &nbsp;</label>
-                        <input class="form-control form-control-color" type="color" id="color-input" value="{{cuenta.color}}"
-                            name="color" [(ngModel)]="cuenta.color" required>
+                        <input class="form-control form-control-color" type="color" id="color-input"
+                            value="{{cuenta.color}}" name="color" [(ngModel)]="cuenta.color" required disabled>
                     </div>
                 </div>
 

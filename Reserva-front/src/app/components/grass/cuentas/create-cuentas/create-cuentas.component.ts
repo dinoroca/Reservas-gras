@@ -12,11 +12,16 @@ import { UserService } from 'src/app/services/user.service';
 export class CreateCuentasComponent implements OnInit {
 
   public cuenta : any = {
+    banco: '',
     color: '#FFFFFF'
   };
+  public bancos = ['Yape', 'Plin', 'BCP', 'Interbank', 'Banco de la Nación', 'BBVA'];
+  public colores = ['#c47cff', '#00E2CD', '#FF961F', '#64e598', '#ff7575', '#61dddd'];
   public token;
   public id;
   public load_btn = false;
+  public esCuenta = true;
+  public limiteCuenta = 20;
 
   constructor(
     private _userService: UserService,
@@ -42,6 +47,28 @@ export class CreateCuentasComponent implements OnInit {
 
   ngOnInit(): void {
     this._title.setTitle('GRASS | Registrar Cuenta');
+  }
+
+  public actualizarColor(): void {
+    const indice = this.bancos.indexOf(this.cuenta.banco);
+    if (indice !== -1) {
+      this.cuenta.color = this.colores[indice];
+    } else {
+      this.cuenta.color = '#FFFFFF'; // Color por defecto si el banco no se encuentra en la lista
+    }
+  }
+
+  // Esta función se llama cuando cambia la selección del banco
+  public onBancoChange(): void {
+    this.actualizarColor();
+
+    if (this.cuenta.banco == 'Yape' || this.cuenta.banco == 'Plin') {
+      this.esCuenta = false;
+      this.limiteCuenta = 9;
+    } else {
+      this.esCuenta = true;
+      this.limiteCuenta = 20;
+    }
   }
 
   registro(registroForm: any){
