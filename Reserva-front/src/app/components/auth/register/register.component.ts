@@ -147,16 +147,17 @@ export class RegisterComponent implements OnInit {
           } else if (response.data != undefined) {
             localStorage.setItem('_id', response.data._id);
             this._toastrService.success('Se registró con éxito', 'REGISTRADO!');
+            localStorage.setItem('user_email', this.user.email);
             this._router.navigate(['/verificar']);
 
-            // this._userService.enviar_correo_confirmacion(response.data._id).subscribe(
-            //   response => {
-            //     if (response.data) {
-            //       this._toastrService.success('Se envió el código de verificación', 'ENVIADO!');
-            //       this._router.navigate(['/verificar']);
-            //     }
-            //   }
-            // );
+            this._userService.enviar_correo_confirmacion(response.data._id).subscribe(
+              response => {
+                if (response.data) {
+                  this._toastrService.success('Se envió el código de verificación', 'ENVIADO!');
+                  this._router.navigate(['/verificar']);
+                }
+              }
+            );
           }
         }
       );

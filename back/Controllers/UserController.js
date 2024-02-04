@@ -12,10 +12,16 @@ var bcrypt = require('bcrypt-nodejs');
 var jwt = require('../Helpers/jwt');
 const moment = require('moment');
 
-// var fs = require('fs');
+var fs = require('fs');
 var handlebars = require('handlebars');
 var ejs = require('ejs');
 var nodemailer = require('nodemailer');
+var { google } = require('googleapis');
+
+const CLIENT_ID = '465301277520-vtde6k9bjbp9bifqst4fv5bupa48i2aj.apps.googleusercontent.com';
+const CLIENT_SECRET = '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';
+const REDIRECT_URI = 'https://developers.google.com/oauthplayground';
+const REFRESH_TOKEN = '1//04zrYhkei_tjMCgYIARAAGAQSNwF-L9IrfnNy4E5y2VAUiIMe8rbQasXHyWraf6UbiWh6CkkLeupbMImgReDjaYcxgdtREEWQT7U';
 
 const registro_user = async function (req, res) {
   //Obtiene los parámetros del cliente
@@ -58,6 +64,75 @@ const registro_user = async function (req, res) {
         data: undefined,
       });
   }
+}
+
+const enviar_correo_confirmacion = async function (req, res) {
+
+  var id = req.params['id'];
+
+  const oauth2Client = new google.auth.OAuth2(
+    CLIENT_ID,
+    CLIENT_SECRET,
+    REDIRECT_URI
+  );
+
+  oauth2Client.setCredentials({ refresh_token: REFRESH_TOKEN });
+
+  // const accessToken = await oauth2Client.getAccessToken();
+
+  var readHTMLFile = function (path, callback) {
+    fs.readFile(path, { encoding: 'utf-8' }, function (err, html) {
+      if (err) {
+        throw err;
+        callback(err);
+      }
+      else {
+        callback(null, html);
+      }
+    });
+  };
+
+  var transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      type: 'OAuth2',
+      user: 'reservatugrass@gmail.com',
+      clientId: CLIENT_ID,
+      clientSecret: CLIENT_SECRET,
+      refreshToken: REFRESH_TOKEN
+      // accessToken: accessToken
+    }
+  });
+
+  //cliente _id fecha data subtotal
+
+  var user = await User.findById({ _id: id });
+
+  readHTMLFile(process.cwd() + '/mail-verficar-user.html', (err, html) => {
+
+    let rest_html = ejs.render(html, {
+      cliente: user.nombres,
+      codigo: user.codigo
+    });
+
+    var template = handlebars.compile(rest_html);
+    var htmlToSend = template({ op: true });
+
+    var mailOptions = {
+      from: 'reservatugrass@gmail.com',
+      to: user.email,
+      subject: 'Verificación de correo',
+      html: htmlToSend
+    };
+    res.status(200).send({ data: true });
+
+    transporter.sendMail(mailOptions, function (error, info) {
+      if (!error) {
+        console.log('Email sent: ' + info.response);
+      }
+    });
+
+  });
 }
 
 const login_user = async function (req, res) {
@@ -802,6 +877,7 @@ const cerrar_mensaje_admin = async function (req, res) {
 
 module.exports = {
   registro_user,
+  enviar_correo_confirmacion,
   login_user,
   actualizar_user_verificado,
   obtener_user,

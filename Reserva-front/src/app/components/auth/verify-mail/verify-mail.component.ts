@@ -13,6 +13,7 @@ export class VerifyMailComponent implements OnInit {
 
   public codigo = '';
   public id: any;
+  public email: any;
 
   constructor(
     private _title: Title,
@@ -22,6 +23,7 @@ export class VerifyMailComponent implements OnInit {
   ) {
 
     this.id = localStorage.getItem('_id');
+    this.email = localStorage.getItem('user_email');
   }
 
   ngOnInit(): void {
@@ -36,6 +38,7 @@ export class VerifyMailComponent implements OnInit {
             if (response.data != undefined) {
               this._toastrService.success('Se verificó correctamente', 'VERIFICADO!');
               this._router.navigate(['/login']);
+              localStorage.removeItem('user_email');
             } else {
               this._toastrService.error('Código incorrecto, vuelve a intentarlo', 'ERROR');
               this.codigo = '';

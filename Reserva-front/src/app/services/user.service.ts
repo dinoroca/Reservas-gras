@@ -23,6 +23,12 @@ export class UserService {
     return this._http.post(this.url + 'registro_user', data, { headers: headers });
   }
 
+  enviar_correo_confirmacion(id: any): Observable<any> {
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this._http.get(this.url + 'enviar_correo_confirmacion/' + id, { headers: headers });
+  }
+
+
   login_user(data: any): Observable<any> {
     let headers = new HttpHeaders().set('Content-Type', 'application/json');
     return this._http.post(this.url + 'login_user', data, { headers: headers });

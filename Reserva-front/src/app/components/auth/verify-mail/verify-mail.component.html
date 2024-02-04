@@ -5,8 +5,8 @@
         <div class="mb-5 container d-flex justify-content-center">
             <div class="p-4 p-sm-5 col-12 col-sm-6 rounded shadow">
                 <h2 class="text-center text-black-50 fw-bold">Verificar correo</h2>
-                <p class="text-center pb-4 text-black-50">
-                    Estimado usuario, ingrese el código que se le envió al correo
+                <p class="text-center pb-2 text-black-50">
+                    Estimado usuario, ingrese el código que se le envió al correo <span class="fw-bold">{{email}}</span>
                 </p>
                 <form #verificarForm="ngForm" (ngSubmit)="verificar(verificarForm)">
                     <input type="text" class="form-control" placeholder="Ingrese el código" name="codigo" maxlength="6" minlength="6"

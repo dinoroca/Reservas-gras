@@ -7,6 +7,7 @@ var auth = require('../Middlewares/authenticate');
 
 //Peticiones
 api.post('/registro_user', UserController.registro_user);
+api.get('/enviar_correo_confirmacion/:id', UserController.enviar_correo_confirmacion);
 api.post('/login_user', UserController.login_user);
 api.get('/obtener_user/:id', auth.auth, UserController.obtener_user);
 api.put('/actualizar_user/:id', auth.auth, UserController.actualizar_user);
