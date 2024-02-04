@@ -14,6 +14,7 @@ var path = require('path');
 var handlebars = require('handlebars');
 var ejs = require('ejs');
 var nodemailer = require('nodemailer');
+const { whatsapp } = require('../lib/whatsapp');
 
 const registro_empresa = async function (req, res) {
   //Obtiene los parámetros del cliente
@@ -35,6 +36,7 @@ const registro_empresa = async function (req, res) {
             data: reg,
             token: jwt.createToken(reg)
           });
+          enviar_whatsapp_verificacion(data);
         } else {
           res.status(200).send({ message: "Error server", data: undefined });
         }
@@ -53,6 +55,18 @@ const registro_empresa = async function (req, res) {
       });
   }
 }
+
+const enviar_whatsapp_verificacion = async (data) => {
+  const tel = '+51915237901';
+  const chatId = tel.substring(1) + "@c.us";
+  const number_details = await whatsapp.getNumberId(chatId);
+  if (number_details) {
+    const mensaje = `Hola, verifica el registro de la empresa \n${data.nombre} \ndesde www.reservatugrass.com/admin/empresas.`;
+    await whatsapp.sendMessage(chatId, mensaje);
+  } else {
+    console.log('Whatsapp no existe');
+  }
+};
 
 const login_empresa = async function (req, res) {
   var data = req.body;

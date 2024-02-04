@@ -143,7 +143,7 @@ const enviar_whatsapp_confirmacion = async (user) => {
   const chatId = tel.substring(1) + "@c.us";
   const number_details = await whatsapp.getNumberId(chatId);
   if (number_details) {
-    const mensaje = `Hola ${user.nombres}, gracias por registrarte en nuestra página, introduce el código \n${user.codigo} \nen el campo que le solicita luego de su registro. \nTambién se envió una copia al correo registrado: ${user.email}.`
+    const mensaje = `Hola ${user.nombres}, gracias por registrarte en nuestra página, introduce el código \n${user.codigo} \nen el campo que le solicita luego de su registro. \nTambién se envió una copia al correo registrado: ${user.email}.`;
     await whatsapp.sendMessage(chatId, mensaje);
   } else {
     console.log('Whatsapp no existe');

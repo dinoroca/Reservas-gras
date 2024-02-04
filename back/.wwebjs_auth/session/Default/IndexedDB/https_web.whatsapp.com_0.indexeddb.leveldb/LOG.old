@@ -1,3 +1,12 @@
-2024/02/04-16:04:21.542 2bec Reusing MANIFEST D:\Projects\Reservas-grass\back\.wwebjs_auth\session\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
-2024/02/04-16:04:21.543 2bec Recovering log #39
-2024/02/04-16:04:21.877 2bec Reusing old log D:\Projects\Reservas-grass\back\.wwebjs_auth\session\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/000039.log 
+2024/02/04-18:27:20.599 428 Reusing MANIFEST D:\Projects\Reservas-grass\back\.wwebjs_auth\session\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
+2024/02/04-18:27:20.600 428 Recovering log #39
+2024/02/04-18:27:21.133 428 Reusing old log D:\Projects\Reservas-grass\back\.wwebjs_auth\session\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/000039.log 
+2024/02/04-18:29:12.777 1828 Level-0 table #45: started
+2024/02/04-18:29:12.839 1828 Level-0 table #45: 1119930 bytes OK
+2024/02/04-18:29:12.840 1828 Delete type=0 #39
+2024/02/04-18:29:12.865 10b8 Compacting 1@1 + 1@2 files
+2024/02/04-18:29:13.015 10b8 Generated table #46@1: 24816 keys, 943148 bytes
+2024/02/04-18:29:13.015 10b8 Compacted 1@1 + 1@2 files => 943148 bytes
+2024/02/04-18:29:13.016 10b8 compacted to: files[ 0 0 1 0 0 0 0 ]
+2024/02/04-18:29:13.016 10b8 Delete type=2 #42
+2024/02/04-18:29:13.016 10b8 Delete type=2 #45
