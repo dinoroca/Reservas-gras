@@ -61,7 +61,7 @@ const enviar_whatsapp_verificacion = async (data) => {
   const chatId = tel.substring(1) + "@c.us";
   const number_details = await whatsapp.getNumberId(chatId);
   if (number_details) {
-    const mensaje = `Hola, verifica el registro de la empresa \n${data.nombre} \ndesde www.reservatugrass.com/admin/empresas.`;
+    const mensaje = `Hola, verifica el registro de la empresa \n${data.nombre} \ndesde www.reservatugrass.com/admin/empresas`;
     await whatsapp.sendMessage(chatId, mensaje);
   } else {
     console.log('Whatsapp no existe');
