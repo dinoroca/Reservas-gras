@@ -12,6 +12,7 @@ import { RouterModule } from '@angular/router';
 import { VerGrassComponent } from './ver-grass/ver-grass.component';
 import { VerMovilComponent } from './ver-movil/ver-movil.component';
 import { TermCondicionesComponent } from './term-condiciones/term-condiciones.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { TermCondicionesComponent } from './term-condiciones/term-condiciones.co
     ForgotPassComponent,
     VerGrassComponent,
     VerMovilComponent,
-    TermCondicionesComponent
+    TermCondicionesComponent,
+    ChangePasswordComponent
   ],
   imports: [
     CommonModule,

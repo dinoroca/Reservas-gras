@@ -16,6 +16,7 @@ import { AuthGrassGuard } from './guards/auth-grass.guard';
 import { VerGrassComponent } from './components/main/ver-grass/ver-grass.component';
 import { VerMovilComponent } from './components/main/ver-movil/ver-movil.component';
 import { TermCondicionesComponent } from './components/main/term-condiciones/term-condiciones.component';
+import { ChangePasswordComponent } from './components/main/change-password/change-password.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -29,6 +30,7 @@ const routes: Routes = [
   {path: 'ver/:id', component: VerGrassComponent},
   {path: 'ver-movil/:id', component: VerMovilComponent},
   {path: 'forgot-password', component: ForgotPassComponent},
+  {path: 'change-password/:token', component: ChangePasswordComponent},
   {path: 'politica-privacidad', component: PoliticaPrivComponent},
   {path: 'terminos-condiciones', component: TermCondicionesComponent},
 

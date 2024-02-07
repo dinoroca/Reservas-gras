@@ -15,6 +15,12 @@ api.post('/comparar_password', UserController.comparar_password);
 api.put('/actualizar_password_user/:id', auth.auth, UserController.actualizar_password_user);
 api.delete('/eliminar_cuenta_user/:id', auth.auth, UserController.eliminar_cuenta_user);
 
+//CAMBIAR password
+api.put('/registro_token_cambio_pass', UserController.registro_token_cambio_pass);
+api.get('/enviar_correo_token_cambio_pass/:correo', UserController.enviar_correo_token_cambio_pass);
+api.get('/verificar_token_cambio_pass/:token', UserController.verificar_token_cambio_pass);
+api.put('/cambiar_password_user/:token', UserController.cambiar_password_user);
+
 /////// CUENTAS
 api.post('/registro_cuenta_admin', auth.auth, UserController.registro_cuenta_admin);
 api.get('/obtener_cuentas_admin/:id', auth.auth, UserController.obtener_cuentas_admin);
