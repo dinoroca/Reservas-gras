@@ -3,7 +3,7 @@ import { Title } from '@angular/platform-browser';
 import { ToastrService } from 'ngx-toastr';
 import { UserService } from 'src/app/services/user.service';
 import html2canvas from 'html2canvas';
-
+import { io } from 'socket.io-client';
 
 @Component({
   selector: 'app-reservas',
@@ -39,6 +39,8 @@ export class ReservasComponent implements OnInit {
   public existReservas: boolean = false;
   public myAngularxQrCode: string = '';
   p: number = 1;
+
+  public socket = io('http://localhost:4201');
 
   constructor(
     private _userService: UserService,
@@ -81,6 +83,10 @@ export class ReservasComponent implements OnInit {
     this._title.setTitle('Perfil | Mis reservaciones');
     this.calcular_subtotal();
     this.obtener_reservas();
+
+    this.socket.on('mostrar-reservas-user', () => {
+      this.obtener_reservas();
+    });
 
     if (this.reservaciones.length >= 1) {
       this.existReservas = true;

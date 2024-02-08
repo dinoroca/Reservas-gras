@@ -3,6 +3,7 @@ import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { UserService } from 'src/app/services/user.service';
+import { io } from 'socket.io-client';
 
 @Component({
   selector: 'app-reservaciones',
@@ -23,6 +24,8 @@ export class ReservacionesComponent implements OnInit {
   public caracteristicas: any;
   p: number = 1;
 
+  public socket = io('http://localhost:4201');
+
   constructor(
     private _router: Router,
     private _title: Title,
@@ -38,6 +41,9 @@ export class ReservacionesComponent implements OnInit {
 
   ngOnInit(): void {
     this._title.setTitle('ADMIN | Reservaciones');
+    this.socket.on('mostrar-reservas', () => {
+      this.init_data();
+    });
   }
 
   init_data() {
@@ -79,7 +85,7 @@ export class ReservacionesComponent implements OnInit {
     this._userService.actualizar_reserva_reservado_admin(id, this.token).subscribe(
       response => {
         this._toastrService.success('Se confirmó con éxito', 'ACTUALIZADO!');
-
+        this.socket.emit('confirmar-reserva-admin', {data: true});
         this.load_btn = false;
         this.init_data();
       }

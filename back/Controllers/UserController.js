@@ -454,19 +454,36 @@ const cambiar_password_user = async function (req, res) {
 
 // Reservaciones
 const crear_reservacion_user = async function (req, res) {
-  if (req.user) {
-    if (req.user.role == 'USER') {
+  try {
+    if (req.user && req.user.role === 'USER') {
+      const data = req.body;
 
-      var data = req.body;
+      // Calcular la hora de fin de la nueva reserva
+      const horaFinNuevaReserva = data.hora_fin;
 
       // Verificar si hay reservas existentes que se solapen con la nueva reserva
       const reservasExistente = await Reservacion.find({
         cancha: data.cancha,
         fecha: data.fecha,
         $or: [
-          { $and: [{ hora_inicio: { $lt: data.hora_fin } }, { hora_fin: { $gt: data.hora_inicio } }] },
-          { $and: [{ hora_inicio: { $lte: data.hora_fin } }, { hora_fin: { $gte: data.hora_fin } }] },
-          { $and: [{ hora_inicio: { $lte: data.hora_inicio } }, { hora_fin: { $gte: data.hora_inicio } }] }
+          { 
+            $and: [
+              { hora_inicio: { $lt: horaFinNuevaReserva } }, 
+              { hora_fin: { $gt: data.hora_inicio } } 
+            ]
+          },
+          { 
+            $and: [
+              { hora_inicio: { $lte: data.hora_inicio } }, 
+              { hora_fin: { $gte: horaFinNuevaReserva } } 
+            ]
+          },
+          { 
+            $and: [
+              { hora_inicio: { $lte: data.hora_fin } }, 
+              { hora_fin: { $gte: horaFinNuevaReserva } } 
+            ]
+          }
         ]
       });
 
@@ -475,17 +492,19 @@ const crear_reservacion_user = async function (req, res) {
         res.status(200).send({ data: undefined, message: 'La cancha ya está reservada para ese horario' });
       } else {
         // Si no hay conflictos, crear la reserva
-        let reg = await Reservacion.create(data);
+        const reg = await Reservacion.create(data);
         res.status(200).send({ data: reg });
       }
 
     } else {
       res.status(500).send({ message: 'NoAccess' });
     }
-  } else {
-    res.status(500).send({ message: 'NoAccess' });
+  } catch (error) {
+    console.error('Error al crear la reserva:', error);
+    res.status(500).send({ message: 'Error al crear la reserva' });
   }
-}
+};
+
 
 const obtener_reservaciones_user = async function (req, res) {
   if (req.user) {
@@ -578,6 +597,7 @@ const eliminarReservasVencidas = async () => {
     // Elimina las reservas vencidas
     for (const reserva of reservasVencidas) {
       await Reservacion.findByIdAndDelete(reserva._id);
+      
     }
   } catch (error) {
     console.error('Error al eliminar reservas vencidas:', error);

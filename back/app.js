@@ -1,7 +1,7 @@
 'use strict';
 
 var express = require('express');
-const {whatsapp} = require('./lib/whatsapp');
+const { whatsapp } = require('./lib/whatsapp');
 var app = express();
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
@@ -9,28 +9,24 @@ var port = process.env.PORT || 4201;
 
 var server = require('http').createServer(app);
 
-/* var io = require('socket.io')(server, {
-    cors: { origin: '*' }
+var io = require('socket.io')(server, {
+  cors: { origin: '*' }
 });
 
-io.on('connection', function(socket){
-    socket.on('delete-carrito', function(data){
-        io.emit('new-carrito', data);
-        console.log(data);
-    });
+io.on('connection', function (socket) {
+  socket.on('crear-reserva-ocupado', function (data) {
+    io.emit('mostrar-reservas', data);
+    console.log(data);
+  });
 
-    socket.on('add-carrito', function(data){
-        io.emit('new-carrito-add', data);
-        console.log(data);
-    });
-}); */
+  socket.on('confirmar-reserva-admin', function (data) {
+    io.emit('mostrar-reservas-user', data);
+    console.log(data);
+  });
+});
 
 var user_route = require('./Routes/User');
 var empresa_route = require('./Routes/Empresa');
-// var practicas_route = require('./Routes/Practicas');
-// var pagos_route = require('./Routes/Pago');
-// var examen_route = require('./Routes/Examen');
-// var reviews_route = require('./Routes/Reviews');
 
 whatsapp.initialize();
 
@@ -54,7 +50,7 @@ const cors = require('cors');
 
 app.use(cors({
 
-    origin: '*'
+  origin: '*'
 
 }));
 
@@ -62,19 +58,15 @@ app.use(cors({
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json({ limit: '50mb', extended: true }));
 
-app.use((req, res, next)=>{
-    res.header('Access-Control-Allow-Origin','*'); 
-    res.header('Access-Control-Allow-Headers','Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Access-Control-Allow-Request-Method');
-    res.header('Access-Control-Allow-Methods','GET, PUT, POST, DELETE, OPTIONS');
-    res.header('Allow','GET, PUT, POST, DELETE, OPTIONS');
-    next();
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Access-Control-Allow-Request-Method');
+  res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, OPTIONS');
+  res.header('Allow', 'GET, PUT, POST, DELETE, OPTIONS');
+  next();
 });
 
 app.use('/api', user_route);
 app.use('/api', empresa_route);
-// app.use('/api', practicas_route);
-// app.use('/api', pagos_route);
-// app.use('/api', examen_route);
-// app.use('/api', reviews_route);
 
 module.exports = app;

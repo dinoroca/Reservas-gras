@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { GLOBAL } from 'src/app/services/global';
 import { UserService } from 'src/app/services/user.service';
 import { ToastrService } from 'ngx-toastr';
+import { io } from 'socket.io-client';
 
 interface BotonHora {
   estado: string;
@@ -47,6 +48,8 @@ export class VerGrassComponent implements OnInit {
   fechaHoraSeleccionada: { fecha: Date; hora: string } | null = null;
   screenWidth: number = 0;
   screenHeight: number = 0;
+
+  public socket = io('http://localhost:4201');
 
   ahora: Date = new Date();
 
@@ -147,13 +150,13 @@ export class VerGrassComponent implements OnInit {
         hora_inicio: this.horasInicio,
         hora_fin: this.horasFinal
       }
-
       this._userService.crear_reservacion_user(data, this.token).subscribe(
         response => {
           if (response.data == undefined) {
             this._toastrService.error(response.message, 'ERROR');
           } else {
             this._toastrService.success('Se reservó con éxito', 'RESERVADO!');
+            this.socket.emit('crear-reserva-ocupado', {data: true});
             this._router.navigate(['/usuario/perfil/reservas']);
           }
         }
