@@ -3,7 +3,7 @@ import { Title } from '@angular/platform-browser';
 import { ToastrService } from 'ngx-toastr';
 import { UserService } from 'src/app/services/user.service';
 import html2canvas from 'html2canvas';
-
+import { io } from 'socket.io-client';
 
 @Component({
   selector: 'app-reservas',
@@ -39,6 +39,8 @@ export class ReservasComponent implements OnInit {
   public existReservas: boolean = false;
   public myAngularxQrCode: string = '';
   p: number = 1;
+
+  public socket = io('http://localhost:4201');
 
   constructor(
     private _userService: UserService,
@@ -81,6 +83,11 @@ export class ReservasComponent implements OnInit {
     this._title.setTitle('Perfil | Mis reservaciones');
     this.calcular_subtotal();
     this.obtener_reservas();
+
+    this.socket.on('mostrar-reservas-user', () => {
+      this.obtener_reservas();
+      this.fromOut = false;
+    });
 
     if (this.reservaciones.length >= 1) {
       this.existReservas = true;
@@ -127,14 +134,13 @@ export class ReservasComponent implements OnInit {
           this._toastrService.error(response.message, 'ERROR');
         } else {
           this._toastrService.success('Se reservó con éxito', 'RESERVADO!');
+          this.socket.emit('crear-reserva-ocupado-out', {data: true});
           localStorage.removeItem('afuera');
           localStorage.removeItem('fecha_reserva');
           localStorage.removeItem('hora_inicio');
           localStorage.removeItem('hora_fin');
           localStorage.removeItem('id_cancha');
           this.load_btn = false;
-          window.location.reload();
-          //this._router.navigate(['/usuario']);
         }
       }
     );

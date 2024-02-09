@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { GLOBAL } from 'src/app/services/global';
 import { UserService } from 'src/app/services/user.service';
+import { io } from 'socket.io-client';
 
 interface BotonHora {
   estado: string;
@@ -47,6 +48,8 @@ export class VerMovilComponent implements OnInit {
   fechaHoraSeleccionada: { fecha: Date; hora: string } | null = null;
   screenWidth: number = 0;
   screenHeight: number = 0;
+
+  public socket = io('http://localhost:4201');
 
   ahora: Date = new Date();
 
@@ -154,6 +157,7 @@ export class VerMovilComponent implements OnInit {
             this._toastrService.error(response.message, 'ERROR');
           } else {
             this._toastrService.success('Se reservó con éxito', 'RESERVADO!');
+            this.socket.emit('crear-reserva-ocupado', {data: true});
             this._router.navigate(['/usuario/perfil/reservas']);
           }
         }

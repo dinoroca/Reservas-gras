@@ -18,6 +18,7 @@ var ejs = require('ejs');
 var nodemailer = require('nodemailer');
 var { google } = require('googleapis');
 const { whatsapp } = require('../lib/whatsapp');
+var { v4: uuidv4 } = require('uuid');
 
 const CLIENT_ID = '465301277520-vtde6k9bjbp9bifqst4fv5bupa48i2aj.apps.googleusercontent.com';
 const CLIENT_SECRET = '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';
@@ -149,7 +150,6 @@ const enviar_whatsapp_confirmacion = async (user) => {
     console.log('Whatsapp no existe');
   }
 };
-
 
 const login_user = async function (req, res) {
   var data = req.body;
@@ -288,7 +288,6 @@ const actualizar_password_user = async function (req, res) {
   }
 }
 
-
 const eliminar_cuenta_user = async function (req, res) {
   try {
     if (req.user) {
@@ -310,24 +309,181 @@ const eliminar_cuenta_user = async function (req, res) {
   } catch (error) {
     console.error('Error al eliminar la cuenta del usuario:', error);
   }
-};
+}
+
+const registro_token_cambio_pass = async function (req, res) {
+  //Obtiene los parámetros del cliente
+  var data = req.body;
+  var users_arr = [];
+
+  //Verifica que no exista correo repetido
+  users_arr = await User.find({ email: data.correo });
+
+  const uniqueString = uuidv4();
+
+  if (users_arr.length == 1) {
+    let reg = await User.findOneAndUpdate({ email: data.correo }, { token_pass: uniqueString });
+    res.status(200).send({ data: reg });
+
+  } else if (users_arr == 0) {
+    res
+      .status(200)
+      .send({
+        message: "El correo ingresado no pertenece a nungún usuario",
+        data: undefined,
+      });
+  }
+}
+
+const enviar_correo_token_cambio_pass = async function (req, res) {
+
+  var correo = req.params['correo'];
+
+  const oauth2Client = new google.auth.OAuth2(
+    CLIENT_ID,
+    CLIENT_SECRET,
+    REDIRECT_URI
+  );
+
+  oauth2Client.setCredentials({ refresh_token: REFRESH_TOKEN });
+
+  // const accessToken = await oauth2Client.getAccessToken();
+
+  var readHTMLFile = function (path, callback) {
+    fs.readFile(path, { encoding: 'utf-8' }, function (err, html) {
+      if (err) {
+        throw err;
+        callback(err);
+      }
+      else {
+        callback(null, html);
+      }
+    });
+  };
+
+  var transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      type: 'OAuth2',
+      user: 'reservatugrass@gmail.com',
+      clientId: CLIENT_ID,
+      clientSecret: CLIENT_SECRET,
+      refreshToken: REFRESH_TOKEN
+      // accessToken: accessToken
+    }
+  });
+
+  //cliente _id fecha data subtotal
+
+  var user = await User.findOne({ email: correo });
+
+  readHTMLFile(process.cwd() + '/mail-cambio-pass.html', (err, html) => {
+
+    let rest_html = ejs.render(html, {
+      nombres: user.nombres,
+      token: user.token_pass
+    });
+
+    var template = handlebars.compile(rest_html);
+    var htmlToSend = template({ op: true });
+
+    var mailOptions = {
+      from: 'reservatugrass@gmail.com',
+      to: user.email,
+      subject: 'Cambio de contraseña, IngresaYaa.',
+      html: htmlToSend
+    };
+    res.status(200).send({ data: true });
+    enviar_whatsapp_cambio_pass(user);
+
+    transporter.sendMail(mailOptions, function (error, info) {
+      if (!error) {
+        console.log('Email sent: ' + info.response);
+      }
+    });
+
+  });
+}
+
+const enviar_whatsapp_cambio_pass = async (user) => {
+  const tel = '+51' + user.telefono;
+  const chatId = tel.substring(1) + "@c.us";
+  const number_details = await whatsapp.getNumberId(chatId);
+  if (number_details) {
+    const mensaje = `Hola ${user.nombres}, su solicitud de cambio de contraseña se realizó de manera correcta, revise su bandeja de entrada de \n${user.email}.`;
+    await whatsapp.sendMessage(chatId, mensaje);
+  } else {
+    console.log('Whatsapp no existe');
+  }
+}
+
+const verificar_token_cambio_pass = async function (req, res) {
+  var token = req.params['token'];
+
+  var reg = await User.findOne({ token_pass: token });
+
+  if (reg) {
+    res.status(200).send({ data: true });
+  } else {
+    res.status(200).send({ message: "No existe el código de verificación", data: undefined });
+  }
+}
+
+const cambiar_password_user = async function (req, res) {
+  var token = req.params['token'];
+  var data = req.body;
+
+  if (data.password) {
+    bcrypt.hash(data.password, null, null, async function (err, hash) {
+      if (hash) {
+        data.password = hash;
+        var reg = await User.findOneAndUpdate({ token_pass: token }, {
+          password: data.password,
+          token_pass: 'N0TokenHaveV01Ddew'
+        });
+
+        res.status(200).send({ data: true });
+
+      } else {
+        res.status(200).send({ message: "Error server", data: undefined });
+      }
+    });
+  }
+}
 
 
 // Reservaciones
 const crear_reservacion_user = async function (req, res) {
-  if (req.user) {
-    if (req.user.role == 'USER') {
+  try {
+    if (req.user && req.user.role === 'USER') {
+      const data = req.body;
 
-      var data = req.body;
+      // Calcular la hora de fin de la nueva reserva
+      const horaFinNuevaReserva = data.hora_fin;
 
       // Verificar si hay reservas existentes que se solapen con la nueva reserva
       const reservasExistente = await Reservacion.find({
         cancha: data.cancha,
         fecha: data.fecha,
         $or: [
-          { $and: [{ hora_inicio: { $lt: data.hora_fin } }, { hora_fin: { $gt: data.hora_inicio } }] },
-          { $and: [{ hora_inicio: { $lte: data.hora_fin } }, { hora_fin: { $gte: data.hora_fin } }] },
-          { $and: [{ hora_inicio: { $lte: data.hora_inicio } }, { hora_fin: { $gte: data.hora_inicio } }] }
+          { 
+            $and: [
+              { hora_inicio: { $lt: horaFinNuevaReserva } }, 
+              { hora_fin: { $gt: data.hora_inicio } } 
+            ]
+          },
+          { 
+            $and: [
+              { hora_inicio: { $lte: data.hora_inicio } }, 
+              { hora_fin: { $gte: horaFinNuevaReserva } } 
+            ]
+          },
+          { 
+            $and: [
+              { hora_inicio: { $lte: data.hora_fin } }, 
+              { hora_fin: { $gte: horaFinNuevaReserva } } 
+            ]
+          }
         ]
       });
 
@@ -336,17 +492,19 @@ const crear_reservacion_user = async function (req, res) {
         res.status(200).send({ data: undefined, message: 'La cancha ya está reservada para ese horario' });
       } else {
         // Si no hay conflictos, crear la reserva
-        let reg = await Reservacion.create(data);
+        const reg = await Reservacion.create(data);
         res.status(200).send({ data: reg });
       }
 
     } else {
       res.status(500).send({ message: 'NoAccess' });
     }
-  } else {
-    res.status(500).send({ message: 'NoAccess' });
+  } catch (error) {
+    console.error('Error al crear la reserva:', error);
+    res.status(500).send({ message: 'Error al crear la reserva' });
   }
-}
+};
+
 
 const obtener_reservaciones_user = async function (req, res) {
   if (req.user) {
@@ -439,6 +597,7 @@ const eliminarReservasVencidas = async () => {
     // Elimina las reservas vencidas
     for (const reserva of reservasVencidas) {
       await Reservacion.findByIdAndDelete(reserva._id);
+      
     }
   } catch (error) {
     console.error('Error al eliminar reservas vencidas:', error);
@@ -901,6 +1060,10 @@ module.exports = {
   comparar_password,
   actualizar_password_user,
   eliminar_cuenta_user,
+  registro_token_cambio_pass,
+  enviar_correo_token_cambio_pass,
+  verificar_token_cambio_pass,
+  cambiar_password_user,
   crear_reservacion_user,
   obtener_reservaciones_user,
   obtener_reservaciones_public,

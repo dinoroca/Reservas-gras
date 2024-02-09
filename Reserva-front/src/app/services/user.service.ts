@@ -63,6 +63,25 @@ export class UserService {
     return this._http.delete(this.url + 'eliminar_cuenta_user/' + id, { headers: headers });
   }
 
+  registro_token_cambio_pass(data: any): Observable<any> {
+    return this._http.put(this.url + 'registro_token_cambio_pass', data);
+  }
+
+  enviar_correo_token_cambio_pass(correo: any): Observable<any> {
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this._http.get(this.url + 'enviar_correo_token_cambio_pass/' + correo, { headers: headers });
+  }
+
+  verificar_token_cambio_pass(token: any): Observable<any> {
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this._http.get(this.url + 'verificar_token_cambio_pass/' + token, { headers: headers });
+  }
+
+  cambiar_password_user(data: any, token: any): Observable<any> {
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this._http.put(this.url + 'cambiar_password_user/' + token, data, { headers: headers });
+  }
+
   //EMPRESA
   registro_empresa(data: any): Observable<any> {
     let headers = new HttpHeaders({ 'Content-Type': 'application/json' });

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { UserService } from 'src/app/services/user.service';
 
@@ -16,6 +17,7 @@ export class ForgotPassComponent implements OnInit {
     private _title: Title,
     private _userService: UserService,
     private _toastrService: ToastrService,
+    private _router: Router
   ) {
 
   }
@@ -31,23 +33,24 @@ export class ForgotPassComponent implements OnInit {
     }
 
     if (verificarForm.valid) {
-      // this._userService.registro_token_cambio_pass(data).subscribe(
-      //   response => {
-      //     if (response.data != undefined) {
-      //       this._userService.enviar_correo_token_cambio_pass(this.correo).subscribe(
-      //         response => {
-      //           if (response.data) {
-      //             this._toastrService.success('Revise su correo, se envió un enlace de restauración', 'CORREO VERIFICADO!');
-      //           } else {
-      //             this._toastrService.error('No se pudo generar el código', 'ERROR');
-      //           }
-      //         }
-      //       );
-      //     } else {
-      //       this._toastrService.error(response.message, 'ERROR');
-      //     }
-      //   }
-      // );
+      this._userService.registro_token_cambio_pass(data).subscribe(
+        response => {
+          if (response.data != undefined) {
+            this._userService.enviar_correo_token_cambio_pass(this.correo).subscribe(
+              response => {
+                if (response.data) {
+                  this._toastrService.success('Revise su correo, se envió un enlace de restauración', 'CORREO VERIFICADO!');
+                  this._router.navigate(['/']);
+                } else {
+                  this._toastrService.error('No se pudo generar el código', 'ERROR');
+                }
+              }
+            );
+          } else {
+            this._toastrService.error(response.message, 'ERROR');
+          }
+        }
+      );
     }
   }
 
