@@ -86,6 +86,7 @@ export class ReservasComponent implements OnInit {
 
     this.socket.on('mostrar-reservas-user', () => {
       this.obtener_reservas();
+      this.fromOut = false;
     });
 
     if (this.reservaciones.length >= 1) {
@@ -133,14 +134,13 @@ export class ReservasComponent implements OnInit {
           this._toastrService.error(response.message, 'ERROR');
         } else {
           this._toastrService.success('Se reservó con éxito', 'RESERVADO!');
+          this.socket.emit('crear-reserva-ocupado-out', {data: true});
           localStorage.removeItem('afuera');
           localStorage.removeItem('fecha_reserva');
           localStorage.removeItem('hora_inicio');
           localStorage.removeItem('hora_fin');
           localStorage.removeItem('id_cancha');
           this.load_btn = false;
-          window.location.reload();
-          //this._router.navigate(['/usuario']);
         }
       }
     );

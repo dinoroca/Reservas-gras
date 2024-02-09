@@ -23,6 +23,11 @@ io.on('connection', function (socket) {
     io.emit('mostrar-reservas-user', data);
     console.log(data);
   });
+
+  socket.on('crear-reserva-ocupado-out', function (data) {
+    io.emit('mostrar-reservas-user', data);
+    console.log(data);
+  });
 });
 
 var user_route = require('./Routes/User');
