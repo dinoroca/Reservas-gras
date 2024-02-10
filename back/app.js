@@ -26,6 +26,7 @@ io.on('connection', function (socket) {
 
   socket.on('crear-reserva-ocupado-out', function (data) {
     io.emit('mostrar-reservas-user', data);
+    io.emit('mostrar-reservas', data);
     console.log(data);
   });
 });

@@ -149,7 +149,7 @@ const enviar_whatsapp_confirmacion = async (user) => {
   } else {
     console.log('Whatsapp no existe');
   }
-};
+}
 
 const login_user = async function (req, res) {
   var data = req.body;
@@ -481,7 +481,8 @@ const crear_reservacion_user = async function (req, res) {
           { 
             $and: [
               { hora_inicio: { $lte: data.hora_fin } }, 
-              { hora_fin: { $gte: horaFinNuevaReserva } } 
+              { hora_fin: { $gte: horaFinNuevaReserva } },
+              { hora_fin: { $lte: data.hora_inicio } }
             ]
           }
         ]
@@ -504,7 +505,6 @@ const crear_reservacion_user = async function (req, res) {
     res.status(500).send({ message: 'Error al crear la reserva' });
   }
 };
-
 
 const obtener_reservaciones_user = async function (req, res) {
   if (req.user) {
@@ -568,8 +568,10 @@ const actualizar_reserva_reservado_admin = async function (req, res) {
       var id = req.params['id'];
 
       var reg = await Reservacion.findByIdAndUpdate({ _id: id }, { estado: 'Reservado' });
+      var user = await User.findById({ _id: reg.cliente });
 
       res.status(200).send({ data: reg });
+      enviar_whatsapp_reservado_admin(user, reg);
 
     } else {
       res.status(500).send({ message: 'NoAccess' });
@@ -578,6 +580,19 @@ const actualizar_reserva_reservado_admin = async function (req, res) {
     res.status(500).send({ message: 'NoAccess' });
   }
 }
+
+const enviar_whatsapp_reservado_admin = async (user, reservacion) => {
+  const tel = '+51' + user.telefono;
+  const chatId = tel.substring(1) + "@c.us";
+  const number_details = await whatsapp.getNumberId(chatId);
+  if (number_details) {
+    const mensaje = `Hola ${user.nombres}, tu reservación con código ${reservacion._id} fue confirmado. \nGracias por preferirnos y disfrute de su partido!.`;
+    await whatsapp.sendMessage(chatId, mensaje);
+  } else {
+    console.log('Whatsapp no existe');
+  }
+};
+
 
 // Función para eliminar reservas vencidas
 const eliminarReservasVencidas = async () => {
