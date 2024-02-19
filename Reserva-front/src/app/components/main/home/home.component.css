@@ -4,220 +4,235 @@
 } */
 
 section {
-    position: relative;
-    width: 100%;
-    height: 70vh;
-    background-image: linear-gradient(to right, #43E97C, #38F9D6);
-    /* background: #f07a7a; */
-    overflow: hidden;
+  position: relative;
+  width: 100%;
+  height: 70vh;
+  background-image: linear-gradient(to right, #43e97c, #38f9d6);
+  /* background: #f07a7a; */
+  overflow: hidden;
 }
 
 section .wave {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 100px;
-    background-image: url(../../../../assets/img/wave.png);
-    background-size: 1000px 100px;
-    /* background-size: 150% 100px; */
-    /* animation: wave 10s linear infinite; */
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100px;
+  background-image: url(../../../../assets/img/wave.png);
+  background-size: 1000px 100px;
+  /* background-size: 150% 100px; */
+  /* animation: wave 10s linear infinite; */
 }
 
 section .wave.wave1 {
-    animation: animate 10s linear infinite;
-    z-index: 1000;
-    opacity: 1;
-    animation-delay: 0s;
-    bottom: 0;
+  animation: animate 10s linear infinite;
+  z-index: 1000;
+  opacity: 1;
+  animation-delay: 0s;
+  bottom: 0;
 }
 
 section .wave.wave2 {
-    animation: animate2 15s linear infinite;
-    z-index: 999;
-    opacity: 0.5;
-    animation-delay: -5s;
-    bottom: 10px;
+  animation: animate2 15s linear infinite;
+  z-index: 999;
+  opacity: 0.5;
+  animation-delay: -5s;
+  bottom: 10px;
 }
 
 section .wave.wave3 {
-    animation: animate 10s linear infinite;
-    z-index: 998;
-    opacity: 0.2;
-    animation-delay: -2s;
-    bottom: 15px;
+  animation: animate 10s linear infinite;
+  z-index: 998;
+  opacity: 0.2;
+  animation-delay: -2s;
+  bottom: 15px;
 }
 
 section .wave.wave4 {
-    animation: animate2 5s linear infinite;
-    z-index: 997;
-    opacity: 0.7;
-    animation-delay: -5s;
-    bottom: 20px;
+  animation: animate2 5s linear infinite;
+  z-index: 997;
+  opacity: 0.7;
+  animation-delay: -5s;
+  bottom: 20px;
 }
 
 @keyframes animate {
-    0% {
-        background-position-x: 0;
-    }
+  0% {
+    background-position-x: 0;
+  }
 
-    100% {
-        background-position-x: 1000px;
-    }
+  100% {
+    background-position-x: 1000px;
+  }
 }
 
 @keyframes animate2 {
-    0% {
-        background-position-x: 0;
-    }
+  0% {
+    background-position-x: 0;
+  }
 
-    100% {
-        background-position-x: -1000px;
-    }
+  100% {
+    background-position-x: -1000px;
+  }
 }
-
 
 .rotate-horizontally {
-    transform: scaleX(-1);
+  transform: scaleX(-1);
 }
 
-
-
-
 .button-search {
-    display: flex;
-    /* grid-template-columns: repeat(4, 1fr); */
-    /* gap: 10px; */
+  display: flex;
+  /* grid-template-columns: repeat(4, 1fr); */
+  /* gap: 10px; */
 }
 
 .button-search-children {
-    background-color: #19ce81;
-    margin-left: 10px;
-    border: none;
-    /* background: linear-gradient(to bottom, #3de69d, #0eab68); */
-    border-radius: 010%;
-    border-radius: 30px;
-    color: white;
-    height: 40px;
-    width: 30vh;
+  background-color: #19ce81;
+  margin-left: 10px;
+  border: none;
+  /* background: linear-gradient(to bottom, #3de69d, #0eab68); */
+  border-radius: 010%;
+  border-radius: 30px;
+  color: white;
+  height: 40px;
+  width: 30vh;
 
-    /** #249b89 */
+  /** #249b89 */
 
-    white-space: nowrap;
-    /* Evita el desbordamiento de texto */
-    overflow: hidden;
-    /* Oculta cualquier texto que exceda el ancho máximo */
-    text-overflow: ellipsis;
-    /* Agrega puntos suspensivos (...) para indicar texto truncado */
-    /* font-size: 16px; */
+  white-space: nowrap;
+  /* Evita el desbordamiento de texto */
+  overflow: hidden;
+  /* Oculta cualquier texto que exceda el ancho máximo */
+  text-overflow: ellipsis;
+  /* Agrega puntos suspensivos (...) para indicar texto truncado */
+  /* font-size: 16px; */
+}
+
+.button-search-children-principal {
+  background-color: #fff;
+  margin-left: 10px;
+  border: none;
+  /* background: linear-gradient(to bottom, #3de69d, #0eab68); */
+  border-radius: 010%;
+  border-radius: 30px;
+  color: #19ce81;
+  height: 40px;
+  width: 30vh;
+
+  /** #249b89 */
+
+  white-space: nowrap;
+  /* Evita el desbordamiento de texto */
+  overflow: hidden;
+  /* Oculta cualquier texto que exceda el ancho máximo */
+  text-overflow: ellipsis;
+  /* Agrega puntos suspensivos (...) para indicar texto truncado */
+  /* font-size: 16px; */
 }
 
 .button-search-children:hover {
-    max-width: none;
-    /* Elimina el ancho máximo al pasar el mouse (muestra el texto completo) */
+  max-width: none;
+  /* Elimina el ancho máximo al pasar el mouse (muestra el texto completo) */
 }
 
 /* Media query para dispositivos móviles (pantallas más pequeñas) */
 @media (max-width: 768px) {
-    .button-search-children {
-        font-size: 14px;
-        /* Tamaño para dispositivos móviles */
-    }
+  .button-search-children {
+    font-size: 14px;
+    /* Tamaño para dispositivos móviles */
+  }
 }
 
 @media screen and (width: 280px) and (height: 653px) {
-    .button-search-children {
-        font-size: 10px;
-        height: 30px;
+  .button-search-children {
+    font-size: 10px;
+    height: 30px;
 
-        /* Tamaño para dispositivos móviles */
-    }
+    /* Tamaño para dispositivos móviles */
+  }
 }
-
 
 /* Clase para opacidad al 100% */
 .opacidad-100 {
-    opacity: 1;
+  opacity: 1;
 }
 
 /* Clase para opacidad al 50% */
 .opacidad-50 {
-    opacity: 0.5;
+  opacity: 0.5;
 }
 
 /* Clase para color de borde y texto */
 .border-color {
-    border: 2px solid #19ce81;
-    background: transparent;
-    color: #19ce81;
+  border: 2px solid #19ce81;
+  background: transparent;
+  color: #19ce81;
 }
 
 /** Clase para cursiva del contenido del atributo placeholder **/
 ::placeholder {
-    font-weight: 300;
-    font-style: italic;
+  font-weight: 300;
+  font-style: italic;
 }
-
 
 /* ! OJO */
 .card-text {
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    /* Número de líneas que deseas mostrar */
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  /* Número de líneas que deseas mostrar */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-
 .btn-reserve {
-    background-color: #19ce81;
-    border: none;
-    /* color: #effef7; */
-    color: white;
+  background-color: #19ce81;
+  border: none;
+  /* color: #effef7; */
+  color: white;
 }
 
 .btn-reserve:hover {
-    background-color: #2bb97b;
-    border: none;
-    /* color: #effef7; */
-    color: white;
+  background-color: #2bb97b;
+  border: none;
+  /* color: #effef7; */
+  color: white;
 }
 
 .btn-reserve-voley {
-    background-color: #F14E8F;
-    border: none;
-    /* color: #effef7; */
-    color: white;
+  background-color: #f14e8f;
+  border: none;
+  /* color: #effef7; */
+  color: white;
 }
 
 .btn-reserve-voley:hover {
-    background-color: #d64c83;
-    border: none;
-    /* color: #effef7; */
-    color: white;
+  background-color: #d64c83;
+  border: none;
+  /* color: #effef7; */
+  color: white;
 }
 
 .btn-reserve-mixto {
-    background-color: rgb(111, 66, 193);
-    border: none;
-    /* color: #effef7; */
-    color: white;
+  background-color: rgb(111, 66, 193);
+  border: none;
+  /* color: #effef7; */
+  color: white;
 }
 
 .btn-reserve-mixto:hover {
-    background-color: rgb(95, 51, 178);
-    border: none;
-    /* color: #effef7; */
-    color: white;
+  background-color: rgb(95, 51, 178);
+  border: none;
+  /* color: #effef7; */
+  color: white;
 }
 
 .bi-1 {
-    color: #0eab68;
+  color: #0eab68;
 }
 
 .bi-2 {
-    color: rgb(124, 124, 124);
+  color: rgb(124, 124, 124);
 }
 
 /* .buscar {
@@ -225,36 +240,38 @@ section .wave.wave4 {
 } */
 
 .bi-greater {
-    color: #effef7;
+  color: #effef7;
 }
 
 .images-grass {
-    display: flex;
-    flex-direction: column;
-    position: relative;
+  display: flex;
+  flex-direction: column;
+  position: relative;
 }
 
 .nombre {
-    margin-top: auto;
-    background: linear-gradient(to top, rgba(0, 1, 30, 0.7) 50%, rgba(10, 0, 11, 0)100%);
-    padding: 10px;
-    text-align: center;
-    width: 100%;
-    position: absolute;
-    bottom: 0;
-    color: white;
-    ;
+  margin-top: auto;
+  background: linear-gradient(
+    to top,
+    rgba(0, 1, 30, 0.7) 50%,
+    rgba(10, 0, 11, 0) 100%
+  );
+  padding: 10px;
+  text-align: center;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  color: white;
 }
 
-
 .grass-caracteristicas p {
-    margin-bottom: 8px;
+  margin-bottom: 8px;
 }
 
 #name-provincia {
-    background-color: #19ce81;
-    border-radius: 0px 0.3rem 0px 0.75rem;
-    padding: 0.125rem 0.4rem;
-    margin-right: -0.65rem;
-    color: white
+  background-color: #19ce81;
+  border-radius: 0px 0.3rem 0px 0.75rem;
+  padding: 0.125rem 0.4rem;
+  margin-right: -0.65rem;
+  color: white;
 }

@@ -23,6 +23,8 @@ export class GaleriaCanchasComponent implements OnInit {
   public file: File | any = undefined;
   public nombreArchivo: string = '';
 
+  imagePreview: string | ArrayBuffer | null = null;
+
   constructor(
     private _route: ActivatedRoute,
     private _userService: UserService,
@@ -101,6 +103,23 @@ export class GaleriaCanchasComponent implements OnInit {
     reader.readAsDataURL(file);
 
     this.file = file;
+
+    if (file) {
+      // Convierte el archivo en una URL de datos (data URL)
+      this.convertToBase64(file);
+    }
+  }
+
+  convertToBase64(file: File): void {
+    const reader = new FileReader();
+
+    reader.onload = (e: any) => {
+      // Asigna la URL de datos a la propiedad imagePreview
+      this.imagePreview = e.target.result;
+    };
+
+    // Lee el contenido del archivo como una URL de datos
+    reader.readAsDataURL(file);
   }
 
   subir_imagen() {

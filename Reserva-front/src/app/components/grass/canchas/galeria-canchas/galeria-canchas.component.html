@@ -115,154 +115,160 @@
 
                         <p class="col-form-label fs-5 fw-light text-center" style="margin: 10px 0;">Galería</p>
 
-
-                        <div class=" group-upload">
-                            <div class="text-center">
-                                <input id="input-img" type="file" (change)="fileChangeEvent($event)">
-                                <label class="lab" for="input-img">
-                                    <i class="bi bi-cloud-arrow-up-fill icon-upload"></i>
-                                    <p><strong>Subir imagen desde el equipo</strong></p>
-                                    <em>Formatos soportados: <br> jpg, png, webp, jpeg</em> <br>
-                                    <p>Tamaño máximo: 4MB</p>
-                                </label>
+                        <div class="row">
+                            <div class="col-12 col-xl-5">
+                                <div class=" group-upload">
+                                    <div class="text-center">
+                                        <input id="input-img" type="file" (change)="fileChangeEvent($event)">
+                                        <label class="lab" for="input-img">
+                                            <i class="bi bi-cloud-arrow-up-fill icon-upload"></i>
+                                            <p><strong>Subir imagen desde el equipo</strong></p>
+                                            <em>Formatos soportados: <br> jpg, png, webp, jpeg</em> <br>
+                                            <p>Tamaño máximo: 4MB</p>
+                                        </label>
+                                    </div>
+                                    <button *ngIf="!load_btn" class="btn btn-primary bi-floppy button-upload"
+                                        type="button" (click)="subir_imagen()" [disabled]="file == undefined">
+                                        Guardar
+                                    </button>
+                                </div>
                             </div>
-                            <button *ngIf="!load_btn" class="btn btn-primary bi-floppy button-upload" type="button"
-                                (click)="subir_imagen()" [disabled]="file == undefined">
-                                Guardar
-                            </button>
+                            <div class="col-12 col-xl-7 text-center">
+                                <div>
+                                    <div
+                                        style="border: 0.2rem dashed #ccc; padding: 10px; display: inline-block; box-sizing: border-box; border-radius: 0.5rem;text-align: center;">
+                                        <em style="margin-top: 10px;">-- Previsualización de la portada --</em> <br>
+                                        <img id=" previewImage" [src]="imagePreview" style="height: 210px ">
+                                    </div>
+
+                                </div>
+                            </div>
                         </div>
 
+
+                        <div class="mb-3">
+                            <!-- Button addon on the right -->
+                            <div class="input-group">
+                                <!-- Button with growing spinner and text -->
+                                <button *ngIf="load_btn" type="button" class="btn btn-secondary" disabled>
+                                    <span class="spinner-grow spinner-grow-sm me-2" role="status"
+                                        aria-hidden="true"></span>
+                                    Subiendo...
+                                </button>
+                            </div>
+                        </div>
+
+
+
                         <div class="form-group row align-items-center">
-                            <div class="mb-3">
+                            <div class="mb-3 pt-3">
                                 <!-- Button addon on the right -->
-                                <div class="input-group">
+                                <div class="input-group" style="display: flex; justify-content: center; ">
 
-                            <ng-container *ngIf="field_upload">
-                                <label class="col-form-label fs-5 fw-light text-center" for="input-img"
-                                    style="cursor: pointer;">
-                                    Subir imagen
-                                </label>
-                                <div class="mb-3">
-                                    <!-- Button addon on the right -->
-                                    <div class="input-group">
-                                        <input id="input-img" class="form-control" type="file"
-                                            (change)="fileChangeEvent($event)">
-                                        <button *ngIf="!load_btn" class="btn btn-primary bi-upload" type="button"
-                                            (click)="subir_imagen()" [disabled]="file == undefined">
-                                            Subir
-                                        </button>
+                                    <div class="">
+                                        <div class="table-responsive mt-2">
 
-                                        <!-- Button with growing spinner and text -->
-                                        <button *ngIf="load_btn" type="button" class="btn btn-secondary" disabled>
-                                            <span class="spinner-grow spinner-grow-sm me-2" role="status"
-                                                aria-hidden="true"></span>
-                                            Subiendo...
-                                        </button>
-                                    </div>
-                                </div>
-                            </ng-container>
+                                            <ng-container *ngIf="load_data">
+                                                <div class="text-center">
+                                                    <div class="spinner-border text-secondary"
+                                                        style="width: 3rem; height: 3rem" role="status">
+                                                    </div>
+                                                    <h4 class="text-black-50"><small>Cargando...</small></h4>
+                                                </div>
+                                            </ng-container>
 
-                            <div class="">
-                                <div class="table-responsive mt-2">
+                                            <table class="table table-sm table-bordered text-center"
+                                                *ngIf="cancha.galeria">
+                                                <thead class="thead-dark">
+                                                    <tr>
+                                                        <th>Imagen</th>
+                                                        <th>Opciones</th>
+                                                    </tr>
+                                                </thead>
 
-                                    <ng-container *ngIf="load_data">
-                                        <div class="text-center">
-                                            <div class="spinner-border text-secondary" style="width: 3rem; height: 3rem"
-                                                role="status">
-                                            </div>
-                                            <h4 class="text-black-50"><small>Cargando...</small></h4>
-                                        </div>
-                                    </ng-container>
+                                                <ng-container *ngIf="cancha.galeria.length == 0">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td colspan="2">
+                                                                <span class="text-danger">No hay imágenes
+                                                                    diponibles</span>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </ng-container>
 
-                                    <table class="table table-sm table-bordered text-center" *ngIf="cancha.galeria">
-                                        <thead class="thead-dark">
-                                            <tr>
-                                                <th>Imagen</th>
-                                                <th>Opciones</th>
-                                            </tr>
-                                        </thead>
+                                                <ng-container *ngIf="cancha.galeria.length >= 1">
+                                                    <tbody *ngFor="let item of cancha.galeria; let indice = index">
+                                                        <tr *ngIf="!load_data">
+                                                            <td><img [src]="url + 'obtener_galeria_cancha/' + item.imagen"
+                                                                    style="width: 15vw;"></td>
 
-                                        <ng-container *ngIf="cancha.galeria.length == 0">
-                                            <tbody>
-                                                <tr>
-                                                    <td colspan="2">
-                                                        <span class="text-danger">No hay imágenes diponibles</span>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </ng-container>
+                                                            <td>
+                                                                <a data-bs-toggle="modal"
+                                                                    [attr.data-bs-target]="'#delete-' + item._id"
+                                                                    class="text-danger fs-5" type="button">
+                                                                    <i class="bi bi-trash"></i>
+                                                                </a>
+                                                            </td>
+                                                        </tr>
 
-                                        <ng-container *ngIf="cancha.galeria.length >= 1">
-                                            <tbody *ngFor="let item of cancha.galeria; let indice = index">
-                                                <tr *ngIf="!load_data">
-                                                    <td><img [src]="url + 'obtener_galeria_cancha/' + item.imagen"
-                                                            style="width: 15vw;"></td>
+                                                        <!-- Modal eliminar -->
+                                                        <div class="modal fade" id="delete-{{ item._id }}" tabindex="-1"
+                                                            style="display: none" aria-hidden="true">
+                                                            <div class="modal-dialog" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h4 class="modal-title text-center">
+                                                                            Eliminar imagen de galería
+                                                                        </h4>
+                                                                        <button type="button" class="btn-close"
+                                                                            data-bs-dismiss="modal" aria-label="Close">
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="modal-body text-center">
+                                                                        <p class="fs-sm">
+                                                                            Desea eliminar esta imagen?
+                                                                        </p>
+                                                                        <p><img [src]="url + 'obtener_galeria_cancha/' + item.imagen"
+                                                                                style="width: 10vw;"></p>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button class="btn btn-secondary btn-sm bi-x-lg"
+                                                                            type="button" data-bs-dismiss="modal">
+                                                                            Cancelar
+                                                                        </button>
+                                                                        <button *ngIf="!load_btn_eliminar"
+                                                                            class="btn btn-danger btn-sm bi-trash-fill"
+                                                                            (click)="eliminar(item._id)" type="button"
+                                                                            data-bs-dismiss="modal">
+                                                                            Eliminar
+                                                                        </button>
 
-                                                    <td>
-                                                        <a data-bs-toggle="modal"
-                                                            [attr.data-bs-target]="'#delete-' + item._id"
-                                                            class="text-danger fs-5" type="button">
-                                                            <i class="bi bi-trash"></i>
-                                                        </a>
-                                                    </td>
-                                                </tr>
-
-                                                <!-- Modal eliminar -->
-                                                <div class="modal fade" id="delete-{{ item._id }}" tabindex="-1"
-                                                    style="display: none" aria-hidden="true">
-                                                    <div class="modal-dialog" role="document">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h4 class="modal-title text-center">
-                                                                    Eliminar imagen de galería
-                                                                </h4>
-                                                                <button type="button" class="btn-close"
-                                                                    data-bs-dismiss="modal" aria-label="Close">
-                                                                </button>
-                                                            </div>
-                                                            <div class="modal-body text-center">
-                                                                <p class="fs-sm">
-                                                                    Desea eliminar esta imagen?
-                                                                </p>
-                                                                <p><img [src]="url + 'obtener_galeria_cancha/' + item.imagen"
-                                                                        style="width: 10vw;"></p>
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button class="btn btn-secondary btn-sm bi-x-lg"
-                                                                    type="button" data-bs-dismiss="modal">
-                                                                    Cancelar
-                                                                </button>
-                                                                <button *ngIf="!load_btn_eliminar"
-                                                                    class="btn btn-danger btn-sm bi-trash-fill"
-                                                                    (click)="eliminar(item._id)" type="button"
-                                                                    data-bs-dismiss="modal">
-                                                                    Eliminar
-                                                                </button>
-
-                                                                <!-- Button with growing spinner and text -->
-                                                                <button *ngIf="load_btn_eliminar" type="button"
-                                                                    class="btn btn-secondary">
-                                                                    <span class="spinner-grow spinner-grow-sm me-2"
-                                                                        role="status" aria-hidden="true"
-                                                                        disabled></span>
-                                                                    Eliminando...
-                                                                </button>
+                                                                        <!-- Button with growing spinner and text -->
+                                                                        <button *ngIf="load_btn_eliminar" type="button"
+                                                                            class="btn btn-secondary">
+                                                                            <span
+                                                                                class="spinner-grow spinner-grow-sm me-2"
+                                                                                role="status" aria-hidden="true"
+                                                                                disabled></span>
+                                                                            Eliminando...
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                </div>
 
-                                            </tbody>
-                                        </ng-container>
-                                    </table>
+                                                    </tbody>
+                                                </ng-container>
+                                            </table>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
 
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
-    </div>
-</div>
