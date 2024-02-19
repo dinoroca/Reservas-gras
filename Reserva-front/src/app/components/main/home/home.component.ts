@@ -1,4 +1,10 @@
-import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  HostListener,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { GLOBAL } from 'src/app/services/global';
@@ -8,11 +14,18 @@ import { UserService } from 'src/app/services/user.service';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  styleUrls: ['./home.component.css'],
 })
-
 export class HomeComponent implements OnInit {
+  //___
+  @ViewChild('masPopular', { static: true }) masPopularRef!: ElementRef;
 
+  scrollToMasPopular(): void {
+    this.masPopularRef.nativeElement.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+    });
+  }
 
   //------------- se aumento
   public searchOption: string = 'name';
@@ -25,7 +38,7 @@ export class HomeComponent implements OnInit {
   public empresa: any = {
     region: '',
     provincia: '',
-    distrito: ''
+    distrito: '',
   };
 
   public token: any;
@@ -84,25 +97,22 @@ export class HomeComponent implements OnInit {
     private _router: Router,
     private _title: Title,
     private _guestService: GuestService,
-    private _userService: UserService,
+    private _userService: UserService
   ) {
-
     this.screenWidth = window.innerWidth;
     this.screenHeight = window.innerHeight;
 
     this.url = GLOBAL.url;
     this.user_lc = undefined;
 
-    this._guestService.obtener_regiones().subscribe(
-      response => {
-        response.forEach((element: { id: any; name: any; }) => {
-          this.regiones.push({
-            id: element.id,
-            name: element.name
-          });
+    this._guestService.obtener_regiones().subscribe((response) => {
+      response.forEach((element: { id: any; name: any }) => {
+        this.regiones.push({
+          id: element.id,
+          name: element.name,
         });
-      }
-    );
+      });
+    });
 
     if (this.screenWidth < this.screenHeight) {
       this.imagen_fondo = '../../../../assets/img/fondo-comentario.jpg';
@@ -110,26 +120,29 @@ export class HomeComponent implements OnInit {
       this.imagen_fondo = '../../../../assets/img/fondo-coment.png';
     }
 
-    this.token = localStorage.getItem('token') || sessionStorage.getItem('token');
+    this.token =
+      localStorage.getItem('token') || sessionStorage.getItem('token');
     this.id = localStorage.getItem('_id') || sessionStorage.getItem('_id');
 
     if (this.token) {
       //Obtener usuario
-      this._userService.obtener_user(this.id, this.token).subscribe(
-        response => {
-
+      this._userService
+        .obtener_user(this.id, this.token)
+        .subscribe((response) => {
           if (response.data == undefined) {
-            _userService.obtener_empresa(this.id, this.token).subscribe(
-              response => {
+            _userService
+              .obtener_empresa(this.id, this.token)
+              .subscribe((response) => {
                 if (response.data == undefined) {
                   this.user_lc = undefined;
-
                 } else {
                   this.user = response.data;
                   localStorage.setItem('user_data', JSON.stringify(this.user));
 
                   if (localStorage.getItem('user_data')) {
-                    this.user_lc = JSON.parse(localStorage.getItem('user_data')!);
+                    this.user_lc = JSON.parse(
+                      localStorage.getItem('user_data')!
+                    );
 
                     if (this.user_lc.role == 'GRASS') {
                       this._router.navigate(['/grass']);
@@ -138,10 +151,8 @@ export class HomeComponent implements OnInit {
                     this.user_lc = undefined;
                   }
                 }
-              }
-            );
+              });
           } else {
-
             this.user = response.data;
             localStorage.setItem('user_data', JSON.stringify(this.user));
 
@@ -150,7 +161,6 @@ export class HomeComponent implements OnInit {
 
               if (this.user_lc.role == 'ADMIN') {
                 this._router.navigate(['/admin']);
-
               } else if (this.user_lc.role == 'USER') {
                 this._router.navigate(['/usuario']);
               }
@@ -158,47 +168,40 @@ export class HomeComponent implements OnInit {
               this.user_lc = undefined;
             }
           }
-        }
-      );
+        });
     }
 
     this.init_data();
 
-    _userService.listar_empresas_publico().subscribe(
-      response => {
-        if (response.data != undefined) {
+    _userService.listar_empresas_publico().subscribe((response) => {
+      if (response.data != undefined) {
+        this.primeras_empresas = response.data;
 
-          this.primeras_empresas = response.data;
+        this._userService
+          .obtener_caracteristicas_empresa_publico()
+          .subscribe((response) => {
+            if (response.data != undefined) {
+              this.caracPrimeros = response.data;
 
-          this._userService.obtener_caracteristicas_empresa_publico().subscribe(
-            response => {
-              if (response.data != undefined ) {
+              for (let i = 0; i < this.primeras_empresas.length; i++) {
+                let idBuscado = this.primeras_empresas[i]._id;
 
-                this.caracPrimeros = response.data;
-                
-                for (let i = 0; i < this.primeras_empresas.length; i++) {
-                  let idBuscado = this.primeras_empresas[i]._id;  
-
-                  for (let j = 0; j < this.caracPrimeros.length; j++) {
-
-                    if (idBuscado === this.caracPrimeros[j].empresa._id) {
-                      this.primerosBuscado[i] = this.caracPrimeros[j];
-                      idBuscado = '';
-                      break
-                    } else {
-                      this.primerosBuscado[i] = null;
-                    }
-                  }       
+                for (let j = 0; j < this.caracPrimeros.length; j++) {
+                  if (idBuscado === this.caracPrimeros[j].empresa._id) {
+                    this.primerosBuscado[i] = this.caracPrimeros[j];
+                    idBuscado = '';
+                    break;
+                  } else {
+                    this.primerosBuscado[i] = null;
+                  }
                 }
-
               }
             }
-          );
-        } else {
-          this.primeras_empresas = [];
-        }
+          });
+      } else {
+        this.primeras_empresas = [];
       }
-    );
+    });
   }
 
   init_data() {
@@ -215,46 +218,41 @@ export class HomeComponent implements OnInit {
       this.show_alert_void_ubication = false;
       this.caracBuscada = [];
       this.empresas = [];
-      this._userService.listar_empresas_filtro(this.busqueda).subscribe(
-        response => {
-
+      this._userService
+        .listar_empresas_filtro(this.busqueda)
+        .subscribe((response) => {
           if (response.data != undefined) {
             this.empresas = response.data;
             this.load_data = false;
-
           } else {
             this.show_alert_void = true;
             this.show_card_empresas = false;
           }
 
-          this._userService.obtener_caracteristicas_empresa_publico().subscribe(
-            response => {
-              if (response.data != undefined ) {
-
+          this._userService
+            .obtener_caracteristicas_empresa_publico()
+            .subscribe((response) => {
+              if (response.data != undefined) {
                 this.caracteristicas = response.data;
-                
+
                 for (let i = 0; i < this.empresas.length; i++) {
-                  let idBuscado = this.empresas[i]._id;  
+                  let idBuscado = this.empresas[i]._id;
 
                   for (let j = 0; j < this.caracteristicas.length; j++) {
-
                     if (idBuscado === this.caracteristicas[j].empresa._id) {
                       this.caracBuscada[i] = this.caracteristicas[j];
                       idBuscado = '';
-                      break
+                      break;
                     } else {
                       this.caracBuscada[i] = null;
                     }
-                  }       
+                  }
                 }
-
               }
-            }
-          );
+            });
 
           this.load_search = false;
-        },
-      );
+        });
     }
     if (this.busqueda == '') {
       this.init_data();
@@ -273,63 +271,57 @@ export class HomeComponent implements OnInit {
     this.load_search_ubication = true;
     this.busqueda = '';
     this.init_data();
-    this._guestService.obtener_provincias().subscribe(
-      response => {
-        response.forEach((element: { department_id: any; }) => {
-          if (element.department_id == this.empresa.region) {
-            this.provincias.push(element);
-          }
-        });
-      }
-    );
+    this._guestService.obtener_provincias().subscribe((response) => {
+      response.forEach((element: { department_id: any }) => {
+        if (element.department_id == this.empresa.region) {
+          this.provincias.push(element);
+        }
+      });
+    });
 
-    const regencontrado = this.regiones.find(objeto => objeto.id === this.empresa.region);
+    const regencontrado = this.regiones.find(
+      (objeto) => objeto.id === this.empresa.region
+    );
 
     this.namereg = regencontrado.name;
 
-    this._userService.listar_empresas_region(this.namereg).subscribe(
-      response => {
-
+    this._userService
+      .listar_empresas_region(this.namereg)
+      .subscribe((response) => {
         if (response.data != undefined) {
           this.empresas_ubication = response.data;
           this.show_card_empresas_ubication = true;
           this.load_data_ubication = false;
           this.show_alert_void_ubication = false;
 
-          
-          this._userService.obtener_caracteristicas_empresa_publico().subscribe(
-            response => {
-              if (response.data != undefined ) {
-
+          this._userService
+            .obtener_caracteristicas_empresa_publico()
+            .subscribe((response) => {
+              if (response.data != undefined) {
                 this.caracteristicas = response.data;
-                
+
                 for (let i = 0; i < this.empresas_ubication.length; i++) {
-                  let idBuscado = this.empresas_ubication[i]._id;  
+                  let idBuscado = this.empresas_ubication[i]._id;
 
                   for (let j = 0; j < this.caracteristicas.length; j++) {
-
                     if (idBuscado === this.caracteristicas[j].empresa._id) {
                       this.caracBuscada[i] = this.caracteristicas[j];
                       idBuscado = '';
-                      break
+                      break;
                     } else {
                       this.caracBuscada[i] = null;
                     }
-                  }       
+                  }
                 }
-
               }
-            }
-          );
-
+            });
         } else {
           this.show_alert_void_ubication = true;
           this.show_card_empresas_ubication = false;
         }
 
         this.load_search_ubication = false;
-      },
-    );
+      });
   }
 
   select_provincia() {
@@ -337,23 +329,23 @@ export class HomeComponent implements OnInit {
     this.caracBuscada = [];
     this.isDisabledDistrito = false;
     this.empresa.distrito = '';
-    this._guestService.obtener_distritos().subscribe(
-      response => {
-        response.forEach((element: { province_id: any; }) => {
-          if (element.province_id == this.empresa.provincia) {
-            this.distritos.push(element);
-          }
-        });
-      }
-    );
+    this._guestService.obtener_distritos().subscribe((response) => {
+      response.forEach((element: { province_id: any }) => {
+        if (element.province_id == this.empresa.provincia) {
+          this.distritos.push(element);
+        }
+      });
+    });
 
-    const provencontrado = this.provincias.find(objeto => objeto.id === this.empresa.provincia);
+    const provencontrado = this.provincias.find(
+      (objeto) => objeto.id === this.empresa.provincia
+    );
 
     this.nameprov = provencontrado.name;
 
-    this._userService.listar_empresas_prov(this.namereg, this.nameprov).subscribe(
-      response => {
-
+    this._userService
+      .listar_empresas_prov(this.namereg, this.nameprov)
+      .subscribe((response) => {
         if (response.data != undefined) {
           this.empresas_ubication = [];
           this.empresas_ubication = response.data;
@@ -361,46 +353,40 @@ export class HomeComponent implements OnInit {
           this.load_data_ubication = false;
           this.show_alert_void_ubication = false;
 
-          this._userService.obtener_caracteristicas_empresa_publico().subscribe(
-            response => {
-              if (response.data != undefined ) {
-
+          this._userService
+            .obtener_caracteristicas_empresa_publico()
+            .subscribe((response) => {
+              if (response.data != undefined) {
                 this.caracteristicas = response.data;
-                
+
                 for (let i = 0; i < this.empresas_ubication.length; i++) {
-                  let idBuscado = this.empresas_ubication[i]._id;  
+                  let idBuscado = this.empresas_ubication[i]._id;
 
                   for (let j = 0; j < this.caracteristicas.length; j++) {
-
                     if (idBuscado === this.caracteristicas[j].empresa._id) {
                       this.caracBuscada[i] = this.caracteristicas[j];
                       idBuscado = '';
-                      break
+                      break;
                     } else {
                       this.caracBuscada[i] = null;
                     }
-                  }       
+                  }
                 }
-
               }
-            }
-          );
-
+            });
         } else {
           this.show_alert_void_ubication = true;
           this.show_card_empresas_ubication = false;
         }
 
         this.load_search_ubication = false;
-      },
-    );
-
+      });
   }
 
   select_distrito() {
-    this._userService.listar_empresas_dist(this.namereg, this.nameprov, this.empresa.distrito).subscribe(
-      response => {
-
+    this._userService
+      .listar_empresas_dist(this.namereg, this.nameprov, this.empresa.distrito)
+      .subscribe((response) => {
         if (response.data != undefined) {
           this.caracBuscada = [];
           this.empresas_ubication = [];
@@ -409,39 +395,34 @@ export class HomeComponent implements OnInit {
           this.load_data_ubication = false;
           this.show_alert_void_ubication = false;
 
-          this._userService.obtener_caracteristicas_empresa_publico().subscribe(
-            response => {
-              if (response.data != undefined ) {
-
+          this._userService
+            .obtener_caracteristicas_empresa_publico()
+            .subscribe((response) => {
+              if (response.data != undefined) {
                 this.caracteristicas = response.data;
-                
+
                 for (let i = 0; i < this.empresas_ubication.length; i++) {
-                  let idBuscado = this.empresas_ubication[i]._id;  
+                  let idBuscado = this.empresas_ubication[i]._id;
 
                   for (let j = 0; j < this.caracteristicas.length; j++) {
-
                     if (idBuscado === this.caracteristicas[j].empresa._id) {
                       this.caracBuscada[i] = this.caracteristicas[j];
                       idBuscado = '';
-                      break
+                      break;
                     } else {
                       this.caracBuscada[i] = null;
                     }
-                  }       
+                  }
                 }
-
               }
-            }
-          );
-
+            });
         } else {
           this.show_alert_void_ubication = true;
           this.show_card_empresas_ubication = false;
         }
 
         this.load_search_ubication = false;
-      },
-    );
+      });
   }
 
   //------------se aumento
@@ -450,7 +431,4 @@ export class HomeComponent implements OnInit {
     this.busqueda = '';
     this.init_data();
   }
-
 }
-
-
