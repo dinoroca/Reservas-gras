@@ -6,7 +6,7 @@ var api = express.Router();
 var auth = require('../Middlewares/authenticate');
 
 var multiparty = require('connect-multiparty');
-const path = multiparty({uploadDir: './uploads/canchas'});
+const path = multiparty({uploadDir: './uploads/empresas'});
 
 //Peticiones Emoresa
 api.post('/registro_empresa', EmpresaController.registro_empresa);

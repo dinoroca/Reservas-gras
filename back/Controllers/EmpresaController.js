@@ -703,9 +703,9 @@ const eliminar_imagen_galeria_cancha = async function (req, res) {
 const obtener_galeria_cancha = async function (req, res) {
   var img = req.params['img'];
 
-  fs.stat('./uploads/canchas/' + img, function (err) {
+  fs.stat('./uploads/empresas/' + img, function (err) {
     if (!err) {
-      let path_img = './uploads/canchas/' + img;
+      let path_img = './uploads/empresas/' + img;
       res.status(200).sendFile(path.resolve(path_img));
     } else {
       let path_img = './uploads/default.jpg';
@@ -778,9 +778,9 @@ const eliminar_imagen_portada = async function (req, res) {
 const obtener_imagen_portada = async function (req, res) {
   var img = req.params['img'];
 
-  fs.stat('./uploads/canchas/' + img, function (err) {
+  fs.stat('./uploads/empresas/' + img, function (err) {
     if (!err) {
-      let path_img = './uploads/canchas/' + img;
+      let path_img = './uploads/empresas/' + img;
       res.status(200).sendFile(path.resolve(path_img));
     } else {
       let path_img = './uploads/empresas/default-portada.jpg';
