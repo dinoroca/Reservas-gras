@@ -390,7 +390,7 @@ const enviar_correo_token_cambio_pass = async function (req, res) {
     var mailOptions = {
       from: 'reservatugrass@gmail.com',
       to: user.email,
-      subject: 'Cambio de contraseña, IngresaYaa.',
+      subject: 'Cambio de contraseña, Reserva Tu Grass.',
       html: htmlToSend
     };
     res.status(200).send({ data: true });
