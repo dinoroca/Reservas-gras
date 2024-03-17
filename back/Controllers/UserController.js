@@ -23,7 +23,7 @@ var { v4: uuidv4 } = require('uuid');
 const CLIENT_ID = '465301277520-vtde6k9bjbp9bifqst4fv5bupa48i2aj.apps.googleusercontent.com';
 const CLIENT_SECRET = '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';
 const REDIRECT_URI = 'https://developers.google.com/oauthplayground';
-const REFRESH_TOKEN = '1//04_-VCBONbcYzCgYIARAAGAQSNwF-L9Ir-ggsdcgx_Ua3TzNucZwT01DxriHnnHXI-5XCgEr_6q5dMmZ9WtoJcBNrqkC2zmCYufM';
+const REFRESH_TOKEN = '1//04hZPKg6LBQ5SCgYIARAAGAQSNwF-L9Ir4jxVnoVP2RiPCsushOdaeiyiYeTM39ZJVn76r9_d7_wsg9rBgfnr0dnaXG0nJD-Ogv4';
 
 const registro_user = async function (req, res) {
   //Obtiene los parámetros del cliente
