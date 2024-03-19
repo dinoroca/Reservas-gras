@@ -19,7 +19,11 @@ export class IndexResComponent implements OnInit {
   public load_data = false;
   public load_btn = false;
   public exist_res = true;
+  public filtro_cod = '';
+  public err_msg = false;
+  public filtro = false;
   public reservaciones: Array<any> = [];
+  public reservacion: any = {};
   p: number = 1;
 
   constructor(
@@ -67,6 +71,28 @@ export class IndexResComponent implements OnInit {
         }
       }
     );
+  }
+
+  filtrar_cod() {
+    if (this.filtro_cod == '') {
+      this.err_msg = false;
+      this.filtro = false;
+      this.init_data();
+    } else {
+      this._userService.obtener_reservacion_empresa(this.filtro_cod, this.token).subscribe(
+        response => {
+          if (response.data != undefined) {
+            this.err_msg = false;
+            this.reservacion = response.data;
+            this.filtro = true;
+          } else {
+            this.err_msg = true;
+            this.init_data();
+            this.reservacion = {};
+          }
+        }
+      );
+    } 
   }
 
   eliminar_reservacion(id: any) {

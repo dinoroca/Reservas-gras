@@ -199,6 +199,11 @@ export class UserService {
     return this._http.get(this.url + 'obtener_reservaciones_empresa/' + id, { headers: headers });
   }
 
+  obtener_reservacion_empresa(id: any, token: any): Observable<any> {
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json', 'authorization': token });
+    return this._http.get(this.url + 'obtener_reservacion_empresa/' + id, { headers: headers });
+  }
+
   obtener_clientes_empresa(id: any, token: any): Observable<any> {
     let headers = new HttpHeaders({ 'Content-Type': 'application/json', 'authorization': token });
     return this._http.get(this.url + 'obtener_clientes_empresa/' + id, { headers: headers });
@@ -213,6 +218,12 @@ export class UserService {
     let headers = new HttpHeaders({ 'Content-Type': 'application/json', 'authorization': token });
     return this._http.get(this.url + 'obtener_reservaciones_admin', { headers: headers });
   }
+
+  obtener_reservacion_admin(id: any, token: any): Observable<any> {
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json', 'authorization': token });
+    return this._http.get(this.url + 'obtener_reservacion_admin/' + id, { headers: headers });
+  }
+
 
   actualizar_reserva_reservado_admin(id: any, token: any): Observable<any> {
     let headers = new HttpHeaders({ 'Content-Type': 'application/json', 'authorization': token });

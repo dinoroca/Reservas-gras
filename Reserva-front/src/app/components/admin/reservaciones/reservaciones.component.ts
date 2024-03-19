@@ -19,7 +19,11 @@ export class ReservacionesComponent implements OnInit {
   public load_car = true;
   public load_cuentas = true;
   public exist_res = true;
+  public filtro_cod = '';
+  public err_msg = false;
+  public filtro = false;
   public reservaciones: Array<any> = [];
+  public reservacion: any = {};
   public cuentas: Array<any> = [];
   public caracteristicas: any;
   p: number = 1;
@@ -48,6 +52,7 @@ export class ReservacionesComponent implements OnInit {
 
   init_data() {
     this.load_data = true;
+    this.filtro_cod = '';
     this._userService.obtener_reservaciones_admin(this.token).subscribe(
       response => {
         if (response.data == undefined) {
@@ -60,6 +65,28 @@ export class ReservacionesComponent implements OnInit {
         }
       }
     );
+  }
+
+  filtrar_cod() {
+    if (this.filtro_cod == '') {
+      this.err_msg = false;
+      this.filtro = false;
+      this.init_data();
+    } else {
+      this._userService.obtener_reservacion_admin(this.filtro_cod, this.token).subscribe(
+        response => {
+          if (response.data != undefined) {
+            this.err_msg = false;
+            this.reservacion = response.data;
+            this.filtro = true;
+          } else {
+            this.err_msg = true;
+            this.init_data();
+            this.reservacion = {};
+          }
+        }
+      );
+    } 
   }
 
   obtener_caracteristicas(id: any) {

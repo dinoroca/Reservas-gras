@@ -12,6 +12,83 @@
       </button>
     </h3>
 
+    <div>
+      <!-- Button addon on the right -->
+      <div class="input-group my-4">
+        <input class="form-control" type="text" placeholder="Filtrar por ID de reservación" name="filtro_cod" autocomplete="off"
+          [(ngModel)]="filtro_cod" (keyup)="filtrar_cod()">
+      </div>
+
+      <div class="rounded my-2" *ngIf="err_msg" style="background-color: rgb(255, 223, 223);">
+        <p class="text-center p-2 text-danger">ERROR: Ingrese el ID correctamente.</p>
+      </div>
+    </div>
+
+    <ng-container *ngIf="filtro && !err_msg">
+      <div class="card my-3"
+        style="border-color: #00C056;">
+        <div class="card-body">
+          <div class="row">
+
+            <ng-container *ngIf="reservacion.estado == 'Reservado' || reservacion.estado == 'Finalizado'">
+              <div class="col-12 col-md-4">
+                <div class="shadow rounded my-3">
+                  <div class="text-center">
+                    <qrcode style="width: 100vw;" [qrdata]="reservacion._id" [width]="200" [errorCorrectionLevel]="'M'">
+                    </qrcode>
+                    <p class="fw-light m-0"> {{ reservacion._id }} </p>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+
+            <div class="col-12 col-md-8">
+              <table class="table table-sm">
+                <tbody>
+                  <tr>
+                    <td><i class="bi bi-house icono"></i> &nbsp; {{ reservacion.empresa.nombre }}</td>
+                    <td><i class="bi bi-square icono"></i> &nbsp; {{ reservacion.cancha.nombre }}</td>
+                  </tr>
+                  <tr>
+                    <td colspan="2"><i class="bi bi-geo-alt icono"></i> &nbsp;
+                      <a href="{{ reservacion.empresa.ubicacion }}" target="_blank"
+                        style="text-decoration: none; color: #000;"> {{reservacion.empresa.direccion}}
+                      </a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colspan="2"><i class="bi bi-calendar-event icono"></i> &nbsp; {{ reservacion.fecha | date: 'fullDate'
+                      }}</td>
+                  </tr>
+                  <tr>
+                    <td><i class="bi bi-clock icono"></i> &nbsp; {{reservacion.hora_inicio}}:00 a {{reservacion.hora_fin}}:00
+                    </td>
+                    <td><i class="bi bi-person icono"></i> &nbsp; {{ reservacion.cliente.nombres }}</td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <i class="bi bi-gear icono"></i> &nbsp;
+                      <span *ngIf="reservacion.estado == 'Reservado'" class="badge rounded-pill"
+                        style="background-color: rgb(0, 192, 86);">Reservado</span>
+                      <span *ngIf="reservacion.estado == 'Finalizado'"
+                        class="badge rounded-pill text-bg-danger">Finalizado</span>
+                    </td>
+                    <td><i class="bi  bi-cash-coin icono"></i>
+                      &nbsp; S/. {{ reservacion.subtotal }} <small class="fw-light">(Monto de reservación)</small>
+                    </td>
+                  </tr>
+
+                </tbody>
+              </table>
+
+              <p class="fw-light m-0">Creación: {{ reservacion.createdAt | date: 'medium' }} </p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </ng-container>
+
     <ng-container *ngIf="load_data">
       <div class="text-center">
         <div class="spinner-border text-secondary" style="width: 3rem; height: 3rem" role="status">
@@ -20,9 +97,9 @@
       </div>
     </ng-container>
 
-    <ng-container *ngIf="!load_data && reservaciones.length >= 1">
-      <div *ngFor="let item of reservaciones | paginate: { itemsPerPage: 10, currentPage: p } "
-        class="card my-3" style="border-color: #00C056;">
+    <ng-container *ngIf="!load_data && reservaciones.length >= 1 && !filtro">
+      <div *ngFor="let item of reservaciones | paginate: { itemsPerPage: 10, currentPage: p } " class="card my-3"
+        style="border-color: #00C056;">
         <div class="card-body">
           <div class="row">
 
@@ -53,7 +130,8 @@
                     </td>
                   </tr>
                   <tr>
-                    <td colspan="2"><i class="bi bi-calendar-event icono"></i> &nbsp; {{ item.fecha | date: 'fullDate' }}</td>
+                    <td colspan="2"><i class="bi bi-calendar-event icono"></i> &nbsp; {{ item.fecha | date: 'fullDate'
+                      }}</td>
                   </tr>
                   <tr>
                     <td><i class="bi bi-clock icono"></i> &nbsp; {{item.hora_inicio}}:00 a {{item.hora_fin}}:00
@@ -68,7 +146,7 @@
                       <span *ngIf="item.estado == 'Finalizado'"
                         class="badge rounded-pill text-bg-danger">Finalizado</span>
                     </td>
-                    <td><i class="bi  bi-cash-coin icono"></i> 
+                    <td><i class="bi  bi-cash-coin icono"></i>
                       &nbsp; S/. {{ item.subtotal }} <small class="fw-light">(Monto de reservación)</small>
                     </td>
                   </tr>
