@@ -24,6 +24,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { ClientesComponent } from './clientes/clientes.component';
 import { ContactarComponent } from './contactar/contactar.component';
 import { AyudaComponent } from './ayuda/ayuda.component';
+import { SuscripcionComponent } from './suscripcion/suscripcion.component';
 
 
 @NgModule({
@@ -46,7 +47,8 @@ import { AyudaComponent } from './ayuda/ayuda.component';
     CrearResIdComponent,
     ClientesComponent,
     ContactarComponent,
-    AyudaComponent
+    AyudaComponent,
+    SuscripcionComponent
   ],
   imports: [
     CommonModule,

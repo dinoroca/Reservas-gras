@@ -3,6 +3,7 @@ import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { UserService } from 'src/app/services/user.service';
+import { io } from 'socket.io-client';
 
 @Component({
   selector: 'app-index-res',
@@ -26,6 +27,13 @@ export class IndexResComponent implements OnInit {
   public reservacion: any = {};
   p: number = 1;
 
+  public socket = io('http://localhost:4201');
+
+  public exist_susc = true;
+  public viewButton: boolean = false;
+  public activePagos: boolean = false;
+  public suscripciones: Array<any> = [];
+
   constructor(
     private _router: Router,
     private _title: Title,
@@ -42,12 +50,20 @@ export class IndexResComponent implements OnInit {
 
   ngOnInit(): void {
     this._title.setTitle('GRASS | Mis reservaciones');
+    this.socket.on('mostrar-reservas', () => {
+      this.init_data();
+    });
   }
 
   init_data() {
+
+    this.load_data = true;
+
+    this.filtro_cod = '';
+    this.filtro = false;
+
     this._userService.obtener_empresa(this.id, this.token).subscribe(
       response => {
-        this.load_data = true;
         if (response.data == undefined) {
           this._toastrService.error('Usuario inexistente', 'ERROR!');
           this.load_data = false;
@@ -63,6 +79,34 @@ export class IndexResComponent implements OnInit {
               } else {
                 this.exist_res = true;
                 this.reservaciones = response.data;
+              }
+            }
+          );
+
+          this._userService.obtener_suscripciones_empresa(this.empresa._id, this.token).subscribe(
+            response => {
+              if (response.data == undefined) {
+                this.exist_susc = false;
+                this.viewButton = true;
+                this.activePagos = false;
+              } else {
+                this.exist_susc = true;
+                this.suscripciones = response.data;
+
+                for (let i = 0; i < this.suscripciones.length; i++) {
+                  if (this.suscripciones[i].estado == 'Confirmado') {
+                    this.activePagos = true;
+                    this.viewButton = false;
+                    break;
+                  } else {
+                    this.activePagos = false;
+                  }
+                }
+
+                if (this.suscripciones.at(0).estado !== 'Confirmado') {
+                  this.viewButton = true;
+                  this.activePagos = false;
+                }
               }
             }
           );
@@ -101,6 +145,18 @@ export class IndexResComponent implements OnInit {
       response => {
         this._toastrService.success('Se eliminó con éxito', 'ELIMINADO!');
 
+        this.load_btn = false;
+        this.init_data();
+      }
+    );
+  }
+
+  confirmar_reservacion(id: any) {
+    this.load_btn = true;
+    this._userService.actualizar_reserva_reservado_empresa(id, this.token).subscribe(
+      response => {
+        this._toastrService.success('Se confirmó con éxito', 'ACTUALIZADO!');
+        this.socket.emit('confirmar-reserva-admin', {data: true});
         this.load_btn = false;
         this.init_data();
       }

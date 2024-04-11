@@ -204,6 +204,12 @@ export class UserService {
     return this._http.get(this.url + 'obtener_reservacion_empresa/' + id, { headers: headers });
   }
 
+  actualizar_reserva_reservado_empresa(id: any, token: any): Observable<any> {
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json', 'authorization': token });
+    return this._http.put(this.url + 'actualizar_reserva_reservado_empresa/' + id, { data: true }, {headers: headers});
+  }
+
+
   obtener_clientes_empresa(id: any, token: any): Observable<any> {
     let headers = new HttpHeaders({ 'Content-Type': 'application/json', 'authorization': token });
     return this._http.get(this.url + 'obtener_clientes_empresa/' + id, { headers: headers });
@@ -224,10 +230,40 @@ export class UserService {
     return this._http.get(this.url + 'obtener_reservacion_admin/' + id, { headers: headers });
   }
 
-
   actualizar_reserva_reservado_admin(id: any, token: any): Observable<any> {
     let headers = new HttpHeaders({ 'Content-Type': 'application/json', 'authorization': token });
     return this._http.put(this.url + 'actualizar_reserva_reservado_admin/' + id, { data: true }, {headers: headers});
+  }
+
+  //SUSCRIPCIONES
+  registro_suscripcion_prueba(data: any, token: any): Observable<any> {
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json', 'authorization': token });
+    return this._http.post(this.url + 'registro_suscripcion_prueba', data, { headers: headers });
+  }
+
+  registro_suscripcion_empresa(data: any, token: any): Observable<any> {
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json', 'authorization': token });
+    return this._http.post(this.url + 'registro_suscripcion_empresa', data, { headers: headers });
+  }
+
+  obtener_suscripciones_empresa(id: any, token: any): Observable<any> {
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json', 'authorization': token });
+    return this._http.get(this.url + 'obtener_suscripciones_empresa/' + id, { headers: headers });
+  }
+
+  obtener_suscripciones_admin(token: any): Observable<any> {
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json', 'authorization': token });
+    return this._http.get(this.url + 'obtener_suscripciones_admin', { headers: headers });
+  }
+
+  obtener_suscripcion_admin(id: any, token: any): Observable<any> {
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json', 'authorization': token });
+    return this._http.get(this.url + 'obtener_suscripcion_admin/' + id, { headers: headers });
+  }
+
+  actualizar_suscripcion_confirmado_admin(id: any, token: any): Observable<any> {
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json', 'authorization': token });
+    return this._http.put(this.url + 'actualizar_suscripcion_confirmado_admin/' + id, { data: true }, {headers: headers});
   }
 
   //KPI
@@ -265,6 +301,11 @@ export class UserService {
   obtener_cuentas(token: any): Observable<any> {
     let headers = new HttpHeaders({ 'Content-Type': 'application/json', 'authorization': token });
     return this._http.get(this.url + 'obtener_cuentas', { headers: headers });
+  }
+
+  obtener_cuentas_de_grass(id: any, token: any): Observable<any> {
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json', 'authorization': token });
+    return this._http.get(this.url + 'obtener_cuentas_de_grass/' + id, { headers: headers });
   }
 
   //CUENTAS ADMIN

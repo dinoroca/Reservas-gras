@@ -1,0 +1,192 @@
+<app-nav></app-nav>
+
+
+<div class="container py-4">
+  <app-sidebar></app-sidebar>
+
+  <div class="shadow rounded mt-5 p-4">
+    <h3 class="text-center fw-bold" style="color:rgb(6, 170, 115)">
+      Mi suscripción
+    </h3>
+
+    <ng-container *ngIf="load_data">
+      <div class="text-center">
+        <div class="spinner-border text-secondary" style="width: 3rem; height: 3rem" role="status">
+        </div>
+        <h4 class="text-black-50"><small>Cargando...</small></h4>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="!load_data">
+      <h5 *ngIf="activePagos" class="text-center mb-3"><small>Estado de suscripción: </small> <strong
+          class="primario">Activo</strong></h5>
+      <h5 *ngIf="!activePagos" class="text-center mb-3"><small>Estado de suscripción: </small> <strong
+          class="text-danger">Inactivo</strong></h5>
+
+      <ng-container *ngIf="exist_susc && !activePagos && viewButton">
+        <div class="d-grid gap-2 col-6 mx-auto mt-4">
+          <button *ngIf="!load_btn_reg" class="btn btn-danger" type="button" (click)="registrar_suscripcion()">
+            Generar suscripción
+          </button>
+
+          <button *ngIf="load_btn_reg" class="btn btn-danger" type="button" disabled>
+            <span class="spinner-border spinner-border-sm" aria-hidden="true"></span> &nbsp;
+            Creando...
+          </button>
+        </div>
+      </ng-container>
+    </ng-container>
+
+    <ng-container *ngIf="!load_data && !exist_susc">
+      <div class="alert alert-warning text-center" role="alert">
+        Aún no existe una suscripción, puede empezar su prueba gratuita de 10 días, desde el siguiente botón.
+
+        <div class="d-grid gap-2 col-6 mx-auto mt-4">
+          <button *ngIf="!load_btn_reg" class="btn btn-warning" type="button" (click)="registrar_prueba_gratis()">
+            Empezar prueba gratis
+          </button>
+
+          <button *ngIf="load_btn_reg" class="btn btn-warning" type="button" disabled>
+            <span class="spinner-border spinner-border-sm" aria-hidden="true"></span> &nbsp;
+            Creando...
+          </button>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="!load_data && exist_susc">
+      <div>
+        <div class="shadow card rounded my-4" *ngFor="let item of suscripciones; let indice = index">
+          <div class="card-body py-1">
+            <div class="d-flex flex-wrap justify-content-between py-3" data-toggle="collapse" aria-expanded="false">
+              <span class="pr-2 fw-bold">N°. {{suscripciones.length - indice}} </span>
+
+              <span class="text-muted" *ngIf="item.estado == 'Reservado'">
+                <i class="bi bi-calendar"></i> &nbsp;
+                {{item.createdAt | date}}
+              </span>
+
+              <span class="text-muted" *ngIf="item.estado == 'Confirmado'">
+                <i class="bi bi-calendar"></i> &nbsp;
+                {{item.vencimiento | date}} <small>(finaliza)</small>
+              </span>
+
+              <span class="text-muted" *ngIf="item.estado == 'Vencido'">
+                <i class="bi bi-calendar"></i> &nbsp;
+                {{item.vencimiento | date}} <small class="text-danger">(vencido)</small>
+              </span>
+
+              <span class="badge rounded-pill bg-secondary" *ngIf="item.estado == 'Reservado'"> {{item.estado}}
+              </span>
+              <span class="badge rounded-pill bg-success" *ngIf="item.estado == 'Confirmado'"> {{item.estado}}
+              </span>
+              <span class="badge rounded-pill bg-danger" *ngIf="item.estado == 'Vencido'"> {{item.estado}}
+              </span>
+              <span class="text-dark pl-1">S/. {{item.subtotal}} </span>
+            </div>
+
+            <div class="text-center mb-3">
+              <!-- Button trigger modal -->
+              <button type="button" class="btn btn-light btn-sm" data-bs-toggle="modal"
+                [attr.data-bs-target]="'#view-' + item._id">
+                <i class="bi bi-eye-fill"></i> &nbsp; Ver detalles
+              </button>
+            </div>
+
+            <div class="card px-2 mb-3" *ngIf="item.estado == 'Reservado'">
+              <div class="text-center">
+                <strong class="fw-bold text-danger">Recuerde: </strong> Realizar un pago de
+                <h1 class="fw-bold primario">S/. 30</h1>
+
+                A una de las siguientes cuentas y enviar el código "<strong>{{item._id}}</strong>"
+                así como el comprobante de la operación al Whatsapp:
+                <a href="https://wa.me/51962557565" target="_blank" style="text-decoration: none; cursor: pointer;">
+                  <strong>+51 962 557 565</strong>
+                </a>
+                o al correo: <a href="mailto:reservatugrass@gmail.com" target="_blank"
+                  style="text-decoration: none; cursor: pointer;">
+                  <strong>reservatugrass&#64;gmail.com</strong>
+                </a>.
+              </div>
+
+              <div class="" *ngIf="!load_data">
+                <ng-container *ngFor="let item of cuentas">
+                  <div class="shadow rounded px-3 my-3 py-3" [ngStyle]="{'background-color': item.color}">
+                    <div class="row pt-3">
+                      <div class="text-center">
+                        <h5 class="fw-bold">
+                          {{item.banco}}
+                        </h5>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-4 col-12">
+                        <span class="badge rounded-pill text-bg-light"><strong>Titular: </strong>
+                          {{item.titular}}</span>
+                      </div>
+
+                      <div class="col-md-4 col-12">
+                        <span class="fs-6 mx-3"> <strong>Cuenta: </strong> {{item.cuenta}}</span>
+                      </div>
+
+                      <div class="col-md-4 col-12">
+                        <span class="fs-6 mx-3"> <strong>CCI: </strong> {{item.cci}}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                </ng-container>
+              </div>
+            </div>
+
+            <!-- Modal -->
+            <div class="modal fade" id="view-{{ item._id }}" tabindex="-1" aria-labelledby="exampleModalLabel"
+              aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Detalles de la <strong>Suscripción N°.
+                        {{suscripciones.length - indice}}</strong></h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body table-responsive">
+                    <table class="table table-borderless">
+                      <tbody>
+                        <tr>
+                          <td class="fw-bold">Código </td>
+                          <td>{{item._id}}</td>
+                        </tr>
+                        <tr>
+                          <td class="fw-bold">Transacción </td>
+                          <td>{{item.transaccion}}</td>
+                        </tr>
+                        <tr>
+                          <td class="fw-bold">Subtotal </td>
+                          <td>{{item.subtotal}}</td>
+                        </tr>
+                        <tr>
+                          <td class="fw-bold">Fecha de inicio </td>
+                          <td>{{item.createdAt | date}}</td>
+                        </tr>
+                        <tr>
+                          <td class="fw-bold">Fecha de fin </td>
+                          <td>{{item.vencimiento | date}}</td>
+                        </tr>
+                        <tr>
+                          <td class="fw-bold">Estado </td>
+                          <td>{{item.estado}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>

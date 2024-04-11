@@ -109,7 +109,7 @@
                           </p>
 
                           <button data-bs-toggle="modal" [attr.data-bs-target]="'#ver-' + item._id"
-                            class="btn btn-secondary btn-sm mt-2" type="button" title="Ver instrucciones">
+                            class="btn btn-secondary btn-sm mt-2" type="button" title="Ver instrucciones" (click)="obtener_cuentas_grass(item.empresa._id)">
                             <i class="bi bi-eye"></i> &nbsp; Ver instrucciones
                           </button>
                         </div>
@@ -171,12 +171,12 @@
                             <span class="fw-bold pasos px-2">Paso 2</span> &nbsp;
                             Enviar el comprobante del pago al
                             Whatsapp <span class="fw-bold">
-                              <a href="https://wa.me/51962557565" target="_blank">
+                              <a href="https://wa.me/51{{item.empresa.telefono}}" target="_blank">
                                 <i class="bi bi-whatsapp icono"></i>
                               </a>
-                              962 557 565 </span> o al correro
-                            <a href="mailto:reservatugrass@gmail.com" target="_blank" style="text-decoration: none;">
-                              <i class="bi bi-envelope gmail"></i> reservatugrass&#64;gmail.com.
+                              {{item.empresa.telefono}} </span> o al correro
+                            <a href="mailto:{{item.empresa.email}}" target="_blank" style="text-decoration: none;">
+                              <i class="bi bi-envelope gmail"></i> {{item.empresa.email}}
                             </a>
                             <span class="fw-bold"></span>
 

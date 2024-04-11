@@ -34,6 +34,11 @@ export class InicioComponent implements OnInit {
   public colores = ['rgb(20, 203, 139)', 'rgb(169, 19, 249)', 'rgb(249, 84, 183)', 'rgb(20, 120, 252)', 'rgb(255, 124, 25)'];
   public canchas: Array<any> = [];
 
+  public exist_susc = true;
+  public viewButton: boolean = false;
+  public activePagos: boolean = false;
+  public suscripciones: Array<any> = [];
+
   imagePreview: string | ArrayBuffer | null = null;
 
   constructor(
@@ -72,6 +77,34 @@ export class InicioComponent implements OnInit {
             this.isImagePort = false;
             this.addImage = true;
           }
+
+          this._userService.obtener_suscripciones_empresa(this.empresa._id, this.token).subscribe(
+            response => {
+              if (response.data == undefined) {
+                this.exist_susc = false;
+                this.viewButton = true;
+                this.activePagos = false;
+              } else {
+                this.exist_susc = true;
+                this.suscripciones = response.data;
+
+                for (let i = 0; i < this.suscripciones.length; i++) {
+                  if (this.suscripciones[i].estado == 'Confirmado') {
+                    this.activePagos = true;
+                    this.viewButton = false;
+                    break;
+                  } else {
+                    this.activePagos = false;
+                  }
+                }
+
+                if (this.suscripciones.at(0).estado !== 'Confirmado') {
+                  this.viewButton = true;
+                  this.activePagos = false;
+                }
+              }
+            }
+          );
 
           this.load_data = false;
         }

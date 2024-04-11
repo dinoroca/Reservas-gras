@@ -17,6 +17,7 @@ import { CrearResIdComponent } from './reservaciones/crear-res-id/crear-res-id.c
 import { ClientesComponent } from './clientes/clientes.component';
 import { ContactarComponent } from './contactar/contactar.component';
 import { AyudaComponent } from './ayuda/ayuda.component';
+import { SuscripcionComponent } from './suscripcion/suscripcion.component';
 
 const routes: Routes = [
   {path: '', component: InicioComponent},
@@ -27,6 +28,7 @@ const routes: Routes = [
   {path: 'caracteristicas', component: CaracteristicasComponent},
   {path: 'datos', component: IndexDatosComponent},
   {path: 'datos/actualizar', component: EditDatosComponent},
+  {path: 'suscripcion', component: SuscripcionComponent},
   {path: 'reservaciones', component: IndexResComponent},
   {path: 'reservaciones/crear', component: CreateResComponent},
   {path: 'reservaciones/crear/:id', component: CrearResIdComponent},

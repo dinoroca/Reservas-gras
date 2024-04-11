@@ -5,8 +5,6 @@
     <app-sidebar></app-sidebar>
 
     <div class="shadow rounded mt-5 p-4">
-        <h3 class="text-center" style="color:rgb(6, 170, 115)">Imagen de portada del grass</h3>
-
         <ng-container *ngIf="load_data">
             <div class="text-center">
                 <div class="spinner-border text-secondary" style="width: 3rem; height: 3rem" role="status">
@@ -14,6 +12,45 @@
                 <h4 class="text-black-50"><small>Cargando...</small></h4>
             </div>
         </ng-container>
+
+        <ng-container *ngIf="!activePagos && viewButton">
+            <div class="alert alert-danger text-center mt-4" role="alert">
+                Su suscripción está inactiva, para usar nuestra plataforma, por favor active su suscripción!
+
+                <div class="d-grid gap-2 col-6 mx-auto my-3">
+                    <button class="btn btn-danger" type="button" [routerLink]="['/grass/suscripcion']">Activar
+                        suscripción</button>
+                </div>
+            </div>
+        </ng-container>
+
+        <!-- Dashboard -->
+        <div class="row mb-5 text-center">
+
+            <div class="mb-3">
+                <h4 class="fw-bold">Cantidad de reservaciones <small class="fw-light">(mes actual)</small></h4>
+                <h1> {{count_ventas}} </h1>
+            </div>
+        </div>
+
+        <div class="card shadow mb-5" style="border: none;">
+            <div style="background-color: rgb(225, 255, 243);">
+                <div class="card-header text-center">
+                    <h5 class="fw-bold" style="margin-bottom: 0px; color: rgb(20, 203, 139);">Ingresos por mes</h5>
+                </div>
+
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <canvas id="MyChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h3 class="text-center" style="color:rgb(6, 170, 115)">Imagen de portada del grass</h3>
+
 
         <ng-container *ngIf="!load_data">
             <div class="form-group row align-items-center">
@@ -126,30 +163,5 @@
 
             </div>
         </ng-container>
-
-        <!-- Dashboard -->
-    <div class="row my-5 text-center">
-
-        <div class="my-3">
-            <h4 class="fw-bold">Cantidad de reservaciones</h4>
-            <h1> {{count_ventas}} </h1>
-        </div>
-    </div>
-
-    <div class="card shadow mb-5" style="border: none;">
-        <div style="background-color: rgb(225, 255, 243);">
-            <div class="card-header text-center">
-                <h5 class="fw-bold" style="margin-bottom: 0px; color: rgb(20, 203, 139);">Ingresos por mes</h5>
-            </div>
-
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-12">
-                        <canvas id="MyChart"></canvas>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
     </div>
 </div>

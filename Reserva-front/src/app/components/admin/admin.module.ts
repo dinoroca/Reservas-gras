@@ -14,6 +14,7 @@ import { UsuariosComponent } from './usuarios/usuarios.component';
 import { FormsModule } from '@angular/forms';
 import { MensajesComponent } from './mensajes/mensajes.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { SuscripcionesComponent } from './suscripciones/suscripciones.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
     CreateCuentasComponent,
     EditCuentasComponent,
     UsuariosComponent,
-    MensajesComponent
+    MensajesComponent,
+    SuscripcionesComponent
   ],
   imports: [
     CommonModule,

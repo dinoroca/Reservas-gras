@@ -1,0 +1,343 @@
+<app-nav></app-nav>
+
+
+<div class="container py-4">
+    <app-sidebar></app-sidebar>
+
+    <div class="shadow rounded mt-5 p-4">
+        <h3 class="text-center fw-bold" style="color:rgb(6, 170, 115)">
+            Suscripciones
+        </h3>
+
+        <div>
+            <!-- Button addon on the right -->
+            <div class="input-group my-4">
+                <input class="form-control" type="text" placeholder="Filtrar por ID de reservación" name="filtro_cod"
+                    autocomplete="off" [(ngModel)]="filtro_cod" (keyup)="filtrar_cod()">
+            </div>
+
+            <div class="rounded my-2" *ngIf="err_msg" style="background-color: rgb(255, 223, 223);">
+                <p class="text-center p-2 text-danger">ERROR: Ingrese el ID correctamente.</p>
+            </div>
+        </div>
+
+        <ng-container *ngIf="load_data">
+            <div class="text-center">
+                <div class="spinner-border text-secondary" style="width: 3rem; height: 3rem" role="status">
+                </div>
+                <h4 class="text-black-50"><small>Cargando...</small></h4>
+            </div>
+        </ng-container>
+
+        <ng-container *ngIf="filtro && !err_msg">
+            <div class="row d-flex justify-content-center">
+                <div class="shadow card rounded my-4" class="card m-3 col-12 col-md-5" style="border-color: #00C056;">
+                    <div class="card-body py-1">
+                        <div class="d-flex flex-wrap justify-content-between py-3" data-toggle="collapse"
+                            aria-expanded="false">
+
+                            <span class="text-muted" *ngIf="suscripcion.estado == 'Reservado'">
+                                <i class="bi bi-calendar"></i> &nbsp;
+                                {{suscripcion.createdAt | date}}
+                            </span>
+
+                            <span class="text-muted" *ngIf="suscripcion.estado == 'Confirmado'">
+                                <i class="bi bi-calendar"></i> &nbsp;
+                                {{suscripcion.vencimiento | date}} <small>(finaliza)</small>
+                            </span>
+
+                            <span class="text-muted" *ngIf="suscripcion.estado == 'Vencido'">
+                                <i class="bi bi-calendar"></i> &nbsp;
+                                {{suscripcion.vencimiento | date}} <small class="text-danger">(vencido)</small>
+                            </span>
+
+                            <span class="badge rounded-pill bg-secondary" *ngIf="suscripcion.estado == 'Reservado'">
+                                {{suscripcion.estado}}
+                            </span>
+                            <span class="badge rounded-pill bg-success" *ngIf="suscripcion.estado == 'Confirmado'">
+                                {{suscripcion.estado}}
+                            </span>
+                            <span class="badge rounded-pill bg-danger" *ngIf="suscripcion.estado == 'Vencido'">
+                                {{suscripcion.estado}}
+                            </span>
+                            <span class="text-dark pl-1">S/. {{suscripcion.subtotal}} </span>
+                        </div>
+
+                        <div class="text-center mb-3">
+                            <p class="fw-light m-0"> {{ suscripcion._id }} </p>
+                        </div>
+
+                        <div class="text-center mb-3">
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-light btn-sm" data-bs-toggle="modal"
+                                [attr.data-bs-target]="'#view-' + suscripcion._id">
+                                <i class="bi bi-eye-fill"></i> &nbsp; Ver detalles
+                            </button> &nbsp;
+                            <button *ngIf="suscripcion.estado == 'Reservado'" type="button" class="btn btn-primary btn-sm"
+                                data-bs-toggle="modal" [attr.data-bs-target]="'#confirmar-' + suscripcion._id">
+                                Confirmar &nbsp; <i class="bi bi-check-lg"></i>
+                            </button>
+                        </div>
+
+                        <div class="card px-2 mb-3">
+                            <h5 class="card-title fw-bold text-center mt-3">
+                                {{ suscripcion.empresa.nombre }}
+                            </h5>
+
+                            <p class="text-center">
+                                <a href="{{ suscripcion.empresa.ubicacion }}" target="_blank"
+                                    style="text-decoration: none; color: #095c3d; font-style: italic;">
+                                    {{ suscripcion.empresa.direccion }}
+                                </a>
+                                &nbsp;
+                                <a href="{{ suscripcion.empresa.ubicacion }}" target="_blank">
+                                    <i class="bi bi-arrow-up-right-circle" style="color: #095c3d"></i>
+                                </a>
+                            </p>
+
+                        </div>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="view-{{ suscripcion._id }}" tabindex="-1"
+                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Detalles de
+                                            <strong> {{suscripcion._id}}</strong>
+                                        </h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body table-responsive">
+                                        <table class="table table-borderless">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="fw-bold">Código </td>
+                                                    <td>{{suscripcion._id}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="fw-bold">Transacción </td>
+                                                    <td>{{suscripcion.transaccion}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="fw-bold">Subtotal </td>
+                                                    <td>{{suscripcion.subtotal}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="fw-bold">Fecha de inicio </td>
+                                                    <td>{{suscripcion.createdAt | date}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="fw-bold">Fecha de fin </td>
+                                                    <td>{{suscripcion.vencimiento | date}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="fw-bold">Estado </td>
+                                                    <td>{{suscripcion.estado}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Modal confirmar reserva -->
+                    <div class="modal fade" id="confirmar-{{ suscripcion._id }}" tabindex="-1" style="display: none"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title text-center">
+                                        Confirmar reservación
+                                    </h4>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                    </button>
+                                </div>
+                                <div class="modal-body text-center">
+                                    Confirmar la suscripción <span class="fw-bold">{{suscripcion._id}}</span> para la
+                                    empresa
+                                    <span class="fw-bold">{{suscripcion.empresa.nombre}}</span>?
+                                </div>
+                                <div class="modal-footer">
+                                    <button class="btn btn-light btn-sm bi-x-lg" type="button" data-bs-dismiss="modal">
+                                    </button>
+                                    <button *ngIf="!load_btn" class="btn btn-primary btn-sm" data-bs-dismiss="modal"
+                                        (click)="confirmar_suscripcion(suscripcion._id)" type="button">
+                                        <i class="bi bi-check-lg"></i> &nbsp;
+                                        Confirmar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+
+        <ng-container *ngIf="!load_data && suscripciones.length >= 1 && !filtro">
+            <div class="row d-flex justify-content-center">
+                <div class="shadow card rounded my-4"
+                    *ngFor="let item of suscripciones | paginate: { itemsPerPage: 10, currentPage: p } "
+                    class="card m-3 col-12 col-md-5" style="border-color: #00C056;">
+                    <div class="card-body py-1">
+                        <div class="d-flex flex-wrap justify-content-between py-3" data-toggle="collapse"
+                            aria-expanded="false">
+
+                            <span class="text-muted" *ngIf="item.estado == 'Reservado'">
+                                <i class="bi bi-calendar"></i> &nbsp;
+                                {{item.createdAt | date}}
+                            </span>
+
+                            <span class="text-muted" *ngIf="item.estado == 'Confirmado'">
+                                <i class="bi bi-calendar"></i> &nbsp;
+                                {{item.vencimiento | date}} <small>(finaliza)</small>
+                            </span>
+
+                            <span class="text-muted" *ngIf="item.estado == 'Vencido'">
+                                <i class="bi bi-calendar"></i> &nbsp;
+                                {{item.vencimiento | date}} <small class="text-danger">(vencido)</small>
+                            </span>
+
+                            <span class="badge rounded-pill bg-secondary" *ngIf="item.estado == 'Reservado'">
+                                {{item.estado}}
+                            </span>
+                            <span class="badge rounded-pill bg-success" *ngIf="item.estado == 'Confirmado'">
+                                {{item.estado}}
+                            </span>
+                            <span class="badge rounded-pill bg-danger" *ngIf="item.estado == 'Vencido'">
+                                {{item.estado}}
+                            </span>
+                            <span class="text-dark pl-1">S/. {{item.subtotal}} </span>
+                        </div>
+
+                        <div class="text-center mb-3">
+                            <p class="fw-light m-0"> {{ item._id }} </p>
+                        </div>
+
+                        <div class="text-center mb-3">
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-light btn-sm" data-bs-toggle="modal"
+                                [attr.data-bs-target]="'#view-' + item._id">
+                                <i class="bi bi-eye-fill"></i> &nbsp; Ver detalles
+                            </button> &nbsp;
+                            <button *ngIf="item.estado == 'Reservado'" type="button" class="btn btn-primary btn-sm"
+                                data-bs-toggle="modal" [attr.data-bs-target]="'#confirmar-' + item._id">
+                                Confirmar &nbsp; <i class="bi bi-check-lg"></i>
+                            </button>
+                        </div>
+
+                        <div class="card px-2 mb-3">
+                            <h5 class="card-title fw-bold text-center mt-3">
+                                {{ item.empresa.nombre }}
+                            </h5>
+
+                            <p class="text-center">
+                                <a href="{{ item.empresa.ubicacion }}" target="_blank"
+                                    style="text-decoration: none; color: #095c3d; font-style: italic;">
+                                    {{ item.empresa.direccion }}
+                                </a>
+                                &nbsp;
+                                <a href="{{ item.empresa.ubicacion }}" target="_blank">
+                                    <i class="bi bi-arrow-up-right-circle" style="color: #095c3d"></i>
+                                </a>
+                            </p>
+
+                        </div>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="view-{{ item._id }}" tabindex="-1"
+                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Detalles de
+                                            <strong> {{item._id}}</strong>
+                                        </h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body table-responsive">
+                                        <table class="table table-borderless">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="fw-bold">Código </td>
+                                                    <td>{{item._id}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="fw-bold">Transacción </td>
+                                                    <td>{{item.transaccion}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="fw-bold">Subtotal </td>
+                                                    <td>{{item.subtotal}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="fw-bold">Fecha de inicio </td>
+                                                    <td>{{item.createdAt | date}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="fw-bold">Fecha de fin </td>
+                                                    <td>{{item.vencimiento | date}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="fw-bold">Estado </td>
+                                                    <td>{{item.estado}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Modal confirmar reserva -->
+                    <div class="modal fade" id="confirmar-{{ item._id }}" tabindex="-1" style="display: none"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title text-center">
+                                        Confirmar reservación
+                                    </h4>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                    </button>
+                                </div>
+                                <div class="modal-body text-center">
+                                    Confirmar la suscripción <span class="fw-bold">{{item._id}}</span> para la
+                                    empresa
+                                    <span class="fw-bold">{{item.empresa.nombre}}</span>?
+                                </div>
+                                <div class="modal-footer">
+                                    <button class="btn btn-light btn-sm bi-x-lg" type="button" data-bs-dismiss="modal">
+                                    </button>
+                                    <button *ngIf="!load_btn" class="btn btn-primary btn-sm" data-bs-dismiss="modal"
+                                        (click)="confirmar_suscripcion(item._id)" type="button">
+                                        <i class="bi bi-check-lg"></i> &nbsp;
+                                        Confirmar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-footer text-center">
+                <pagination-controls (pageChange)="p = $event" [responsive]="true" previousLabel="" nextLabel="">
+                </pagination-controls>
+            </div>
+        </ng-container>
+
+        <ng-container *ngIf="!load_data && !existr_susc">
+            <div class="alert alert-danger mt-3 mb-0 text-center" role="alert">
+                Aún no existen suscripciones
+            </div>
+        </ng-container>
+    </div>
+</div>

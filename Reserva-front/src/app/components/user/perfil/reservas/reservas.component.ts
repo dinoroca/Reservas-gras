@@ -19,6 +19,7 @@ export class ReservasComponent implements OnInit {
   public load_data: boolean = true;
   public load_reservas: boolean = true;
   public load_btn = false;
+  public load_cuentas = false;
   public descargando = false;
   public activePagos: boolean = false;
   public viewButton: boolean = false;
@@ -71,12 +72,6 @@ export class ReservasComponent implements OnInit {
         this.load_data = false;
       }
     );
-
-    _userService.obtener_cuentas_de_admin(this.token).subscribe(
-      response => {
-        this.cuentas = response.data;
-      }
-    );
   }
 
   ngOnInit() {
@@ -98,6 +93,16 @@ export class ReservasComponent implements OnInit {
 
   calcular_subtotal() {
     this.subtotal = (parseInt(this.horaFin!) - parseInt(this.horaInicio!)) * 10;
+  }
+
+  obtener_cuentas_grass(id: any) {
+    this.load_cuentas = true;
+    this._userService.obtener_cuentas_de_grass(id, this.token).subscribe(
+      response => {
+        this.cuentas = response.data;
+        this.load_cuentas = false;
+      }
+    );
   }
 
   obtener_reservas() {
