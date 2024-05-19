@@ -145,7 +145,7 @@ const listar_empresas_filtro = async function (req, res) {
 
 const listar_empresas_publico = async function (req, res) {
 
-  let reg = await Empresa.find().sort({ createdAt: 1 }).limit(9);
+  let reg = await Empresa.find().sort({ createdAt: 1 });
   if (reg.length > 0) {
     res.status(200).send({ data: reg });
   } else {
@@ -158,7 +158,7 @@ const listar_empresas_user = async function (req, res) {
 
     let region = req.params['region'];
 
-    let reg = await Empresa.find({ region: new RegExp(region, 'i') }).sort({ createdAt: 1 }).limit(6);
+    let reg = await Empresa.find({ region: new RegExp(region, 'i') }).sort({ createdAt: 1 });
     if (reg.length > 0) {
       res.status(200).send({ data: reg });
     } else {
@@ -548,7 +548,7 @@ const enviar_whatsapp_reservado = async (user, reservacion) => {
   } else {
     console.log('Whatsapp no existe');
   }
-};
+}
 
 const obtener_clientes_empresa = async function (req, res) {
   if (req.user) {

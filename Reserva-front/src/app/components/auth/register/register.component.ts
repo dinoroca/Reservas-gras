@@ -27,6 +27,7 @@ export class RegisterComponent implements OnInit {
   public valid = false;
 
   public recordar = true;
+  public load_register = false;
 
   public usuario: any = {};
   public token: any;
@@ -129,6 +130,7 @@ export class RegisterComponent implements OnInit {
   }
 
   registrar(registroForm: any) {
+    this.load_register = true;
     if (registroForm.valid) {
 
       let data = {
@@ -143,11 +145,13 @@ export class RegisterComponent implements OnInit {
         response => {
           if (response.data == undefined) {
             this._toastrService.error(response.message, 'ERROR');
+            this.load_register = false;
 
           } else if (response.data != undefined) {
             localStorage.setItem('_id', response.data._id);
             this._toastrService.success('Se registró con éxito', 'REGISTRADO!');
             localStorage.setItem('user_email', this.user.email);
+            this.load_register = false;
             this._router.navigate(['/verificar']);
 
             this._userService.enviar_correo_confirmacion(response.data._id).subscribe(
@@ -163,6 +167,7 @@ export class RegisterComponent implements OnInit {
       );
     } else {
       this._toastrService.error('Los datos del formulario no son válidos', 'ERROR');
+      this.load_register = false;
     }
   }
 

@@ -367,7 +367,7 @@
 
         <div class="row d-flex justify-content-center px-2 px-sm-5">
             <ng-container *ngIf="primeras_empresas.length > 0">
-                <div *ngFor="let item of primerosBuscado" class="col-md-4 pb-5 pt-2 col-sm-12">
+                <div *ngFor="let item of primerosBuscado | paginate: { itemsPerPage: 6, currentPage: p }" class="col-md-4 pb-5 pt-2 col-sm-12">
                     <div class="card shadow">
                         <div class="images-grass">
                             <ng-container *ngIf=" item.empresa.portada == undefined || item.empresa.portada.length < 1">
@@ -485,6 +485,11 @@
                             </div>
                         </div>
                     </div>
+                </div>
+
+                <div class="text-center">
+                    <pagination-controls (pageChange)="p = $event" [responsive]="true" previousLabel="" nextLabel="">
+                    </pagination-controls>
                 </div>
             </ng-container>
 

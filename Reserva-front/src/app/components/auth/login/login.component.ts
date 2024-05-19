@@ -19,6 +19,7 @@ export class LoginComponent implements OnInit {
   public user_lc: any;
   public password: any;
   public show = false;
+  public load_login = false;
 
   public recordar = true;
 
@@ -90,6 +91,7 @@ export class LoginComponent implements OnInit {
   }
 
   login(loginForm: any) {
+    this.load_login = true;
     if (loginForm.valid) {
       let data = {
         email: this.user.email,
@@ -104,6 +106,7 @@ export class LoginComponent implements OnInit {
               response => {
                 if (response.data == undefined) {
                   this._toastrService.error(response.message, 'ERROR');
+                  this.load_login = false;
 
                 } else if (response.data.verificado) {
 
@@ -116,6 +119,7 @@ export class LoginComponent implements OnInit {
                     sessionStorage.setItem('_id', response.data._id);
                   }
                   this.usuario = response.data;
+                  this.load_login = false;
 
                   if (this.usuario.role === 'GRASS') {
                     this._router.navigate(['/grass']).then(() => {
@@ -141,6 +145,7 @@ export class LoginComponent implements OnInit {
               sessionStorage.setItem('_id', response.data._id);
             }
             this.usuario = response.data;
+            this.load_login = false;
 
             if (this.usuario.role === 'USER') {
               console.log(this.id_cancha);

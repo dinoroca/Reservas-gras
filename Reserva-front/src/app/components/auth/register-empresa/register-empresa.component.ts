@@ -48,6 +48,7 @@ export class RegisterEmpresaComponent implements OnInit {
   public user_lc: any;
 
   public load_btn_crear = false;
+  public load_register = false;
   public car : any = { };
 
   isDisabledProvincia = true;
@@ -207,6 +208,7 @@ export class RegisterEmpresaComponent implements OnInit {
   }
 
   registrar(registroForm: any) {
+    this.load_register = true;
     if (registroForm.valid) {
 
       let data = {
@@ -225,6 +227,7 @@ export class RegisterEmpresaComponent implements OnInit {
         response => {
           if (response.data == undefined) {
             this._toastrService.error(response.message, 'ERROR');
+            this.load_register = false;
 
           } else if (response.data != undefined) {
             localStorage.setItem('_id', response.data._id);
@@ -245,6 +248,7 @@ export class RegisterEmpresaComponent implements OnInit {
             
 
             this._toastrService.success('Se registró con éxito', 'REGISTRADO!');
+            this.load_register = false;
             this._router.navigate(['/wait']);
 
             // this._userService.enviar_correo_confirmacion(response.data._id).subscribe(
@@ -261,6 +265,7 @@ export class RegisterEmpresaComponent implements OnInit {
 
     } else {
       this._toastrService.error('Los datos del formulario no son válidos', 'ERROR');
+      this.load_register = false;
     }
   }
 

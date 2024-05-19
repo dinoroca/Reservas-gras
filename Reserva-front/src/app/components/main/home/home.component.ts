@@ -83,6 +83,8 @@ export class HomeComponent implements OnInit {
   screenWidth: number = 0;
   screenHeight: number = 0;
 
+  p: number = 1;
+
   public imagen_fondo: String = '';
   @ViewChild('textoAnimado') textoAnimado: any;
   texto: string = '';

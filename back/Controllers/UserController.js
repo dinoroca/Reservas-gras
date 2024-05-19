@@ -24,7 +24,7 @@ var { v4: uuidv4 } = require('uuid');
 const CLIENT_ID = '465301277520-vtde6k9bjbp9bifqst4fv5bupa48i2aj.apps.googleusercontent.com';
 const CLIENT_SECRET = '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';
 const REDIRECT_URI = 'https://developers.google.com/oauthplayground';
-const REFRESH_TOKEN = '1//0421rBv1N-iQdCgYIARAAGAQSNwF-L9IrpaRKEtkCylLXBbnsl60WTr03pspmjA8SjWks02sY-_9oeDQoXewsImFosUZMOQ-Cm8U';
+const REFRESH_TOKEN = '1//04sJf7uMw1AsqCgYIARAAGAQSNwF-L9Ir_Ily6OK3hR9-mvciq4t6FPbD84aaLB4gitOiulmdrIc2A3nZ9Oq6GT2tHFaQ6c6029Q';
 
 const registro_user = async function (req, res) {
   //Obtiene los parámetros del cliente
@@ -951,7 +951,7 @@ const enviar_whatsapp_empresa_verificado = async (user) => {
   } else {
     console.log('Whatsapp no existe');
   }
-};
+}
 
 const obtener_caracteristicas_admin = async function (req, res) {
   if (req.user) {
@@ -997,7 +997,7 @@ const eliminar_empresa_admin = async function (req, res) {
   } else {
     res.status(500).send({ message: 'NoAccess' });
   }
-};
+}
 
 const obtener_cuentas_de_empresa_admin = async function (req, res) {
   if (req.user) {

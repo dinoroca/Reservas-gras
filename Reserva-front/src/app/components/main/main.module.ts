@@ -13,6 +13,7 @@ import { VerGrassComponent } from './ver-grass/ver-grass.component';
 import { VerMovilComponent } from './ver-movil/ver-movil.component';
 import { TermCondicionesComponent } from './term-condiciones/term-condiciones.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
     SharedModule,
     FormsModule,
     AppRoutingModule,
+    NgxPaginationModule,
     RouterModule
   ]
 })
